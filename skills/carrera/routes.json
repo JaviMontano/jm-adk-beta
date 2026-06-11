@@ -1,0 +1,62 @@
+{
+  "proceso-seleccion-orchestrator": {
+    "playbook": "references/proceso-seleccion-orchestrator.md",
+    "desc": "This skill should be used when the user asks to track a hiring or selection process, extract interview stages from supplied notes or emails, reconcile interviewer roles, build a candidate status board, identify the next action, or audit handoff evidence for an active selection workflow.",
+    "alfa": "proceso-seleccion-orchestrator"
+  },
+  "simulador-entrevista": {
+    "playbook": "references/simulador-entrevista.md",
+    "desc": "This skill should be used when the user asks to run a mock interview, practice one interview question at a time, score an answer across separate substance, English, and presence rubrics, choose the next practice step, or validate interview feedback without averaging the dimensions.",
+    "alfa": "simulador-entrevista"
+  },
+  "negociacion-oferta": {
+    "playbook": "references/negociacion-oferta.md",
+    "desc": "Evalua ofertas profesionales con filtros de aceptacion, PIVOTE, evidencia suministrada y contrapropuestas sin presion, numeros inventados ni claims de mercado vivo.",
+    "alfa": "negociacion-oferta"
+  },
+  "cv-cover-optimizer": {
+    "playbook": "references/cv-cover-optimizer.md",
+    "desc": "Optimiza CV y carta de presentacion para ATS, rol objetivo y voz de marca con lint offline de keywords, secciones, longitud, contacto y tono.",
+    "alfa": "cv-cover-optimizer"
+  },
+  "follow-up-email": {
+    "playbook": "references/follow-up-email.md",
+    "desc": ">",
+    "alfa": "follow-up-email"
+  },
+  "onboarding-90-dias": {
+    "playbook": "references/onboarding-90-dias.md",
+    "desc": "Genera y valida planes 30/60/90 para nuevos roles con evidencia, hitos verificables, limites anti-burnout, prioridades acotadas y sin promesas de desempeno no sustentadas.",
+    "alfa": "onboarding-90-dias"
+  },
+  "validar-liquidacion-co": {
+    "playbook": "references/validar-liquidacion-co.md",
+    "desc": "This skill should be used when the user asks to validate a Colombian labor settlement calculation, recompute cesantias, intereses de cesantias, prima, vacaciones, deductions, net payment, or review paz y salvo questions with an arithmetic-only, evidence-backed report.",
+    "alfa": "validar-liquidacion-co"
+  },
+  "red-y-referencias": {
+    "playbook": "references/red-y-referencias.md",
+    "desc": "This skill should be used when the user asks to manage a professional reference network, request or audit explicit consent, plan referral follow-ups, map relationship context, decide whether a reference can be contacted, or create an evidence-backed networking handoff.",
+    "alfa": "red-y-referencias"
+  },
+  "gratitud-post-proceso": {
+    "playbook": "references/gratitud-post-proceso.md",
+    "desc": "Redacta agradecimientos post-proceso diferenciados por persona, evidencia de interaccion, voz de marca y lint offline contra FOMO, hustle, servilismo y promesas no verificables.",
+    "alfa": "gratitud-post-proceso"
+  },
+  "cierre-conversacion": {
+    "playbook": "references/cierre-conversacion.md",
+    "desc": "Cosecha aprendizajes, valida evidencia y produce un cierre de conversacion reproducible con handoff, riesgos y plan de actualizaciones durables.",
+    "alfa": "cierre-conversacion"
+  },
+  "acta-formal": {
+    "playbook": "references/acta-formal.md",
+    "desc": ">",
+    "alfa": "acta-formal"
+  },
+  "cv-enhancement": {
+    "playbook": "references/cv-enhancement.md",
+    "desc": ">",
+    "alfa": "cv-enhancement"
+  }
+}

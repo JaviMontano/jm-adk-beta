@@ -1,0 +1,82 @@
+{
+  "meta-skill-creator": {
+    "playbook": "references/meta-skill-creator.md",
+    "desc": "Create new 10x skills using the skill-forge protocol. Loads reference sub-repo, applies Trinity (Alfa-Atoms-Beta), validates with 10/10 rubric. [EXPLICIT]",
+    "alfa": "meta-skill-creator"
+  },
+  "agent-creator": {
+    "playbook": "references/agent-creator.md",
+    "desc": "Create deterministic Claude Code custom agent definitions with trigger conditions, bounded system prompts, least-privilege tools, model selection, and validation checks. Use when the user asks to create an agent, add a subagent, make a custom agent, define an agent definition, or build an autonomous subprocess for a specific project responsibility. [EXPLICIT]",
+    "alfa": "agent-creator"
+  },
+  "prompt-creator": {
+    "playbook": "references/prompt-creator.md",
+    "desc": "Generates deterministic prompt files for agentic ecosystems using the canonical prompt-type matrix, including meta prompts, system-user pairs, handoffs, committee deliberation, synthesis, validation, fallback, and redirects for agent constitutions and workflow steps. Use when the user asks to create a prompt, write a handoff prompt, generate a meta prompt, build a committee deliberation prompt, make a fallback prompt, or design agent prompts. If prompt type or owning agent is missing, interview for the minimum required inputs before writing. [EXPLICIT]",
+    "alfa": "prompt-creator"
+  },
+  "workflow-creator": {
+    "playbook": "references/workflow-creator.md",
+    "desc": "Generates deterministic 17-field workflow definitions with step contracts, DoD, RACI, KPIs, validation rules, and failure handling for agentic ecosystems. Use when the user asks to create a workflow, define workflow steps, build workflow YAML, generate a workflow spec, design a RACI-backed procedure, or convert an agentic process into a repeatable workflow.",
+    "alfa": "workflow-creator"
+  },
+  "mcp-creator": {
+    "playbook": "references/mcp-creator.md",
+    "desc": "Design deterministic MCP server configuration plans with transport, scope, auth, secret, preflight, validation, and rollback controls; validate offline before any live setup.",
+    "alfa": "mcp-creator"
+  },
+  "hook-creator": {
+    "playbook": "references/hook-creator.md",
+    "desc": "This skill should be used when the user asks to \"create a hook\",",
+    "alfa": "hook-creator"
+  },
+  "prompt-forge": {
+    "playbook": "references/prompt-forge.md",
+    "desc": "Create, review, evolve, repair, and port system prompts using a deterministic Playbook format, source-boundary rules, platform portability notes, rubric scorecards, adversarial test cases, and script-backed forge packet validation. Use when the user asks to create a system prompt, review a prompt, optimize or repair prompt behavior, port prompts across Claude, ChatGPT, Gemini, or API runtimes, or apply Prompt Forge / Playbook format. [EXPLICIT]",
+    "alfa": "prompt-forge"
+  },
+  "workflow-forge": {
+    "playbook": "references/workflow-forge.md",
+    "desc": "Creates slash-command workflow definitions with phase maps, agent handoffs, verification checkpoints, and deterministic validation. Use when the user asks to create a workflow, forge a slash command, turn a process into phases, define an agent workflow, or prepare a repeatable command flow.",
+    "alfa": "workflow-forge"
+  },
+  "assembly-skill": {
+    "playbook": "references/assembly-skill.md",
+    "desc": "Use when the user asks to run the full skill quality pipeline, improve a skill end to end, take a skill to production, run x-ray plus surgeon plus certify, or assembly-line one skill. Orchestrates one target skill through deterministic diagnostic, intervention, certification, and optional trigger optimization gates.",
+    "alfa": "assembly-skill"
+  },
+  "certify-skill": {
+    "playbook": "references/certify-skill.md",
+    "desc": "This skill should be used when the user asks to \"certify a skill\",",
+    "alfa": "certify-skill"
+  },
+  "benchmark-skill": {
+    "playbook": "references/benchmark-skill.md",
+    "desc": "Compares two skill states or one skill against a benchmark standard using a deterministic rubric, inventory deltas, gate changes, regression detection, trade-off analysis, and net assessment. Use when the user asks to compare skill versions, benchmark a skill, measure skill improvement, diff skill states, prove before/after quality, or evaluate a skill against a quality standard.",
+    "alfa": "benchmark-skill"
+  },
+  "design-skill": {
+    "playbook": "references/design-skill.md",
+    "desc": "Design a plugin skill in detail: frontmatter, procedure outline, quality criteria, anti-patterns, edge cases, tool selection. [EXPLICIT]",
+    "alfa": "design-skill"
+  },
+  "x-ray-skill": {
+    "playbook": "references/x-ray-skill.md",
+    "desc": "This skill should be used when the user asks to \"audit a skill\",",
+    "alfa": "x-ray-skill"
+  },
+  "meta-skill-indexer": {
+    "playbook": "references/meta-skill-indexer.md",
+    "desc": "Regenerates skills_index.json by scanning all SKILL.md files. Extracts frontmatter metadata for BM25 search. [EXPLICIT]",
+    "alfa": "meta-skill-indexer"
+  },
+  "auto-prompt-matching": {
+    "playbook": "references/auto-prompt-matching.md",
+    "desc": ">",
+    "alfa": "auto-prompt-matching"
+  },
+  "skill-search": {
+    "playbook": "references/skill-search.md",
+    "desc": ">",
+    "alfa": "skill-search"
+  }
+}

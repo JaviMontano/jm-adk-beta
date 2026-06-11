@@ -1,0 +1,47 @@
+{
+  "business-process-modeling": {
+    "playbook": "references/business-process-modeling.md",
+    "desc": ">",
+    "alfa": "business-process-modeling"
+  },
+  "change-management-enterprise": {
+    "playbook": "references/change-management-enterprise.md",
+    "desc": ">",
+    "alfa": "change-management-enterprise"
+  },
+  "change-readiness": {
+    "playbook": "references/change-readiness.md",
+    "desc": ">",
+    "alfa": "change-readiness"
+  },
+  "feasibility-validation": {
+    "playbook": "references/feasibility-validation.md",
+    "desc": ">",
+    "alfa": "feasibility-validation"
+  },
+  "flow-mapping": {
+    "playbook": "references/flow-mapping.md",
+    "desc": "DDD domain taxonomy + 8-12 end-to-end business flows. Sequence diagrams (Mermaid). Bounded contexts. Integration matrix. [EXPLICIT]",
+    "alfa": "flow-mapping"
+  },
+  "requirements-engineering": {
+    "playbook": "references/requirements-engineering.md",
+    "desc": ">",
+    "alfa": "requirements-engineering"
+  },
+  "scenario-analysis": {
+    "playbook": "references/scenario-analysis.md",
+    "desc": "Evaluate 3+ implementation scenarios. Weighted criteria matrix. Risk/reward. Firebase/Google stack constrained. [EXPLICIT]",
+    "alfa": "scenario-analysis"
+  },
+  "workshop-design": {
+    "playbook": "references/workshop-design.md",
+    "desc": ">",
+    "alfa": "workshop-design"
+  },
+  "workshop-facilitator": {
+    "playbook": "references/workshop-facilitator.md",
+    "desc": "Workshop design — event storming, impact mapping, user story mapping, design sprints. [EXPLICIT]",
+    "alfa": "workshop-facilitator"
+  }
+}

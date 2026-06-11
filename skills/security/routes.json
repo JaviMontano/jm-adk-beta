@@ -1,0 +1,52 @@
+{
+  "audit-security": {
+    "playbook": "references/audit-security.md",
+    "desc": ">",
+    "alfa": "audit-security"
+  },
+  "auth-architecture": {
+    "playbook": "references/auth-architecture.md",
+    "desc": "Firebase Auth setup. Custom claims for RBAC. Session management. MFA configuration. Provider selection. [EXPLICIT]",
+    "alfa": "auth-architecture"
+  },
+  "cors-configuration": {
+    "playbook": "references/cors-configuration.md",
+    "desc": ">",
+    "alfa": "cors-configuration"
+  },
+  "dual-layer-verification": {
+    "playbook": "references/dual-layer-verification.md",
+    "desc": ">",
+    "alfa": "dual-layer-verification"
+  },
+  "http-headers": {
+    "playbook": "references/http-headers.md",
+    "desc": ">",
+    "alfa": "http-headers"
+  },
+  "input-sanitization": {
+    "playbook": "references/input-sanitization.md",
+    "desc": ">",
+    "alfa": "input-sanitization"
+  },
+  "rate-limiting": {
+    "playbook": "references/rate-limiting.md",
+    "desc": ">",
+    "alfa": "rate-limiting"
+  },
+  "rbac-patterns": {
+    "playbook": "references/rbac-patterns.md",
+    "desc": ">",
+    "alfa": "rbac-patterns"
+  },
+  "architecture": {
+    "playbook": "references/architecture.md",
+    "desc": "This skill should be used when the user asks to \"design security architecture\", \"model",
+    "alfa": "security-architecture"
+  },
+  "testing": {
+    "playbook": "references/testing.md",
+    "desc": ">",
+    "alfa": "security-testing"
+  }
+}

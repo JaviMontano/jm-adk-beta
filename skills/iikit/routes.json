@@ -1,0 +1,62 @@
+{
+  "00-constitution": {
+    "playbook": "references/00-constitution.md",
+    "desc": ">-",
+    "alfa": "iikit-00-constitution"
+  },
+  "01-specify": {
+    "playbook": "references/01-specify.md",
+    "desc": ">-",
+    "alfa": "iikit-01-specify"
+  },
+  "02-plan": {
+    "playbook": "references/02-plan.md",
+    "desc": ">-",
+    "alfa": "iikit-02-plan"
+  },
+  "03-checklist": {
+    "playbook": "references/03-checklist.md",
+    "desc": ">-",
+    "alfa": "iikit-03-checklist"
+  },
+  "04-testify": {
+    "playbook": "references/04-testify.md",
+    "desc": ">-",
+    "alfa": "iikit-04-testify"
+  },
+  "05-tasks": {
+    "playbook": "references/05-tasks.md",
+    "desc": ">-",
+    "alfa": "iikit-05-tasks"
+  },
+  "06-analyze": {
+    "playbook": "references/06-analyze.md",
+    "desc": ">-",
+    "alfa": "iikit-06-analyze"
+  },
+  "07-implement": {
+    "playbook": "references/07-implement.md",
+    "desc": ">-",
+    "alfa": "iikit-07-implement"
+  },
+  "08-taskstoissues": {
+    "playbook": "references/08-taskstoissues.md",
+    "desc": ">-",
+    "alfa": "iikit-08-taskstoissues"
+  },
+  "bugfix": {
+    "playbook": "references/bugfix.md",
+    "desc": ">-",
+    "alfa": "iikit-bugfix"
+  },
+  "clarify": {
+    "playbook": "references/clarify.md",
+    "desc": ">-",
+    "alfa": "iikit-clarify"
+  },
+  "core": {
+    "playbook": "references/core.md",
+    "desc": ">-",
+    "alfa": "iikit-core"
+  }
+}

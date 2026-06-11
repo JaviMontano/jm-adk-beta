@@ -1,0 +1,37 @@
+{
+  "data-governance": {
+    "playbook": "references/data-governance.md",
+    "desc": "This skill should be used when the user asks to \"build a data catalog\",",
+    "alfa": "data-governance"
+  },
+  "data-privacy-patterns": {
+    "playbook": "references/data-privacy-patterns.md",
+    "desc": ">",
+    "alfa": "data-privacy-patterns"
+  },
+  "data-strategy": {
+    "playbook": "references/data-strategy.md",
+    "desc": ">",
+    "alfa": "data-strategy"
+  },
+  "data-documentation": {
+    "playbook": "references/data-documentation.md",
+    "desc": ">",
+    "alfa": "data-documentation"
+  },
+  "data-storytelling": {
+    "playbook": "references/data-storytelling.md",
+    "desc": "Transforms metrics and findings into meaningful narratives — insight extraction,",
+    "alfa": "data-storytelling"
+  },
+  "audit-trail-design": {
+    "playbook": "references/audit-trail-design.md",
+    "desc": ">",
+    "alfa": "audit-trail-design"
+  },
+  "pipeline-governance": {
+    "playbook": "references/pipeline-governance.md",
+    "desc": ">",
+    "alfa": "pipeline-governance"
+  }
+}

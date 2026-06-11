@@ -1,0 +1,67 @@
+{
+  "api-documentation": {
+    "playbook": "references/api-documentation.md",
+    "desc": ">",
+    "alfa": "api-documentation"
+  },
+  "changelog-writing": {
+    "playbook": "references/changelog-writing.md",
+    "desc": ">",
+    "alfa": "changelog-writing"
+  },
+  "developer-onboarding": {
+    "playbook": "references/developer-onboarding.md",
+    "desc": ">",
+    "alfa": "developer-onboarding"
+  },
+  "documentation-standards": {
+    "playbook": "references/documentation-standards.md",
+    "desc": ">",
+    "alfa": "documentation-standards"
+  },
+  "documentation-system": {
+    "playbook": "references/documentation-system.md",
+    "desc": ">",
+    "alfa": "documentation-system"
+  },
+  "internal-memo": {
+    "playbook": "references/internal-memo.md",
+    "desc": ">",
+    "alfa": "internal-memo"
+  },
+  "knowledge-management": {
+    "playbook": "references/knowledge-management.md",
+    "desc": ">",
+    "alfa": "knowledge-management"
+  },
+  "meeting-notes": {
+    "playbook": "references/meeting-notes.md",
+    "desc": ">",
+    "alfa": "meeting-notes"
+  },
+  "mermaid-diagramming": {
+    "playbook": "references/mermaid-diagramming.md",
+    "desc": "This skill should be used when the user asks to \"create diagrams\", \"generate Mermaid\",",
+    "alfa": "mermaid-diagramming"
+  },
+  "reporting-templates": {
+    "playbook": "references/reporting-templates.md",
+    "desc": ">",
+    "alfa": "reporting-templates"
+  },
+  "storytelling": {
+    "playbook": "references/storytelling.md",
+    "desc": "Narrative arc design and transformation metodologia-storytelling for discovery deliverables. [EXPLICIT]",
+    "alfa": "storytelling"
+  },
+  "technical-writing-patterns": {
+    "playbook": "references/technical-writing-patterns.md",
+    "desc": ">",
+    "alfa": "technical-writing-patterns"
+  },
+  "training-material": {
+    "playbook": "references/training-material.md",
+    "desc": ">",
+    "alfa": "training-material"
+  }
+}

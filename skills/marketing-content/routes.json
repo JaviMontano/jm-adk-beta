@@ -1,0 +1,42 @@
+{
+  "case-study-writing": {
+    "playbook": "references/case-study-writing.md",
+    "desc": ">",
+    "alfa": "case-study-writing"
+  },
+  "content-calendar": {
+    "playbook": "references/content-calendar.md",
+    "desc": ">",
+    "alfa": "content-calendar"
+  },
+  "copywriting-frameworks": {
+    "playbook": "references/copywriting-frameworks.md",
+    "desc": ">",
+    "alfa": "copywriting-frameworks"
+  },
+  "event-marketing": {
+    "playbook": "references/event-marketing.md",
+    "desc": ">",
+    "alfa": "event-marketing"
+  },
+  "podcast-prep": {
+    "playbook": "references/podcast-prep.md",
+    "desc": ">",
+    "alfa": "podcast-prep"
+  },
+  "press-release": {
+    "playbook": "references/press-release.md",
+    "desc": ">",
+    "alfa": "press-release"
+  },
+  "video-script": {
+    "playbook": "references/video-script.md",
+    "desc": ">",
+    "alfa": "video-script"
+  },
+  "whitepaper-creation": {
+    "playbook": "references/whitepaper-creation.md",
+    "desc": ">",
+    "alfa": "whitepaper-creation"
+  }
+}

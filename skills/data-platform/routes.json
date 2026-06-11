@@ -1,0 +1,42 @@
+{
+  "data-engineering": {
+    "playbook": "references/data-engineering.md",
+    "desc": "This skill should be used when the user asks to \"design data pipelines\",",
+    "alfa": "data-engineering"
+  },
+  "data-quality": {
+    "playbook": "references/data-quality.md",
+    "desc": "This skill should be used when the user asks to \"design a data quality framework\",",
+    "alfa": "data-quality"
+  },
+  "data-validation": {
+    "playbook": "references/data-validation.md",
+    "desc": "Client-side Zod/Yup schemas. Server-side Cloud Functions validation. Firestore rules validation. End-to-end type safety. [EXPLICIT]",
+    "alfa": "data-validation"
+  },
+  "data-migration": {
+    "playbook": "references/data-migration.md",
+    "desc": "CSV/JSON import to Firestore. Batch writes (500/batch). Schema evolution. Rollback procedures. Data transformation scripts. [EXPLICIT]",
+    "alfa": "data-migration"
+  },
+  "data-export": {
+    "playbook": "references/data-export.md",
+    "desc": ">",
+    "alfa": "data-export"
+  },
+  "data-flow-architecture": {
+    "playbook": "references/data-flow-architecture.md",
+    "desc": "Firebase real-time sync patterns. Firestore triggers to Cloud Functions event chains. Data pipeline design. [EXPLICIT]",
+    "alfa": "data-flow-architecture"
+  },
+  "etl-patterns": {
+    "playbook": "references/etl-patterns.md",
+    "desc": ">",
+    "alfa": "etl-patterns"
+  },
+  "schema-evolution": {
+    "playbook": "references/schema-evolution.md",
+    "desc": ">",
+    "alfa": "schema-evolution"
+  }
+}

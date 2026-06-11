@@ -1,0 +1,47 @@
+{
+  "backup-strategy": {
+    "playbook": "references/backup-strategy.md",
+    "desc": ">",
+    "alfa": "backup-strategy"
+  },
+  "cdn-configuration": {
+    "playbook": "references/cdn-configuration.md",
+    "desc": ">",
+    "alfa": "cdn-configuration"
+  },
+  "disaster-recovery": {
+    "playbook": "references/disaster-recovery.md",
+    "desc": ">",
+    "alfa": "disaster-recovery"
+  },
+  "dns-architecture": {
+    "playbook": "references/dns-architecture.md",
+    "desc": ">",
+    "alfa": "dns-architecture"
+  },
+  "domain-management": {
+    "playbook": "references/domain-management.md",
+    "desc": ">",
+    "alfa": "domain-management"
+  },
+  "hostinger-deployment": {
+    "playbook": "references/hostinger-deployment.md",
+    "desc": "Static site and Node.js deployment on Hostinger via SFTP/Git, cPanel/hPanel config, and PM2 process management",
+    "alfa": "hostinger-deployment"
+  },
+  "infrastructure-design": {
+    "playbook": "references/infrastructure-design.md",
+    "desc": ">",
+    "alfa": "infrastructure-design"
+  },
+  "serverless-patterns": {
+    "playbook": "references/serverless-patterns.md",
+    "desc": "Fan-out (Firestore trigger to multiple ops). Saga (compensating transactions). Event sourcing with Firestore. [EXPLICIT]",
+    "alfa": "serverless-patterns"
+  },
+  "ssl-management": {
+    "playbook": "references/ssl-management.md",
+    "desc": ">",
+    "alfa": "ssl-management"
+  }
+}

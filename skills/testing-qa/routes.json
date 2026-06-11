@@ -1,0 +1,32 @@
+{
+  "bdd-full-spectrum": {
+    "playbook": "references/bdd-full-spectrum.md",
+    "desc": ">",
+    "alfa": "bdd-full-spectrum"
+  },
+  "cross-browser-testing": {
+    "playbook": "references/cross-browser-testing.md",
+    "desc": ">",
+    "alfa": "cross-browser-testing"
+  },
+  "e2e-testing": {
+    "playbook": "references/e2e-testing.md",
+    "desc": "Cypress/Playwright E2E testing with page object model, CI integration, and visual assertions",
+    "alfa": "e2e-testing"
+  },
+  "performance-testing": {
+    "playbook": "references/performance-testing.md",
+    "desc": ">",
+    "alfa": "performance-testing"
+  },
+  "test-strategy": {
+    "playbook": "references/test-strategy.md",
+    "desc": ">",
+    "alfa": "test-strategy"
+  },
+  "unit-testing": {
+    "playbook": "references/unit-testing.md",
+    "desc": "Jest/Vitest unit testing with Firebase emulator mocking, TDD workflow, and 80%+ coverage enforcement",
+    "alfa": "unit-testing"
+  }
+}

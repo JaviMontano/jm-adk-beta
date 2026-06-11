@@ -1,0 +1,42 @@
+{
+  "conversion-optimization": {
+    "playbook": "references/conversion-optimization.md",
+    "desc": ">",
+    "alfa": "conversion-optimization"
+  },
+  "funnel-design": {
+    "playbook": "references/funnel-design.md",
+    "desc": ">",
+    "alfa": "funnel-design"
+  },
+  "indexability-validator": {
+    "playbook": "references/indexability-validator.md",
+    "desc": ">",
+    "alfa": "indexability-validator"
+  },
+  "landing-page-builder": {
+    "playbook": "references/landing-page-builder.md",
+    "desc": "High-conversion landing page. Hero, features, testimonials, pricing, CTA, footer sections. SEO optimized. Hostinger deploy. [EXPLICIT]",
+    "alfa": "landing-page-builder"
+  },
+  "landing-pages": {
+    "playbook": "references/landing-pages.md",
+    "desc": ">",
+    "alfa": "landing-pages"
+  },
+  "seo-architecture": {
+    "playbook": "references/seo-architecture.md",
+    "desc": ">",
+    "alfa": "seo-architecture"
+  },
+  "seo-content": {
+    "playbook": "references/seo-content.md",
+    "desc": ">",
+    "alfa": "seo-content"
+  },
+  "social-proof": {
+    "playbook": "references/social-proof.md",
+    "desc": ">",
+    "alfa": "social-proof"
+  }
+}

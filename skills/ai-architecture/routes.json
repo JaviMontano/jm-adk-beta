@@ -1,0 +1,67 @@
+{
+  "ai-software-architecture": {
+    "playbook": "references/ai-software-architecture.md",
+    "desc": ">",
+    "alfa": "ai-software-architecture"
+  },
+  "ai-pipeline-architecture": {
+    "playbook": "references/ai-pipeline-architecture.md",
+    "desc": ">",
+    "alfa": "ai-pipeline-architecture"
+  },
+  "ai-conops": {
+    "playbook": "references/ai-conops.md",
+    "desc": ">",
+    "alfa": "ai-conops"
+  },
+  "ai-design-patterns": {
+    "playbook": "references/ai-design-patterns.md",
+    "desc": ">",
+    "alfa": "ai-design-patterns"
+  },
+  "audit": {
+    "playbook": "references/audit.md",
+    "desc": ">",
+    "alfa": "ai-architecture-audit"
+  },
+  "implementation": {
+    "playbook": "references/implementation.md",
+    "desc": ">",
+    "alfa": "ai-architecture-implementation"
+  },
+  "chatbot-design": {
+    "playbook": "references/chatbot-design.md",
+    "desc": ">",
+    "alfa": "chatbot-design"
+  },
+  "embedding-strategy": {
+    "playbook": "references/embedding-strategy.md",
+    "desc": ">",
+    "alfa": "embedding-strategy"
+  },
+  "fine-tuning-prep": {
+    "playbook": "references/fine-tuning-prep.md",
+    "desc": ">",
+    "alfa": "fine-tuning-prep"
+  },
+  "prompt-engineering": {
+    "playbook": "references/prompt-engineering.md",
+    "desc": "Design, evaluate, and optimize LLM instruction packages using deterministic pattern selection, source-grounded context, structured output contracts, guardrails, adversarial test cases, and script-backed evaluation packets. Use when the user asks for prompt engineering, system instruction design, few-shot examples, prompt optimization, prompt evaluation, guardrails, meta-prompting, or prompt design. [EXPLICIT]",
+    "alfa": "prompt-engineering"
+  },
+  "rag-patterns": {
+    "playbook": "references/rag-patterns.md",
+    "desc": ">",
+    "alfa": "rag-patterns"
+  },
+  "structured-output": {
+    "playbook": "references/structured-output.md",
+    "desc": ">",
+    "alfa": "structured-output"
+  },
+  "voice-interface": {
+    "playbook": "references/voice-interface.md",
+    "desc": ">",
+    "alfa": "voice-interface"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "benchmarking-analysis": {
+    "playbook": "references/benchmarking-analysis.md",
+    "desc": ">",
+    "alfa": "benchmarking-analysis"
+  },
+  "competitive-intelligence": {
+    "playbook": "references/competitive-intelligence.md",
+    "desc": "Market analysis. Competitor feature matrix. Technical stack comparison. SWOT. Differentiation opportunities. [EXPLICIT]",
+    "alfa": "competitive-intelligence"
+  },
+  "competitive-positioning": {
+    "playbook": "references/competitive-positioning.md",
+    "desc": ">",
+    "alfa": "competitive-positioning"
+  },
+  "market-intelligence": {
+    "playbook": "references/market-intelligence.md",
+    "desc": ">",
+    "alfa": "market-intelligence"
+  },
+  "marketing-context": {
+    "playbook": "references/marketing-context.md",
+    "desc": ">",
+    "alfa": "marketing-context"
+  },
+  "partnership-strategy": {
+    "playbook": "references/partnership-strategy.md",
+    "desc": ">",
+    "alfa": "partnership-strategy"
+  },
+  "pricing-strategy": {
+    "playbook": "references/pricing-strategy.md",
+    "desc": ">",
+    "alfa": "pricing-strategy"
+  },
+  "sector-intelligence": {
+    "playbook": "references/sector-intelligence.md",
+    "desc": ">",
+    "alfa": "sector-intelligence"
+  }
+}

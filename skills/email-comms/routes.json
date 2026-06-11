@@ -1,0 +1,22 @@
+{
+  "email-sending": {
+    "playbook": "references/email-sending.md",
+    "desc": ">",
+    "alfa": "email-sending"
+  },
+  "email-template-builder": {
+    "playbook": "references/email-template-builder.md",
+    "desc": "Responsive HTML email templates. Table-based layout, inline CSS, 600px max-width. Firebase Extensions trigger. [EXPLICIT]",
+    "alfa": "email-template-builder"
+  },
+  "email-templates": {
+    "playbook": "references/email-templates.md",
+    "desc": ">",
+    "alfa": "email-templates"
+  },
+  "newsletter-design": {
+    "playbook": "references/newsletter-design.md",
+    "desc": ">",
+    "alfa": "newsletter-design"
+  }
+}

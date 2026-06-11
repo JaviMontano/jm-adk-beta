@@ -1,0 +1,80 @@
+# P3 grouping of 222 remaining load-bearing skills (agent-proposed, reviewed).
+routers:
+  web-frontend:
+    desc: "Frontend implementation: frameworks, component/CSS architecture, builds, PWA, i18n, and site types (ecommerce, blog, portfolio, admin)."
+    absorb: [admin-dashboards, angular-development, blog-cms, build-optimization, component-architecture, css-architecture, dark-mode, ecommerce-frontend, form-engineering, internationalization, localization-guide, portfolio-sites, pwa-architecture, react-development, web-components]
+  ux-design:
+    desc: "UI/UX design patterns: design systems, interaction and motion, onboarding, microcopy, and component-level UX (forms, tables, search, notifications)."
+    absorb: [component-designer, dashboard-design, design-critique, design-system, empty-states, error-messaging, first-use-onboarding, form-ux-advanced, iconography, micro-interactions, microcopy-writing, mobile-patterns, motion-design, notification-ux, onboarding-ux, search-ux, table-ux, typography-advanced]
+  ux-research:
+    desc: "User research and validation: interviews, surveys, usability testing, and prototyping."
+    absorb: [prototyping, survey-design, user-research, user-testing]
+  testing-qa:
+    desc: "Software testing strategy and execution: unit, E2E, BDD, cross-browser, and performance testing."
+    absorb: [bdd-full-spectrum, cross-browser-testing, e2e-testing, performance-testing, test-strategy, unit-testing]
+  security:
+    desc: "Application security: auth, RBAC, input sanitization, headers/CORS, rate limiting, audits, and security testing."
+    absorb: [audit-security, auth-architecture, cors-configuration, dual-layer-verification, http-headers, input-sanitization, rate-limiting, rbac-patterns, security-architecture, security-testing]
+  devops-deploy:
+    desc: "CI/CD and release engineering: pipelines, environments, deployment gates, rollbacks, hooks, and repo hygiene."
+    absorb: [ci-pipeline-design, dependency-management, deployment-checklist, environment-management, file-watcher, git-hook-integration, github-actions-ci, lighthouse-ci, linting-formatting, rollback-strategy]
+  hosting-infra:
+    desc: "Hosting and infrastructure: DNS, domains, SSL, CDN, serverless, backup/DR, and provider-specific deployment."
+    absorb: [backup-strategy, cdn-configuration, disaster-recovery, dns-architecture, domain-management, hostinger-deployment, infrastructure-design, serverless-patterns, ssl-management]
+  observability:
+    desc: "Production health: monitoring, logging, alerting, health checks, and incident response."
+    absorb: [alerting-strategy, health-check-automation, incident-response, log-management, monitoring-setup]
+  architecture:
+    desc: "Software/system architecture: API design, DDD, events, realtime, caching, performance, migrations, and structured trade-off analysis."
+    absorb: [api-design, caching-strategy, domain-driven-design, event-architecture, migration-planning, performance-architecture, realtime-architecture, system-architecture, trade-off-analysis]
+  integrations:
+    desc: "Third-party service integration: payments, webhooks, push notifications, and captcha."
+    absorb: [payment-integration, push-notifications, recaptcha-integration, webhook-handling]
+  seo-growth:
+    desc: "SEO and conversion growth: technical SEO, content SEO, landing pages, funnels, CRO, and trust patterns."
+    absorb: [conversion-optimization, funnel-design, indexability-validator, landing-page-builder, landing-pages, seo-architecture, seo-content, social-proof]
+  product-analytics:
+    desc: "Product and business analytics: event instrumentation, KPIs, A/B tests, cohorts, funnels, and data visualization."
+    absorb: [ab-testing, analytics-events, cohort-analysis, data-visualization, funnel-analytics, kpi-framework, metrics-instrumentation, real-time-analytics]
+  sales-bizdev:
+    desc: "Sales and business development: prospecting, outreach, dossiers, proposals, pitches, and collateral (ES/EN consulting context)."
+    absorb: [b2b-outreach, client-dossier, client-prospecting, executive-pitch, lead-generation, proposal-writing, sales-collateral]
+  marketing-content:
+    desc: "Marketing content production: copywriting, calendars, PR, case studies, whitepapers, video scripts, podcasts, and events."
+    absorb: [case-study-writing, content-calendar, copywriting-frameworks, event-marketing, podcast-prep, press-release, video-script, whitepaper-creation]
+  market-intel:
+    desc: "Market and competitive intelligence: positioning, pricing, sector context, benchmarks, and partnerships."
+    absorb: [benchmarking-analysis, competitive-intelligence, competitive-positioning, market-intelligence, marketing-context, partnership-strategy, pricing-strategy, sector-intelligence]
+  email-comms:
+    desc: "Email systems and communication: transactional sending, templates, and newsletters."
+    absorb: [email-sending, email-template-builder, email-templates, newsletter-design]
+  docs-writing:
+    desc: "Documentation and professional writing: technical docs, changelogs, diagrams, memos, meeting notes, reports, training, and knowledge management."
+    absorb: [api-documentation, changelog-writing, developer-onboarding, documentation-standards, documentation-system, internal-memo, knowledge-management, meeting-notes, mermaid-diagramming, reporting-templates, storytelling, technical-writing-patterns, training-material]
+  pm-delivery:
+    desc: "Project and delivery management: budgets, estimation, capacity, roadmaps, OKRs, risks, stakeholders, vendors, and retrospectives."
+    absorb: [budget-management, capacity-planning, cost-estimation, okr-design, product-roadmapping, retrospective-facilitation, risk-assessment, sla-definition, stakeholder-mapping, team-topology, vendor-evaluation]
+  business-analysis:
+    desc: "Business analysis and change: process modeling, requirements, feasibility, scenarios, enterprise change management, and workshops."
+    absorb: [business-process-modeling, change-management-enterprise, change-readiness, feasibility-validation, flow-mapping, requirements-engineering, scenario-analysis, workshop-design, workshop-facilitator]
+  legal-compliance:
+    desc: "Legal and compliance: contract review, compliance frameworks, and assessments."
+    absorb: [compliance-assessment, compliance-framework, contract-review]
+  session-workspace:
+    desc: "Agent session lifecycle: bootstrap, protocol, state management, context preservation/compaction, notifications, and clean handoff."
+    absorb: [context-window-management, notification-handler, pre-compact-context, session-end-cleanup, session-manager, session-protocol, session-start-bootstrap]
+  agent-orchestration:
+    desc: "Multi-agent orchestration: workflow execution, triad composition, routing, parallelism, subagent monitoring, error recovery, and learning loops."
+    absorb: [continuous-learning, error-recovery-automation, intelligent-routing, multi-model-routing, parallel-workflow, socratic-debate, subagent-monitor, task-automation, triad-composition, workflow-orchestration]
+existing:
+  firebase: [cloud-functions, firestore-modeling, firestore-queries, firestore-security-rules, scheduled-functions]
+  ai-architecture: [chatbot-design, embedding-strategy, fine-tuning-prep, prompt-engineering, rag-patterns, structured-output, voice-interface]
+  ai-quality: [code-review, llm-evaluation]
+  data-platform: [etl-patterns, schema-evolution]
+  data-governance: [audit-trail-design, pipeline-governance]
+  brand-output: [branded-html-output, presentation-design]
+  carrera: [cv-enhancement]
+  guardrails: [input-tolerance, integrity-chain-validation, permission-fast-path, stop-validator]
+  skill-foundry: [auto-prompt-matching, skill-search]
+standalone: []
+dropped_generic_p3: [animation-principles, color-theory, css-animation, docker-awareness, grid-systems, html-semantic, responsive-design, typescript-patterns, vanilla-javascript]

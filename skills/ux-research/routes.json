@@ -1,0 +1,22 @@
+{
+  "prototyping": {
+    "playbook": "references/prototyping.md",
+    "desc": ">",
+    "alfa": "prototyping"
+  },
+  "survey-design": {
+    "playbook": "references/survey-design.md",
+    "desc": ">",
+    "alfa": "survey-design"
+  },
+  "user-research": {
+    "playbook": "references/user-research.md",
+    "desc": ">",
+    "alfa": "user-research"
+  },
+  "user-testing": {
+    "playbook": "references/user-testing.md",
+    "desc": ">",
+    "alfa": "user-testing"
+  }
+}

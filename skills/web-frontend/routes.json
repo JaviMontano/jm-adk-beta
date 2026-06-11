@@ -1,0 +1,77 @@
+{
+  "admin-dashboards": {
+    "playbook": "references/admin-dashboards.md",
+    "desc": ">",
+    "alfa": "admin-dashboards"
+  },
+  "angular-development": {
+    "playbook": "references/angular-development.md",
+    "desc": ">",
+    "alfa": "angular-development"
+  },
+  "blog-cms": {
+    "playbook": "references/blog-cms.md",
+    "desc": ">",
+    "alfa": "blog-cms"
+  },
+  "build-optimization": {
+    "playbook": "references/build-optimization.md",
+    "desc": "Vite/Webpack config tuning with tree shaking, code splitting, dynamic imports, Brotli/gzip compression, and source maps",
+    "alfa": "build-optimization"
+  },
+  "component-architecture": {
+    "playbook": "references/component-architecture.md",
+    "desc": ">",
+    "alfa": "component-architecture"
+  },
+  "css-architecture": {
+    "playbook": "references/css-architecture.md",
+    "desc": "CSS methodology selection (BEM/utility-first). Custom properties system. Container queries. CSS layers. Dark mode. [EXPLICIT]",
+    "alfa": "css-architecture"
+  },
+  "dark-mode": {
+    "playbook": "references/dark-mode.md",
+    "desc": ">",
+    "alfa": "dark-mode"
+  },
+  "ecommerce-frontend": {
+    "playbook": "references/ecommerce-frontend.md",
+    "desc": ">",
+    "alfa": "ecommerce-frontend"
+  },
+  "form-engineering": {
+    "playbook": "references/form-engineering.md",
+    "desc": ">",
+    "alfa": "form-engineering"
+  },
+  "internationalization": {
+    "playbook": "references/internationalization.md",
+    "desc": ">",
+    "alfa": "internationalization"
+  },
+  "localization-guide": {
+    "playbook": "references/localization-guide.md",
+    "desc": ">",
+    "alfa": "localization-guide"
+  },
+  "portfolio-sites": {
+    "playbook": "references/portfolio-sites.md",
+    "desc": ">",
+    "alfa": "portfolio-sites"
+  },
+  "pwa-architecture": {
+    "playbook": "references/pwa-architecture.md",
+    "desc": "Progressive Web App design. Service workers, Web App Manifest, offline-first, push notifications via FCM. [EXPLICIT]",
+    "alfa": "pwa-architecture"
+  },
+  "react-development": {
+    "playbook": "references/react-development.md",
+    "desc": ">",
+    "alfa": "react-development"
+  },
+  "web-components": {
+    "playbook": "references/web-components.md",
+    "desc": ">",
+    "alfa": "web-components"
+  }
+}

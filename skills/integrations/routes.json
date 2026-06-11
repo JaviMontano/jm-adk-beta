@@ -1,0 +1,22 @@
+{
+  "payment-integration": {
+    "playbook": "references/payment-integration.md",
+    "desc": ">",
+    "alfa": "payment-integration"
+  },
+  "push-notifications": {
+    "playbook": "references/push-notifications.md",
+    "desc": ">",
+    "alfa": "push-notifications"
+  },
+  "recaptcha-integration": {
+    "playbook": "references/recaptcha-integration.md",
+    "desc": ">",
+    "alfa": "recaptcha-integration"
+  },
+  "webhook-handling": {
+    "playbook": "references/webhook-handling.md",
+    "desc": ">",
+    "alfa": "webhook-handling"
+  }
+}

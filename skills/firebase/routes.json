@@ -1,0 +1,77 @@
+{
+  "architecture": {
+    "playbook": "references/architecture.md",
+    "desc": "End-to-end Firebase project architecture. Firestore schema strategy, Cloud Functions topology, Hosting config, Security Rules design. C4 diagram output. [EXPLICIT]",
+    "alfa": "firebase-architecture"
+  },
+  "auth": {
+    "playbook": "references/auth.md",
+    "desc": ">",
+    "alfa": "firebase-auth"
+  },
+  "cost-optimization": {
+    "playbook": "references/cost-optimization.md",
+    "desc": "Firestore read/write reduction, Functions cold start mitigation, Storage lifecycle rules, and billing alerts",
+    "alfa": "firebase-cost-optimization"
+  },
+  "deployment": {
+    "playbook": "references/deployment.md",
+    "desc": ">",
+    "alfa": "firebase-deployment"
+  },
+  "emulator-setup": {
+    "playbook": "references/emulator-setup.md",
+    "desc": "Firebase Emulator Suite configuration for Firestore, Auth, Functions, Storage, and Hosting with seed data",
+    "alfa": "firebase-emulator-setup"
+  },
+  "extensions": {
+    "playbook": "references/extensions.md",
+    "desc": "Configure Firebase Extensions: Stripe payments, SendGrid email, image resize, translation, Algolia search. [EXPLICIT]",
+    "alfa": "firebase-extensions"
+  },
+  "functions": {
+    "playbook": "references/functions.md",
+    "desc": "Cloud Functions development. HTTP, Firestore, Auth, Storage, scheduled triggers. 2nd gen functions. Node.js 20. [EXPLICIT]",
+    "alfa": "firebase-functions"
+  },
+  "hosting": {
+    "playbook": "references/hosting.md",
+    "desc": ">",
+    "alfa": "firebase-hosting"
+  },
+  "setup": {
+    "playbook": "references/setup.md",
+    "desc": ">",
+    "alfa": "firebase-setup"
+  },
+  "storage": {
+    "playbook": "references/storage.md",
+    "desc": ">",
+    "alfa": "firebase-storage"
+  },
+  "cloud-functions": {
+    "playbook": "references/cloud-functions.md",
+    "desc": ">",
+    "alfa": "cloud-functions"
+  },
+  "firestore-modeling": {
+    "playbook": "references/firestore-modeling.md",
+    "desc": ">",
+    "alfa": "firestore-modeling"
+  },
+  "firestore-queries": {
+    "playbook": "references/firestore-queries.md",
+    "desc": ">",
+    "alfa": "firestore-queries"
+  },
+  "firestore-security-rules": {
+    "playbook": "references/firestore-security-rules.md",
+    "desc": "Rules authoring: request.auth, request.resource, resource.data. Custom claims. Role-based. Rate limiting in rules. [EXPLICIT]",
+    "alfa": "firestore-security-rules"
+  },
+  "scheduled-functions": {
+    "playbook": "references/scheduled-functions.md",
+    "desc": ">",
+    "alfa": "scheduled-functions"
+  }
+}

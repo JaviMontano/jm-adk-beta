@@ -1,0 +1,62 @@
+{
+  "pre-tool-use-guard": {
+    "playbook": "references/pre-tool-use-guard.md",
+    "desc": "Block dangerous commands before execution using the exit-code-2 deny pattern, deterministic write-scope policy, private path protection, and offline report validation. [EXPLICIT]",
+    "alfa": "pre-tool-use-guard"
+  },
+  "post-tool-use-validator": {
+    "playbook": "references/post-tool-use-validator.md",
+    "desc": "Validate tool outputs against exit codes, evidence tags, quality gates, secret exposure policy, scope compliance, and offline post-tool report fixtures. [EXPLICIT]",
+    "alfa": "post-tool-use-validator"
+  },
+  "user-prompt-filter": {
+    "playbook": "references/user-prompt-filter.md",
+    "desc": ">",
+    "alfa": "user-prompt-filter"
+  },
+  "output-contract-enforcer": {
+    "playbook": "references/output-contract-enforcer.md",
+    "desc": "Validate generated outputs against declared contracts for format, required sections, required fields, evidence tags, naming conventions, machine-readable validation packets, and repair suggestions. Use after a skill produces an output, before gate evaluation, when `/jm:verify` is invoked, or when the user asks to validate an artifact against its output contract. [EXPLICIT]",
+    "alfa": "output-contract-enforcer"
+  },
+  "quality-gatekeeper": {
+    "playbook": "references/quality-gatekeeper.md",
+    "desc": "Validates deliverables at JM-ADK quality gates G0-G3 using deterministic criteria, evidence tags, sequential gate order, score-history entry contracts, remediation, and fail-closed missing-evidence handling. Use before phase transitions, release decisions, `/jm:advance`, PR readiness, or any request asking whether a gate can pass.",
+    "alfa": "quality-gatekeeper"
+  },
+  "management": {
+    "playbook": "references/management.md",
+    "desc": ">",
+    "alfa": "guardrails-management"
+  },
+  "secrets-sanitization": {
+    "playbook": "references/secrets-sanitization.md",
+    "desc": ">",
+    "alfa": "secrets-sanitization"
+  },
+  "constitution-compliance": {
+    "playbook": "references/constitution-compliance.md",
+    "desc": "Validates outputs, plans, PRs, reports, or workflows against JM-ADK Constitution v6.0.0 using an 18-principle matrix, G0-G3 gate impact, evidence tags, severity, remediation, and fail-closed missing-evidence handling. Use when the user asks for constitution compliance, constitutional audit, Pristino governance validation, pre-delivery compliance, or whether an artifact violates JM-ADK principles.",
+    "alfa": "constitution-compliance"
+  },
+  "input-tolerance": {
+    "playbook": "references/input-tolerance.md",
+    "desc": ">",
+    "alfa": "input-tolerance"
+  },
+  "integrity-chain-validation": {
+    "playbook": "references/integrity-chain-validation.md",
+    "desc": ">",
+    "alfa": "integrity-chain-validation"
+  },
+  "permission-fast-path": {
+    "playbook": "references/permission-fast-path.md",
+    "desc": ">",
+    "alfa": "permission-fast-path"
+  },
+  "stop-validator": {
+    "playbook": "references/stop-validator.md",
+    "desc": ">",
+    "alfa": "stop-validator"
+  }
+}

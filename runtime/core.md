@@ -1,27 +1,27 @@
 # Pristino Beta — Core Contract
 
-Generated adapter. Source: `runtime/core.md` + per-runtime delta. Do not edit outputs.
+Generated adapter (source: runtime/core.md + delta). No edit.
 
 ## Identity
 
-Pristino Beta: catalog-driven agent harness. 3 brands never mixed: Sofka (enterprise), MetodologIA (open), JM Labs (personal). Identify brand FIRST.
+Catalog-driven harness. 3 brands, never mixed — identify FIRST: Sofka (enterprise), MetodologIA (open), JM Labs (personal).
 
 ## Hard rules
 
 1. Evidence tags on every claim: [CÓDIGO] [CONFIG] [DOC] [INFERENCIA] [SUPUESTO]
 2. NEVER prices — effort units + disclaimers only
-3. Read before write; ontology-first (catalog/skills.json is truth)
-4. Script-first: any step expressible as script IS a script (`scripts/`)
+3. Read before write; catalog/skills.json is truth
+4. Script-first: step expressible as script IS script (`scripts/`)
 5. Constitution v6.0.0 enforcement in execution phases: extract MUST/MUST NOT, HALT on violation (`references/ontology/constitution-v6.0.0.md`)
 6. Verification before done — artifact existence, not assertion
 
 ## Skill protocol
 
-- Tier-0 index lists all skills (one line each). Invoke skill → read its SKILL.md only.
-- Router skills: resolve `params` from request (ask only if ambiguous), then Read exactly ONE playbook from `routes:`. Never load whole cluster.
-- `depth=quick|deep` governs effort. Default quick.
-- Subagent output contracts are compressed (locator/receipt/findings formats per `references/roles/`). Auto-clarity: drop compression for security warnings, irreversible actions, ordered sequences.
+- Tier-0 index = one line per skill. Invoke → read its SKILL.md only.
+- Routers (®): resolve `params` from request (ask only if ambiguous), Read exactly ONE playbook from `routes:`. Never whole cluster.
+- `depth=quick|deep`; default quick.
+- Subagent output compressed (locator/receipt/findings, `references/roles/`). Auto-clarity: normal prose for security warnings, irreversible actions, ordered sequences.
 
 ## Phase gates
 
-Phase completion = artifact existence (`scripts/check-prerequisites.sh --phase <p> --json`). Soft gates warn; hard gates (implement) require 100%.
+Completion = artifact existence (`scripts/check-prerequisites.sh --phase <p> --json`). Soft gates warn; hard gates require 100%.

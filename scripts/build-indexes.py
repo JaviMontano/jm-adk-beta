@@ -27,31 +27,25 @@ def load(path: Path):
 def tier0_lines(skills: list[dict]) -> list[str]:
     lines = []
     for s in sorted(skills, key=lambda x: x["id"]):
-        params = ""
-        if s.get("params"):
-            params = " [" + ",".join(s["params"].keys()) + "]"
-        lines.append(f"- `{s['id']}`{params} — {s['desc']}")
+        mark = "®" if s.get("params") else ""
+        lines.append(f"`{s['id']}`{mark} {s['desc']}")
     return lines
 
 
 def build_skills_md(skills: list[dict]) -> str:
     return (
         "# Skills Index (tier-0)\n\n"
-        "Generated from catalog/skills.json — do not edit. "
-        "Invoke skill → its SKILL.md routes to one playbook (lazy load).\n\n"
+        "Generated — no edit. ® = router (params in SKILL.md frontmatter; "
+        "resolve topic, read ONE playbook).\n\n"
         + "\n".join(tier0_lines(skills))
         + "\n"
     )
 
 
 def build_antigravity_index(skills: list[dict]) -> str:
+    # path derivable: skills/<id>/SKILL.md ; r=1 marks router (params in SKILL.md)
     entries = [
-        {
-            "id": s["id"],
-            "path": f"skills/{s['id']}/SKILL.md",
-            "desc": s["desc"],
-            **({"params": list(s["params"].keys())} if s.get("params") else {}),
-        }
+        {"id": s["id"], "d": s["desc"], **({"r": 1} if s.get("params") else {})}
         for s in sorted(skills, key=lambda x: x["id"])
     ]
     return json.dumps(entries, ensure_ascii=False, separators=(",", ":")) + "\n"

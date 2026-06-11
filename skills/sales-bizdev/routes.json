@@ -1,0 +1,37 @@
+{
+  "b2b-outreach": {
+    "playbook": "references/b2b-outreach.md",
+    "desc": ">",
+    "alfa": "b2b-outreach"
+  },
+  "client-dossier": {
+    "playbook": "references/client-dossier.md",
+    "desc": ">",
+    "alfa": "client-dossier"
+  },
+  "client-prospecting": {
+    "playbook": "references/client-prospecting.md",
+    "desc": ">",
+    "alfa": "client-prospecting"
+  },
+  "executive-pitch": {
+    "playbook": "references/executive-pitch.md",
+    "desc": "This skill should be used when the user asks to \"create a pitch\",",
+    "alfa": "executive-pitch"
+  },
+  "lead-generation": {
+    "playbook": "references/lead-generation.md",
+    "desc": ">",
+    "alfa": "lead-generation"
+  },
+  "proposal-writing": {
+    "playbook": "references/proposal-writing.md",
+    "desc": ">",
+    "alfa": "proposal-writing"
+  },
+  "sales-collateral": {
+    "playbook": "references/sales-collateral.md",
+    "desc": ">",
+    "alfa": "sales-collateral"
+  }
+}

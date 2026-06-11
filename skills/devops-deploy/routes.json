@@ -1,0 +1,52 @@
+{
+  "ci-pipeline-design": {
+    "playbook": "references/ci-pipeline-design.md",
+    "desc": ">",
+    "alfa": "ci-pipeline-design"
+  },
+  "dependency-management": {
+    "playbook": "references/dependency-management.md",
+    "desc": ">",
+    "alfa": "dependency-management"
+  },
+  "deployment-checklist": {
+    "playbook": "references/deployment-checklist.md",
+    "desc": ">",
+    "alfa": "deployment-checklist"
+  },
+  "environment-management": {
+    "playbook": "references/environment-management.md",
+    "desc": "Dev/staging/prod Firebase project separation, environment variables, .env files, and CLI project aliases",
+    "alfa": "environment-management"
+  },
+  "file-watcher": {
+    "playbook": "references/file-watcher.md",
+    "desc": ">",
+    "alfa": "file-watcher"
+  },
+  "git-hook-integration": {
+    "playbook": "references/git-hook-integration.md",
+    "desc": ">",
+    "alfa": "git-hook-integration"
+  },
+  "github-actions-ci": {
+    "playbook": "references/github-actions-ci.md",
+    "desc": ">",
+    "alfa": "github-actions-ci"
+  },
+  "lighthouse-ci": {
+    "playbook": "references/lighthouse-ci.md",
+    "desc": ">",
+    "alfa": "lighthouse-ci"
+  },
+  "linting-formatting": {
+    "playbook": "references/linting-formatting.md",
+    "desc": ">",
+    "alfa": "linting-formatting"
+  },
+  "rollback-strategy": {
+    "playbook": "references/rollback-strategy.md",
+    "desc": ">",
+    "alfa": "rollback-strategy"
+  }
+}

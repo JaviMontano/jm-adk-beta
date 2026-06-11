@@ -49,11 +49,15 @@ def main() -> int:
             continue
         fm = parse_frontmatter(sm.read_text(encoding="utf-8"))
         desc = fm.get("description", "").strip()
+        # Topics enum already lives in params — drop the redundant clause.
+        desc = re.sub(r"\s*Topics:.*$", "", desc)
         if not desc:
             print(f"WARN {d.name}: empty description", file=sys.stderr)
+        if len(desc) > 90:  # trim at word boundary (compressed register)
+            desc = desc[:90].rsplit(" ", 1)[0].rstrip(",;:") + "…"
         entry = {
             "id": d.name,
-            "desc": desc[:200],
+            "desc": desc,
             "tier": "router" if (d / "routes.json").exists() else "standalone",
         }
         if fm.get("params"):

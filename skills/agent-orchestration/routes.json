@@ -1,0 +1,52 @@
+{
+  "continuous-learning": {
+    "playbook": "references/continuous-learning.md",
+    "desc": "Extract reusable insights from Socratic debates and discoveries. Capture patterns",
+    "alfa": "continuous-learning"
+  },
+  "error-recovery-automation": {
+    "playbook": "references/error-recovery-automation.md",
+    "desc": ">",
+    "alfa": "error-recovery-automation"
+  },
+  "intelligent-routing": {
+    "playbook": "references/intelligent-routing.md",
+    "desc": ">",
+    "alfa": "intelligent-routing"
+  },
+  "multi-model-routing": {
+    "playbook": "references/multi-model-routing.md",
+    "desc": ">",
+    "alfa": "multi-model-routing"
+  },
+  "parallel-workflow": {
+    "playbook": "references/parallel-workflow.md",
+    "desc": ">",
+    "alfa": "parallel-workflow"
+  },
+  "socratic-debate": {
+    "playbook": "references/socratic-debate.md",
+    "desc": ">",
+    "alfa": "socratic-debate"
+  },
+  "subagent-monitor": {
+    "playbook": "references/subagent-monitor.md",
+    "desc": ">",
+    "alfa": "subagent-monitor"
+  },
+  "task-automation": {
+    "playbook": "references/task-automation.md",
+    "desc": ">",
+    "alfa": "task-automation"
+  },
+  "triad-composition": {
+    "playbook": "references/triad-composition.md",
+    "desc": "Select a deterministic Lead + Support + Guardian triad from the PRISTINO composition matrix using domain classification, confidence thresholds, stable tie-breakers, execution-mode routing, degraded-mode policy, and Guardian validation. Use when the user or orchestrator asks for triad composition, agent role selection, Lead/Support/Guardian routing, Pristino orchestration, domain-to-agent mapping, committee escalation, or quality-gated multiagent execution planning.",
+    "alfa": "triad-composition"
+  },
+  "workflow-orchestration": {
+    "playbook": "references/workflow-orchestration.md",
+    "desc": ">",
+    "alfa": "workflow-orchestration"
+  }
+}

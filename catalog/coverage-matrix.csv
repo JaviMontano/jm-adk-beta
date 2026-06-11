@@ -1,612 +1,612 @@
 alfa_skill,status,severity,referenced_by_count,referenced_by,disposition,beta_home,rationale
-ab-testing,dod-complete,P2,3,agents/ab-testing-specialist.md;commands/ab-testing.md;prompts/business/7-ab-testing.md,,,
-accessibility-audit,dod-complete,P2,0,,,,
-accessibility-design,dod-complete,P2,2,agents/a11y-implementer.md;agents/accessibility-designer.md,,,
-accessibility-testing,dod-complete,P2,3,agents/a11y-implementer.md;agents/accessibility-auditor.md;agents/quality-guardian.md,,,
-accessibility-writing,dod-complete,P1,3,agents/accessibility-writing-specialist.md;commands/accessibility-writing.md;prompts/content/16-accessibility-writing.md,,,
-acta-formal,dod-complete,P1,0,,,,
-adaptive-investigation-method,dod-complete,P1,0,,,,
-admin-dashboards,dod-complete,P1,1,agents/dashboard-builder.md,,,
-agent-constitution-creator,dod-complete,P1,0,,,,
-agent-creator,dod-complete,P1,0,,,,
-agentic-loop-engineering,dod-complete,P1,0,,,,
-ai-architecture-audit,dod-complete,P1,0,,,,
-ai-architecture-implementation,dod-complete,P1,0,,,,
-ai-assisted-testing,dod-complete,P1,3,agents/ai-assisted-testing-specialist.md;commands/ai-assisted-testing.md;prompts/ai/7-ai-assisted-testing.md,,,
-ai-code-review,dod-complete,P1,3,agents/ai-code-review-specialist.md;commands/ai-code-review.md;prompts/ai/8-ai-code-review.md,,,
-ai-conops,dod-complete,P1,0,,,,
-ai-content-detection,dod-complete,P1,3,agents/ai-content-detection-specialist.md;commands/ai-content-detection.md;prompts/ai/4-ai-content-detection.md,,,
-ai-design-patterns,dod-complete,P1,0,,,,
-ai-documentation,dod-complete,P1,3,agents/ai-documentation-specialist.md;commands/ai-documentation.md;prompts/ai/9-ai-documentation.md,,,
-ai-pipeline-architecture,dod-complete,P1,0,,,,
-ai-safety,dod-complete,P1,3,agents/ai-safety-specialist.md;commands/ai-safety.md;prompts/ai/11-ai-safety.md,,,
-ai-software-architecture,dod-complete,P1,0,,,,
-ai-testing-strategy,dod-complete,P1,0,,,,
-ai-workflow-automation,dod-complete,P1,3,agents/ai-workflow-automation-specialist.md;commands/ai-workflow-automation.md;prompts/ai/15-ai-workflow-automation.md,,,
-alerting-strategy,dod-complete,P1,3,agents/alerting-strategy-specialist.md;commands/alerting-strategy.md;prompts/devops/3-alerting-strategy.md,,,
-alfa-repo-maintenance-orchestrator,dod-complete,P1,0,,,,
-analytics-engineering,dod-complete,P1,0,,,,
-analytics-events,dod-complete,P1,3,agents/analytics-events-specialist.md;commands/analytics-events.md;prompts/analytics/7-analytics-events.md,,,
-analytics-implementation,dod-complete,P1,0,,,,
-angular-development,pending,,1,agents/angular-specialist.md,,,
-angular-module-builder,pending,,0,,,,
-animation-motion,pending,,0,,,,
-animation-principles,pending,,3,agents/animation-principles-specialist.md;commands/animation-principles.md;prompts/ux/4-animation-principles.md,,,
-api-architecture,pending,,0,,,,
-api-design,pending,,2,agents/api-designer.md;agents/solutions-architect.md,,,
-api-designer,pending,,1,agents/api-designer.md,,,
-api-documentation,pending,,1,prompts/quality/95-api-documentation.md,,,
-api-security,pending,,0,,,,
-architecture-tobe,pending,,0,,,,
-asis-analysis,pending,,0,,,,
-assembly-skill,dod-complete,P1,0,,,,
-assumption-log,dod-complete,P1,0,,,,
-audit-content-quality,dod-complete,P1,0,,,,
-audit-security,dod-complete,P1,10,commands/audit-deps.md;commands/audit-security.md;commands/create-auth.md;commands/create-payment.md;commands/create-upload.md;commands/design-auth.md;commands/review.md;commands/risks.md;commands/setup-ssl.md;prompts/quality/75-audit-security.md,,,
-audit-trail-design,pending,,3,agents/audit-trail-design-specialist.md;commands/audit-trail-design.md;prompts/enterprise/2-audit-trail-design.md,,,
-auth-architecture,pending,,3,agents/auth-architect.md;agents/firebase-auth-expert.md;agents/security-architect.md,,,
-auto-prompt-matching,dod-complete,P1,1,agents/adk-orchestrator.md,,,
-aws-architecture-audit,pending,,0,,,,
-aws-architecture-design,pending,,0,,,,
-aws-architecture-implementation,pending,,0,,,,
-b2b-outreach,pending,,3,agents/b2b-outreach-specialist.md;commands/b2b-outreach.md;prompts/business/3-b2b-outreach.md,,,
-background-jobs,pending,,0,,,,
-backup-recovery,pending,,0,,,,
-backup-strategy,pending,,3,agents/backup-strategy-specialist.md;commands/backup-strategy.md;prompts/devops/12-backup-strategy.md,,,
-bdd-full-spectrum,pending,,2,agents/bdd-strategist.md;agents/quality-guardian.md,,,
-benchmark-skill,dod-complete,P1,0,,,,
-benchmarking-analysis,pending,,3,agents/benchmarking-analysis-specialist.md;commands/benchmarking-analysis.md;prompts/analytics/14-benchmarking-analysis.md,,,
-bi-architecture,pending,,0,,,,
-bilingual-doc,pending,,0,,,,
-blog-cms,pending,,1,agents/blog-builder.md,,,
-bmad-method,dod-complete,P1,0,,,,
-brand-docx,dod-complete,P1,0,,,,
-brand-html,dod-complete,P1,1,commands/brand-html.md,,,
-brand-voice,pending,,0,,,,
-brand-xlsx,dod-complete,P1,0,,,,
-branded-html-output,pending,,1,agents/brand-html-crafter.md,,,
-budget-management,pending,,3,agents/budget-management-specialist.md;commands/budget-management.md;prompts/enterprise/16-budget-management.md,,,
-build-moat-assets,pending,,0,,,,
-build-optimization,pending,,3,agents/bundle-analyzer.md;agents/performance-architect.md;agents/performance-tester.md,,,
-build-plugin-scaffold,pending,,0,,,,
-bundle-analysis,pending,,0,,,,
-business-process-modeling,pending,,1,agents/business-analyst.md,,,
-caching-strategy,pending,,1,agents/caching-strategist.md,,,
-capacity-planning,pending,,3,agents/capacity-planning-specialist.md;commands/capacity-planning.md;prompts/enterprise/9-capacity-planning.md,,,
-case-study-writing,pending,,3,agents/case-study-writing-specialist.md;commands/case-study-writing.md;prompts/content/5-case-study-writing.md,,,
-cdn-configuration,pending,,3,agents/cdn-configuration-specialist.md;commands/cdn-configuration.md;prompts/devops/9-cdn-configuration.md,,,
-certify-skill,dod-complete,P1,0,,,,
-change-management-enterprise,pending,,3,agents/change-management-enterprise-specialist.md;commands/change-management-enterprise.md;prompts/enterprise/6-change-management-enterprise.md,,,
-change-readiness,pending,,1,agents/change-catalyst.md,,,
-changelog-management,dod-complete,P1,0,,,,
-changelog-writing,pending,,3,agents/changelog-writing-specialist.md;commands/changelog-writing.md;prompts/content/12-changelog-writing.md,,,
-chatbot-design,pending,,3,agents/chatbot-design-specialist.md;commands/chatbot-design.md;prompts/ai/10-chatbot-design.md,,,
-ci-cd-pipeline,pending,,0,,,,
-ci-pipeline-design,pending,,3,agents/ci-pipeline-design-specialist.md;commands/ci-pipeline-design.md;prompts/devops/16-ci-pipeline-design.md,,,
-cierre-conversacion,dod-complete,P1,1,agents/jarvis-orchestrator.md,,,
-claude-md-architecture,dod-complete,P1,0,,,,
-client-browser-audit,pending,,0,,,,
-client-dossier,pending,,1,agents/dossier-builder.md,,,
-client-prospecting,pending,,1,agents/client-prospector.md,,,
-cloud-functions,pending,,2,agents/cloud-functions-dev.md;agents/event-designer.md,,,
-cloud-migration,pending,,0,,,,
-cloud-native-architecture,pending,,0,,,,
-code-review,dod-complete,P1,1,agents/code-reviewer.md,,,
-code-review-checklist,dod-complete,P1,0,,,,
-cohort-analysis,pending,,3,agents/cohort-analysis-specialist.md;commands/cohort-analysis.md;prompts/analytics/8-cohort-analysis.md,,,
-color-theory,pending,,3,agents/color-theory-specialist.md;commands/color-theory.md;prompts/ux/6-color-theory.md,,,
-commercial-model,pending,,0,,,,
-competitive-intelligence,pending,,1,agents/competitive-analyst.md,,,
-competitive-positioning,pending,,3,agents/competitive-positioning-specialist.md;commands/competitive-positioning.md;prompts/business/14-competitive-positioning.md,,,
-competitor-teardown,pending,,0,,,,
-compliance-assessment,pending,,3,agents/compliance-checker.md;agents/evidence-auditor.md;agents/integrity-validator.md,,,
-compliance-framework,pending,,3,agents/compliance-framework-specialist.md;commands/compliance-framework.md;prompts/enterprise/1-compliance-framework.md,,,
-component-architecture,pending,,1,agents/component-designer.md,,,
-component-designer,pending,,1,agents/component-designer.md,,,
-constitution-compliance,dod-complete,P1,1,agents/adk-orchestrator.md,,,
-contact-database,pending,,0,,,,
-content-calendar,pending,,3,agents/content-calendar-specialist.md;commands/content-calendar.md;prompts/business/12-content-calendar.md,,,
-context-optimization,dod-complete,P1,3,agents/adk-orchestrator.md;agents/context-manager.md;agents/skill-router.md,,,
-context-optimizer,dod-complete,P1,0,,,,
-context-window-engineering,dod-complete,P1,0,,,,
-context-window-management,dod-complete,P1,3,agents/context-window-management-specialist.md;commands/context-window-management.md;prompts/ai/13-context-window-management.md,,,
-continuous-learning,dod-complete,P1,2,agents/adk-orchestrator.md;agents/quality-guardian.md,,,
-contract-review,pending,,3,agents/contract-review-specialist.md;commands/contract-review.md;prompts/enterprise/11-contract-review.md,,,
-conversion-optimization,pending,,3,agents/conversion-optimization-specialist.md;commands/conversion-optimization.md;prompts/business/2-conversion-optimization.md,,,
-copywriting,pending,,0,,,,
-copywriting-frameworks,pending,,3,agents/copywriting-frameworks-specialist.md;commands/copywriting-frameworks.md;prompts/business/5-copywriting-frameworks.md,,,
-cors-configuration,pending,,3,agents/cors-configuration-specialist.md;commands/cors-configuration.md;prompts/devops/14-cors-configuration.md,,,
-cost-estimation,pending,,2,agents/cost-estimator.md;agents/pitch-crafter.md,,,
-create-antigravity-skill,pending,,0,,,,
-creator-moat-skill,pending,,0,,,,
-cross-browser-testing,pending,,1,agents/cross-browser-tester.md,,,
-cross-platform-convert,pending,,0,,,,
-css-animation,pending,,2,agents/animation-specialist.md;agents/portfolio-builder.md,,,
-css-architecture,pending,,3,agents/css-architect.md;agents/design-system-architect.md;agents/frontend-craftsman.md,,,
-custom-tooling-extension,dod-complete,P1,0,,,,
-cv-cover-optimizer,dod-complete,P1,0,,,,
-cv-enhancement,pending,,1,agents/cv-specialist.md,,,
-cv-transformer,pending,,0,,,,
-daily-close,not-in-ledger,,0,,,,
-dark-mode,pending,,3,agents/brand-html-crafter.md;agents/css-architect.md;commands/evolve.md,,,
-dashboard-design,pending,,3,agents/dashboard-design-specialist.md;commands/dashboard-design.md;prompts/analytics/2-dashboard-design.md,,,
-data-documentation,pending,,3,agents/data-documentation-specialist.md;commands/data-documentation.md;prompts/analytics/15-data-documentation.md,,,
-data-engineering,pending,,0,,,,
-data-export,pending,,3,agents/data-export-specialist.md;commands/data-export.md;prompts/analytics/11-data-export.md,,,
-data-flow-architecture,pending,,0,,,,
-data-governance,pending,,0,,,,
-data-migration,pending,,0,,,,
-data-privacy-patterns,pending,,3,agents/data-privacy-patterns-specialist.md;commands/data-privacy-patterns.md;prompts/analytics/10-data-privacy-patterns.md,,,
-data-quality,pending,,0,,,,
-data-science-architecture,pending,,0,,,,
-data-storytelling,pending,,0,,,,
-data-strategy,pending,,1,agents/data-strategist.md,,,
-data-validation,pending,,3,agents/data-validation-specialist.md;commands/data-validation.md;prompts/analytics/3-data-validation.md,,,
-data-visualization,pending,,2,agents/chart-specialist.md;agents/dashboard-builder.md,,,
-database-architecture,pending,,0,,,,
-database-design,pending,,2,agents/data-modeler.md;agents/database-architect.md,,,
-dbr-daily-plan,not-in-ledger,,1,agents/jarvis-orchestrator.md,,,
-dependency-analysis,pending,,0,,,,
-dependency-management,pending,,3,agents/dependency-management-specialist.md;commands/dependency-management.md;prompts/devops/8-dependency-management.md,,,
-deployment-checklist,pending,,1,agents/pipeline-conductor.md,,,
-design-agent,dod-complete,P1,0,,,,
-design-critique,pending,,3,agents/design-critique-specialist.md;commands/design-critique.md;prompts/ux/3-design-critique.md,,,
-design-skill,dod-complete,P1,0,,,,
-design-system,pending,,1,agents/design-system-architect.md,,,
-developer-onboarding,pending,,3,agents/developer-onboarding-specialist.md;commands/developer-onboarding.md;prompts/enterprise/13-developer-onboarding.md,,,
-devsecops-architecture,pending,,0,,,,
-digital-presence,pending,,0,,,,
-disaster-recovery,pending,,3,agents/disaster-recovery-specialist.md;commands/disaster-recovery.md;prompts/enterprise/8-disaster-recovery.md,,,
-discovery-handover,pending,,0,,,,
-discovery-orchestration,dod-complete,P1,2,agents/discovery-reporter.md;agents/pipeline-conductor.md,,,
-discovery-orchestrator,dod-complete,P1,0,,,,
-discovery-retrospective,pending,,0,,,,
-dns-architecture,pending,,3,agents/dns-architecture-specialist.md;commands/dns-architecture.md;prompts/devops/11-dns-architecture.md,,,
-docker-awareness,pending,,3,agents/docker-awareness-specialist.md;commands/docker-awareness.md;prompts/devops/1-docker-awareness.md,,,
-documentation-standards,pending,,3,agents/documentation-standards-specialist.md;commands/documentation-standards.md;prompts/enterprise/4-documentation-standards.md,,,
-documentation-system,pending,,3,agents/documentation-system-specialist.md;commands/documentation-system.md;prompts/content/11-documentation-system.md,,,
-domain-dns-setup,pending,,0,,,,
-domain-driven-design,pending,,1,agents/domain-modeler.md,,,
-domain-management,pending,,2,agents/domain-dns-specialist.md;agents/hostinger-expert.md,,,
-dual-layer-verification,pending,,2,agents/quality-guardian.md;agents/security-scanner.md,,,
-dynamic-sme,pending,,0,,,,
-e2e-testing,pending,,2,agents/e2e-test-writer.md;agents/quality-engineer.md,,,
-ecommerce-frontend,pending,,1,agents/ecommerce-builder.md,,,
-ecosystem-forge,pending,,0,,,,
-email-sending,pending,,1,agents/email-service-specialist.md,,,
-email-template-builder,pending,,1,agents/email-template-builder.md,,,
-email-templates,pending,,1,agents/email-template-builder.md,,,
-embedding-strategy,pending,,3,agents/embedding-strategy-specialist.md;commands/embedding-strategy.md;prompts/ai/5-embedding-strategy.md,,,
-empty-states,pending,,3,agents/empty-states-specialist.md;commands/empty-states.md;prompts/ux/12-empty-states.md,,,
-enterprise-architecture,pending,,0,,,,
-environment-detection,dod-complete,P1,0,,,,
-environment-management,pending,,3,agents/environment-management-specialist.md;commands/environment-management.md;prompts/devops/7-environment-management.md,,,
-error-handling,pending,,0,,,,
-error-handling-patterns,pending,,1,prompts/quality/87-error-handling-patterns.md,,,
-error-messaging,pending,,3,agents/error-messaging-specialist.md;commands/error-messaging.md;prompts/content/13-error-messaging.md,,,
-error-recovery-automation,dod-complete,P1,3,agents/error-recovery-automation-specialist.md;commands/error-recovery-automation.md;prompts/automation/13-error-recovery-automation.md,,,
-etl-patterns,pending,,3,agents/etl-patterns-specialist.md;commands/etl-patterns.md;prompts/analytics/5-etl-patterns.md,,,
-evaluation-confidence-design,dod-complete,P1,0,,,,
-event-architecture,pending,,1,agents/event-designer.md,,,
-event-marketing,pending,,3,agents/event-marketing-specialist.md;commands/event-marketing.md;prompts/business/16-event-marketing.md,,,
-excellence-loop,pending,,0,,,,
-executive-pitch,pending,,4,agents/copywriter.md;agents/discovery-reporter.md;agents/dossier-builder.md;agents/pitch-crafter.md,,,
-executive-summary,pending,,0,,,,
-feasibility-validation,pending,,1,agents/feasibility-validator.md,,,
-few-shot-engineering,pending,,0,,,,
-file-storage,pending,,0,,,,
-file-watcher,pending,,3,agents/file-watcher-specialist.md;commands/file-watcher.md;prompts/automation/11-file-watcher.md,,,
-find-skills,dod-complete,P1,0,,,,
-fine-tuning-prep,pending,,3,agents/fine-tuning-prep-specialist.md;commands/fine-tuning-prep.md;prompts/ai/6-fine-tuning-prep.md,,,
-finops,pending,,0,,,,
-firebase-architecture,pending,,0,,,,
-firebase-auth,pending,,3,agents/auth-architect.md;agents/firebase-auth-expert.md;agents/firebase-specialist.md,,,
-firebase-auth-setup,pending,,0,,,,
-firebase-cost-optimization,pending,,0,,,,
-firebase-deployment,pending,,2,agents/deployment-specialist.md;agents/firebase-deployer.md,,,
-firebase-emulator-setup,pending,,0,,,,
-firebase-extensions,pending,,0,,,,
-firebase-functions,pending,,0,,,,
-firebase-hosting,pending,,1,agents/firebase-hosting-expert.md,,,
-firebase-hosting-setup,pending,,0,,,,
-firebase-setup,pending,,2,agents/firebase-emulator-expert.md;agents/firebase-specialist.md,,,
-firebase-storage,pending,,1,agents/firebase-storage-expert.md,,,
-firestore-modeling,pending,,4,agents/data-modeler.md;agents/database-architect.md;agents/firebase-specialist.md;agents/firestore-expert.md,,,
-firestore-queries,pending,,1,agents/firestore-expert.md,,,
-firestore-schema-design,pending,,0,,,,
-firestore-security-rules,pending,,1,agents/firestore-expert.md,,,
-first-use-onboarding,pending,,1,commands/first-use.md,,,
-fix-common-issues,pending,,0,,,,
-flow-mapping,pending,,2,agents/domain-modeler.md;agents/flow-mapper.md,,,
-folio-generator,dod-complete,P1,0,,,,
-follow-up-email,dod-complete,P1,0,,,,
-font-optimization,dod-complete,P1,0,,,,
-form-builder,dod-complete,P1,0,,,,
-form-engineering,dod-complete,P1,1,agents/form-specialist.md,,,
-form-ux-advanced,dod-complete,P1,3,agents/form-ux-advanced-specialist.md;commands/form-ux-advanced.md;prompts/ux/11-form-ux-advanced.md,,,
-frontload-prompt,not-in-ledger,,1,agents/jarvis-orchestrator.md,,,
-functional-spec,dod-complete,P1,0,,,,
-functional-toolbelt,dod-complete,P1,0,,,,
-funnel-analytics,dod-complete,P1,3,agents/funnel-analytics-specialist.md;commands/funnel-analytics.md;prompts/analytics/9-funnel-analytics.md,,,
-funnel-design,pending,,3,agents/funnel-design-specialist.md;commands/funnel-design.md;prompts/business/6-funnel-design.md,,,
-genai-architecture,pending,,0,,,,
-generate-qa-report,dod-complete,P1,0,,,,
-generate-qa-scorecard,dod-complete,P1,0,,,,
-git-hook-integration,pending,,3,agents/git-hook-integration-specialist.md;commands/git-hook-integration.md;prompts/automation/12-git-hook-integration.md,,,
-git-workflow,dod-complete,P1,0,,,,
-github-actions-ci,dod-complete,P1,2,agents/ci-cd-configurator.md;agents/deployment-specialist.md,,,
-gmail-mcp,pending,,0,,,,
-google-analytics,pending,,1,agents/google-apis-specialist.md,,,
-google-apis-integration,pending,,0,,,,
-google-calendar-mcp,pending,,0,,,,
-google-docs-mcp,pending,,0,,,,
-google-drive-mcp,pending,,0,,,,
-google-maps-integration,pending,,1,agents/map-specialist.md,,,
-google-sheets-mcp,pending,,0,,,,
-google-slides-mcp,pending,,0,,,,
-google-workspace-apis,pending,,1,agents/google-apis-specialist.md,,,
-governance-framework,pending,,0,,,,
-gratitud-post-proceso,dod-complete,P1,0,,,,
-grid-systems,pending,,3,agents/grid-systems-specialist.md;commands/grid-systems.md;prompts/ux/9-grid-systems.md,,,
-guardrails-management,dod-complete,P1,0,,,,
-health-check-automation,dod-complete,P1,3,agents/health-check-automation-specialist.md;commands/health-check-automation.md;prompts/automation/16-health-check-automation.md,,,
-hook-creator,pending,,0,,,,
-hook-engineering,pending,,0,,,,
-hostinger-deployment,pending,,3,agents/deployment-specialist.md;agents/hostinger-expert.md;agents/infrastructure-planner.md,,,
-html-brand,pending,,0,,,,
-html-semantic,pending,,3,agents/frontend-craftsman.md;agents/html-specialist.md;agents/vanilla-js-specialist.md,,,
-html-semantic-builder,pending,,0,,,,
-http-headers,pending,,3,agents/http-headers-specialist.md;commands/http-headers.md;prompts/devops/15-http-headers.md,,,
-human-escalation-design,pending,,0,,,,
-iconography,pending,,3,agents/iconography-specialist.md;commands/iconography.md;prompts/ux/7-iconography.md,,,
-ideate-component,dod-complete,P1,0,,,,
-ideate-plugin,pending,,0,,,,
-iic-artifact-analyzer,pending,,0,,,,
-iic-bugfix,pending,,0,,,,
-iic-checklist-generator,pending,,0,,,,
-iic-clarify,pending,,0,,,,
-iic-constitution,pending,,0,,,,
-iic-core-engine,pending,,0,,,,
-iic-implement,pending,,0,,,,
-iic-plan-generator,pending,,0,,,,
-iic-specify,pending,,0,,,,
-iic-task-decomposer,pending,,0,,,,
-iic-tasks-to-issues,pending,,0,,,,
-iic-testify,pending,,0,,,,
-iikit-00-constitution,pending,,0,,,,
-iikit-01-specify,pending,,0,,,,
-iikit-02-plan,pending,,0,,,,
-iikit-03-checklist,pending,,0,,,,
-iikit-04-testify,pending,,0,,,,
-iikit-05-tasks,pending,,0,,,,
-iikit-06-analyze,pending,,0,,,,
-iikit-07-implement,pending,,0,,,,
-iikit-08-taskstoissues,pending,,0,,,,
-iikit-bugfix,pending,,0,,,,
-iikit-clarify,pending,,0,,,,
-iikit-core,pending,,0,,,,
-image-optimization,pending,,0,,,,
-incident-response,pending,,3,agents/incident-response-specialist.md;commands/incident-response.md;prompts/devops/5-incident-response.md,,,
-independent-review-design,pending,,0,,,,
-indexability-validator,pending,,1,agents/quality-guardian.md,,,
-infrastructure-architecture,pending,,0,,,,
-infrastructure-design,pending,,1,agents/infrastructure-planner.md,,,
-input-analysis,dod-complete,P1,3,agents/input-amplifier.md;agents/jarvis-orchestrator.md;agents/requirements-analyst.md,,,
-input-analyst,dod-complete,P1,0,,,,
-input-sanitization,pending,,1,agents/security-scanner.md,,,
-input-tolerance,pending,,1,agents/adk-orchestrator.md,,,
-integration-architecture,pending,,0,,,,
-integration-testing,pending,,0,,,,
-integrity-chain-validation,pending,,2,agents/integrity-validator.md;agents/quality-guardian.md,,,
-intelligent-routing,pending,,1,agents/adk-orchestrator.md,,,
-internal-memo,pending,,3,agents/internal-memo-specialist.md;commands/internal-memo.md;prompts/content/8-internal-memo.md,,,
-internationalization,pending,,3,agents/i18n-specialist.md;commands/add-i18n.md;prompts/development/62-implement-i18n.md,,,
-interview-prep,pending,,0,,,,
-inventory-management,pending,,0,,,,
-invoice-generator,pending,,0,,,,
-jarvis-bootstrap,not-in-ledger,,0,,,,
-jarvis-os,not-in-ledger,,1,agents/jarvis-orchestrator.md,,,
-javascript-patterns,pending,,0,,,,
-jmlabs-corporate-doc,pending,,0,,,,
-katas-adaptive-investigation,dod-complete,P1,0,,,,
-katas-builtin-tool-selection,dod-complete,P1,0,,,,
-katas-confidence-stratified-sampling,dod-complete,P1,0,,,,
-katas-context-dilution-mitigation,dod-complete,P1,0,,,,
-katas-critical-self-correction,pending,,0,,,,
-katas-custom-commands-skills,pending,,0,,,,
-katas-defensive-structured-extraction,pending,,0,,,,
-katas-deterministic-agent-loop,pending,,0,,,,
-katas-false-positive-criteria,pending,,0,,,,
-katas-fewshot-edge-calibration,pending,,0,,,,
-katas-headless-code-review,pending,,0,,,,
-katas-hierarchical-claude-memory,pending,,0,,,,
-katas-hub-and-spoke-isolation,pending,,0,,,,
-katas-human-handoff-protocol,pending,,0,,,,
-katas-independent-reviewer-multipass,pending,,0,,,,
-katas-mcp-server-configuration,pending,,0,,,,
-katas-mcp-structured-errors,pending,,0,,,,
-katas-message-batch-processing,pending,,0,,,,
-katas-multiagent-error-propagation,pending,,0,,,,
-katas-multipass-prompt-chaining,pending,,0,,,,
-katas-path-conditional-rules,pending,,0,,,,
-katas-persistent-scratchpad,dod-complete,P1,0,,,,
-katas-plan-mode-exploration,pending,,0,,,,
-katas-posttooluse-normalization,dod-complete,P1,0,,,,
-katas-prefix-caching,pending,,0,,,,
-katas-pretooluse-guardrails,dod-complete,P1,0,,,,
-katas-provenance-preservation,dod-complete,P1,0,,,,
-katas-session-resume-fork,dod-complete,P1,0,,,,
-katas-tool-description-quality,dod-complete,P1,0,,,,
-katas-validation-retry-feedback,dod-complete,P1,0,,,,
-kit-orchestrator,pending,,0,,,,
-knowledge-management,dod-complete,P1,3,agents/knowledge-management-specialist.md;commands/knowledge-management.md;prompts/enterprise/5-knowledge-management.md,,,
-kpi-framework,pending,,3,agents/kpi-framework-specialist.md;commands/kpi-framework.md;prompts/analytics/1-kpi-framework.md,,,
-lab-session,not-in-ledger,,1,agents/jarvis-orchestrator.md,,,
-landing-page-builder,pending,,1,agents/landing-page-builder.md,,,
-landing-pages,pending,,2,agents/copywriter.md;agents/landing-page-builder.md,,,
-lead-generation,pending,,3,agents/lead-generation-specialist.md;commands/lead-generation.md;prompts/business/13-lead-generation.md,,,
-lighthouse-ci,pending,,1,agents/quality-guardian.md,,,
-linkedin-optimization,pending,,0,,,,
-linting-formatting,pending,,1,agents/linter-configurator.md,,,
-llm-evaluation,pending,,3,agents/llm-evaluation-specialist.md;commands/llm-evaluation.md;prompts/ai/3-llm-evaluation.md,,,
-local-state-preservation,dod-complete,P1,0,,,,
-localization-guide,pending,,3,agents/localization-guide-specialist.md;commands/localization-guide.md;prompts/content/15-localization-guide.md,,,
-log-management,pending,,3,agents/log-management-specialist.md;commands/log-management.md;prompts/devops/4-log-management.md,,,
-market-intelligence,pending,,1,agents/client-prospector.md,,,
-marketing-context,pending,,3,agents/marketing-context-specialist.md;commands/marketing-context.md;prompts/business/1-marketing-context.md,,,
-maturity-assessment,pending,,0,,,,
-mcp-creator,dod-complete,P1,0,,,,
-mcp-engineering,dod-complete,P1,0,,,,
-meeting-notes,pending,,1,commands/requirements.md,,,
-mermaid-diagramming,pending,,3,agents/architecture-designer.md;agents/diagram-specialist.md;agents/flow-mapper.md,,,
-message-batch-orchestration,dod-complete,P1,0,,,,
-meta-orchestration-updater,pending,,0,,,,
-meta-skill-creator,pending,,0,,,,
-meta-skill-deployer,pending,,0,,,,
-meta-skill-indexer,pending,,0,,,,
-meta-skill-reviewer,pending,,0,,,,
-meta-skill-searcher,pending,,0,,,,
-metrics-instrumentation,pending,,3,agents/metrics-instrumentation-specialist.md;commands/metrics-instrumentation.md;prompts/analytics/16-metrics-instrumentation.md,,,
-micro-interactions,pending,,6,agents/animation-specialist.md;agents/micro-interactions-specialist.md;commands/add-animation.md;commands/micro-interactions.md;prompts/development/63-implement-animation.md;prompts/ux/5-micro-interactions.md,,,
-microcopy-writing,pending,,3,agents/microcopy-writing-specialist.md;commands/microcopy-writing.md;prompts/content/14-microcopy-writing.md,,,
-migration-planning,pending,,1,agents/migration-planner.md,,,
-mobile-architecture,pending,,0,,,,
-mobile-assessment,pending,,0,,,,
-mobile-patterns,pending,,3,agents/mobile-patterns-specialist.md;commands/mobile-patterns.md;prompts/ux/16-mobile-patterns.md,,,
-modal-dialog-patterns,pending,,0,,,,
-monitoring-alerting,pending,,0,,,,
-monitoring-setup,pending,,3,agents/monitoring-setup-specialist.md;commands/monitoring-setup.md;prompts/devops/2-monitoring-setup.md,,,
-monthly-audit,not-in-ledger,,0,,,,
-motion-design,pending,,3,agents/motion-design-specialist.md;commands/motion-design.md;prompts/ux/10-motion-design.md,,,
-multi-model-routing,pending,,3,agents/multi-model-routing-specialist.md;commands/multi-model-routing.md;prompts/ai/12-multi-model-routing.md,,,
-naming-and-slugging,pending,,0,,,,
-navigation-patterns,pending,,0,,,,
-negociacion-oferta,dod-complete,P1,0,,,,
-newsletter-design,pending,,3,agents/newsletter-design-specialist.md;commands/newsletter-design.md;prompts/business/11-newsletter-design.md,,,
-node-api-builder,pending,,0,,,,
-node-development,pending,,1,agents/node-specialist.md,,,
-notebook-curator-seleccion,dod-complete,P1,0,,,,
-notification-handler,pending,,3,agents/notification-handler-specialist.md;commands/notification-handler.md;prompts/automation/8-notification-handler.md,,,
-notification-service,pending,,0,,,,
-notification-ux,pending,,3,agents/notification-ux-specialist.md;commands/notification-ux.md;prompts/ux/13-notification-ux.md,,,
-oauth-social-login,pending,,0,,,,
-observability,pending,,0,,,,
-office-workflow-runner,pending,,0,,,,
-official-source-verifier,dod-complete,P1,0,,,,
-okr-design,pending,,3,agents/okr-design-specialist.md;commands/okr-design.md;prompts/enterprise/15-okr-design.md,,,
-onboarding-90-dias,dod-complete,P1,0,,,,
-onboarding-playbook,pending,,0,,,,
-onboarding-ux,pending,,3,agents/onboarding-ux-specialist.md;commands/onboarding-ux.md;prompts/business/10-onboarding-ux.md,,,
-open-claude-security,pending,,0,,,,
-open-claw-builder,pending,,0,,,,
-openclaw-isolation,pending,,0,,,,
-openclaw-personal-deploy,pending,,0,,,,
-openclaw-tool-auth,pending,,0,,,,
-output-contract-enforcer,dod-complete,P1,0,,,,
-output-engineering,pending,,0,,,,
-parallel-workflow,pending,,1,agents/pipeline-conductor.md,,,
-partnership-strategy,pending,,3,agents/partnership-strategy-specialist.md;commands/partnership-strategy.md;prompts/business/15-partnership-strategy.md,,,
-payment-integration,pending,,2,agents/ecommerce-builder.md;agents/payment-specialist.md,,,
-pdf-architecture-reviewer,dod-complete,P1,0,,,,
-penetration-testing-guide,pending,,0,,,,
-performance-architecture,pending,,1,agents/performance-architect.md,,,
-performance-engineering,pending,,0,,,,
-performance-testing,pending,,2,agents/performance-tester.md;agents/quality-guardian.md,,,
-permission-fast-path,pending,,3,agents/permission-fast-path-specialist.md;commands/permission-fast-path.md;prompts/automation/10-permission-fast-path.md,,,
-persistent-memory-design,dod-complete,P1,0,,,,
-personal-branding,pending,,0,,,,
-pipeline-governance,pending,,1,agents/adk-orchestrator.md,,,
-pitch-deck,pending,,0,,,,
-plan-architecture,pending,,0,,,,
-plan-moat-strategy,pending,,0,,,,
-plan-mode-workflow,dod-complete,P1,0,,,,
-plugin-builder,pending,,0,,,,
-plugin-reload,pending,,0,,,,
-poc-lab,pending,,0,,,,
-podcast-prep,pending,,3,agents/podcast-prep-specialist.md;commands/podcast-prep.md;prompts/content/4-podcast-prep.md,,,
-portfolio-sites,pending,,1,agents/portfolio-builder.md,,,
-post-tool-use-validator,dod-complete,P1,3,agents/post-tool-use-validator-specialist.md;commands/post-tool-use-validator.md;prompts/automation/2-post-tool-use-validator.md,,,
-pre-compact-context,dod-complete,P1,3,agents/pre-compact-context-specialist.md;commands/pre-compact-context.md;prompts/automation/6-pre-compact-context.md,,,
-pre-tool-use-guard,dod-complete,P1,3,agents/pre-tool-use-guard-specialist.md;commands/pre-tool-use-guard.md;prompts/automation/1-pre-tool-use-guard.md,,,
-presentation-design,pending,,3,agents/presentation-design-specialist.md;commands/presentation-design.md;prompts/content/2-presentation-design.md,,,
-press-release,pending,,3,agents/press-release-specialist.md;commands/press-release.md;prompts/content/7-press-release.md,,,
-pricing-strategy,pending,,3,agents/pricing-strategy-specialist.md;commands/pricing-strategy.md;prompts/business/9-pricing-strategy.md,,,
-print-stylesheet,pending,,0,,,,
-pristino-calibration,dod-complete,P1,1,commands/calibrate.md,,,
-privacy-compliance,pending,,0,,,,
-proceso-seleccion-orchestrator,dod-complete,P1,0,,,,
-product-roadmapping,pending,,1,agents/product-strategist.md,,,
-product-strategy,pending,,0,,,,
-progress-tracker,pending,,0,,,,
-project-charter,pending,,0,,,,
-project-create,not-in-ledger,,1,agents/jarvis-orchestrator.md,,,
-project-program-management,pending,,0,,,,
-prompt-chaining-design,dod-complete,P1,0,,,,
-prompt-creator,dod-complete,P1,0,,,,
-prompt-engineering,dod-complete,P1,3,agents/prompt-engineering-specialist.md;commands/prompt-engineering.md;prompts/ai/1-prompt-engineering.md,,,
-prompt-forge,dod-complete,P1,0,,,,
-prompting-and-meta-prompting,dod-complete,P1,0,,,,
-proposal-writing,pending,,3,agents/proposal-writing-specialist.md;commands/proposal-writing.md;prompts/content/9-proposal-writing.md,,,
-prototyping,pending,,3,agents/prototyping-specialist.md;commands/prototyping.md;prompts/ux/2-prototyping.md,,,
-provenance-engineering,dod-complete,P1,0,,,,
-push-notifications,pending,,1,agents/push-notification-specialist.md,,,
-pwa-architecture,pending,,2,agents/mobile-responsiveness-tester.md;agents/pwa-architect.md,,,
-qbr-quarterly,not-in-ledger,,0,,,,
-quality-engineering,dod-complete,P1,0,,,,
-quality-gatekeeper,dod-complete,P1,0,,,,
-quality-metrics,dod-complete,P1,0,,,,
-rag-patterns,pending,,3,agents/rag-patterns-specialist.md;commands/rag-patterns.md;prompts/ai/2-rag-patterns.md,,,
-rate-limiting,pending,,3,agents/rate-limiting-specialist.md;commands/rate-limiting.md;prompts/devops/13-rate-limiting.md,,,
-rbac-patterns,pending,,3,agents/rbac-patterns-specialist.md;commands/rbac-patterns.md;prompts/enterprise/3-rbac-patterns.md,,,
-react-component-library,pending,,0,,,,
-react-development,pending,,1,agents/react-specialist.md,,,
-real-time-analytics,pending,,3,agents/real-time-analytics-specialist.md;commands/real-time-analytics.md;prompts/analytics/12-real-time-analytics.md,,,
-realtime-architecture,pending,,1,agents/realtime-designer.md,,,
-realtime-database,pending,,0,,,,
-recaptcha-integration,pending,,1,agents/google-apis-specialist.md,,,
-red-y-referencias,dod-complete,P1,0,,,,
-release-strategy,pending,,0,,,,
-rendering-engine,pending,,0,,,,
-repo-sync-auditor,dod-complete,P1,0,,,,
-reporting-templates,pending,,3,agents/reporting-templates-specialist.md;commands/reporting-templates.md;prompts/analytics/6-reporting-templates.md,,,
-repository-organization,dod-complete,P1,0,,,,
-requirements-engineering,pending,,2,agents/business-analyst.md;agents/requirements-analyst.md,,,
-responsive-design,pending,,3,agents/css-architect.md;agents/mobile-responsiveness-tester.md;agents/responsive-designer.md,,,
-responsive-design-system,pending,,0,,,,
-rest-api-development,pending,,1,agents/rest-api-builder.md,,,
-retrospective-facilitation,pending,,3,agents/retrospective-facilitation-specialist.md;commands/retrospective-facilitation.md;prompts/enterprise/14-retrospective-facilitation.md,,,
-revisor-veracidad,not-in-ledger,,1,agents/jarvis-orchestrator.md,,,
-risk-assessment,pending,,1,agents/risk-analyst.md,,,
-risk-controlling-dynamics,pending,,0,,,,
-roadmap-poc,pending,,0,,,,
-role-based-access,pending,,0,,,,
-rollback-strategy,pending,,3,agents/rollback-strategy-specialist.md;commands/rollback-strategy.md;prompts/devops/6-rollback-strategy.md,,,
-rule-forge,pending,,0,,,,
-runtime-routing,dod-complete,P1,1,commands/explain-devkit.md,,,
-safe-scripting-and-bash,dod-complete,P1,0,,,,
-sales-collateral,pending,,3,agents/sales-collateral-specialist.md;commands/sales-collateral.md;prompts/business/4-sales-collateral.md,,,
-sales-tracker,pending,,0,,,,
-scaffold-angular-app,pending,,0,,,,
-scaffold-html-css,pending,,0,,,,
-scaffold-react-app,pending,,0,,,,
-scenario-analysis,pending,,2,agents/scenario-evaluator.md;agents/socratic-debater.md,,,
-scheduled-functions,pending,,1,agents/cron-job-specialist.md,,,
-schema-evolution,pending,,3,agents/schema-evolution-specialist.md;commands/schema-evolution.md;prompts/analytics/4-schema-evolution.md,,,
-scope-guard,pending,,0,,,,
-scroll-interaction,pending,,0,,,,
-search-implementation,pending,,0,,,,
-search-ux,pending,,3,agents/search-ux-specialist.md;commands/search-ux.md;prompts/ux/14-search-ux.md,,,
-secrets-management,pending,,0,,,,
-secrets-sanitization,dod-complete,P1,0,,,,
-sector-intelligence,pending,,2,agents/competitive-analyst.md;agents/industry-expert.md,,,
-security-architecture,pending,,1,agents/security-architect.md,,,
-security-testing,pending,,2,agents/quality-guardian.md;agents/security-scanner.md,,,
-self-correction-loops,dod-complete,P1,0,,,,
-seo-architecture,pending,,4,agents/blog-builder.md;agents/landing-page-builder.md;agents/seo-architect.md;agents/seo-auditor.md,,,
-seo-content,pending,,1,commands/seo-content.md,,,
-seo-technical,pending,,0,,,,
-server-middleware,pending,,0,,,,
-serverless-patterns,pending,,1,agents/cloud-functions-dev.md,,,
-session-end-cleanup,dod-complete,P1,3,agents/session-end-cleanup-specialist.md;commands/session-end-cleanup.md;prompts/automation/5-session-end-cleanup.md,,,
-session-lifecycle-management,dod-complete,P1,0,,,,
-session-manager,dod-complete,P1,1,agents/session-manager.md,,,
-session-protocol,dod-complete,P1,1,agents/adk-orchestrator.md,,,
-session-start-bootstrap,dod-complete,P1,3,agents/session-start-bootstrap-specialist.md;commands/session-start-bootstrap.md;prompts/automation/4-session-start-bootstrap.md,,,
-simulador-entrevista,dod-complete,P1,0,,,,
-skill-forge,pending,,0,,,,
-skill-search,pending,,1,agents/skill-router.md,,,
-skill-spec-creator,pending,,0,,,,
-sla-definition,pending,,3,agents/sla-definition-specialist.md;commands/sla-definition.md;prompts/enterprise/7-sla-definition.md,,,
-social-media-strategy,pending,,0,,,,
-social-proof,pending,,3,agents/social-proof-specialist.md;commands/social-proof.md;prompts/business/8-social-proof.md,,,
-socratic-debate,pending,,2,agents/adk-orchestrator.md;agents/socratic-debater.md,,,
-sofka-bpmn-process-analysis,pending,,0,,,,
-sofka-regional-finance,pending,,0,,,,
-sofka-sap-implementation,pending,,0,,,,
-software-architecture,pending,,0,,,,
-software-viability,pending,,0,,,,
-solution-roadmap,pending,,0,,,,
-solutions-architecture,pending,,0,,,,
-spa-routing,pending,,0,,,,
-spec-agent-command,pending,,0,,,,
-spec-skill-moat,pending,,0,,,,
-sprint-report,pending,,0,,,,
-ssh-deployment,pending,,0,,,,
-ssl-management,pending,,3,agents/ssl-management-specialist.md;commands/ssl-management.md;prompts/devops/10-ssl-management.md,,,
-stakeholder-mapping,pending,,1,agents/stakeholder-mapper.md,,,
-state-management,pending,,1,agents/state-designer.md,,,
-state-management-design,pending,,0,,,,
-station-create,not-in-ledger,,1,agents/jarvis-orchestrator.md,,,
-step-creator,pending,,0,,,,
-stop-validator,pending,,4,agents/stop-validator-specialist.md;commands/stop-validator.md;hooks/hooks.json;prompts/automation/7-stop-validator.md,,,
-storytelling,pending,,3,agents/presentation-design-specialist.md;commands/presentation-design.md;prompts/content/2-presentation-design.md,,,
-structured-output,pending,,3,agents/structured-output-specialist.md;commands/structured-output.md;prompts/ai/14-structured-output.md,,,
-structured-output-design,dod-complete,P1,0,,,,
-subagent-monitor,dod-complete,P1,3,agents/subagent-monitor-specialist.md;commands/subagent-monitor.md;prompts/automation/9-subagent-monitor.md,,,
-subagent-orchestration,dod-complete,P1,0,,,,
-surgeon-skill,pending,,0,,,,
-survey-design,pending,,3,agents/survey-design-specialist.md;commands/survey-design.md;prompts/analytics/13-survey-design.md,,,
-swot-analysis,pending,,0,,,,
-system-architecture,pending,,2,agents/architecture-designer.md;agents/solutions-architect.md,,,
-system-design,pending,,0,,,,
-table-ux,pending,,3,agents/table-ux-specialist.md;commands/table-ux.md;prompts/ux/15-table-ux.md,,,
-task-automation,pending,,3,agents/task-automation-specialist.md;commands/task-automation.md;prompts/automation/14-task-automation.md,,,
-task-engine,dod-complete,P1,0,,,,
-task-subfolder,not-in-ledger,,1,agents/jarvis-orchestrator.md,,,
-tasklog-management,dod-complete,P1,0,,,,
-team-topology,pending,,3,agents/team-topology-specialist.md;commands/team-topology.md;prompts/enterprise/12-team-topology.md,,,
-technical-documentation,pending,,0,,,,
-technical-feasibility,pending,,0,,,,
-technical-writing,pending,,0,,,,
-technical-writing-patterns,pending,,3,agents/technical-writing-patterns-specialist.md;commands/technical-writing-patterns.md;prompts/content/1-technical-writing-patterns.md,,,
-test-data-factory,pending,,0,,,,
-test-strategy,pending,,3,agents/bdd-strategist.md;agents/quality-engineer.md;agents/quality-guardian.md,,,
-testimonial-collector,pending,,0,,,,
-testing-strategy,pending,,0,,,,
-tool-use-design,dod-complete,P1,0,,,,
-trade-off-analysis,pending,,3,agents/feasibility-validator.md;agents/scenario-evaluator.md;agents/socratic-debater.md,,,
-training-material,pending,,3,agents/training-material-specialist.md;commands/training-material.md;prompts/content/10-training-material.md,,,
-triad-composition,dod-complete,P1,1,agents/adk-orchestrator.md,,,
-trigger-skill,pending,,0,,,,
-typescript-patterns,pending,,3,agents/angular-specialist.md;agents/react-specialist.md;agents/typescript-specialist.md,,,
-typography-advanced,pending,,3,agents/typography-advanced-specialist.md;commands/typography-advanced.md;prompts/ux/8-typography-advanced.md,,,
-ui-kit-builder,pending,,0,,,,
-unit-testing,pending,,2,agents/quality-engineer.md;agents/unit-test-writer.md,,,
-user-prompt-filter,dod-complete,P1,4,agents/user-prompt-filter-specialist.md;commands/user-prompt-filter.md;hooks/hooks.json;prompts/automation/3-user-prompt-filter.md,,,
-user-representative,dod-complete,P1,0,,,,
-user-research,pending,,1,agents/user-researcher.md,,,
-user-story-writer,pending,,0,,,,
-user-testing,pending,,3,agents/user-testing-specialist.md;commands/user-testing.md;prompts/ux/1-user-testing.md,,,
-ux-writing,dod-complete,P1,0,,,,
-validar-liquidacion-co,dod-complete,P1,0,,,,
-validate-components,dod-complete,P1,0,,,,
-validate-cross-refs,pending,,0,,,,
-validate-hooks,pending,,0,,,,
-validate-manifest,pending,,0,,,,
-validate-structure,dod-complete,P1,0,,,,
-validation-retry-design,dod-complete,P1,0,,,,
-value-proposition,pending,,0,,,,
-vanilla-javascript,pending,,2,agents/frontend-craftsman.md;agents/vanilla-js-specialist.md,,,
-vendor-evaluation,pending,,3,agents/vendor-evaluation-specialist.md;commands/vendor-evaluation.md;prompts/enterprise/10-vendor-evaluation.md,,,
-video-script,pending,,3,agents/video-script-specialist.md;commands/video-script.md;prompts/content/3-video-script.md,,,
-visual-regression,pending,,0,,,,
-visual-regression-testing,pending,,0,,,,
-voice-interface,pending,,3,agents/voice-interface-specialist.md;commands/voice-interface.md;prompts/ai/16-voice-interface.md,,,
-wbr-weekly-review,not-in-ledger,,0,,,,
-web-components,pending,,1,agents/web-component-builder.md,,,
-web-performance,pending,,0,,,,
-web-security-implementation,pending,,0,,,,
-webhook-handler,pending,,0,,,,
-webhook-handling,pending,,1,agents/webhook-specialist.md,,,
-weekly-retro,not-in-ledger,,0,,,,
-whitepaper-creation,pending,,3,agents/whitepaper-creation-specialist.md;commands/whitepaper-creation.md;prompts/content/6-whitepaper-creation.md,,,
-workflow-creator,dod-complete,P1,0,,,,
-workflow-forge,dod-complete,P1,0,,,,
-workflow-orchestration,dod-complete,P1,3,agents/workflow-orchestration-specialist.md;commands/workflow-orchestration.md;prompts/automation/15-workflow-orchestration.md,,,
-workshop-design,pending,,1,agents/workshop-facilitator.md,,,
-workshop-facilitator,pending,,1,agents/workshop-facilitator.md,,,
-workshop-proposal,pending,,0,,,,
-workspace-governance,dod-complete,P1,0,,,,
-workspace-setup,dod-complete,P1,1,commands/setup-workspace.md,,,
-x-ray-skill,dod-complete,P1,0,,,,
-xlsx-template-creator,dod-complete,P1,0,,,,
+ab-testing,dod-complete,P2,3,agents/ab-testing-specialist.md;commands/ab-testing.md;prompts/business/7-ab-testing.md,router-fold,product-analytics#ab-testing,playbook in skills/product-analytics/references/ab-testing.md
+accessibility-audit,dod-complete,P2,0,,router-fold,accessibility#audit,playbook in skills/accessibility/references/audit.md
+accessibility-design,dod-complete,P2,2,agents/a11y-implementer.md;agents/accessibility-designer.md,router-fold,accessibility#design,playbook in skills/accessibility/references/design.md
+accessibility-testing,dod-complete,P2,3,agents/a11y-implementer.md;agents/accessibility-auditor.md;agents/quality-guardian.md,router-fold,accessibility#testing,playbook in skills/accessibility/references/testing.md
+accessibility-writing,dod-complete,P1,3,agents/accessibility-writing-specialist.md;commands/accessibility-writing.md;prompts/content/16-accessibility-writing.md,router-fold,accessibility#writing,playbook in skills/accessibility/references/writing.md
+acta-formal,dod-complete,P1,0,,router-fold,carrera#acta-formal,playbook in skills/carrera/references/acta-formal.md
+adaptive-investigation-method,dod-complete,P1,0,,core,adaptive-investigation-method,standalone skill in beta
+admin-dashboards,dod-complete,P1,1,agents/dashboard-builder.md,router-fold,web-frontend#admin-dashboards,playbook in skills/web-frontend/references/admin-dashboards.md
+agent-constitution-creator,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+agent-creator,dod-complete,P1,0,,router-fold,skill-foundry#agent-creator,playbook in skills/skill-foundry/references/agent-creator.md
+agentic-loop-engineering,dod-complete,P1,0,,core,agentic-loop-engineering,standalone skill in beta
+ai-architecture-audit,dod-complete,P1,0,,router-fold,ai-architecture#audit,playbook in skills/ai-architecture/references/audit.md
+ai-architecture-implementation,dod-complete,P1,0,,router-fold,ai-architecture#implementation,playbook in skills/ai-architecture/references/implementation.md
+ai-assisted-testing,dod-complete,P1,3,agents/ai-assisted-testing-specialist.md;commands/ai-assisted-testing.md;prompts/ai/7-ai-assisted-testing.md,router-fold,ai-quality#ai-assisted-testing,playbook in skills/ai-quality/references/ai-assisted-testing.md
+ai-code-review,dod-complete,P1,3,agents/ai-code-review-specialist.md;commands/ai-code-review.md;prompts/ai/8-ai-code-review.md,router-fold,ai-quality#ai-code-review,playbook in skills/ai-quality/references/ai-code-review.md
+ai-conops,dod-complete,P1,0,,router-fold,ai-architecture#ai-conops,playbook in skills/ai-architecture/references/ai-conops.md
+ai-content-detection,dod-complete,P1,3,agents/ai-content-detection-specialist.md;commands/ai-content-detection.md;prompts/ai/4-ai-content-detection.md,router-fold,ai-quality#ai-content-detection,playbook in skills/ai-quality/references/ai-content-detection.md
+ai-design-patterns,dod-complete,P1,0,,router-fold,ai-architecture#ai-design-patterns,playbook in skills/ai-architecture/references/ai-design-patterns.md
+ai-documentation,dod-complete,P1,3,agents/ai-documentation-specialist.md;commands/ai-documentation.md;prompts/ai/9-ai-documentation.md,router-fold,ai-quality#ai-documentation,playbook in skills/ai-quality/references/ai-documentation.md
+ai-pipeline-architecture,dod-complete,P1,0,,router-fold,ai-architecture#ai-pipeline-architecture,playbook in skills/ai-architecture/references/ai-pipeline-architecture.md
+ai-safety,dod-complete,P1,3,agents/ai-safety-specialist.md;commands/ai-safety.md;prompts/ai/11-ai-safety.md,router-fold,ai-quality#ai-safety,playbook in skills/ai-quality/references/ai-safety.md
+ai-software-architecture,dod-complete,P1,0,,router-fold,ai-architecture#ai-software-architecture,playbook in skills/ai-architecture/references/ai-software-architecture.md
+ai-testing-strategy,dod-complete,P1,0,,router-fold,ai-quality#ai-testing-strategy,playbook in skills/ai-quality/references/ai-testing-strategy.md
+ai-workflow-automation,dod-complete,P1,3,agents/ai-workflow-automation-specialist.md;commands/ai-workflow-automation.md;prompts/ai/15-ai-workflow-automation.md,router-fold,ai-quality#ai-workflow-automation,playbook in skills/ai-quality/references/ai-workflow-automation.md
+alerting-strategy,dod-complete,P1,3,agents/alerting-strategy-specialist.md;commands/alerting-strategy.md;prompts/devops/3-alerting-strategy.md,router-fold,observability#alerting-strategy,playbook in skills/observability/references/alerting-strategy.md
+alfa-repo-maintenance-orchestrator,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+analytics-engineering,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+analytics-events,dod-complete,P1,3,agents/analytics-events-specialist.md;commands/analytics-events.md;prompts/analytics/7-analytics-events.md,router-fold,product-analytics#analytics-events,playbook in skills/product-analytics/references/analytics-events.md
+analytics-implementation,dod-complete,P1,0,,router-fold,google-workspace#analytics-implementation,playbook in skills/google-workspace/references/analytics-implementation.md
+angular-development,pending,,1,agents/angular-specialist.md,router-fold,web-frontend#angular-development,playbook in skills/web-frontend/references/angular-development.md
+angular-module-builder,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+animation-motion,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+animation-principles,pending,,3,agents/animation-principles-specialist.md;commands/animation-principles.md;prompts/ux/4-animation-principles.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
+api-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+api-design,pending,,2,agents/api-designer.md;agents/solutions-architect.md,router-fold,architecture#api-design,playbook in skills/architecture/references/api-design.md
+api-designer,pending,,1,agents/api-designer.md,alias,architecture#api-design,duplicate of api-design
+api-documentation,pending,,1,prompts/quality/95-api-documentation.md,router-fold,docs-writing#api-documentation,playbook in skills/docs-writing/references/api-documentation.md
+api-security,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+architecture-tobe,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+asis-analysis,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+assembly-skill,dod-complete,P1,0,,router-fold,skill-foundry#assembly-skill,playbook in skills/skill-foundry/references/assembly-skill.md
+assumption-log,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+audit-content-quality,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+audit-security,dod-complete,P1,10,commands/audit-deps.md;commands/audit-security.md;commands/create-auth.md;commands/create-payment.md;commands/create-upload.md;commands/design-auth.md;commands/review.md;commands/risks.md;commands/setup-ssl.md;prompts/quality/75-audit-security.md,router-fold,security#audit-security,playbook in skills/security/references/audit-security.md
+audit-trail-design,pending,,3,agents/audit-trail-design-specialist.md;commands/audit-trail-design.md;prompts/enterprise/2-audit-trail-design.md,router-fold,data-governance#audit-trail-design,playbook in skills/data-governance/references/audit-trail-design.md
+auth-architecture,pending,,3,agents/auth-architect.md;agents/firebase-auth-expert.md;agents/security-architect.md,router-fold,security#auth-architecture,playbook in skills/security/references/auth-architecture.md
+auto-prompt-matching,dod-complete,P1,1,agents/adk-orchestrator.md,router-fold,skill-foundry#auto-prompt-matching,playbook in skills/skill-foundry/references/auto-prompt-matching.md
+aws-architecture-audit,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+aws-architecture-design,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+aws-architecture-implementation,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+b2b-outreach,pending,,3,agents/b2b-outreach-specialist.md;commands/b2b-outreach.md;prompts/business/3-b2b-outreach.md,router-fold,sales-bizdev#b2b-outreach,playbook in skills/sales-bizdev/references/b2b-outreach.md
+background-jobs,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+backup-recovery,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+backup-strategy,pending,,3,agents/backup-strategy-specialist.md;commands/backup-strategy.md;prompts/devops/12-backup-strategy.md,router-fold,hosting-infra#backup-strategy,playbook in skills/hosting-infra/references/backup-strategy.md
+bdd-full-spectrum,pending,,2,agents/bdd-strategist.md;agents/quality-guardian.md,router-fold,testing-qa#bdd-full-spectrum,playbook in skills/testing-qa/references/bdd-full-spectrum.md
+benchmark-skill,dod-complete,P1,0,,router-fold,skill-foundry#benchmark-skill,playbook in skills/skill-foundry/references/benchmark-skill.md
+benchmarking-analysis,pending,,3,agents/benchmarking-analysis-specialist.md;commands/benchmarking-analysis.md;prompts/analytics/14-benchmarking-analysis.md,router-fold,market-intel#benchmarking-analysis,playbook in skills/market-intel/references/benchmarking-analysis.md
+bi-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+bilingual-doc,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+blog-cms,pending,,1,agents/blog-builder.md,router-fold,web-frontend#blog-cms,playbook in skills/web-frontend/references/blog-cms.md
+bmad-method,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+brand-docx,dod-complete,P1,0,,router-fold,brand-output#brand-docx,playbook in skills/brand-output/references/brand-docx.md
+brand-html,dod-complete,P1,1,commands/brand-html.md,router-fold,brand-output#brand-html,playbook in skills/brand-output/references/brand-html.md
+brand-voice,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+brand-xlsx,dod-complete,P1,0,,router-fold,brand-output#brand-xlsx,playbook in skills/brand-output/references/brand-xlsx.md
+branded-html-output,pending,,1,agents/brand-html-crafter.md,router-fold,brand-output#branded-html-output,playbook in skills/brand-output/references/branded-html-output.md
+budget-management,pending,,3,agents/budget-management-specialist.md;commands/budget-management.md;prompts/enterprise/16-budget-management.md,router-fold,pm-delivery#budget-management,playbook in skills/pm-delivery/references/budget-management.md
+build-moat-assets,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+build-optimization,pending,,3,agents/bundle-analyzer.md;agents/performance-architect.md;agents/performance-tester.md,router-fold,web-frontend#build-optimization,playbook in skills/web-frontend/references/build-optimization.md
+build-plugin-scaffold,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+bundle-analysis,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+business-process-modeling,pending,,1,agents/business-analyst.md,router-fold,business-analysis#business-process-modeling,playbook in skills/business-analysis/references/business-process-modeling.md
+caching-strategy,pending,,1,agents/caching-strategist.md,router-fold,architecture#caching-strategy,playbook in skills/architecture/references/caching-strategy.md
+capacity-planning,pending,,3,agents/capacity-planning-specialist.md;commands/capacity-planning.md;prompts/enterprise/9-capacity-planning.md,router-fold,pm-delivery#capacity-planning,playbook in skills/pm-delivery/references/capacity-planning.md
+case-study-writing,pending,,3,agents/case-study-writing-specialist.md;commands/case-study-writing.md;prompts/content/5-case-study-writing.md,router-fold,marketing-content#case-study-writing,playbook in skills/marketing-content/references/case-study-writing.md
+cdn-configuration,pending,,3,agents/cdn-configuration-specialist.md;commands/cdn-configuration.md;prompts/devops/9-cdn-configuration.md,router-fold,hosting-infra#cdn-configuration,playbook in skills/hosting-infra/references/cdn-configuration.md
+certify-skill,dod-complete,P1,0,,router-fold,skill-foundry#certify-skill,playbook in skills/skill-foundry/references/certify-skill.md
+change-management-enterprise,pending,,3,agents/change-management-enterprise-specialist.md;commands/change-management-enterprise.md;prompts/enterprise/6-change-management-enterprise.md,router-fold,business-analysis#change-management-enterprise,playbook in skills/business-analysis/references/change-management-enterprise.md
+change-readiness,pending,,1,agents/change-catalyst.md,router-fold,business-analysis#change-readiness,playbook in skills/business-analysis/references/change-readiness.md
+changelog-management,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+changelog-writing,pending,,3,agents/changelog-writing-specialist.md;commands/changelog-writing.md;prompts/content/12-changelog-writing.md,router-fold,docs-writing#changelog-writing,playbook in skills/docs-writing/references/changelog-writing.md
+chatbot-design,pending,,3,agents/chatbot-design-specialist.md;commands/chatbot-design.md;prompts/ai/10-chatbot-design.md,router-fold,ai-architecture#chatbot-design,playbook in skills/ai-architecture/references/chatbot-design.md
+ci-cd-pipeline,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+ci-pipeline-design,pending,,3,agents/ci-pipeline-design-specialist.md;commands/ci-pipeline-design.md;prompts/devops/16-ci-pipeline-design.md,router-fold,devops-deploy#ci-pipeline-design,playbook in skills/devops-deploy/references/ci-pipeline-design.md
+cierre-conversacion,dod-complete,P1,1,agents/jarvis-orchestrator.md,router-fold,carrera#cierre-conversacion,playbook in skills/carrera/references/cierre-conversacion.md
+claude-md-architecture,dod-complete,P1,0,,core,claude-md-architecture,standalone skill in beta
+client-browser-audit,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+client-dossier,pending,,1,agents/dossier-builder.md,router-fold,sales-bizdev#client-dossier,playbook in skills/sales-bizdev/references/client-dossier.md
+client-prospecting,pending,,1,agents/client-prospector.md,router-fold,sales-bizdev#client-prospecting,playbook in skills/sales-bizdev/references/client-prospecting.md
+cloud-functions,pending,,2,agents/cloud-functions-dev.md;agents/event-designer.md,router-fold,firebase#cloud-functions,playbook in skills/firebase/references/cloud-functions.md
+cloud-migration,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+cloud-native-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+code-review,dod-complete,P1,1,agents/code-reviewer.md,router-fold,ai-quality#code-review,playbook in skills/ai-quality/references/code-review.md
+code-review-checklist,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+cohort-analysis,pending,,3,agents/cohort-analysis-specialist.md;commands/cohort-analysis.md;prompts/analytics/8-cohort-analysis.md,router-fold,product-analytics#cohort-analysis,playbook in skills/product-analytics/references/cohort-analysis.md
+color-theory,pending,,3,agents/color-theory-specialist.md;commands/color-theory.md;prompts/ux/6-color-theory.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
+commercial-model,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+competitive-intelligence,pending,,1,agents/competitive-analyst.md,router-fold,market-intel#competitive-intelligence,playbook in skills/market-intel/references/competitive-intelligence.md
+competitive-positioning,pending,,3,agents/competitive-positioning-specialist.md;commands/competitive-positioning.md;prompts/business/14-competitive-positioning.md,router-fold,market-intel#competitive-positioning,playbook in skills/market-intel/references/competitive-positioning.md
+competitor-teardown,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+compliance-assessment,pending,,3,agents/compliance-checker.md;agents/evidence-auditor.md;agents/integrity-validator.md,router-fold,legal-compliance#compliance-assessment,playbook in skills/legal-compliance/references/compliance-assessment.md
+compliance-framework,pending,,3,agents/compliance-framework-specialist.md;commands/compliance-framework.md;prompts/enterprise/1-compliance-framework.md,router-fold,legal-compliance#compliance-framework,playbook in skills/legal-compliance/references/compliance-framework.md
+component-architecture,pending,,1,agents/component-designer.md,router-fold,web-frontend#component-architecture,playbook in skills/web-frontend/references/component-architecture.md
+component-designer,pending,,1,agents/component-designer.md,router-fold,ux-design#component-designer,playbook in skills/ux-design/references/component-designer.md
+constitution-compliance,dod-complete,P1,1,agents/adk-orchestrator.md,router-fold,guardrails#constitution-compliance,playbook in skills/guardrails/references/constitution-compliance.md
+contact-database,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+content-calendar,pending,,3,agents/content-calendar-specialist.md;commands/content-calendar.md;prompts/business/12-content-calendar.md,router-fold,marketing-content#content-calendar,playbook in skills/marketing-content/references/content-calendar.md
+context-optimization,dod-complete,P1,3,agents/adk-orchestrator.md;agents/context-manager.md;agents/skill-router.md,alias,context-optimizer,duplicate of context-optimizer
+context-optimizer,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+context-window-engineering,dod-complete,P1,0,,core,context-window-engineering,standalone skill in beta
+context-window-management,dod-complete,P1,3,agents/context-window-management-specialist.md;commands/context-window-management.md;prompts/ai/13-context-window-management.md,router-fold,session-workspace#context-window-management,playbook in skills/session-workspace/references/context-window-management.md
+continuous-learning,dod-complete,P1,2,agents/adk-orchestrator.md;agents/quality-guardian.md,router-fold,agent-orchestration#continuous-learning,playbook in skills/agent-orchestration/references/continuous-learning.md
+contract-review,pending,,3,agents/contract-review-specialist.md;commands/contract-review.md;prompts/enterprise/11-contract-review.md,router-fold,legal-compliance#contract-review,playbook in skills/legal-compliance/references/contract-review.md
+conversion-optimization,pending,,3,agents/conversion-optimization-specialist.md;commands/conversion-optimization.md;prompts/business/2-conversion-optimization.md,router-fold,seo-growth#conversion-optimization,playbook in skills/seo-growth/references/conversion-optimization.md
+copywriting,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+copywriting-frameworks,pending,,3,agents/copywriting-frameworks-specialist.md;commands/copywriting-frameworks.md;prompts/business/5-copywriting-frameworks.md,router-fold,marketing-content#copywriting-frameworks,playbook in skills/marketing-content/references/copywriting-frameworks.md
+cors-configuration,pending,,3,agents/cors-configuration-specialist.md;commands/cors-configuration.md;prompts/devops/14-cors-configuration.md,router-fold,security#cors-configuration,playbook in skills/security/references/cors-configuration.md
+cost-estimation,pending,,2,agents/cost-estimator.md;agents/pitch-crafter.md,router-fold,pm-delivery#cost-estimation,playbook in skills/pm-delivery/references/cost-estimation.md
+create-antigravity-skill,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+creator-moat-skill,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+cross-browser-testing,pending,,1,agents/cross-browser-tester.md,router-fold,testing-qa#cross-browser-testing,playbook in skills/testing-qa/references/cross-browser-testing.md
+cross-platform-convert,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+css-animation,pending,,2,agents/animation-specialist.md;agents/portfolio-builder.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
+css-architecture,pending,,3,agents/css-architect.md;agents/design-system-architect.md;agents/frontend-craftsman.md,router-fold,web-frontend#css-architecture,playbook in skills/web-frontend/references/css-architecture.md
+custom-tooling-extension,dod-complete,P1,0,,core,custom-tooling-extension,standalone skill in beta
+cv-cover-optimizer,dod-complete,P1,0,,router-fold,carrera#cv-cover-optimizer,playbook in skills/carrera/references/cv-cover-optimizer.md
+cv-enhancement,pending,,1,agents/cv-specialist.md,router-fold,carrera#cv-enhancement,playbook in skills/carrera/references/cv-enhancement.md
+cv-transformer,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+daily-close,not-in-ledger,,0,,core,daily-close,standalone skill in beta
+dark-mode,pending,,3,agents/brand-html-crafter.md;agents/css-architect.md;commands/evolve.md,router-fold,web-frontend#dark-mode,playbook in skills/web-frontend/references/dark-mode.md
+dashboard-design,pending,,3,agents/dashboard-design-specialist.md;commands/dashboard-design.md;prompts/analytics/2-dashboard-design.md,router-fold,ux-design#dashboard-design,playbook in skills/ux-design/references/dashboard-design.md
+data-documentation,pending,,3,agents/data-documentation-specialist.md;commands/data-documentation.md;prompts/analytics/15-data-documentation.md,router-fold,data-governance#data-documentation,playbook in skills/data-governance/references/data-documentation.md
+data-engineering,pending,,0,,router-fold,data-platform#data-engineering,playbook in skills/data-platform/references/data-engineering.md
+data-export,pending,,3,agents/data-export-specialist.md;commands/data-export.md;prompts/analytics/11-data-export.md,router-fold,data-platform#data-export,playbook in skills/data-platform/references/data-export.md
+data-flow-architecture,pending,,0,,router-fold,data-platform#data-flow-architecture,playbook in skills/data-platform/references/data-flow-architecture.md
+data-governance,pending,,0,,router-fold,data-governance#data-governance,playbook in skills/data-governance/references/data-governance.md
+data-migration,pending,,0,,router-fold,data-platform#data-migration,playbook in skills/data-platform/references/data-migration.md
+data-privacy-patterns,pending,,3,agents/data-privacy-patterns-specialist.md;commands/data-privacy-patterns.md;prompts/analytics/10-data-privacy-patterns.md,router-fold,data-governance#data-privacy-patterns,playbook in skills/data-governance/references/data-privacy-patterns.md
+data-quality,pending,,0,,router-fold,data-platform#data-quality,playbook in skills/data-platform/references/data-quality.md
+data-science-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+data-storytelling,pending,,0,,router-fold,data-governance#data-storytelling,playbook in skills/data-governance/references/data-storytelling.md
+data-strategy,pending,,1,agents/data-strategist.md,router-fold,data-governance#data-strategy,playbook in skills/data-governance/references/data-strategy.md
+data-validation,pending,,3,agents/data-validation-specialist.md;commands/data-validation.md;prompts/analytics/3-data-validation.md,router-fold,data-platform#data-validation,playbook in skills/data-platform/references/data-validation.md
+data-visualization,pending,,2,agents/chart-specialist.md;agents/dashboard-builder.md,router-fold,product-analytics#data-visualization,playbook in skills/product-analytics/references/data-visualization.md
+database-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+database-design,pending,,2,agents/data-modeler.md;agents/database-architect.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
+dbr-daily-plan,not-in-ledger,,1,agents/jarvis-orchestrator.md,core,dbr-daily-plan,standalone skill in beta
+dependency-analysis,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+dependency-management,pending,,3,agents/dependency-management-specialist.md;commands/dependency-management.md;prompts/devops/8-dependency-management.md,router-fold,devops-deploy#dependency-management,playbook in skills/devops-deploy/references/dependency-management.md
+deployment-checklist,pending,,1,agents/pipeline-conductor.md,router-fold,devops-deploy#deployment-checklist,playbook in skills/devops-deploy/references/deployment-checklist.md
+design-agent,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+design-critique,pending,,3,agents/design-critique-specialist.md;commands/design-critique.md;prompts/ux/3-design-critique.md,router-fold,ux-design#design-critique,playbook in skills/ux-design/references/design-critique.md
+design-skill,dod-complete,P1,0,,router-fold,skill-foundry#design-skill,playbook in skills/skill-foundry/references/design-skill.md
+design-system,pending,,1,agents/design-system-architect.md,router-fold,ux-design#design-system,playbook in skills/ux-design/references/design-system.md
+developer-onboarding,pending,,3,agents/developer-onboarding-specialist.md;commands/developer-onboarding.md;prompts/enterprise/13-developer-onboarding.md,router-fold,docs-writing#developer-onboarding,playbook in skills/docs-writing/references/developer-onboarding.md
+devsecops-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+digital-presence,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+disaster-recovery,pending,,3,agents/disaster-recovery-specialist.md;commands/disaster-recovery.md;prompts/enterprise/8-disaster-recovery.md,router-fold,hosting-infra#disaster-recovery,playbook in skills/hosting-infra/references/disaster-recovery.md
+discovery-handover,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+discovery-orchestration,dod-complete,P1,2,agents/discovery-reporter.md;agents/pipeline-conductor.md,alias,discovery-orchestrator,duplicate of discovery-orchestrator
+discovery-orchestrator,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+discovery-retrospective,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+dns-architecture,pending,,3,agents/dns-architecture-specialist.md;commands/dns-architecture.md;prompts/devops/11-dns-architecture.md,router-fold,hosting-infra#dns-architecture,playbook in skills/hosting-infra/references/dns-architecture.md
+docker-awareness,pending,,3,agents/docker-awareness-specialist.md;commands/docker-awareness.md;prompts/devops/1-docker-awareness.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
+documentation-standards,pending,,3,agents/documentation-standards-specialist.md;commands/documentation-standards.md;prompts/enterprise/4-documentation-standards.md,router-fold,docs-writing#documentation-standards,playbook in skills/docs-writing/references/documentation-standards.md
+documentation-system,pending,,3,agents/documentation-system-specialist.md;commands/documentation-system.md;prompts/content/11-documentation-system.md,router-fold,docs-writing#documentation-system,playbook in skills/docs-writing/references/documentation-system.md
+domain-dns-setup,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+domain-driven-design,pending,,1,agents/domain-modeler.md,router-fold,architecture#domain-driven-design,playbook in skills/architecture/references/domain-driven-design.md
+domain-management,pending,,2,agents/domain-dns-specialist.md;agents/hostinger-expert.md,router-fold,hosting-infra#domain-management,playbook in skills/hosting-infra/references/domain-management.md
+dual-layer-verification,pending,,2,agents/quality-guardian.md;agents/security-scanner.md,router-fold,security#dual-layer-verification,playbook in skills/security/references/dual-layer-verification.md
+dynamic-sme,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+e2e-testing,pending,,2,agents/e2e-test-writer.md;agents/quality-engineer.md,router-fold,testing-qa#e2e-testing,playbook in skills/testing-qa/references/e2e-testing.md
+ecommerce-frontend,pending,,1,agents/ecommerce-builder.md,router-fold,web-frontend#ecommerce-frontend,playbook in skills/web-frontend/references/ecommerce-frontend.md
+ecosystem-forge,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+email-sending,pending,,1,agents/email-service-specialist.md,router-fold,email-comms#email-sending,playbook in skills/email-comms/references/email-sending.md
+email-template-builder,pending,,1,agents/email-template-builder.md,router-fold,email-comms#email-template-builder,playbook in skills/email-comms/references/email-template-builder.md
+email-templates,pending,,1,agents/email-template-builder.md,router-fold,email-comms#email-templates,playbook in skills/email-comms/references/email-templates.md
+embedding-strategy,pending,,3,agents/embedding-strategy-specialist.md;commands/embedding-strategy.md;prompts/ai/5-embedding-strategy.md,router-fold,ai-architecture#embedding-strategy,playbook in skills/ai-architecture/references/embedding-strategy.md
+empty-states,pending,,3,agents/empty-states-specialist.md;commands/empty-states.md;prompts/ux/12-empty-states.md,router-fold,ux-design#empty-states,playbook in skills/ux-design/references/empty-states.md
+enterprise-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+environment-detection,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+environment-management,pending,,3,agents/environment-management-specialist.md;commands/environment-management.md;prompts/devops/7-environment-management.md,router-fold,devops-deploy#environment-management,playbook in skills/devops-deploy/references/environment-management.md
+error-handling,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+error-handling-patterns,pending,,1,prompts/quality/87-error-handling-patterns.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
+error-messaging,pending,,3,agents/error-messaging-specialist.md;commands/error-messaging.md;prompts/content/13-error-messaging.md,router-fold,ux-design#error-messaging,playbook in skills/ux-design/references/error-messaging.md
+error-recovery-automation,dod-complete,P1,3,agents/error-recovery-automation-specialist.md;commands/error-recovery-automation.md;prompts/automation/13-error-recovery-automation.md,router-fold,agent-orchestration#error-recovery-automation,playbook in skills/agent-orchestration/references/error-recovery-automation.md
+etl-patterns,pending,,3,agents/etl-patterns-specialist.md;commands/etl-patterns.md;prompts/analytics/5-etl-patterns.md,router-fold,data-platform#etl-patterns,playbook in skills/data-platform/references/etl-patterns.md
+evaluation-confidence-design,dod-complete,P1,0,,core,evaluation-confidence-design,standalone skill in beta
+event-architecture,pending,,1,agents/event-designer.md,router-fold,architecture#event-architecture,playbook in skills/architecture/references/event-architecture.md
+event-marketing,pending,,3,agents/event-marketing-specialist.md;commands/event-marketing.md;prompts/business/16-event-marketing.md,router-fold,marketing-content#event-marketing,playbook in skills/marketing-content/references/event-marketing.md
+excellence-loop,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+executive-pitch,pending,,4,agents/copywriter.md;agents/discovery-reporter.md;agents/dossier-builder.md;agents/pitch-crafter.md,router-fold,sales-bizdev#executive-pitch,playbook in skills/sales-bizdev/references/executive-pitch.md
+executive-summary,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+feasibility-validation,pending,,1,agents/feasibility-validator.md,router-fold,business-analysis#feasibility-validation,playbook in skills/business-analysis/references/feasibility-validation.md
+few-shot-engineering,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+file-storage,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+file-watcher,pending,,3,agents/file-watcher-specialist.md;commands/file-watcher.md;prompts/automation/11-file-watcher.md,router-fold,devops-deploy#file-watcher,playbook in skills/devops-deploy/references/file-watcher.md
+find-skills,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+fine-tuning-prep,pending,,3,agents/fine-tuning-prep-specialist.md;commands/fine-tuning-prep.md;prompts/ai/6-fine-tuning-prep.md,router-fold,ai-architecture#fine-tuning-prep,playbook in skills/ai-architecture/references/fine-tuning-prep.md
+finops,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+firebase-architecture,pending,,0,,router-fold,firebase#architecture,playbook in skills/firebase/references/architecture.md
+firebase-auth,pending,,3,agents/auth-architect.md;agents/firebase-auth-expert.md;agents/firebase-specialist.md,router-fold,firebase#auth,playbook in skills/firebase/references/auth.md
+firebase-auth-setup,pending,,0,,alias,firebase#auth,duplicate of firebase-auth
+firebase-cost-optimization,pending,,0,,router-fold,firebase#cost-optimization,playbook in skills/firebase/references/cost-optimization.md
+firebase-deployment,pending,,2,agents/deployment-specialist.md;agents/firebase-deployer.md,router-fold,firebase#deployment,playbook in skills/firebase/references/deployment.md
+firebase-emulator-setup,pending,,0,,router-fold,firebase#emulator-setup,playbook in skills/firebase/references/emulator-setup.md
+firebase-extensions,pending,,0,,router-fold,firebase#extensions,playbook in skills/firebase/references/extensions.md
+firebase-functions,pending,,0,,router-fold,firebase#functions,playbook in skills/firebase/references/functions.md
+firebase-hosting,pending,,1,agents/firebase-hosting-expert.md,router-fold,firebase#hosting,playbook in skills/firebase/references/hosting.md
+firebase-hosting-setup,pending,,0,,alias,firebase#hosting,duplicate of firebase-hosting
+firebase-setup,pending,,2,agents/firebase-emulator-expert.md;agents/firebase-specialist.md,router-fold,firebase#setup,playbook in skills/firebase/references/setup.md
+firebase-storage,pending,,1,agents/firebase-storage-expert.md,router-fold,firebase#storage,playbook in skills/firebase/references/storage.md
+firestore-modeling,pending,,4,agents/data-modeler.md;agents/database-architect.md;agents/firebase-specialist.md;agents/firestore-expert.md,router-fold,firebase#firestore-modeling,playbook in skills/firebase/references/firestore-modeling.md
+firestore-queries,pending,,1,agents/firestore-expert.md,router-fold,firebase#firestore-queries,playbook in skills/firebase/references/firestore-queries.md
+firestore-schema-design,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+firestore-security-rules,pending,,1,agents/firestore-expert.md,router-fold,firebase#firestore-security-rules,playbook in skills/firebase/references/firestore-security-rules.md
+first-use-onboarding,pending,,1,commands/first-use.md,router-fold,ux-design#first-use-onboarding,playbook in skills/ux-design/references/first-use-onboarding.md
+fix-common-issues,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+flow-mapping,pending,,2,agents/domain-modeler.md;agents/flow-mapper.md,router-fold,business-analysis#flow-mapping,playbook in skills/business-analysis/references/flow-mapping.md
+folio-generator,dod-complete,P1,0,,router-fold,brand-output#folio-generator,playbook in skills/brand-output/references/folio-generator.md
+follow-up-email,dod-complete,P1,0,,router-fold,carrera#follow-up-email,playbook in skills/carrera/references/follow-up-email.md
+font-optimization,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+form-builder,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+form-engineering,dod-complete,P1,1,agents/form-specialist.md,router-fold,web-frontend#form-engineering,playbook in skills/web-frontend/references/form-engineering.md
+form-ux-advanced,dod-complete,P1,3,agents/form-ux-advanced-specialist.md;commands/form-ux-advanced.md;prompts/ux/11-form-ux-advanced.md,router-fold,ux-design#form-ux-advanced,playbook in skills/ux-design/references/form-ux-advanced.md
+frontload-prompt,not-in-ledger,,1,agents/jarvis-orchestrator.md,core,frontload-prompt,standalone skill in beta
+functional-spec,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+functional-toolbelt,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+funnel-analytics,dod-complete,P1,3,agents/funnel-analytics-specialist.md;commands/funnel-analytics.md;prompts/analytics/9-funnel-analytics.md,router-fold,product-analytics#funnel-analytics,playbook in skills/product-analytics/references/funnel-analytics.md
+funnel-design,pending,,3,agents/funnel-design-specialist.md;commands/funnel-design.md;prompts/business/6-funnel-design.md,router-fold,seo-growth#funnel-design,playbook in skills/seo-growth/references/funnel-design.md
+genai-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+generate-qa-report,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+generate-qa-scorecard,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+git-hook-integration,pending,,3,agents/git-hook-integration-specialist.md;commands/git-hook-integration.md;prompts/automation/12-git-hook-integration.md,router-fold,devops-deploy#git-hook-integration,playbook in skills/devops-deploy/references/git-hook-integration.md
+git-workflow,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+github-actions-ci,dod-complete,P1,2,agents/ci-cd-configurator.md;agents/deployment-specialist.md,router-fold,devops-deploy#github-actions-ci,playbook in skills/devops-deploy/references/github-actions-ci.md
+gmail-mcp,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+google-analytics,pending,,1,agents/google-apis-specialist.md,router-fold,google-workspace#google-analytics,playbook in skills/google-workspace/references/google-analytics.md
+google-apis-integration,pending,,0,,router-fold,google-workspace#google-apis-integration,playbook in skills/google-workspace/references/google-apis-integration.md
+google-calendar-mcp,pending,,0,,router-fold,google-workspace#google-calendar-mcp,playbook in skills/google-workspace/references/google-calendar-mcp.md
+google-docs-mcp,pending,,0,,router-fold,google-workspace#google-docs-mcp,playbook in skills/google-workspace/references/google-docs-mcp.md
+google-drive-mcp,pending,,0,,router-fold,google-workspace#google-drive-mcp,playbook in skills/google-workspace/references/google-drive-mcp.md
+google-maps-integration,pending,,1,agents/map-specialist.md,router-fold,google-workspace#google-maps-integration,playbook in skills/google-workspace/references/google-maps-integration.md
+google-sheets-mcp,pending,,0,,router-fold,google-workspace#google-sheets-mcp,playbook in skills/google-workspace/references/google-sheets-mcp.md
+google-slides-mcp,pending,,0,,router-fold,google-workspace#google-slides-mcp,playbook in skills/google-workspace/references/google-slides-mcp.md
+google-workspace-apis,pending,,1,agents/google-apis-specialist.md,router-fold,google-workspace#apis,playbook in skills/google-workspace/references/apis.md
+governance-framework,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+gratitud-post-proceso,dod-complete,P1,0,,router-fold,carrera#gratitud-post-proceso,playbook in skills/carrera/references/gratitud-post-proceso.md
+grid-systems,pending,,3,agents/grid-systems-specialist.md;commands/grid-systems.md;prompts/ux/9-grid-systems.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
+guardrails-management,dod-complete,P1,0,,router-fold,guardrails#management,playbook in skills/guardrails/references/management.md
+health-check-automation,dod-complete,P1,3,agents/health-check-automation-specialist.md;commands/health-check-automation.md;prompts/automation/16-health-check-automation.md,router-fold,observability#health-check-automation,playbook in skills/observability/references/health-check-automation.md
+hook-creator,pending,,0,,router-fold,skill-foundry#hook-creator,playbook in skills/skill-foundry/references/hook-creator.md
+hook-engineering,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+hostinger-deployment,pending,,3,agents/deployment-specialist.md;agents/hostinger-expert.md;agents/infrastructure-planner.md,router-fold,hosting-infra#hostinger-deployment,playbook in skills/hosting-infra/references/hostinger-deployment.md
+html-brand,pending,,0,,router-fold,brand-output#html-brand,playbook in skills/brand-output/references/html-brand.md
+html-semantic,pending,,3,agents/frontend-craftsman.md;agents/html-specialist.md;agents/vanilla-js-specialist.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
+html-semantic-builder,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+http-headers,pending,,3,agents/http-headers-specialist.md;commands/http-headers.md;prompts/devops/15-http-headers.md,router-fold,security#http-headers,playbook in skills/security/references/http-headers.md
+human-escalation-design,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+iconography,pending,,3,agents/iconography-specialist.md;commands/iconography.md;prompts/ux/7-iconography.md,router-fold,ux-design#iconography,playbook in skills/ux-design/references/iconography.md
+ideate-component,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+ideate-plugin,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+iic-artifact-analyzer,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+iic-bugfix,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+iic-checklist-generator,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+iic-clarify,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+iic-constitution,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+iic-core-engine,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+iic-implement,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+iic-plan-generator,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+iic-specify,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+iic-task-decomposer,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+iic-tasks-to-issues,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+iic-testify,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+iikit-00-constitution,pending,,0,,router-fold,iikit#00-constitution,playbook in skills/iikit/references/00-constitution.md
+iikit-01-specify,pending,,0,,router-fold,iikit#01-specify,playbook in skills/iikit/references/01-specify.md
+iikit-02-plan,pending,,0,,router-fold,iikit#02-plan,playbook in skills/iikit/references/02-plan.md
+iikit-03-checklist,pending,,0,,router-fold,iikit#03-checklist,playbook in skills/iikit/references/03-checklist.md
+iikit-04-testify,pending,,0,,router-fold,iikit#04-testify,playbook in skills/iikit/references/04-testify.md
+iikit-05-tasks,pending,,0,,router-fold,iikit#05-tasks,playbook in skills/iikit/references/05-tasks.md
+iikit-06-analyze,pending,,0,,router-fold,iikit#06-analyze,playbook in skills/iikit/references/06-analyze.md
+iikit-07-implement,pending,,0,,router-fold,iikit#07-implement,playbook in skills/iikit/references/07-implement.md
+iikit-08-taskstoissues,pending,,0,,router-fold,iikit#08-taskstoissues,playbook in skills/iikit/references/08-taskstoissues.md
+iikit-bugfix,pending,,0,,router-fold,iikit#bugfix,playbook in skills/iikit/references/bugfix.md
+iikit-clarify,pending,,0,,router-fold,iikit#clarify,playbook in skills/iikit/references/clarify.md
+iikit-core,pending,,0,,router-fold,iikit#core,playbook in skills/iikit/references/core.md
+image-optimization,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+incident-response,pending,,3,agents/incident-response-specialist.md;commands/incident-response.md;prompts/devops/5-incident-response.md,router-fold,observability#incident-response,playbook in skills/observability/references/incident-response.md
+independent-review-design,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+indexability-validator,pending,,1,agents/quality-guardian.md,router-fold,seo-growth#indexability-validator,playbook in skills/seo-growth/references/indexability-validator.md
+infrastructure-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+infrastructure-design,pending,,1,agents/infrastructure-planner.md,router-fold,hosting-infra#infrastructure-design,playbook in skills/hosting-infra/references/infrastructure-design.md
+input-analysis,dod-complete,P1,3,agents/input-amplifier.md;agents/jarvis-orchestrator.md;agents/requirements-analyst.md,alias,input-analyst,duplicate of input-analyst
+input-analyst,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+input-sanitization,pending,,1,agents/security-scanner.md,router-fold,security#input-sanitization,playbook in skills/security/references/input-sanitization.md
+input-tolerance,pending,,1,agents/adk-orchestrator.md,router-fold,guardrails#input-tolerance,playbook in skills/guardrails/references/input-tolerance.md
+integration-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+integration-testing,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+integrity-chain-validation,pending,,2,agents/integrity-validator.md;agents/quality-guardian.md,router-fold,guardrails#integrity-chain-validation,playbook in skills/guardrails/references/integrity-chain-validation.md
+intelligent-routing,pending,,1,agents/adk-orchestrator.md,router-fold,agent-orchestration#intelligent-routing,playbook in skills/agent-orchestration/references/intelligent-routing.md
+internal-memo,pending,,3,agents/internal-memo-specialist.md;commands/internal-memo.md;prompts/content/8-internal-memo.md,router-fold,docs-writing#internal-memo,playbook in skills/docs-writing/references/internal-memo.md
+internationalization,pending,,3,agents/i18n-specialist.md;commands/add-i18n.md;prompts/development/62-implement-i18n.md,router-fold,web-frontend#internationalization,playbook in skills/web-frontend/references/internationalization.md
+interview-prep,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+inventory-management,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+invoice-generator,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+jarvis-bootstrap,not-in-ledger,,0,,core,jarvis-bootstrap,standalone skill in beta
+jarvis-os,not-in-ledger,,1,agents/jarvis-orchestrator.md,core,jarvis-os,standalone skill in beta
+javascript-patterns,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+jmlabs-corporate-doc,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+katas-adaptive-investigation,dod-complete,P1,0,,router-fold,kata#adaptive-investigation,playbook in skills/kata/references/adaptive-investigation.md
+katas-builtin-tool-selection,dod-complete,P1,0,,router-fold,kata#builtin-tool-selection,playbook in skills/kata/references/builtin-tool-selection.md
+katas-confidence-stratified-sampling,dod-complete,P1,0,,router-fold,kata#confidence-stratified-sampling,playbook in skills/kata/references/confidence-stratified-sampling.md
+katas-context-dilution-mitigation,dod-complete,P1,0,,router-fold,kata#context-dilution-mitigation,playbook in skills/kata/references/context-dilution-mitigation.md
+katas-critical-self-correction,pending,,0,,router-fold,kata#critical-self-correction,playbook in skills/kata/references/critical-self-correction.md
+katas-custom-commands-skills,pending,,0,,router-fold,kata#custom-commands-skills,playbook in skills/kata/references/custom-commands-skills.md
+katas-defensive-structured-extraction,pending,,0,,router-fold,kata#defensive-structured-extraction,playbook in skills/kata/references/defensive-structured-extraction.md
+katas-deterministic-agent-loop,pending,,0,,router-fold,kata#deterministic-agent-loop,playbook in skills/kata/references/deterministic-agent-loop.md
+katas-false-positive-criteria,pending,,0,,router-fold,kata#false-positive-criteria,playbook in skills/kata/references/false-positive-criteria.md
+katas-fewshot-edge-calibration,pending,,0,,router-fold,kata#fewshot-edge-calibration,playbook in skills/kata/references/fewshot-edge-calibration.md
+katas-headless-code-review,pending,,0,,router-fold,kata#headless-code-review,playbook in skills/kata/references/headless-code-review.md
+katas-hierarchical-claude-memory,pending,,0,,router-fold,kata#hierarchical-claude-memory,playbook in skills/kata/references/hierarchical-claude-memory.md
+katas-hub-and-spoke-isolation,pending,,0,,router-fold,kata#hub-and-spoke-isolation,playbook in skills/kata/references/hub-and-spoke-isolation.md
+katas-human-handoff-protocol,pending,,0,,router-fold,kata#human-handoff-protocol,playbook in skills/kata/references/human-handoff-protocol.md
+katas-independent-reviewer-multipass,pending,,0,,router-fold,kata#independent-reviewer-multipass,playbook in skills/kata/references/independent-reviewer-multipass.md
+katas-mcp-server-configuration,pending,,0,,router-fold,kata#mcp-server-configuration,playbook in skills/kata/references/mcp-server-configuration.md
+katas-mcp-structured-errors,pending,,0,,router-fold,kata#mcp-structured-errors,playbook in skills/kata/references/mcp-structured-errors.md
+katas-message-batch-processing,pending,,0,,router-fold,kata#message-batch-processing,playbook in skills/kata/references/message-batch-processing.md
+katas-multiagent-error-propagation,pending,,0,,router-fold,kata#multiagent-error-propagation,playbook in skills/kata/references/multiagent-error-propagation.md
+katas-multipass-prompt-chaining,pending,,0,,router-fold,kata#multipass-prompt-chaining,playbook in skills/kata/references/multipass-prompt-chaining.md
+katas-path-conditional-rules,pending,,0,,router-fold,kata#path-conditional-rules,playbook in skills/kata/references/path-conditional-rules.md
+katas-persistent-scratchpad,dod-complete,P1,0,,router-fold,kata#persistent-scratchpad,playbook in skills/kata/references/persistent-scratchpad.md
+katas-plan-mode-exploration,pending,,0,,router-fold,kata#plan-mode-exploration,playbook in skills/kata/references/plan-mode-exploration.md
+katas-posttooluse-normalization,dod-complete,P1,0,,router-fold,kata#posttooluse-normalization,playbook in skills/kata/references/posttooluse-normalization.md
+katas-prefix-caching,pending,,0,,router-fold,kata#prefix-caching,playbook in skills/kata/references/prefix-caching.md
+katas-pretooluse-guardrails,dod-complete,P1,0,,router-fold,kata#pretooluse-guardrails,playbook in skills/kata/references/pretooluse-guardrails.md
+katas-provenance-preservation,dod-complete,P1,0,,router-fold,kata#provenance-preservation,playbook in skills/kata/references/provenance-preservation.md
+katas-session-resume-fork,dod-complete,P1,0,,router-fold,kata#session-resume-fork,playbook in skills/kata/references/session-resume-fork.md
+katas-tool-description-quality,dod-complete,P1,0,,router-fold,kata#tool-description-quality,playbook in skills/kata/references/tool-description-quality.md
+katas-validation-retry-feedback,dod-complete,P1,0,,router-fold,kata#validation-retry-feedback,playbook in skills/kata/references/validation-retry-feedback.md
+kit-orchestrator,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+knowledge-management,dod-complete,P1,3,agents/knowledge-management-specialist.md;commands/knowledge-management.md;prompts/enterprise/5-knowledge-management.md,router-fold,docs-writing#knowledge-management,playbook in skills/docs-writing/references/knowledge-management.md
+kpi-framework,pending,,3,agents/kpi-framework-specialist.md;commands/kpi-framework.md;prompts/analytics/1-kpi-framework.md,router-fold,product-analytics#kpi-framework,playbook in skills/product-analytics/references/kpi-framework.md
+lab-session,not-in-ledger,,1,agents/jarvis-orchestrator.md,core,lab-session,standalone skill in beta
+landing-page-builder,pending,,1,agents/landing-page-builder.md,router-fold,seo-growth#landing-page-builder,playbook in skills/seo-growth/references/landing-page-builder.md
+landing-pages,pending,,2,agents/copywriter.md;agents/landing-page-builder.md,router-fold,seo-growth#landing-pages,playbook in skills/seo-growth/references/landing-pages.md
+lead-generation,pending,,3,agents/lead-generation-specialist.md;commands/lead-generation.md;prompts/business/13-lead-generation.md,router-fold,sales-bizdev#lead-generation,playbook in skills/sales-bizdev/references/lead-generation.md
+lighthouse-ci,pending,,1,agents/quality-guardian.md,router-fold,devops-deploy#lighthouse-ci,playbook in skills/devops-deploy/references/lighthouse-ci.md
+linkedin-optimization,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+linting-formatting,pending,,1,agents/linter-configurator.md,router-fold,devops-deploy#linting-formatting,playbook in skills/devops-deploy/references/linting-formatting.md
+llm-evaluation,pending,,3,agents/llm-evaluation-specialist.md;commands/llm-evaluation.md;prompts/ai/3-llm-evaluation.md,router-fold,ai-quality#llm-evaluation,playbook in skills/ai-quality/references/llm-evaluation.md
+local-state-preservation,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+localization-guide,pending,,3,agents/localization-guide-specialist.md;commands/localization-guide.md;prompts/content/15-localization-guide.md,router-fold,web-frontend#localization-guide,playbook in skills/web-frontend/references/localization-guide.md
+log-management,pending,,3,agents/log-management-specialist.md;commands/log-management.md;prompts/devops/4-log-management.md,router-fold,observability#log-management,playbook in skills/observability/references/log-management.md
+market-intelligence,pending,,1,agents/client-prospector.md,router-fold,market-intel#market-intelligence,playbook in skills/market-intel/references/market-intelligence.md
+marketing-context,pending,,3,agents/marketing-context-specialist.md;commands/marketing-context.md;prompts/business/1-marketing-context.md,router-fold,market-intel#marketing-context,playbook in skills/market-intel/references/marketing-context.md
+maturity-assessment,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+mcp-creator,dod-complete,P1,0,,router-fold,skill-foundry#mcp-creator,playbook in skills/skill-foundry/references/mcp-creator.md
+mcp-engineering,dod-complete,P1,0,,core,mcp-engineering,standalone skill in beta
+meeting-notes,pending,,1,commands/requirements.md,router-fold,docs-writing#meeting-notes,playbook in skills/docs-writing/references/meeting-notes.md
+mermaid-diagramming,pending,,3,agents/architecture-designer.md;agents/diagram-specialist.md;agents/flow-mapper.md,router-fold,docs-writing#mermaid-diagramming,playbook in skills/docs-writing/references/mermaid-diagramming.md
+message-batch-orchestration,dod-complete,P1,0,,core,message-batch-orchestration,standalone skill in beta
+meta-orchestration-updater,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+meta-skill-creator,pending,,0,,router-fold,skill-foundry#meta-skill-creator,playbook in skills/skill-foundry/references/meta-skill-creator.md
+meta-skill-deployer,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+meta-skill-indexer,pending,,0,,router-fold,skill-foundry#meta-skill-indexer,playbook in skills/skill-foundry/references/meta-skill-indexer.md
+meta-skill-reviewer,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+meta-skill-searcher,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+metrics-instrumentation,pending,,3,agents/metrics-instrumentation-specialist.md;commands/metrics-instrumentation.md;prompts/analytics/16-metrics-instrumentation.md,router-fold,product-analytics#metrics-instrumentation,playbook in skills/product-analytics/references/metrics-instrumentation.md
+micro-interactions,pending,,6,agents/animation-specialist.md;agents/micro-interactions-specialist.md;commands/add-animation.md;commands/micro-interactions.md;prompts/development/63-implement-animation.md;prompts/ux/5-micro-interactions.md,router-fold,ux-design#micro-interactions,playbook in skills/ux-design/references/micro-interactions.md
+microcopy-writing,pending,,3,agents/microcopy-writing-specialist.md;commands/microcopy-writing.md;prompts/content/14-microcopy-writing.md,router-fold,ux-design#microcopy-writing,playbook in skills/ux-design/references/microcopy-writing.md
+migration-planning,pending,,1,agents/migration-planner.md,router-fold,architecture#migration-planning,playbook in skills/architecture/references/migration-planning.md
+mobile-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+mobile-assessment,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+mobile-patterns,pending,,3,agents/mobile-patterns-specialist.md;commands/mobile-patterns.md;prompts/ux/16-mobile-patterns.md,router-fold,ux-design#mobile-patterns,playbook in skills/ux-design/references/mobile-patterns.md
+modal-dialog-patterns,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+monitoring-alerting,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+monitoring-setup,pending,,3,agents/monitoring-setup-specialist.md;commands/monitoring-setup.md;prompts/devops/2-monitoring-setup.md,router-fold,observability#monitoring-setup,playbook in skills/observability/references/monitoring-setup.md
+monthly-audit,not-in-ledger,,0,,core,monthly-audit,standalone skill in beta
+motion-design,pending,,3,agents/motion-design-specialist.md;commands/motion-design.md;prompts/ux/10-motion-design.md,router-fold,ux-design#motion-design,playbook in skills/ux-design/references/motion-design.md
+multi-model-routing,pending,,3,agents/multi-model-routing-specialist.md;commands/multi-model-routing.md;prompts/ai/12-multi-model-routing.md,router-fold,agent-orchestration#multi-model-routing,playbook in skills/agent-orchestration/references/multi-model-routing.md
+naming-and-slugging,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+navigation-patterns,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+negociacion-oferta,dod-complete,P1,0,,router-fold,carrera#negociacion-oferta,playbook in skills/carrera/references/negociacion-oferta.md
+newsletter-design,pending,,3,agents/newsletter-design-specialist.md;commands/newsletter-design.md;prompts/business/11-newsletter-design.md,router-fold,email-comms#newsletter-design,playbook in skills/email-comms/references/newsletter-design.md
+node-api-builder,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+node-development,pending,,1,agents/node-specialist.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
+notebook-curator-seleccion,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+notification-handler,pending,,3,agents/notification-handler-specialist.md;commands/notification-handler.md;prompts/automation/8-notification-handler.md,router-fold,session-workspace#notification-handler,playbook in skills/session-workspace/references/notification-handler.md
+notification-service,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+notification-ux,pending,,3,agents/notification-ux-specialist.md;commands/notification-ux.md;prompts/ux/13-notification-ux.md,router-fold,ux-design#notification-ux,playbook in skills/ux-design/references/notification-ux.md
+oauth-social-login,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+observability,pending,,0,,core,observability,standalone skill in beta
+office-workflow-runner,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+official-source-verifier,dod-complete,P1,0,,core,official-source-verifier,standalone skill in beta
+okr-design,pending,,3,agents/okr-design-specialist.md;commands/okr-design.md;prompts/enterprise/15-okr-design.md,router-fold,pm-delivery#okr-design,playbook in skills/pm-delivery/references/okr-design.md
+onboarding-90-dias,dod-complete,P1,0,,router-fold,carrera#onboarding-90-dias,playbook in skills/carrera/references/onboarding-90-dias.md
+onboarding-playbook,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+onboarding-ux,pending,,3,agents/onboarding-ux-specialist.md;commands/onboarding-ux.md;prompts/business/10-onboarding-ux.md,router-fold,ux-design#onboarding-ux,playbook in skills/ux-design/references/onboarding-ux.md
+open-claude-security,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+open-claw-builder,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+openclaw-isolation,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+openclaw-personal-deploy,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+openclaw-tool-auth,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+output-contract-enforcer,dod-complete,P1,0,,router-fold,guardrails#output-contract-enforcer,playbook in skills/guardrails/references/output-contract-enforcer.md
+output-engineering,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+parallel-workflow,pending,,1,agents/pipeline-conductor.md,router-fold,agent-orchestration#parallel-workflow,playbook in skills/agent-orchestration/references/parallel-workflow.md
+partnership-strategy,pending,,3,agents/partnership-strategy-specialist.md;commands/partnership-strategy.md;prompts/business/15-partnership-strategy.md,router-fold,market-intel#partnership-strategy,playbook in skills/market-intel/references/partnership-strategy.md
+payment-integration,pending,,2,agents/ecommerce-builder.md;agents/payment-specialist.md,router-fold,integrations#payment-integration,playbook in skills/integrations/references/payment-integration.md
+pdf-architecture-reviewer,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+penetration-testing-guide,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+performance-architecture,pending,,1,agents/performance-architect.md,router-fold,architecture#performance-architecture,playbook in skills/architecture/references/performance-architecture.md
+performance-engineering,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+performance-testing,pending,,2,agents/performance-tester.md;agents/quality-guardian.md,router-fold,testing-qa#performance-testing,playbook in skills/testing-qa/references/performance-testing.md
+permission-fast-path,pending,,3,agents/permission-fast-path-specialist.md;commands/permission-fast-path.md;prompts/automation/10-permission-fast-path.md,router-fold,guardrails#permission-fast-path,playbook in skills/guardrails/references/permission-fast-path.md
+persistent-memory-design,dod-complete,P1,0,,core,persistent-memory-design,standalone skill in beta
+personal-branding,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+pipeline-governance,pending,,1,agents/adk-orchestrator.md,router-fold,data-governance#pipeline-governance,playbook in skills/data-governance/references/pipeline-governance.md
+pitch-deck,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+plan-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+plan-moat-strategy,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+plan-mode-workflow,dod-complete,P1,0,,core,plan-mode-workflow,standalone skill in beta
+plugin-builder,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+plugin-reload,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+poc-lab,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+podcast-prep,pending,,3,agents/podcast-prep-specialist.md;commands/podcast-prep.md;prompts/content/4-podcast-prep.md,router-fold,marketing-content#podcast-prep,playbook in skills/marketing-content/references/podcast-prep.md
+portfolio-sites,pending,,1,agents/portfolio-builder.md,router-fold,web-frontend#portfolio-sites,playbook in skills/web-frontend/references/portfolio-sites.md
+post-tool-use-validator,dod-complete,P1,3,agents/post-tool-use-validator-specialist.md;commands/post-tool-use-validator.md;prompts/automation/2-post-tool-use-validator.md,router-fold,guardrails#post-tool-use-validator,playbook in skills/guardrails/references/post-tool-use-validator.md
+pre-compact-context,dod-complete,P1,3,agents/pre-compact-context-specialist.md;commands/pre-compact-context.md;prompts/automation/6-pre-compact-context.md,router-fold,session-workspace#pre-compact-context,playbook in skills/session-workspace/references/pre-compact-context.md
+pre-tool-use-guard,dod-complete,P1,3,agents/pre-tool-use-guard-specialist.md;commands/pre-tool-use-guard.md;prompts/automation/1-pre-tool-use-guard.md,router-fold,guardrails#pre-tool-use-guard,playbook in skills/guardrails/references/pre-tool-use-guard.md
+presentation-design,pending,,3,agents/presentation-design-specialist.md;commands/presentation-design.md;prompts/content/2-presentation-design.md,router-fold,brand-output#presentation-design,playbook in skills/brand-output/references/presentation-design.md
+press-release,pending,,3,agents/press-release-specialist.md;commands/press-release.md;prompts/content/7-press-release.md,router-fold,marketing-content#press-release,playbook in skills/marketing-content/references/press-release.md
+pricing-strategy,pending,,3,agents/pricing-strategy-specialist.md;commands/pricing-strategy.md;prompts/business/9-pricing-strategy.md,router-fold,market-intel#pricing-strategy,playbook in skills/market-intel/references/pricing-strategy.md
+print-stylesheet,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+pristino-calibration,dod-complete,P1,1,commands/calibrate.md,core,pristino-calibration,standalone skill in beta
+privacy-compliance,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+proceso-seleccion-orchestrator,dod-complete,P1,0,,router-fold,carrera#proceso-seleccion-orchestrator,playbook in skills/carrera/references/proceso-seleccion-orchestrator.md
+product-roadmapping,pending,,1,agents/product-strategist.md,router-fold,pm-delivery#product-roadmapping,playbook in skills/pm-delivery/references/product-roadmapping.md
+product-strategy,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+progress-tracker,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+project-charter,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+project-create,not-in-ledger,,1,agents/jarvis-orchestrator.md,core,project-create,standalone skill in beta
+project-program-management,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+prompt-chaining-design,dod-complete,P1,0,,core,prompt-chaining-design,standalone skill in beta
+prompt-creator,dod-complete,P1,0,,router-fold,skill-foundry#prompt-creator,playbook in skills/skill-foundry/references/prompt-creator.md
+prompt-engineering,dod-complete,P1,3,agents/prompt-engineering-specialist.md;commands/prompt-engineering.md;prompts/ai/1-prompt-engineering.md,router-fold,ai-architecture#prompt-engineering,playbook in skills/ai-architecture/references/prompt-engineering.md
+prompt-forge,dod-complete,P1,0,,router-fold,skill-foundry#prompt-forge,playbook in skills/skill-foundry/references/prompt-forge.md
+prompting-and-meta-prompting,dod-complete,P1,0,,core,prompting-and-meta-prompting,standalone skill in beta
+proposal-writing,pending,,3,agents/proposal-writing-specialist.md;commands/proposal-writing.md;prompts/content/9-proposal-writing.md,router-fold,sales-bizdev#proposal-writing,playbook in skills/sales-bizdev/references/proposal-writing.md
+prototyping,pending,,3,agents/prototyping-specialist.md;commands/prototyping.md;prompts/ux/2-prototyping.md,router-fold,ux-research#prototyping,playbook in skills/ux-research/references/prototyping.md
+provenance-engineering,dod-complete,P1,0,,core,provenance-engineering,standalone skill in beta
+push-notifications,pending,,1,agents/push-notification-specialist.md,router-fold,integrations#push-notifications,playbook in skills/integrations/references/push-notifications.md
+pwa-architecture,pending,,2,agents/mobile-responsiveness-tester.md;agents/pwa-architect.md,router-fold,web-frontend#pwa-architecture,playbook in skills/web-frontend/references/pwa-architecture.md
+qbr-quarterly,not-in-ledger,,0,,core,qbr-quarterly,standalone skill in beta
+quality-engineering,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+quality-gatekeeper,dod-complete,P1,0,,router-fold,guardrails#quality-gatekeeper,playbook in skills/guardrails/references/quality-gatekeeper.md
+quality-metrics,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+rag-patterns,pending,,3,agents/rag-patterns-specialist.md;commands/rag-patterns.md;prompts/ai/2-rag-patterns.md,router-fold,ai-architecture#rag-patterns,playbook in skills/ai-architecture/references/rag-patterns.md
+rate-limiting,pending,,3,agents/rate-limiting-specialist.md;commands/rate-limiting.md;prompts/devops/13-rate-limiting.md,router-fold,security#rate-limiting,playbook in skills/security/references/rate-limiting.md
+rbac-patterns,pending,,3,agents/rbac-patterns-specialist.md;commands/rbac-patterns.md;prompts/enterprise/3-rbac-patterns.md,router-fold,security#rbac-patterns,playbook in skills/security/references/rbac-patterns.md
+react-component-library,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+react-development,pending,,1,agents/react-specialist.md,router-fold,web-frontend#react-development,playbook in skills/web-frontend/references/react-development.md
+real-time-analytics,pending,,3,agents/real-time-analytics-specialist.md;commands/real-time-analytics.md;prompts/analytics/12-real-time-analytics.md,router-fold,product-analytics#real-time-analytics,playbook in skills/product-analytics/references/real-time-analytics.md
+realtime-architecture,pending,,1,agents/realtime-designer.md,router-fold,architecture#realtime-architecture,playbook in skills/architecture/references/realtime-architecture.md
+realtime-database,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+recaptcha-integration,pending,,1,agents/google-apis-specialist.md,router-fold,integrations#recaptcha-integration,playbook in skills/integrations/references/recaptcha-integration.md
+red-y-referencias,dod-complete,P1,0,,router-fold,carrera#red-y-referencias,playbook in skills/carrera/references/red-y-referencias.md
+release-strategy,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+rendering-engine,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+repo-sync-auditor,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+reporting-templates,pending,,3,agents/reporting-templates-specialist.md;commands/reporting-templates.md;prompts/analytics/6-reporting-templates.md,router-fold,docs-writing#reporting-templates,playbook in skills/docs-writing/references/reporting-templates.md
+repository-organization,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+requirements-engineering,pending,,2,agents/business-analyst.md;agents/requirements-analyst.md,router-fold,business-analysis#requirements-engineering,playbook in skills/business-analysis/references/requirements-engineering.md
+responsive-design,pending,,3,agents/css-architect.md;agents/mobile-responsiveness-tester.md;agents/responsive-designer.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
+responsive-design-system,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+rest-api-development,pending,,1,agents/rest-api-builder.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
+retrospective-facilitation,pending,,3,agents/retrospective-facilitation-specialist.md;commands/retrospective-facilitation.md;prompts/enterprise/14-retrospective-facilitation.md,router-fold,pm-delivery#retrospective-facilitation,playbook in skills/pm-delivery/references/retrospective-facilitation.md
+revisor-veracidad,not-in-ledger,,1,agents/jarvis-orchestrator.md,core,revisor-veracidad,standalone skill in beta
+risk-assessment,pending,,1,agents/risk-analyst.md,router-fold,pm-delivery#risk-assessment,playbook in skills/pm-delivery/references/risk-assessment.md
+risk-controlling-dynamics,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+roadmap-poc,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+role-based-access,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+rollback-strategy,pending,,3,agents/rollback-strategy-specialist.md;commands/rollback-strategy.md;prompts/devops/6-rollback-strategy.md,router-fold,devops-deploy#rollback-strategy,playbook in skills/devops-deploy/references/rollback-strategy.md
+rule-forge,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+runtime-routing,dod-complete,P1,1,commands/explain-devkit.md,core,runtime-routing,standalone skill in beta
+safe-scripting-and-bash,dod-complete,P1,0,,core,safe-scripting-and-bash,standalone skill in beta
+sales-collateral,pending,,3,agents/sales-collateral-specialist.md;commands/sales-collateral.md;prompts/business/4-sales-collateral.md,router-fold,sales-bizdev#sales-collateral,playbook in skills/sales-bizdev/references/sales-collateral.md
+sales-tracker,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+scaffold-angular-app,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+scaffold-html-css,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+scaffold-react-app,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+scenario-analysis,pending,,2,agents/scenario-evaluator.md;agents/socratic-debater.md,router-fold,business-analysis#scenario-analysis,playbook in skills/business-analysis/references/scenario-analysis.md
+scheduled-functions,pending,,1,agents/cron-job-specialist.md,router-fold,firebase#scheduled-functions,playbook in skills/firebase/references/scheduled-functions.md
+schema-evolution,pending,,3,agents/schema-evolution-specialist.md;commands/schema-evolution.md;prompts/analytics/4-schema-evolution.md,router-fold,data-platform#schema-evolution,playbook in skills/data-platform/references/schema-evolution.md
+scope-guard,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+scroll-interaction,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+search-implementation,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+search-ux,pending,,3,agents/search-ux-specialist.md;commands/search-ux.md;prompts/ux/14-search-ux.md,router-fold,ux-design#search-ux,playbook in skills/ux-design/references/search-ux.md
+secrets-management,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+secrets-sanitization,dod-complete,P1,0,,router-fold,guardrails#secrets-sanitization,playbook in skills/guardrails/references/secrets-sanitization.md
+sector-intelligence,pending,,2,agents/competitive-analyst.md;agents/industry-expert.md,router-fold,market-intel#sector-intelligence,playbook in skills/market-intel/references/sector-intelligence.md
+security-architecture,pending,,1,agents/security-architect.md,router-fold,security#architecture,playbook in skills/security/references/architecture.md
+security-testing,pending,,2,agents/quality-guardian.md;agents/security-scanner.md,router-fold,security#testing,playbook in skills/security/references/testing.md
+self-correction-loops,dod-complete,P1,0,,core,self-correction-loops,standalone skill in beta
+seo-architecture,pending,,4,agents/blog-builder.md;agents/landing-page-builder.md;agents/seo-architect.md;agents/seo-auditor.md,router-fold,seo-growth#seo-architecture,playbook in skills/seo-growth/references/seo-architecture.md
+seo-content,pending,,1,commands/seo-content.md,router-fold,seo-growth#seo-content,playbook in skills/seo-growth/references/seo-content.md
+seo-technical,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+server-middleware,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+serverless-patterns,pending,,1,agents/cloud-functions-dev.md,router-fold,hosting-infra#serverless-patterns,playbook in skills/hosting-infra/references/serverless-patterns.md
+session-end-cleanup,dod-complete,P1,3,agents/session-end-cleanup-specialist.md;commands/session-end-cleanup.md;prompts/automation/5-session-end-cleanup.md,router-fold,session-workspace#session-end-cleanup,playbook in skills/session-workspace/references/session-end-cleanup.md
+session-lifecycle-management,dod-complete,P1,0,,core,session-lifecycle-management,standalone skill in beta
+session-manager,dod-complete,P1,1,agents/session-manager.md,router-fold,session-workspace#session-manager,playbook in skills/session-workspace/references/session-manager.md
+session-protocol,dod-complete,P1,1,agents/adk-orchestrator.md,router-fold,session-workspace#session-protocol,playbook in skills/session-workspace/references/session-protocol.md
+session-start-bootstrap,dod-complete,P1,3,agents/session-start-bootstrap-specialist.md;commands/session-start-bootstrap.md;prompts/automation/4-session-start-bootstrap.md,router-fold,session-workspace#session-start-bootstrap,playbook in skills/session-workspace/references/session-start-bootstrap.md
+simulador-entrevista,dod-complete,P1,0,,router-fold,carrera#simulador-entrevista,playbook in skills/carrera/references/simulador-entrevista.md
+skill-forge,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+skill-search,pending,,1,agents/skill-router.md,router-fold,skill-foundry#skill-search,playbook in skills/skill-foundry/references/skill-search.md
+skill-spec-creator,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+sla-definition,pending,,3,agents/sla-definition-specialist.md;commands/sla-definition.md;prompts/enterprise/7-sla-definition.md,router-fold,pm-delivery#sla-definition,playbook in skills/pm-delivery/references/sla-definition.md
+social-media-strategy,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+social-proof,pending,,3,agents/social-proof-specialist.md;commands/social-proof.md;prompts/business/8-social-proof.md,router-fold,seo-growth#social-proof,playbook in skills/seo-growth/references/social-proof.md
+socratic-debate,pending,,2,agents/adk-orchestrator.md;agents/socratic-debater.md,router-fold,agent-orchestration#socratic-debate,playbook in skills/agent-orchestration/references/socratic-debate.md
+sofka-bpmn-process-analysis,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+sofka-regional-finance,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+sofka-sap-implementation,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+software-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+software-viability,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+solution-roadmap,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+solutions-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+spa-routing,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+spec-agent-command,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+spec-skill-moat,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+sprint-report,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+ssh-deployment,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+ssl-management,pending,,3,agents/ssl-management-specialist.md;commands/ssl-management.md;prompts/devops/10-ssl-management.md,router-fold,hosting-infra#ssl-management,playbook in skills/hosting-infra/references/ssl-management.md
+stakeholder-mapping,pending,,1,agents/stakeholder-mapper.md,router-fold,pm-delivery#stakeholder-mapping,playbook in skills/pm-delivery/references/stakeholder-mapping.md
+state-management,pending,,1,agents/state-designer.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
+state-management-design,pending,,0,,alias,state-management,duplicate of state-management
+station-create,not-in-ledger,,1,agents/jarvis-orchestrator.md,core,station-create,standalone skill in beta
+step-creator,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+stop-validator,pending,,4,agents/stop-validator-specialist.md;commands/stop-validator.md;hooks/hooks.json;prompts/automation/7-stop-validator.md,router-fold,guardrails#stop-validator,playbook in skills/guardrails/references/stop-validator.md
+storytelling,pending,,3,agents/presentation-design-specialist.md;commands/presentation-design.md;prompts/content/2-presentation-design.md,router-fold,docs-writing#storytelling,playbook in skills/docs-writing/references/storytelling.md
+structured-output,pending,,3,agents/structured-output-specialist.md;commands/structured-output.md;prompts/ai/14-structured-output.md,router-fold,ai-architecture#structured-output,playbook in skills/ai-architecture/references/structured-output.md
+structured-output-design,dod-complete,P1,0,,core,structured-output-design,standalone skill in beta
+subagent-monitor,dod-complete,P1,3,agents/subagent-monitor-specialist.md;commands/subagent-monitor.md;prompts/automation/9-subagent-monitor.md,router-fold,agent-orchestration#subagent-monitor,playbook in skills/agent-orchestration/references/subagent-monitor.md
+subagent-orchestration,dod-complete,P1,0,,core,subagent-orchestration,standalone skill in beta
+surgeon-skill,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+survey-design,pending,,3,agents/survey-design-specialist.md;commands/survey-design.md;prompts/analytics/13-survey-design.md,router-fold,ux-research#survey-design,playbook in skills/ux-research/references/survey-design.md
+swot-analysis,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+system-architecture,pending,,2,agents/architecture-designer.md;agents/solutions-architect.md,router-fold,architecture#system-architecture,playbook in skills/architecture/references/system-architecture.md
+system-design,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+table-ux,pending,,3,agents/table-ux-specialist.md;commands/table-ux.md;prompts/ux/15-table-ux.md,router-fold,ux-design#table-ux,playbook in skills/ux-design/references/table-ux.md
+task-automation,pending,,3,agents/task-automation-specialist.md;commands/task-automation.md;prompts/automation/14-task-automation.md,router-fold,agent-orchestration#task-automation,playbook in skills/agent-orchestration/references/task-automation.md
+task-engine,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+task-subfolder,not-in-ledger,,1,agents/jarvis-orchestrator.md,core,task-subfolder,standalone skill in beta
+tasklog-management,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+team-topology,pending,,3,agents/team-topology-specialist.md;commands/team-topology.md;prompts/enterprise/12-team-topology.md,router-fold,pm-delivery#team-topology,playbook in skills/pm-delivery/references/team-topology.md
+technical-documentation,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+technical-feasibility,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+technical-writing,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+technical-writing-patterns,pending,,3,agents/technical-writing-patterns-specialist.md;commands/technical-writing-patterns.md;prompts/content/1-technical-writing-patterns.md,router-fold,docs-writing#technical-writing-patterns,playbook in skills/docs-writing/references/technical-writing-patterns.md
+test-data-factory,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+test-strategy,pending,,3,agents/bdd-strategist.md;agents/quality-engineer.md;agents/quality-guardian.md,router-fold,testing-qa#test-strategy,playbook in skills/testing-qa/references/test-strategy.md
+testimonial-collector,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+testing-strategy,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+tool-use-design,dod-complete,P1,0,,core,tool-use-design,standalone skill in beta
+trade-off-analysis,pending,,3,agents/feasibility-validator.md;agents/scenario-evaluator.md;agents/socratic-debater.md,router-fold,architecture#trade-off-analysis,playbook in skills/architecture/references/trade-off-analysis.md
+training-material,pending,,3,agents/training-material-specialist.md;commands/training-material.md;prompts/content/10-training-material.md,router-fold,docs-writing#training-material,playbook in skills/docs-writing/references/training-material.md
+triad-composition,dod-complete,P1,1,agents/adk-orchestrator.md,router-fold,agent-orchestration#triad-composition,playbook in skills/agent-orchestration/references/triad-composition.md
+trigger-skill,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+typescript-patterns,pending,,3,agents/angular-specialist.md;agents/react-specialist.md;agents/typescript-specialist.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
+typography-advanced,pending,,3,agents/typography-advanced-specialist.md;commands/typography-advanced.md;prompts/ux/8-typography-advanced.md,router-fold,ux-design#typography-advanced,playbook in skills/ux-design/references/typography-advanced.md
+ui-kit-builder,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+unit-testing,pending,,2,agents/quality-engineer.md;agents/unit-test-writer.md,router-fold,testing-qa#unit-testing,playbook in skills/testing-qa/references/unit-testing.md
+user-prompt-filter,dod-complete,P1,4,agents/user-prompt-filter-specialist.md;commands/user-prompt-filter.md;hooks/hooks.json;prompts/automation/3-user-prompt-filter.md,router-fold,guardrails#user-prompt-filter,playbook in skills/guardrails/references/user-prompt-filter.md
+user-representative,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+user-research,pending,,1,agents/user-researcher.md,router-fold,ux-research#user-research,playbook in skills/ux-research/references/user-research.md
+user-story-writer,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+user-testing,pending,,3,agents/user-testing-specialist.md;commands/user-testing.md;prompts/ux/1-user-testing.md,router-fold,ux-research#user-testing,playbook in skills/ux-research/references/user-testing.md
+ux-writing,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+validar-liquidacion-co,dod-complete,P1,0,,router-fold,carrera#validar-liquidacion-co,playbook in skills/carrera/references/validar-liquidacion-co.md
+validate-components,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+validate-cross-refs,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+validate-hooks,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+validate-manifest,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+validate-structure,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+validation-retry-design,dod-complete,P1,0,,core,validation-retry-design,standalone skill in beta
+value-proposition,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+vanilla-javascript,pending,,2,agents/frontend-craftsman.md;agents/vanilla-js-specialist.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
+vendor-evaluation,pending,,3,agents/vendor-evaluation-specialist.md;commands/vendor-evaluation.md;prompts/enterprise/10-vendor-evaluation.md,router-fold,pm-delivery#vendor-evaluation,playbook in skills/pm-delivery/references/vendor-evaluation.md
+video-script,pending,,3,agents/video-script-specialist.md;commands/video-script.md;prompts/content/3-video-script.md,router-fold,marketing-content#video-script,playbook in skills/marketing-content/references/video-script.md
+visual-regression,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+visual-regression-testing,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+voice-interface,pending,,3,agents/voice-interface-specialist.md;commands/voice-interface.md;prompts/ai/16-voice-interface.md,router-fold,ai-architecture#voice-interface,playbook in skills/ai-architecture/references/voice-interface.md
+wbr-weekly-review,not-in-ledger,,0,,core,wbr-weekly-review,standalone skill in beta
+web-components,pending,,1,agents/web-component-builder.md,router-fold,web-frontend#web-components,playbook in skills/web-frontend/references/web-components.md
+web-performance,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+web-security-implementation,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+webhook-handler,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+webhook-handling,pending,,1,agents/webhook-specialist.md,router-fold,integrations#webhook-handling,playbook in skills/integrations/references/webhook-handling.md
+weekly-retro,not-in-ledger,,0,,core,weekly-retro,standalone skill in beta
+whitepaper-creation,pending,,3,agents/whitepaper-creation-specialist.md;commands/whitepaper-creation.md;prompts/content/6-whitepaper-creation.md,router-fold,marketing-content#whitepaper-creation,playbook in skills/marketing-content/references/whitepaper-creation.md
+workflow-creator,dod-complete,P1,0,,router-fold,skill-foundry#workflow-creator,playbook in skills/skill-foundry/references/workflow-creator.md
+workflow-forge,dod-complete,P1,0,,router-fold,skill-foundry#workflow-forge,playbook in skills/skill-foundry/references/workflow-forge.md
+workflow-orchestration,dod-complete,P1,3,agents/workflow-orchestration-specialist.md;commands/workflow-orchestration.md;prompts/automation/15-workflow-orchestration.md,router-fold,agent-orchestration#workflow-orchestration,playbook in skills/agent-orchestration/references/workflow-orchestration.md
+workshop-design,pending,,1,agents/workshop-facilitator.md,router-fold,business-analysis#workshop-design,playbook in skills/business-analysis/references/workshop-design.md
+workshop-facilitator,pending,,1,agents/workshop-facilitator.md,router-fold,business-analysis#workshop-facilitator,playbook in skills/business-analysis/references/workshop-facilitator.md
+workshop-proposal,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+workspace-governance,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+workspace-setup,dod-complete,P1,1,commands/setup-workspace.md,core,workspace-setup,standalone skill in beta
+x-ray-skill,dod-complete,P1,0,,router-fold,skill-foundry#x-ray-skill,playbook in skills/skill-foundry/references/x-ray-skill.md
+xlsx-template-creator,dod-complete,P1,0,,router-fold,brand-output#xlsx-template-creator,playbook in skills/brand-output/references/xlsx-template-creator.md

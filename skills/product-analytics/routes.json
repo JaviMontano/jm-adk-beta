@@ -1,0 +1,42 @@
+{
+  "ab-testing": {
+    "playbook": "references/ab-testing.md",
+    "desc": ">",
+    "alfa": "ab-testing"
+  },
+  "analytics-events": {
+    "playbook": "references/analytics-events.md",
+    "desc": ">",
+    "alfa": "analytics-events"
+  },
+  "cohort-analysis": {
+    "playbook": "references/cohort-analysis.md",
+    "desc": ">",
+    "alfa": "cohort-analysis"
+  },
+  "data-visualization": {
+    "playbook": "references/data-visualization.md",
+    "desc": ">",
+    "alfa": "data-visualization"
+  },
+  "funnel-analytics": {
+    "playbook": "references/funnel-analytics.md",
+    "desc": ">",
+    "alfa": "funnel-analytics"
+  },
+  "kpi-framework": {
+    "playbook": "references/kpi-framework.md",
+    "desc": ">",
+    "alfa": "kpi-framework"
+  },
+  "metrics-instrumentation": {
+    "playbook": "references/metrics-instrumentation.md",
+    "desc": ">",
+    "alfa": "metrics-instrumentation"
+  },
+  "real-time-analytics": {
+    "playbook": "references/real-time-analytics.md",
+    "desc": ">",
+    "alfa": "real-time-analytics"
+  }
+}

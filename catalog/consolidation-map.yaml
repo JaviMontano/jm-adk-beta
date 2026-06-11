@@ -68,5 +68,14 @@ dropped_generic:
   - error-handling-patterns
   - state-management-design
   - state-management
+  - animation-principles
+  - color-theory
+  - css-animation
+  - docker-awareness
+  - grid-systems
+  - html-semantic
+  - responsive-design
+  - typescript-patterns
+  - vanilla-javascript
 
 default_disposition_for_unreferenced_pending: dropped-unreferenced

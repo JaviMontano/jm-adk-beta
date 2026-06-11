@@ -1,0 +1,57 @@
+{
+  "budget-management": {
+    "playbook": "references/budget-management.md",
+    "desc": ">",
+    "alfa": "budget-management"
+  },
+  "capacity-planning": {
+    "playbook": "references/capacity-planning.md",
+    "desc": ">",
+    "alfa": "capacity-planning"
+  },
+  "cost-estimation": {
+    "playbook": "references/cost-estimation.md",
+    "desc": "FTE-month estimation (NEVER prices). Effort inductors. Scope drivers. Confidence ranges (optimistic/expected/pessimistic). [EXPLICIT]",
+    "alfa": "cost-estimation"
+  },
+  "okr-design": {
+    "playbook": "references/okr-design.md",
+    "desc": ">",
+    "alfa": "okr-design"
+  },
+  "product-roadmapping": {
+    "playbook": "references/product-roadmapping.md",
+    "desc": ">",
+    "alfa": "product-roadmapping"
+  },
+  "retrospective-facilitation": {
+    "playbook": "references/retrospective-facilitation.md",
+    "desc": ">",
+    "alfa": "retrospective-facilitation"
+  },
+  "risk-assessment": {
+    "playbook": "references/risk-assessment.md",
+    "desc": "Risk identification across 7 categories (technical, operational, security, scalability, data, team, timeline). Severity x likelihood. [EXPLICIT]",
+    "alfa": "risk-assessment"
+  },
+  "sla-definition": {
+    "playbook": "references/sla-definition.md",
+    "desc": ">",
+    "alfa": "sla-definition"
+  },
+  "stakeholder-mapping": {
+    "playbook": "references/stakeholder-mapping.md",
+    "desc": "Influence/interest matrix. RACI matrix. Communication plan. Power/interest grid. Stakeholder registry. [EXPLICIT]",
+    "alfa": "stakeholder-mapping"
+  },
+  "team-topology": {
+    "playbook": "references/team-topology.md",
+    "desc": "Conway's Law analysis, team interaction modes, cognitive load assessment, organizational design. [EXPLICIT]",
+    "alfa": "team-topology"
+  },
+  "vendor-evaluation": {
+    "playbook": "references/vendor-evaluation.md",
+    "desc": ">",
+    "alfa": "vendor-evaluation"
+  }
+}

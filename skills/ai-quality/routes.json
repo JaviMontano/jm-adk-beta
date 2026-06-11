@@ -1,0 +1,47 @@
+{
+  "ai-testing-strategy": {
+    "playbook": "references/ai-testing-strategy.md",
+    "desc": ">",
+    "alfa": "ai-testing-strategy"
+  },
+  "ai-assisted-testing": {
+    "playbook": "references/ai-assisted-testing.md",
+    "desc": ">",
+    "alfa": "ai-assisted-testing"
+  },
+  "ai-code-review": {
+    "playbook": "references/ai-code-review.md",
+    "desc": ">",
+    "alfa": "ai-code-review"
+  },
+  "ai-safety": {
+    "playbook": "references/ai-safety.md",
+    "desc": ">",
+    "alfa": "ai-safety"
+  },
+  "ai-content-detection": {
+    "playbook": "references/ai-content-detection.md",
+    "desc": ">",
+    "alfa": "ai-content-detection"
+  },
+  "ai-documentation": {
+    "playbook": "references/ai-documentation.md",
+    "desc": ">",
+    "alfa": "ai-documentation"
+  },
+  "ai-workflow-automation": {
+    "playbook": "references/ai-workflow-automation.md",
+    "desc": ">",
+    "alfa": "ai-workflow-automation"
+  },
+  "code-review": {
+    "playbook": "references/code-review.md",
+    "desc": ">",
+    "alfa": "code-review"
+  },
+  "llm-evaluation": {
+    "playbook": "references/llm-evaluation.md",
+    "desc": ">",
+    "alfa": "llm-evaluation"
+  }
+}

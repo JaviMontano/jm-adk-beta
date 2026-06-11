@@ -1,0 +1,27 @@
+{
+  "alerting-strategy": {
+    "playbook": "references/alerting-strategy.md",
+    "desc": ">",
+    "alfa": "alerting-strategy"
+  },
+  "health-check-automation": {
+    "playbook": "references/health-check-automation.md",
+    "desc": ">",
+    "alfa": "health-check-automation"
+  },
+  "incident-response": {
+    "playbook": "references/incident-response.md",
+    "desc": ">",
+    "alfa": "incident-response"
+  },
+  "log-management": {
+    "playbook": "references/log-management.md",
+    "desc": ">",
+    "alfa": "log-management"
+  },
+  "monitoring-setup": {
+    "playbook": "references/monitoring-setup.md",
+    "desc": ">",
+    "alfa": "monitoring-setup"
+  }
+}

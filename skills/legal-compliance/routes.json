@@ -1,0 +1,17 @@
+{
+  "compliance-assessment": {
+    "playbook": "references/compliance-assessment.md",
+    "desc": "Regulatory and standards compliance assessment — GDPR, SOX, PCI-DSS, HIPAA, ISO 27001, NIST CSF. [EXPLICIT]",
+    "alfa": "compliance-assessment"
+  },
+  "compliance-framework": {
+    "playbook": "references/compliance-framework.md",
+    "desc": ">",
+    "alfa": "compliance-framework"
+  },
+  "contract-review": {
+    "playbook": "references/contract-review.md",
+    "desc": ">",
+    "alfa": "contract-review"
+  }
+}

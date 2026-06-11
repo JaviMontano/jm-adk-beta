@@ -1,0 +1,47 @@
+{
+  "api-design": {
+    "playbook": "references/api-design.md",
+    "desc": ">",
+    "alfa": "api-design"
+  },
+  "caching-strategy": {
+    "playbook": "references/caching-strategy.md",
+    "desc": "Firebase Hosting CDN cache headers. Firestore offline persistence. Client-side cache (localStorage/IndexedDB). [EXPLICIT]",
+    "alfa": "caching-strategy"
+  },
+  "domain-driven-design": {
+    "playbook": "references/domain-driven-design.md",
+    "desc": ">",
+    "alfa": "domain-driven-design"
+  },
+  "event-architecture": {
+    "playbook": "references/event-architecture.md",
+    "desc": "This skill should be used when the user asks to \"design an event-driven system\",",
+    "alfa": "event-architecture"
+  },
+  "migration-planning": {
+    "playbook": "references/migration-planning.md",
+    "desc": ">",
+    "alfa": "migration-planning"
+  },
+  "performance-architecture": {
+    "playbook": "references/performance-architecture.md",
+    "desc": ">",
+    "alfa": "performance-architecture"
+  },
+  "realtime-architecture": {
+    "playbook": "references/realtime-architecture.md",
+    "desc": ">",
+    "alfa": "realtime-architecture"
+  },
+  "system-architecture": {
+    "playbook": "references/system-architecture.md",
+    "desc": ">",
+    "alfa": "system-architecture"
+  },
+  "trade-off-analysis": {
+    "playbook": "references/trade-off-analysis.md",
+    "desc": ">",
+    "alfa": "trade-off-analysis"
+  }
+}

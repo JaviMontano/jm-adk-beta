@@ -1,0 +1,42 @@
+{
+  "brand-html": {
+    "playbook": "references/brand-html.md",
+    "desc": ">",
+    "alfa": "brand-html"
+  },
+  "html-brand": {
+    "playbook": "references/html-brand.md",
+    "desc": ">",
+    "alfa": "html-brand"
+  },
+  "brand-docx": {
+    "playbook": "references/brand-docx.md",
+    "desc": ">",
+    "alfa": "brand-docx"
+  },
+  "brand-xlsx": {
+    "playbook": "references/brand-xlsx.md",
+    "desc": ">",
+    "alfa": "brand-xlsx"
+  },
+  "folio-generator": {
+    "playbook": "references/folio-generator.md",
+    "desc": ">",
+    "alfa": "folio-generator"
+  },
+  "xlsx-template-creator": {
+    "playbook": "references/xlsx-template-creator.md",
+    "desc": "[EXPLICIT]",
+    "alfa": "xlsx-template-creator"
+  },
+  "branded-html-output": {
+    "playbook": "references/branded-html-output.md",
+    "desc": ">",
+    "alfa": "branded-html-output"
+  },
+  "presentation-design": {
+    "playbook": "references/presentation-design.md",
+    "desc": ">",
+    "alfa": "presentation-design"
+  }
+}

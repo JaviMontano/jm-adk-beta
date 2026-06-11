@@ -1,0 +1,92 @@
+{
+  "component-designer": {
+    "playbook": "references/component-designer.md",
+    "desc": "UI component architecture. Atomic design (atoms/molecules/organisms). Props contracts. Composition patterns. Accessibility built-in. [EXPLICIT]",
+    "alfa": "component-designer"
+  },
+  "dashboard-design": {
+    "playbook": "references/dashboard-design.md",
+    "desc": ">",
+    "alfa": "dashboard-design"
+  },
+  "design-critique": {
+    "playbook": "references/design-critique.md",
+    "desc": ">",
+    "alfa": "design-critique"
+  },
+  "design-system": {
+    "playbook": "references/design-system.md",
+    "desc": "This skill should be used when the user asks to \"apply design system\",",
+    "alfa": "design-system"
+  },
+  "empty-states": {
+    "playbook": "references/empty-states.md",
+    "desc": ">",
+    "alfa": "empty-states"
+  },
+  "error-messaging": {
+    "playbook": "references/error-messaging.md",
+    "desc": ">",
+    "alfa": "error-messaging"
+  },
+  "first-use-onboarding": {
+    "playbook": "references/first-use-onboarding.md",
+    "desc": "First-use and cold-start onboarding for JM-ADK after clone, greeting, or missing task context.",
+    "alfa": "first-use-onboarding"
+  },
+  "form-ux-advanced": {
+    "playbook": "references/form-ux-advanced.md",
+    "desc": ">",
+    "alfa": "form-ux-advanced"
+  },
+  "iconography": {
+    "playbook": "references/iconography.md",
+    "desc": ">",
+    "alfa": "iconography"
+  },
+  "micro-interactions": {
+    "playbook": "references/micro-interactions.md",
+    "desc": ">",
+    "alfa": "micro-interactions"
+  },
+  "microcopy-writing": {
+    "playbook": "references/microcopy-writing.md",
+    "desc": ">",
+    "alfa": "microcopy-writing"
+  },
+  "mobile-patterns": {
+    "playbook": "references/mobile-patterns.md",
+    "desc": ">",
+    "alfa": "mobile-patterns"
+  },
+  "motion-design": {
+    "playbook": "references/motion-design.md",
+    "desc": ">",
+    "alfa": "motion-design"
+  },
+  "notification-ux": {
+    "playbook": "references/notification-ux.md",
+    "desc": ">",
+    "alfa": "notification-ux"
+  },
+  "onboarding-ux": {
+    "playbook": "references/onboarding-ux.md",
+    "desc": ">",
+    "alfa": "onboarding-ux"
+  },
+  "search-ux": {
+    "playbook": "references/search-ux.md",
+    "desc": ">",
+    "alfa": "search-ux"
+  },
+  "table-ux": {
+    "playbook": "references/table-ux.md",
+    "desc": ">",
+    "alfa": "table-ux"
+  },
+  "typography-advanced": {
+    "playbook": "references/typography-advanced.md",
+    "desc": ">",
+    "alfa": "typography-advanced"
+  }
+}

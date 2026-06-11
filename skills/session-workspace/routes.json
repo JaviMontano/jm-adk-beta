@@ -1,0 +1,37 @@
+{
+  "context-window-management": {
+    "playbook": "references/context-window-management.md",
+    "desc": ">",
+    "alfa": "context-window-management"
+  },
+  "notification-handler": {
+    "playbook": "references/notification-handler.md",
+    "desc": ">",
+    "alfa": "notification-handler"
+  },
+  "pre-compact-context": {
+    "playbook": "references/pre-compact-context.md",
+    "desc": ">",
+    "alfa": "pre-compact-context"
+  },
+  "session-end-cleanup": {
+    "playbook": "references/session-end-cleanup.md",
+    "desc": ">",
+    "alfa": "session-end-cleanup"
+  },
+  "session-manager": {
+    "playbook": "references/session-manager.md",
+    "desc": "Manages session state, pipeline progress, and cold-start priming. Reads/writes .specify/context.json to track feature stages and artifact completion. [EXPLICIT]",
+    "alfa": "session-manager"
+  },
+  "session-protocol": {
+    "playbook": "references/session-protocol.md",
+    "desc": ">",
+    "alfa": "session-protocol"
+  },
+  "session-start-bootstrap": {
+    "playbook": "references/session-start-bootstrap.md",
+    "desc": ">",
+    "alfa": "session-start-bootstrap"
+  }
+}

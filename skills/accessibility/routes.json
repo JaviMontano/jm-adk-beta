@@ -1,0 +1,22 @@
+{
+  "audit": {
+    "playbook": "references/audit.md",
+    "desc": "WCAG 2.1 AA automated scanning with axe-core plus manual checklist for keyboard, screen reader, and contrast",
+    "alfa": "accessibility-audit"
+  },
+  "testing": {
+    "playbook": "references/testing.md",
+    "desc": ">",
+    "alfa": "accessibility-testing"
+  },
+  "design": {
+    "playbook": "references/design.md",
+    "desc": ">",
+    "alfa": "accessibility-design"
+  },
+  "writing": {
+    "playbook": "references/writing.md",
+    "desc": ">",
+    "alfa": "accessibility-writing"
+  }
+}
