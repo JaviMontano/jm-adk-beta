@@ -29,7 +29,9 @@ for ev in sorted((ROOT / "skills").glob("*/evals.json")):
     if len(cases) < 3:
         errs.append(f"only {len(cases)} cases (<3)")
     for c in cases:
-        missing = [k for k in ("id", "input", "expected_activation") if k not in c]
+        missing = [k for k in ("id", "input") if k not in c]
+        if not ("expected_activation" in c or "expected_behavior" in c):
+            missing.append("expected_activation|expected_behavior")
         if missing:
             errs.append(f"case {c.get('id','?')}: missing {missing}")
     if errs:
