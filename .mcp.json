@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "notebooklm": {
+      "command": "notebooklm-mcp"
+    },
+    "stitch": {
+      "type": "http",
+      "url": "https://stitch.googleapis.com/mcp"
+    },
+    "google-workspace": {
+      "command": "uvx",
+      "args": [
+        "workspace-mcp",
+        "--tool-tier",
+        "core",
+        "--tools",
+        "gmail",
+        "drive",
+        "calendar"
+      ]
+    }
+  }
+}
