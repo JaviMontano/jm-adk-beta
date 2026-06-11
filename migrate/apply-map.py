@@ -47,6 +47,12 @@ def main() -> int:
     cmap_text = CMAP.read_text(encoding="utf-8")
     dropped_generic = set(yaml_list_after(cmap_text, "dropped_generic"))
     dup_pairs = yaml_pairs(cmap_text)
+    manual_aliases: dict[str, str] = {}
+    mm = re.search(r"^manual_aliases:.*?\n((?:[ \t]+[\w-]+:[ \t]*\S+\n?)+)", cmap_text, re.M | re.S)
+    if mm:
+        for ln in mm.group(1).strip().splitlines():
+            k, v = ln.strip().split(":", 1)
+            manual_aliases[k.strip()] = v.strip()
 
     # alfa id -> (beta_home, disposition)
     assign: dict[str, tuple[str, str, str]] = {}
@@ -64,6 +70,10 @@ def main() -> int:
 
     # duplicate pairs: loser -> alias of winner's home
     aliases: dict[str, str] = {}
+    for aid, home in manual_aliases.items():
+        if aid not in assign:
+            assign[aid] = (home, "alias", "manual alias (winner not standalone in beta)")
+        aliases[aid] = home
     for winner, loser in dup_pairs:
         home = assign.get(winner, (winner, "", ""))[0]
         if loser not in assign:

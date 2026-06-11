@@ -1,0 +1,24 @@
+name: gates
+on:
+  push: { branches: [main] }
+  pull_request:
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Regenerate surfaces (must be clean)
+        run: |
+          python3 scripts/update-catalog.py
+          python3 scripts/build-indexes.py
+          git diff --exit-code || { echo "::error::generated surfaces out of date — run build-indexes.py"; exit 1; }
+      - name: Token budgets
+        run: python3 scripts/check-token-budget.py
+      - name: Coverage gate (611-row parity trace)
+        run: python3 scripts/validate-coverage.py
+      - name: Eval contracts
+        run: python3 scripts/validate-evals.py
+      - name: MCP config generation + secret scan
+        run: python3 scripts/gen_mcp.py

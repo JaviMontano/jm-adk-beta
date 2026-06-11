@@ -106,8 +106,8 @@ component-designer,pending,,1,agents/component-designer.md,router-fold,ux-design
 constitution-compliance,dod-complete,P1,1,agents/adk-orchestrator.md,router-fold,guardrails#constitution-compliance,playbook in skills/guardrails/references/constitution-compliance.md
 contact-database,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
 content-calendar,pending,,3,agents/content-calendar-specialist.md;commands/content-calendar.md;prompts/business/12-content-calendar.md,router-fold,marketing-content#content-calendar,playbook in skills/marketing-content/references/content-calendar.md
-context-optimization,dod-complete,P1,3,agents/adk-orchestrator.md;agents/context-manager.md;agents/skill-router.md,alias,context-optimizer,duplicate of context-optimizer
-context-optimizer,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+context-optimization,dod-complete,P1,3,agents/adk-orchestrator.md;agents/context-manager.md;agents/skill-router.md,alias,context-window-engineering,manual alias (winner not standalone in beta)
+context-optimizer,dod-complete,P1,0,,alias,context-window-engineering,manual alias (winner not standalone in beta)
 context-window-engineering,dod-complete,P1,0,,core,context-window-engineering,standalone skill in beta
 context-window-management,dod-complete,P1,3,agents/context-window-management-specialist.md;commands/context-window-management.md;prompts/ai/13-context-window-management.md,router-fold,session-workspace#context-window-management,playbook in skills/session-workspace/references/context-window-management.md
 continuous-learning,dod-complete,P1,2,agents/adk-orchestrator.md;agents/quality-guardian.md,router-fold,agent-orchestration#continuous-learning,playbook in skills/agent-orchestration/references/continuous-learning.md
@@ -158,8 +158,8 @@ devsecops-architecture,pending,,0,,dropped-unreferenced,none,pending+unreference
 digital-presence,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
 disaster-recovery,pending,,3,agents/disaster-recovery-specialist.md;commands/disaster-recovery.md;prompts/enterprise/8-disaster-recovery.md,router-fold,hosting-infra#disaster-recovery,playbook in skills/hosting-infra/references/disaster-recovery.md
 discovery-handover,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
-discovery-orchestration,dod-complete,P1,2,agents/discovery-reporter.md;agents/pipeline-conductor.md,alias,discovery-orchestrator,duplicate of discovery-orchestrator
-discovery-orchestrator,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+discovery-orchestration,dod-complete,P1,2,agents/discovery-reporter.md;agents/pipeline-conductor.md,alias,agent-orchestration#workflow-orchestration,manual alias (winner not standalone in beta)
+discovery-orchestrator,dod-complete,P1,0,,alias,agent-orchestration#workflow-orchestration,manual alias (winner not standalone in beta)
 discovery-retrospective,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
 dns-architecture,pending,,3,agents/dns-architecture-specialist.md;commands/dns-architecture.md;prompts/devops/11-dns-architecture.md,router-fold,hosting-infra#dns-architecture,playbook in skills/hosting-infra/references/dns-architecture.md
 docker-awareness,pending,,3,agents/docker-awareness-specialist.md;commands/docker-awareness.md;prompts/devops/1-docker-awareness.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
@@ -291,8 +291,8 @@ independent-review-design,pending,,0,,dropped-unreferenced,none,pending+unrefere
 indexability-validator,pending,,1,agents/quality-guardian.md,router-fold,seo-growth#indexability-validator,playbook in skills/seo-growth/references/indexability-validator.md
 infrastructure-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
 infrastructure-design,pending,,1,agents/infrastructure-planner.md,router-fold,hosting-infra#infrastructure-design,playbook in skills/hosting-infra/references/infrastructure-design.md
-input-analysis,dod-complete,P1,3,agents/input-amplifier.md;agents/jarvis-orchestrator.md;agents/requirements-analyst.md,alias,input-analyst,duplicate of input-analyst
-input-analyst,dod-complete,P1,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+input-analysis,dod-complete,P1,3,agents/input-amplifier.md;agents/jarvis-orchestrator.md;agents/requirements-analyst.md,alias,business-analysis#requirements-engineering,manual alias (winner not standalone in beta)
+input-analyst,dod-complete,P1,0,,alias,business-analysis#requirements-engineering,manual alias (winner not standalone in beta)
 input-sanitization,pending,,1,agents/security-scanner.md,router-fold,security#input-sanitization,playbook in skills/security/references/input-sanitization.md
 input-tolerance,pending,,1,agents/adk-orchestrator.md,router-fold,guardrails#input-tolerance,playbook in skills/guardrails/references/input-tolerance.md
 integration-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
@@ -535,7 +535,7 @@ ssh-deployment,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa 
 ssl-management,pending,,3,agents/ssl-management-specialist.md;commands/ssl-management.md;prompts/devops/10-ssl-management.md,router-fold,hosting-infra#ssl-management,playbook in skills/hosting-infra/references/ssl-management.md
 stakeholder-mapping,pending,,1,agents/stakeholder-mapper.md,router-fold,pm-delivery#stakeholder-mapping,playbook in skills/pm-delivery/references/stakeholder-mapping.md
 state-management,pending,,1,agents/state-designer.md,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
-state-management-design,pending,,0,,alias,state-management,duplicate of state-management
+state-management-design,pending,,0,,dropped-generic,none,restates base-model knowledge; referencers rewired to nearest router
 station-create,not-in-ledger,,1,agents/jarvis-orchestrator.md,core,station-create,standalone skill in beta
 step-creator,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
 stop-validator,pending,,4,agents/stop-validator-specialist.md;commands/stop-validator.md;hooks/hooks.json;prompts/automation/7-stop-validator.md,router-fold,guardrails#stop-validator,playbook in skills/guardrails/references/stop-validator.md

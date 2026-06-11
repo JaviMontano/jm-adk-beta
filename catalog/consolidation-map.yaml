@@ -47,16 +47,20 @@ keep_as_is:
   jarvis-os-pack: [jarvis-os, jarvis-bootstrap, daily-close, dbr-daily-plan, frontload-prompt, lab-session, monthly-audit, project-create, qbr-quarterly, revisor-veracidad, station-create, task-subfolder, wbr-weekly-review, weekly-retro]
 
 duplicate_pairs:  # keep first (dod-complete), alias second
-  - [input-analyst, input-analysis]
-  - [context-optimizer, context-optimization]
-  - [discovery-orchestrator, discovery-orchestration]
   - [accessibility-audit, accessibility-testing]   # both fold into accessibility router
   - [firebase-auth, firebase-auth-setup]
   - [firebase-hosting, firebase-hosting-setup]
   - [api-design, api-designer]
   - [google-analytics, analytics-implementation]
   - [code-review, ai-code-review]
-  - [state-management, state-management-design]
+
+manual_aliases:  # pairs whose winner did not migrate standalone — both map to a real beta home
+  input-analyst: business-analysis#requirements-engineering
+  input-analysis: business-analysis#requirements-engineering
+  context-optimizer: context-window-engineering
+  context-optimization: context-window-engineering
+  discovery-orchestrator: agent-orchestration#workflow-orchestration
+  discovery-orchestration: agent-orchestration#workflow-orchestration
 
 dropped_generic:
   - javascript-patterns

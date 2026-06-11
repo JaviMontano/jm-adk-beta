@@ -1,0 +1,25 @@
+{
+  "method": "chars/4 heuristic, identical across arms",
+  "arms": {
+    "alfa": {
+      "claude-code": 29552,
+      "antigravity": 36801,
+      "codex": 1651
+    },
+    "beta-naive": {
+      "claude-code": 3869,
+      "antigravity": 5377,
+      "codex": 3820
+    },
+    "beta": {
+      "claude-code": 2335,
+      "antigravity": 2990,
+      "codex": 2289
+    }
+  },
+  "reduction_vs_alfa": {
+    "claude-code": "92%",
+    "antigravity": "92%",
+    "codex": "-39%"
+  }
+}

@@ -26,10 +26,24 @@ migrate/      one-off porting scripts (deleted at GA)
 
 ## Token budgets (session start, CI-gated)
 
-| Runtime | Alfa | Beta target |
-|---|---|---|
-| Claude Code | ~14K | ≤2.6K |
-| Antigravity | ~35-40K | ≤4K |
-| Codex | ~20K | ≤2.3K |
+Measured (`evals/token-benchmark.json`, chars/4 applied identically to all arms):
 
-Measured claims only: 3-arm benchmark committed before README tables update.
+| Runtime | Alfa (measured) | Beta naive | Beta (measured) | vs alfa |
+|---|---|---|---|---|
+| Claude Code | 29,552 | 3,869 | **2,335** | **−92%** |
+| Antigravity | 36,801 | 5,377 | **2,990** | **−92%** |
+| Codex | 1,651 | 3,820 | **2,289** | +39%* |
+
+\* Alfa's AGENTS.md carried no skill index — Codex sessions had no catalog access.
+Beta inlines the full 73-skill tier-0 index; the +638 tokens buy complete
+catalog routing. Honest trade-off, recorded as measured.
+
+Regenerate: `python3 scripts/token-stats.py`. README table updates only from
+committed benchmark data (caveman honesty rule).
+
+## Status
+
+- 611/611 alfa skills dispositioned (`scripts/validate-coverage.py` PASS)
+- 73 beta skills (35 routers + 24 competencies + 14 jarvis-os), 351 aliases
+- Pending field validation: 3-runtime smoke (10 canonical tasks), Stitch-on-Codex
+  proxy, Antigravity end-to-end MCP (`scripts/auth-doctor.sh` to check auth)
