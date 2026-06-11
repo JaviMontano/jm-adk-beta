@@ -61,10 +61,13 @@
       "command": "notebooklm-mcp",
       "args": [],
       "auth": {
-        "kind": "cli-login",
+        "kind": "cli-login-browser",
         "command": "nlm login",
-        "tokenPath": "~/.nlm/auth.json",
-        "fallback": "save_auth_tokens tool"
+        "tokenPath": "~/.notebooklm-mcp-cli/auth.json",
+        "chromeProfile": "~/.notebooklm-mcp-cli/chrome-profile",
+        "headlessFallback": "nlm login --manual -f cookies.txt",
+        "fallback": "save_auth_tokens tool",
+        "doc": "harness/notebooklm-auth.md"
       },
       "runtimes": [
         "claude-code",
