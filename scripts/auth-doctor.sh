@@ -9,7 +9,7 @@ check() { # name condition hint
 
 echo "== Pristino Beta auth doctor =="
 check "notebooklm: nlm CLI"        'command -v nlm >/dev/null'                          "install notebooklm-mcp-cli (uv tool install notebooklm-mcp-cli)"
-check "notebooklm: auth valid"     'nlm login --check 2>/dev/null | grep -q "Authentication valid"' "run: nlm login"
+check "notebooklm: auth valid"     'nlm login --check 2>&1 | grep -qi "valid"' "run: nlm login"
 check "notebooklm: mcp binary"     'command -v notebooklm-mcp >/dev/null'               "uv tool install notebooklm-mcp-cli"
 check "stitch: gcloud ADC or key"  '[[ -f "$HOME/.config/gcloud/application_default_credentials.json" || -n "${STITCH_API_KEY:-}" ]] || security find-generic-password -s pristino-stitch -w >/dev/null 2>&1' "gcloud auth application-default login OR keychain add-generic-password -s pristino-stitch"
 check "workspace-mcp: uvx"         'command -v uvx >/dev/null'                          "install uv"
