@@ -23,7 +23,7 @@ ALFA_SURFACES = {
     "codex": ["AGENTS.md"],
 }
 BETA_SURFACES = {
-    "claude-code": ["CLAUDE.md", "SKILLS.md"],
+    "claude-code": ["CLAUDE.md"],
     "antigravity": ["GEMINI.md", ".agent/rules/GEMINI.md", ".agent/skills_index.json"],
     "codex": ["AGENTS.md"],
 }

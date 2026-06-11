@@ -13,7 +13,7 @@ manifest = json.loads((ROOT / "harness/manifest.json").read_text(encoding="utf-8
 
 # What each runtime injects at session start.
 SURFACES = {
-    "claude-code": ["CLAUDE.md", "SKILLS.md"],
+    "claude-code": ["CLAUDE.md"],  # index inlined
     "antigravity": ["GEMINI.md", ".agent/rules/GEMINI.md", ".agent/skills_index.json"],
     "codex": ["AGENTS.md"],
 }

@@ -30,7 +30,7 @@ Measured (`evals/token-benchmark.json`, chars/4 applied identically to all arms)
 
 | Runtime | Alfa (measured) | Beta naive | Beta (measured) | vs alfa |
 |---|---|---|---|---|
-| Claude Code | 29,552 | 3,869 | **2,335** | **−92%** |
+| Claude Code | 29,552 | 3,869 | **2,294** | **−92%** |
 | Antigravity | 36,801 | 5,377 | **2,990** | **−92%** |
 | Codex | 1,651 | 3,820 | **2,289** | +39%* |
 

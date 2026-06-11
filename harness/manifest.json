@@ -2,11 +2,17 @@
   "$schema": "./manifest.schema.json",
   "name": "pristino-beta",
   "version": "0.1.0",
-  "description": "Pristino Beta — catalog-driven multi-runtime agent harness (Claude Code, Antigravity, Codex)",
+  "description": "Pristino Beta \u2014 catalog-driven multi-runtime agent harness (Claude Code, Antigravity, Codex)",
   "tokenBudgets": {
-    "claude-code": { "sessionStartMax": 2600 },
-    "antigravity": { "sessionStartMax": 4000 },
-    "codex": { "sessionStartMax": 2300 }
+    "claude-code": {
+      "sessionStartMax": 2600
+    },
+    "antigravity": {
+      "sessionStartMax": 4000
+    },
+    "codex": {
+      "sessionStartMax": 2300
+    }
   },
   "contract": {
     "core": "runtime/core.md",
@@ -19,21 +25,33 @@
   "outputs": {
     "claude-code": {
       "adapter": "CLAUDE.md",
-      "index": "SKILLS.md",
-      "mcpConfig": { "path": ".mcp.json", "format": "json", "merge": "keys" },
+      "index": "inline",
+      "mcpConfig": {
+        "path": ".mcp.json",
+        "format": "json",
+        "merge": "keys"
+      },
       "hooks": true
     },
     "antigravity": {
       "adapter": "GEMINI.md",
       "rules": ".agent/rules/GEMINI.md",
       "index": ".agent/skills_index.json",
-      "mcpConfig": { "path": "~/.gemini/config/mcp_config.json", "format": "json", "merge": "keys" },
+      "mcpConfig": {
+        "path": "~/.gemini/config/mcp_config.json",
+        "format": "json",
+        "merge": "keys"
+      },
       "hooks": false
     },
     "codex": {
       "adapter": "AGENTS.md",
       "index": "inline",
-      "mcpConfig": { "path": "~/.codex/config.toml", "format": "toml", "merge": "keys" },
+      "mcpConfig": {
+        "path": "~/.codex/config.toml",
+        "format": "toml",
+        "merge": "keys"
+      },
       "hooks": false
     }
   },
@@ -42,30 +60,71 @@
       "transport": "stdio",
       "command": "notebooklm-mcp",
       "args": [],
-      "auth": { "kind": "cli-login", "command": "nlm login", "tokenPath": "~/.nlm/auth.json", "fallback": "save_auth_tokens tool" },
-      "runtimes": ["claude-code", "antigravity", "codex"],
+      "auth": {
+        "kind": "cli-login",
+        "command": "nlm login",
+        "tokenPath": "~/.nlm/auth.json",
+        "fallback": "save_auth_tokens tool"
+      },
+      "runtimes": [
+        "claude-code",
+        "antigravity",
+        "codex"
+      ],
       "fallback": "nlm CLI via Bash"
     },
     "stitch": {
       "transport": "http",
       "url": "https://stitch.googleapis.com/mcp",
-      "auth": { "kind": "gcloud-adc-or-key", "env": "STITCH_API_KEY" },
-      "runtimes": ["claude-code", "antigravity"],
-      "codexVariant": { "transport": "stdio", "command": "npx", "args": ["@_davideast/stitch-mcp", "proxy"], "status": "VALIDATE" },
+      "auth": {
+        "kind": "gcloud-adc-or-key",
+        "env": "STITCH_API_KEY"
+      },
+      "runtimes": [
+        "claude-code",
+        "antigravity"
+      ],
+      "codexVariant": {
+        "transport": "stdio",
+        "command": "npx",
+        "args": [
+          "@_davideast/stitch-mcp",
+          "proxy"
+        ],
+        "status": "VALIDATE"
+      },
       "fallback": "stitch skills + Playwright"
     },
     "google-workspace": {
       "transport": "stdio",
       "command": "uvx",
-      "args": ["workspace-mcp", "--tool-tier", "core", "--tools", "gmail", "drive", "calendar"],
-      "auth": { "kind": "oauth-file", "credentialsPath": "~/.config/workspace-mcp/credentials.json" },
-      "runtimes": ["claude-code", "antigravity", "codex"],
+      "args": [
+        "workspace-mcp",
+        "--tool-tier",
+        "core",
+        "--tools",
+        "gmail",
+        "drive",
+        "calendar"
+      ],
+      "auth": {
+        "kind": "oauth-file",
+        "credentialsPath": "~/.config/workspace-mcp/credentials.json"
+      },
+      "runtimes": [
+        "claude-code",
+        "antigravity",
+        "codex"
+      ],
       "fallback": "direct Google APIs, same OAuth client"
     }
   },
   "secrets": {
     "policy": "never-commit",
     "wrapper": "scripts/with-secrets.sh",
-    "sources": ["keychain", "env"]
+    "sources": [
+      "keychain",
+      "env"
+    ]
   }
 }
