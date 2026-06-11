@@ -1,0 +1,14 @@
+{
+  "$comment": "Single source of truth. Every runtime index is generated from this file (scripts/build-indexes.py). aliases map retired alfa ids to beta homes.",
+  "version": "0.1.0",
+  "skills": [
+    {
+      "id": "skill-foundry",
+      "desc": "Create/certify skills, agents, commands, prompts, hooks, MCP servers. Router.",
+      "params": { "make": ["skill", "agent", "command", "prompt", "hook", "mcp", "workflow"], "depth": ["quick", "deep"] },
+      "tier": "router",
+      "status": "stub"
+    }
+  ],
+  "aliases": {}
+}

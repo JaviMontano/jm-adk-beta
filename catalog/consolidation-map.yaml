@@ -1,0 +1,72 @@
+# consolidation-map.yaml — hand-authored cluster decisions (P3 fills details).
+# dispositions: core | router-fold | alias | dropped-generic | dropped-unreferenced | keep-as-is
+# migrate/apply-map.py joins this with coverage-matrix.csv to fill disposition/beta_home/rationale.
+
+routers:
+  kata:            { absorbs_glob: "katas-*", count: 30 }
+  iikit:           { absorbs_glob: "iikit-*|iic-*", count: 24, note: "consume upstream intent-integrity-chain/kit; alfa deltas as preset overlay" }
+  firebase:        { absorbs_glob: "firebase-*", count: 12 }
+  google-workspace:{ absorbs_glob: "google-*", extra: [analytics-implementation], count: 10 }
+  data-platform:   { absorbs: [data-engineering, data-quality, data-validation, data-migration, data-export, data-flow-architecture] }
+  data-governance: { absorbs: [data-governance, data-privacy-patterns, data-strategy, data-documentation, data-storytelling] }
+  ai-architecture: { absorbs: [ai-software-architecture, ai-pipeline-architecture, ai-conops, ai-design-patterns, ai-architecture-audit, ai-architecture-implementation] }
+  ai-quality:      { absorbs: [ai-testing-strategy, ai-assisted-testing, ai-code-review, ai-safety, ai-content-detection, ai-documentation, ai-workflow-automation] }
+  skill-foundry:   { absorbs: [skill-creator, agent-creator, prompt-creator, workflow-creator, mcp-creator, hook-creator, prompt-forge, workflow-forge, assembly-skill, certify-skill, benchmark-skill, design-skill, x-ray-skill, meta-skill-indexer] }
+  guardrails:      { absorbs: [pre-tool-use-guard, post-tool-use-validator, user-prompt-filter, output-contract-enforcer, quality-gatekeeper, guardrails-management, secrets-sanitization, constitution-compliance] }
+  accessibility:   { absorbs: [accessibility-audit, accessibility-testing, accessibility-design, accessibility-writing] }
+  brand-output:    { absorbs: [brand-html, html-brand, brand-docx, brand-xlsx, folio-generator, xlsx-template-creator] }
+  carrera:         { absorbs: [proceso-seleccion-orchestrator, simulador-entrevista, negociacion-oferta, cv-cover-optimizer, follow-up-email, onboarding-90-dias, validar-liquidacion-co, red-y-referencias, gratitud-post-proceso, cierre-conversacion, acta-formal] }
+
+core_standalone:  # 24 competencies, dod-complete, evals carried
+  - adaptive-investigation-method
+  - agentic-loop-engineering
+  - claude-md-architecture
+  - context-window-engineering
+  - custom-tooling-extension
+  - evaluation-confidence-design
+  - mcp-engineering
+  - message-batch-orchestration
+  - official-source-verifier
+  - persistent-memory-design
+  - plan-mode-workflow
+  - pristino-calibration
+  - prompt-chaining-design
+  - prompting-and-meta-prompting
+  - provenance-engineering
+  - runtime-routing
+  - safe-scripting-and-bash
+  - self-correction-loops
+  - session-lifecycle-management
+  - structured-output-design
+  - subagent-orchestration
+  - tool-use-design
+  - validation-retry-design
+  - workspace-setup
+
+keep_as_is:
+  jarvis-os-pack: [jarvis-os, jarvis-bootstrap, daily-close, dbr-daily-plan, frontload-prompt, lab-session, monthly-audit, project-create, qbr-quarterly, revisor-veracidad, station-create, task-subfolder, wbr-weekly-review, weekly-retro]
+
+duplicate_pairs:  # keep first (dod-complete), alias second
+  - [input-analyst, input-analysis]
+  - [context-optimizer, context-optimization]
+  - [discovery-orchestrator, discovery-orchestration]
+  - [accessibility-audit, accessibility-testing]   # both fold into accessibility router
+  - [firebase-auth, firebase-auth-setup]
+  - [firebase-hosting, firebase-hosting-setup]
+  - [api-design, api-designer]
+  - [google-analytics, analytics-implementation]
+  - [code-review, ai-code-review]
+  - [state-management, state-management-design]
+
+dropped_generic:
+  - javascript-patterns
+  - node-development
+  - rest-api-development
+  - testing-fundamentals
+  - component-patterns
+  - database-design
+  - error-handling-patterns
+  - state-management-design
+  - state-management
+
+default_disposition_for_unreferenced_pending: dropped-unreferenced

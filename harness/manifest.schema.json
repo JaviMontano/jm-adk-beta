@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pristino Beta harness manifest",
+  "type": "object",
+  "required": ["name", "version", "tokenBudgets", "contract", "outputs", "mcpServers"],
+  "properties": {
+    "name": { "type": "string" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "description": { "type": "string" },
+    "tokenBudgets": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["sessionStartMax"],
+        "properties": { "sessionStartMax": { "type": "integer", "minimum": 1 } }
+      }
+    },
+    "contract": {
+      "type": "object",
+      "required": ["core"],
+      "properties": {
+        "core": { "type": "string" },
+        "deltas": { "type": "object", "additionalProperties": { "type": "string" } }
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["adapter"],
+        "properties": {
+          "adapter": { "type": "string" },
+          "index": { "type": "string" },
+          "rules": { "type": "string" },
+          "hooks": { "type": "boolean" },
+          "mcpConfig": {
+            "type": "object",
+            "required": ["path", "format"],
+            "properties": {
+              "path": { "type": "string" },
+              "format": { "enum": ["json", "toml"] },
+              "merge": { "enum": ["keys", "replace"] }
+            }
+          }
+        }
+      }
+    },
+    "mcpServers": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["transport", "auth", "runtimes"],
+        "properties": {
+          "transport": { "enum": ["stdio", "http"] },
+          "command": { "type": "string" },
+          "args": { "type": "array", "items": { "type": "string" } },
+          "url": { "type": "string" },
+          "auth": { "type": "object" },
+          "runtimes": { "type": "array", "items": { "type": "string" } },
+          "fallback": { "type": "string" },
+          "codexVariant": { "type": "object" }
+        }
+      }
+    },
+    "secrets": { "type": "object" }
+  }
+}

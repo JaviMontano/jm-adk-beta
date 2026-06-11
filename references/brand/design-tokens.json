@@ -1,0 +1,85 @@
+{
+  "brand": "MetodologIA",
+  "version": "2.0.0",
+  "aesthetic": "Neo-Swiss Clean and Soft Explainer (Corporate Clean and Premium)",
+  "description": "Ilustración vectorial flat y vibrante con grid suizo, mucho espacio en blanco, composición por columnas, figuras humanas sin rostro, formas geométricas suaves, elementos UI (chips, checklists, timers). Sombras suaves y micro-gradientes discretos. Legibilidad alta: texto grande, alto contraste, nunca sobre fondos ruidosos.",
+  "palette": {
+    "navy": "#122562",
+    "gold": "#FFD700",
+    "cyan": "#137DC5",
+    "dark": "#1F2833",
+    "lavender": "#BBA0CC",
+    "gray": "#808080",
+    "surface": "rgba(18, 37, 98, 0.95)",
+    "surfaceAlt": "#0F172A",
+    "goldDark": "#E5A100",
+    "goldLight": "#FFF176",
+    "text": "#FFFFFF",
+    "textMuted": "#94A3B8",
+    "border": "rgba(255, 255, 255, 0.05)",
+    "borderHover": "rgba(255, 215, 0, 0.3)"
+  },
+  "paletteExclusive": ["#122562", "#FFD700", "#137DC5", "#1F2833", "#BBA0CC", "#808080"],
+  "typography": {
+    "heading": {
+      "family": "Poppins, sans-serif",
+      "role": "Titulares, encabezados, hero text",
+      "weights": [600, 700, 800],
+      "import": "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap"
+    },
+    "body": {
+      "family": "Trebuchet MS, sans-serif",
+      "role": "Cuerpo de texto, párrafos, descripciones",
+      "weights": [400, 700],
+      "fallback": "Montserrat, sans-serif"
+    },
+    "footnote": {
+      "family": "Futura, sans-serif",
+      "role": "Notas pequeñas, footnotes, popups, callouts",
+      "weights": [400, 500],
+      "fallback": "system-ui, sans-serif"
+    },
+    "mono": {
+      "family": "JetBrains Mono, monospace",
+      "role": "Código, terminales, badges técnicos",
+      "weights": [400, 500],
+      "import": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
+    }
+  },
+  "effects": {
+    "glassBg": "rgba(30, 41, 59, 0.4)",
+    "glassBlur": "blur(24px)",
+    "glassBorder": "1px solid rgba(255, 255, 255, 0.05)",
+    "glassShadow": "0 4px 30px rgba(0, 0, 0, 0.5)",
+    "softShadow": "0 2px 8px rgba(0, 0, 0, 0.15)",
+    "microGradient": "linear-gradient(135deg, rgba(255,215,0,0.05), transparent)",
+    "goldGlow": "0 0 20px rgba(255, 215, 0, 0.2)",
+    "goldHoverShadow": "0 8px 32px rgba(255, 215, 0, 0.1)",
+    "transition": "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+    "gridSize": "32px",
+    "gridColor": "rgba(255, 255, 255, 0.03)"
+  },
+  "layout": {
+    "maxWidth": "1200px",
+    "padding": "2rem",
+    "borderRadius": "12px",
+    "gap": "1.5rem",
+    "gridSystem": "Swiss grid — composición por columnas (texto + visual)"
+  },
+  "illustration": {
+    "style": "Vectorial flat, vibrante",
+    "figures": "Humanas sin rostro",
+    "shapes": "Geométricas suaves",
+    "uiElements": ["chips", "checklists", "timers", "progress bars"],
+    "shadows": "Suaves, no realistas",
+    "gradients": "Micro-gradientes discretos",
+    "whitespace": "Abundante — composición respira"
+  },
+  "rules": {
+    "contrast": "Alto siempre. Nunca texto sobre fondos ruidosos.",
+    "textSize": "Grande por defecto. Legibilidad es prioridad.",
+    "backgrounds": "Limpios. Sin texturas complejas bajo texto.",
+    "palette": "Exclusiva: solo los 6 colores definidos + derivados.",
+    "typography": "Poppins titulares, Trebuchet cuerpo, Futura notas, JetBrains código. Sin excepciones."
+  }
+}

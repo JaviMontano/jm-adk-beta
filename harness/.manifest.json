@@ -1,0 +1,10 @@
+{
+  "generated": [
+    ".agent/rules/GEMINI.md",
+    ".agent/skills_index.json",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    "SKILLS.md"
+  ]
+}

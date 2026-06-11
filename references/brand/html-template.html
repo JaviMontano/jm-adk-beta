@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} | MetodologIA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* MetodologIA Design Tokens */
+        :root {
+            --navy: #0A122A;
+            --surface: #1E293B;
+            --surface-alt: #0F172A;
+            --gold: #FFD700;
+            --gold-dark: #E5A100;
+            --gold-light: #FFF176;
+            --cyan: #137DC5;
+            --lavender: #BBA0CC;
+            --dark: #1F2833;
+            --text: #FFFFFF;
+            --text-muted: #94A3B8;
+            --text-secondary: #F8F9FA;
+            --border: rgba(255, 255, 255, 0.05);
+            --border-hover: rgba(255, 215, 0, 0.3);
+            --glass-bg: rgba(30, 41, 59, 0.4);
+            --glass-blur: blur(24px);
+            --gold-glow: 0 0 20px rgba(255, 215, 0, 0.2);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --max-width: 1200px;
+            --radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--navy);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Swiss Grid Overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            border-bottom: 2px solid var(--gold);
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        header .subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Section Headers */
+        h2 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h3 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        /* Glass Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.1);
+            transform: scale(1.01);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--gold);
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-bottom: 2px solid var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        tr:hover td {
+            background: rgba(255, 215, 0, 0.03);
+        }
+
+        /* Lists */
+        ul, ol { padding-left: 1.5rem; margin: 0.75rem 0; }
+        li { margin-bottom: 0.4rem; color: var(--text-secondary); }
+        li::marker { color: var(--gold); }
+
+        /* Code */
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--surface);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            color: var(--gold-light);
+        }
+
+        /* Gold Accent Bar */
+        .accent-bar {
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--cyan) 50%, var(--lavender) 100%);
+            border-radius: 2px;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 2px solid var(--gold);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        footer .brand {
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        /* Print */
+        @media print {
+            body { background: white; color: #1a1a1a; }
+            body::before { display: none; }
+            .card { border: 1px solid #ddd; box-shadow: none; background: #f9f9f9; }
+            header h1 { -webkit-text-fill-color: #0A122A; background: none; }
+            h2 { color: #0A122A; border-bottom-color: #ddd; }
+            th { color: #0A122A; border-bottom-color: #0A122A; }
+            footer .brand { color: #0A122A; }
+            @page { margin: 1.5cm; size: letter; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            header h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>{{TITLE}}</h1>
+            <div class="subtitle">{{SUBTITLE}}</div>
+        </header>
+
+        <div class="accent-bar"></div>
+
+        <!-- CONTENT GOES HERE -->
+        {{CONTENT}}
+
+        <div class="accent-bar"></div>
+
+        <footer>
+            <span class="brand">MetodologIA</span> &mdash; {{DATE}}
+            <br>
+            Made with Claude Code and Tons of Love with the Help of Pristino Agent
+        </footer>
+    </div>
+</body>
+</html>
