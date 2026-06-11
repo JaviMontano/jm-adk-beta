@@ -1,6 +1,18 @@
 # Skills Index (tier-0)
 
-Generated — no edit. ® = router (params in SKILL.md frontmatter; resolve topic, read ONE playbook).
+GENERATED — do not edit by hand. Source of truth: `catalog/skills.json`; regenerate with `python scripts/build-indexes.py` (also rebuilds this header). Hand edits are overwritten on next build. [DOC]
+
+Tier-0 = always-loaded discovery layer: one line per skill so the agent picks a skill WITHOUT reading any SKILL.md. Match the user request to a `id` + description, then load `skills/<id>/SKILL.md` (path is derivable from the id, never listed here). [DOC]
+
+Legend [DOC]:
+- `id` — backtick code span; the slug. Open `skills/<id>/SKILL.md` to run it.
+- ® — router skill: `params` (topic enum + depth) live in its frontmatter `routes`. Resolve the topic, read exactly ONE playbook under that skill's `references/` — not the whole skill.
+- (no ®) — leaf skill: SKILL.md is the full playbook; many carry a `(Pnn)` cadence/process id.
+- … — description elided for width; the authoritative full text is the SKILL.md `description`.
+
+Selection contract [DOC]: pick the single best id; if two tie, prefer the more specific; if none fit, fall back to the closest ® router and let its topic param disambiguate; if still unmatched, ask — do NOT invent an id or a path. Anti-scope: this index lists no params, routes, tools, or versions — read the SKILL.md for those.
+
+Counts [INFERENCE]: 73 skills, 35 routers (®), 38 leaf. Sorted by id; stable for diffing.
 
 `accessibility`® Accessibility: WCAG audit, testing, design, writing.
 `adaptive-investigation-method` Investigar dominios desconocidos con mapeo barato, budget acotado y re-plan disciplinado…
