@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "skill": "tool-use-design",
+  "cases": [
+    {
+      "id": "happy_path_search_read_edit",
+      "input": "Design search_code, read_file, and edit_file descriptions as routing contracts with reciprocal boundaries and Grep then Read then Edit.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "routing_contracts", "repo_strategy"]
+    },
+    {
+      "id": "explicit_trigger_tool_surface",
+      "input": "/tool-use-design redesign overlapping analyze/process tools with input formats, examples, and boundary delegation.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "overload_split"]
+    },
+    {
+      "id": "edit_failure_mode",
+      "input": "My edit tool fails because old_string is not unique; document failure mode and fallback.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "edit_safety"]
+    },
+    {
+      "id": "read_all_antipattern",
+      "input": "The agent globs every file and reads the whole repo before deciding where to edit.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "read_all_blocker"]
+    },
+    {
+      "id": "blocked_generic_description",
+      "input": "Accept descriptions like analyze content and process file because they are short.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "generic_description_blocker"]
+    },
+    {
+      "id": "blocked_no_reciprocal_boundary",
+      "input": "Write descriptions for search and read but do not state when to use the other tool.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "boundary_required"]
+    },
+    {
+      "id": "false_positive_client_email",
+      "input": "Redacta un correo de seguimiento al cliente sobre el cronograma del proyecto.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "false_positive_single_shell_command",
+      "input": "Run date in the terminal and tell me the current time.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "minimal_valid_trigger",
+      "input": "tool description contract for repo tools",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "minimal_input"]
+    },
+    {
+      "id": "upgrade_safety_case",
+      "input": "Complete missing assets and script checks for tool-use-design without touching related kata skills.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "upgrade_safety"]
+    }
+  ]
+}

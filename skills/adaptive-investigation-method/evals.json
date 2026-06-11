@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "skill": "adaptive-investigation-method",
+  "cases": [
+    {
+      "id": "happy-path-unknown-repo",
+      "type": "happy_path",
+      "input": "Use adaptive-investigation-method to find where auth is validated in a 4000-file monorepo, with a hard budget of 8 reads, mapping cheaply before any deep read.",
+      "expected_behavior": "Activates the skill, defines a hard budget, maps with cheap tools, ranks hypotheses, deep-dives selectively, and returns a traceable deliverable.",
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "quality_criteria"
+      ],
+      "tags": [
+        "unknown-repo",
+        "budget"
+      ]
+    },
+    {
+      "id": "explicit-trigger",
+      "type": "happy_path",
+      "input": "/adaptive-investigation-method investigate this unknown dataset within an exploration budget.",
+      "expected_behavior": "Uses the adaptive investigation workflow and asks for missing budget or goal only if absent.",
+      "expected_checks": [
+        "assets",
+        "quality_criteria"
+      ],
+      "tags": [
+        "trigger",
+        "dataset"
+      ]
+    },
+    {
+      "id": "compiler-valid-auth",
+      "type": "script_fixture",
+      "input": "Run compile-adaptive-investigation.py on auth-repo-investigation.json.",
+      "expected_behavior": "The compiler exits zero and renders budget, surface map, hypotheses, deep-dives, replan log, deliverable, and risks.",
+      "expected_checks": [
+        "deterministic_scripts",
+        "quality_criteria"
+      ],
+      "tags": [
+        "compiler",
+        "markdown"
+      ]
+    },
+    {
+      "id": "compiler-valid-corpus",
+      "type": "script_fixture",
+      "input": "Run compile-adaptive-investigation.py on corpus-investigation.json with JSON output.",
+      "expected_behavior": "The compiler exits zero and preserves hypothesis_invalidated replan evidence in JSON output.",
+      "expected_checks": [
+        "deterministic_scripts",
+        "quality_criteria"
+      ],
+      "tags": [
+        "compiler",
+        "json"
+      ]
+    },
+    {
+      "id": "negative-no-budget",
+      "type": "negative_fixture",
+      "input": "Validate an investigation spec without budget.total.",
+      "expected_behavior": "The compiler exits non-zero and reports that budget.total is required.",
+      "expected_checks": [
+        "deterministic_scripts",
+        "quality_criteria"
+      ],
+      "tags": [
+        "fail-closed",
+        "budget"
+      ]
+    },
+    {
+      "id": "negative-reflexive-replan",
+      "type": "negative_fixture",
+      "input": "Validate an investigation spec that replans every turn.",
+      "expected_behavior": "The compiler exits non-zero because replan is only allowed on hypothesis_invalidated.",
+      "expected_checks": [
+        "deterministic_scripts",
+        "quality_criteria"
+      ],
+      "tags": [
+        "fail-closed",
+        "replan"
+      ]
+    },
+    {
+      "id": "tiny-domain-false-positive",
+      "type": "false_positive",
+      "input": "I have one 30-line config file; read it and tell me the configured port.",
+      "expected_behavior": "Does not activate; reading one small file is cheaper than adaptive mapping.",
+      "expected_checks": [
+        "quality_criteria"
+      ],
+      "tags": [
+        "routing",
+        "small-domain"
+      ]
+    },
+    {
+      "id": "conflicting-requirements",
+      "type": "edge_case",
+      "input": "Use adaptive-investigation-method, but skip the budget and read everything.",
+      "expected_behavior": "Rejects the unsafe instruction, preserves the hard-budget requirement, and proposes a bounded alternative.",
+      "expected_checks": [
+        "assets",
+        "quality_criteria"
+      ],
+      "tags": [
+        "conflict",
+        "anti-pattern"
+      ]
+    }
+  ]
+}

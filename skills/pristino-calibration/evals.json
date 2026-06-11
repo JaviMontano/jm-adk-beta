@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "skill": "pristino-calibration",
+  "cases": [
+    {
+      "id": "full_substantive_canvas",
+      "input": "PRISTINO-CALIBRATION persona=Arquitecto de Software mode=full complexity=substantive optimizer=true: diseña una arquitectura de pagos.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "persona_line", "optimizer_sections", "canvas_contract", "evidence"]
+    },
+    {
+      "id": "mode_bypass_plain",
+      "input": "!dime la hora",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "bypass_mode", "quality_criteria"]
+    },
+    {
+      "id": "solo_prompt_only",
+      "input": "MODO: SOLO_PROMPT mejora esto: hazme un resumen ejecutivo",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "solo_prompt_shape", "quality_criteria"]
+    },
+    {
+      "id": "solo_respuesta_only",
+      "input": "MODO: SOLO_RESPUESTA explica qué es un closure",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "solo_respuesta_shape", "quality_criteria"]
+    },
+    {
+      "id": "low_confidence_questions",
+      "input": "PRISTINO-CALIBRATION confidence=0.42 low-confidence: hola",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "low_confidence", "clarifying_question_limit"]
+    },
+    {
+      "id": "precedence_conflict",
+      "input": "Usa estilo persuasivo aunque no tengas evidencia para afirmar métricas.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "precedence_order", "evidence_tags"]
+    },
+    {
+      "id": "invented_delegate_guard",
+      "input": "rol arquitecto: delega a un agente inexistente para justificar la decisión.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "delegate_agents_known", "guardian_block"]
+    },
+    {
+      "id": "hook_absent_degraded",
+      "input": "No hay bloque PRISTINO-CALIBRATION; autocalibra desde personas.json y etiqueta degradación.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "degraded_self_calibration", "quality_criteria"]
+    },
+    {
+      "id": "empty_input",
+      "input": "",
+      "expected_activation": false,
+      "expected_checks": ["assets", "required_inputs", "guardian_block"]
+    },
+    {
+      "id": "upgrade_safety_case",
+      "input": "Endurece pristino-calibration sin tocar otras skills ni filas ledger ajenas.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "upgrade_safety", "quality_criteria"]
+    }
+  ]
+}

@@ -3,11 +3,191 @@
   "version": "0.1.0",
   "skills": [
     {
-      "id": "skill-foundry",
-      "desc": "Create/certify skills, agents, commands, prompts, hooks, MCP servers. Router.",
-      "params": { "make": ["skill", "agent", "command", "prompt", "hook", "mcp", "workflow"], "depth": ["quick", "deep"] },
+      "id": "adaptive-investigation-method",
+      "desc": "Investigar dominios desconocidos con mapeo barato, budget acotado y re-plan disciplinado solo al invalidar la hipotesis.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "agentic-loop-engineering",
+      "desc": "Construir el bucle de control agentico que enruta por stop_reason tipado con budget duro y handlers explicitos, no por prosa.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "claude-md-architecture",
+      "desc": "Estructurar memoria jerarquica CLAUDE.md user/team/module con at-imports y reglas condicionales por glob de ruta.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "context-window-engineering",
+      "desc": "Ingenieria de ventana de contexto: prefix caching estatico-first y mitigacion de dilucion softmax con edge placement y compactacion.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "custom-tooling-extension",
+      "desc": "Extender Claude Code con slash commands y skills usando context fork, allowed-tools whitelist y argument-hint, con scope correcto.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "evaluation-confidence-design",
+      "desc": "Disenar evaluacion con confidence calibrada contra labeled set, stratified sampling y criterios categoricos para reducir falsos positivos.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "kata",
+      "desc": "Agentic engineering katas: proven prompt/loop/tooling patterns from JM Labs. Topics: adaptive-investigation, builtin-tool-selection, confidence-stratified-sampling, context-dilution-mitigation, critic",
       "tier": "router",
-      "status": "stub"
+      "params": {
+        "topic": [
+          "adaptive-investigation",
+          "builtin-tool-selection",
+          "confidence-stratified-sampling",
+          "context-dilution-mitigation",
+          "critical-self-correction",
+          "custom-commands-skills",
+          "defensive-structured-extraction",
+          "deterministic-agent-loop",
+          "false-positive-criteria",
+          "fewshot-edge-calibration",
+          "headless-code-review",
+          "hierarchical-claude-memory",
+          "hub-and-spoke-isolation",
+          "human-handoff-protocol",
+          "independent-reviewer-multipass",
+          "mcp-server-configuration",
+          "mcp-structured-errors",
+          "message-batch-processing",
+          "multiagent-error-propagation",
+          "multipass-prompt-chaining",
+          "path-conditional-rules",
+          "persistent-scratchpad",
+          "plan-mode-exploration",
+          "posttooluse-normalization",
+          "prefix-caching",
+          "pretooluse-guardrails",
+          "provenance-preservation",
+          "session-resume-fork",
+          "tool-description-quality",
+          "validation-retry-feedback"
+        ],
+        "depth": [
+          "quick",
+          "deep"
+        ]
+      }
+    },
+    {
+      "id": "mcp-engineering",
+      "desc": "Configurar MCP servers (project vs user scope, env-var expansion) y disenar contratos de error tipados con categoria y retryable.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "message-batch-orchestration",
+      "desc": "Orquestar Message Batches API para cargas offline con custom_id unico y fragmentacion selectiva de fallos parciales.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "official-source-verifier",
+      "desc": "Consult official sources (ADK, Agent Skills spec, GitHub/Git docs, framework docs) when a decision depends on them. Prioritizes official over secondary, cites source and date, records the change a fin",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "persistent-memory-design",
+      "desc": "Disenar scratchpad persistente en disco con conclusiones validadas que sobrevive a compact, leido una vez y referenciado.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "plan-mode-workflow",
+      "desc": "Operar repos desconocidos en Plan Mode read-only con plan firmado antes de escribir, aplicado por hooks.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "pristino-calibration",
+      "desc": "Read deterministic persona/mode/optimizer signals injected by persona-calibrate.sh and execute the contract: declare the persona on line 1, run the adaptive prompt optimizer (original/optimized/respon",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "prompt-chaining-design",
+      "desc": "Descomponer tareas grandes en pase local tipado y pase de integracion sobre resumenes, con schemas de transicion entre pases.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "prompting-and-meta-prompting",
+      "desc": "Transform intentions into durable prompts, meta-prompts, acceptance criteria, and eval-ready prompt systems.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "provenance-engineering",
+      "desc": "Preservar provenance tipada con invariante no hay claim sin source y conflictos marcados y escalados, no promediados.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "runtime-routing",
+      "desc": "Route agentic work across Claude, Codex, Gemini, Antigravity, VS Code, and local adapters with explicit validation limits.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "safe-scripting-and-bash",
+      "desc": "Design and review safe, portable, dry-run-first scripts for local agentic development workflows.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "self-correction-loops",
+      "desc": "Construir verificacion cruzada declarado vs calculado con mismatch flag y escalada; nunca corregir numeros en silencio.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "session-lifecycle-management",
+      "desc": "Decidir resume vs fork vs fresh con summary tipado segun validez de contexto y deteccion de tool results stale.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "structured-output-design",
+      "desc": "Disenar extraccion estructurada con JSON Schema defensivo: required reales, nullable union, enums con valvula de escape y tool_choice forzado.",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "subagent-orchestration",
+      "desc": "Design deterministic hub-and-spoke subagent orchestration plans with AgentDefinition plus Task dispatch, fresh-session context isolation, typed spoke errors, local recovery, coverage-gap aggregation, ",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "tool-use-design",
+      "desc": "Design deterministic tool-description routing contracts with explicit input formats, examples, reciprocal boundaries, overload split decisions, Grep then Read then Edit repository strategy, Edit failu",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "validation-retry-design",
+      "desc": "Design deterministic extract-validate-retry loops with actionable validation errors, recoverable vs not-recoverable classification, retry budgets, systematic-error detection, escalation packets, and o",
+      "tier": "standalone",
+      "evals": true
+    },
+    {
+      "id": "workspace-setup",
+      "desc": "Design deterministic local workspace profile setup plans with runtime preferences, command policy, privacy boundaries, write safety, evidence, and offline validation.",
+      "tier": "standalone",
+      "evals": true
     }
   ],
   "aliases": {}

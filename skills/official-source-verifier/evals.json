@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "skill": "official-source-verifier",
+  "cases": [
+    {
+      "id": "adk_docs_decision",
+      "input": "Before changing our ADK adapter, verify the official ADK docs and record which source justifies the change.",
+      "expected_activation": true,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "official_source_priority",
+        "claim_evidence",
+        "quality_criteria",
+        "evidence"
+      ]
+    },
+    {
+      "id": "github_cli_behavior",
+      "input": "A blog says gh pr merge deletes branches by default. Verify with official GitHub docs before updating our workflow.",
+      "expected_activation": true,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "secondary_not_authority",
+        "citation_date",
+        "quality_criteria",
+        "evidence"
+      ]
+    },
+    {
+      "id": "agent_skills_spec",
+      "input": "Confirm from the official Agent Skills spec whether assets should be loaded into context or used as output resources.",
+      "expected_activation": true,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "official_source_priority",
+        "claim_evidence",
+        "quality_criteria",
+        "evidence"
+      ]
+    },
+    {
+      "id": "framework_version_migration",
+      "input": "Verify from official framework docs whether the migration guide allows this config key before editing code.",
+      "expected_activation": true,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "official_source_priority",
+        "decision_traceability",
+        "quality_criteria",
+        "evidence"
+      ]
+    },
+    {
+      "id": "secondary_source_rejected",
+      "input": "Use a StackOverflow answer as the only authority for changing our Git settings.",
+      "expected_activation": false,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "secondary_not_authority",
+        "quality_criteria",
+        "evidence"
+      ]
+    },
+    {
+      "id": "missing_access_date_rejected",
+      "input": "Cite the official docs but omit the date because the URL is enough.",
+      "expected_activation": false,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "citation_date",
+        "quality_criteria",
+        "evidence"
+      ]
+    },
+    {
+      "id": "local_code_fact_false_positive",
+      "input": "Search this repo for where validate-skill-dod.py reads evals.json.",
+      "expected_activation": false,
+      "expected_checks": [
+        "assets",
+        "quality_criteria",
+        "activation_scope"
+      ]
+    },
+    {
+      "id": "conflicting_sources",
+      "input": "Two docs disagree about a Git command. Prioritize the official Git docs over a tutorial and record the conflict.",
+      "expected_activation": true,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "conflict_resolution",
+        "official_source_priority",
+        "quality_criteria",
+        "evidence"
+      ]
+    },
+    {
+      "id": "unverified_claim_blocks_change",
+      "input": "If no official source confirms this SDK parameter, mark it unverified and do not authorize the code change.",
+      "expected_activation": true,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "unverified_blocks_change",
+        "quality_criteria",
+        "evidence"
+      ]
+    },
+    {
+      "id": "upgrade_safety_case",
+      "input": "Harden official-source-verifier assets, evals, examples and scripts without touching other skills or unrelated ledger rows.",
+      "expected_activation": true,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "quality_criteria",
+        "upgrade_safety"
+      ]
+    }
+  ]
+}

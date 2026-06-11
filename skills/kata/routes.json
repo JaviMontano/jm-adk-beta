@@ -1,0 +1,152 @@
+{
+  "adaptive-investigation": {
+    "playbook": "references/adaptive-investigation.md",
+    "desc": "Investigacion adaptativa: mapeo barato, budget de exploracion acotado y re-plan disciplinado solo al invalidar la hipotesis.",
+    "alfa": "katas-adaptive-investigation"
+  },
+  "builtin-tool-selection": {
+    "playbook": "references/builtin-tool-selection.md",
+    "desc": "Seleccion de built-in tools con estrategia Grep then Read then Edit, failure modes y sin Read masivo upfront.",
+    "alfa": "katas-builtin-tool-selection"
+  },
+  "confidence-stratified-sampling": {
+    "playbook": "references/confidence-stratified-sampling.md",
+    "desc": "Confidence calibration contra labeled set y stratified sampling por document_type; accuracy desglosada, nunca agregada.",
+    "alfa": "katas-confidence-stratified-sampling"
+  },
+  "context-dilution-mitigation": {
+    "playbook": "references/context-dilution-mitigation.md",
+    "desc": "Mitigacion de dilucion softmax: edge placement de reglas criticas y compactacion al cruzar 50-60 por ciento de contexto.",
+    "alfa": "katas-context-dilution-mitigation"
+  },
+  "critical-self-correction": {
+    "playbook": "references/critical-self-correction.md",
+    "desc": "Evaluacion critica: cross-check numerico declarado vs calculado, mismatch flag con ambos valores, sin corregir en silencio.",
+    "alfa": "katas-critical-self-correction"
+  },
+  "custom-commands-skills": {
+    "playbook": "references/custom-commands-skills.md",
+    "desc": "Slash commands vs skills: context fork, allowed-tools whitelist y argument-hint; convenciones permanentes van en CLAUDE.md.",
+    "alfa": "katas-custom-commands-skills"
+  },
+  "defensive-structured-extraction": {
+    "playbook": "references/defensive-structured-extraction.md",
+    "desc": "Extraccion defensiva con JSON Schema, tool_choice forzado, enums con valvula de escape y nullable explicito; nunca prosa.",
+    "alfa": "katas-defensive-structured-extraction"
+  },
+  "deterministic-agent-loop": {
+    "playbook": "references/deterministic-agent-loop.md",
+    "desc": "Control de bucle agentico por stop_reason tipado (tool_use vs end_turn), nunca por prosa del modelo; halt y budget deterministas.",
+    "alfa": "katas-deterministic-agent-loop"
+  },
+  "false-positive-criteria": {
+    "playbook": "references/false-positive-criteria.md",
+    "desc": "Criterios categoricos con ejemplos positivos y negativos por severidad para reducir falsos positivos; disable temporal por categoria.",
+    "alfa": "katas-false-positive-criteria"
+  },
+  "fewshot-edge-calibration": {
+    "playbook": "references/fewshot-edge-calibration.md",
+    "desc": "Few-shot para calibrar bordes subjetivos con 2-4 ejemplos del mismo schema; complementa, no reemplaza, al schema.",
+    "alfa": "katas-fewshot-edge-calibration"
+  },
+  "headless-code-review": {
+    "playbook": "references/headless-code-review.md",
+    "desc": "Code review headless con claude -p output-format json validado contra schema; el humano sigue siendo gate final de merge.",
+    "alfa": "katas-headless-code-review"
+  },
+  "hierarchical-claude-memory": {
+    "playbook": "references/hierarchical-claude-memory.md",
+    "desc": "Memoria jerarquica CLAUDE.md user/team/module con at-imports y precedencia por especificidad de subpath.",
+    "alfa": "katas-hierarchical-claude-memory"
+  },
+  "hub-and-spoke-isolation": {
+    "playbook": "references/hub-and-spoke-isolation.md",
+    "desc": "Aislamiento multi-agente con AgentDefinition y built-in Task; cada subagente arranca con contexto vacio y modelo propio.",
+    "alfa": "katas-hub-and-spoke-isolation"
+  },
+  "human-handoff-protocol": {
+    "playbook": "references/human-handoff-protocol.md",
+    "desc": "Handoff a humano con payload tipado autocontenido (customer_id, issue_summary, actions_taken); end-state del bucle, no pausa.",
+    "alfa": "katas-human-handoff-protocol"
+  },
+  "independent-reviewer-multipass": {
+    "playbook": "references/independent-reviewer-multipass.md",
+    "desc": "Multi-pass review con reviewer independiente en sesion limpia; per-file y cross-file; rechazo de quorum N-de-M.",
+    "alfa": "katas-independent-reviewer-multipass"
+  },
+  "mcp-server-configuration": {
+    "playbook": "references/mcp-server-configuration.md",
+    "desc": "Configuracion de MCP servers: project vs user scope, env-var expansion para credenciales y rotacion ante secreto leakeado.",
+    "alfa": "katas-mcp-server-configuration"
+  },
+  "mcp-structured-errors": {
+    "playbook": "references/mcp-structured-errors.md",
+    "desc": "Errores MCP tipados (isError, errorCategory, isRetryable, retryAfterSeconds); la politica de retry vive en el cliente.",
+    "alfa": "katas-mcp-structured-errors"
+  },
+  "message-batch-processing": {
+    "playbook": "references/message-batch-processing.md",
+    "desc": "Procesamiento masivo con Message Batches API, custom_id unico por request y fragmentacion selectiva de fallos parciales.",
+    "alfa": "katas-message-batch-processing"
+  },
+  "multiagent-error-propagation": {
+    "playbook": "references/multiagent-error-propagation.md",
+    "desc": "Propagacion de errores multi-agente: distinguir access failure de valid empty, local recovery primero y coverage gap annotation.",
+    "alfa": "katas-multiagent-error-propagation"
+  },
+  "multipass-prompt-chaining": {
+    "playbook": "references/multipass-prompt-chaining.md",
+    "desc": "Prompt chaining multi-pass: pase local tipado por unidad y pase de integracion que solo ve resumenes, no las unidades crudas.",
+    "alfa": "katas-multipass-prompt-chaining"
+  },
+  "path-conditional-rules": {
+    "playbook": "references/path-conditional-rules.md",
+    "desc": "Reglas condicionales por glob de ruta; universales siempre cargadas, heuristicas de lenguaje on-demand.",
+    "alfa": "katas-path-conditional-rules"
+  },
+  "persistent-scratchpad": {
+    "playbook": "references/persistent-scratchpad.md",
+    "desc": "Scratchpad persistente en disco curado por el agente; sobrevive a compact y reinicios, leido una vez y referenciado despues.",
+    "alfa": "katas-persistent-scratchpad"
+  },
+  "plan-mode-exploration": {
+    "playbook": "references/plan-mode-exploration.md",
+    "desc": "Exploracion segura en Plan Mode read-only con plan.md firmado por humano antes de transicionar a escritura.",
+    "alfa": "katas-plan-mode-exploration"
+  },
+  "posttooluse-normalization": {
+    "playbook": "references/posttooluse-normalization.md",
+    "desc": "Normalizacion de outputs heterogeneos via hook PostToolUse y updatedMCPToolOutput antes de entrar al historial del modelo.",
+    "alfa": "katas-posttooluse-normalization"
+  },
+  "prefix-caching": {
+    "playbook": "references/prefix-caching.md",
+    "desc": "Prefix caching: estatico-first y dinamico-last; interpretar cache_creation vs cache_read input tokens para estimar ahorro.",
+    "alfa": "katas-prefix-caching"
+  },
+  "pretooluse-guardrails": {
+    "playbook": "references/pretooluse-guardrails.md",
+    "desc": "Guardarrailes deterministas en hook PreToolUse con permissionDecision deny desde politica recargable, no en el system prompt.",
+    "alfa": "katas-pretooluse-guardrails"
+  },
+  "provenance-preservation": {
+    "playbook": "references/provenance-preservation.md",
+    "desc": "Provenance tipada: no hay claim sin source; conflictos marcados con conflict true y escalados, nunca promediados.",
+    "alfa": "katas-provenance-preservation"
+  },
+  "session-resume-fork": {
+    "playbook": "references/session-resume-fork.md",
+    "desc": "Gestion de sesiones: resume vs fork vs fresh con summary tipado; detectar cuando los tool results estan stale.",
+    "alfa": "katas-session-resume-fork"
+  },
+  "tool-description-quality": {
+    "playbook": "references/tool-description-quality.md",
+    "desc": "Calidad de descripciones de tools como contrato de seleccion; rename y split sobre overloading para evitar misroute.",
+    "alfa": "katas-tool-description-quality"
+  },
+  "validation-retry-feedback": {
+    "playbook": "references/validation-retry-feedback.md",
+    "desc": "Validacion y retry con error feedback especifico; distinguir recuperable de no recuperable; max 2-3 intentos y luego escalar.",
+    "alfa": "katas-validation-retry-feedback"
+  }
+}

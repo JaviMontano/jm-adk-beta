@@ -1,0 +1,156 @@
+{
+  "schema": 1,
+  "generated_by": "scripts/scaffold-skill.py",
+  "generated_on": "2026-05-30",
+  "skill": "persistent-memory-design",
+  "cases": [
+    {
+      "id": "long_investigation_survives_compact",
+      "input": "Audito una base de codigo grande por sesiones largas y cada /compact el agente olvida que modulos ya revise. Disena una memoria persistente en .agent/scratchpad.md que sobreviva al compact.",
+      "expected_activation": true,
+      "expected_checks": [
+        "validated_conclusions_only",
+        "fixed_schema",
+        "read_once_reference",
+        "survives_compact",
+        "evidence_traceability",
+        "assets",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "explicit_trigger",
+      "input": "/persistent-memory-design disena un scratchpad persistente para esta investigacion multi-sesion.",
+      "expected_activation": true,
+      "expected_checks": [
+        "validated_conclusions_only",
+        "fixed_schema",
+        "read_once_reference",
+        "survives_compact",
+        "evidence_traceability",
+        "assets",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "durable_agent_memory_multisession",
+      "input": "Necesito retomar manana esta tarea sin re-derivar todo. Quiero memoria duradera del agente con conclusiones validadas y evidencia.",
+      "expected_activation": true,
+      "expected_checks": [
+        "validated_conclusions_only",
+        "fixed_schema",
+        "read_once_reference",
+        "survives_compact",
+        "evidence_traceability",
+        "assets",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "cache_breaking_rework_fix",
+      "input": "Mi scratchpad se relee cada turno y rompe el prompt cache, y ademas guarda razonamiento crudo. Como lo rediseno?",
+      "expected_activation": true,
+      "expected_checks": [
+        "validated_conclusions_only",
+        "fixed_schema",
+        "read_once_reference",
+        "survives_compact",
+        "evidence_traceability",
+        "assets",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "full_design_with_explicit_dod",
+      "input": "Investigacion larga con limite de contexto, ruta .agent/scratchpad.md, evidencia source+fecha exigida y DoD: estado reconstruible solo desde el archivo tras reset.",
+      "expected_activation": true,
+      "expected_checks": [
+        "validated_conclusions_only",
+        "fixed_schema",
+        "read_once_reference",
+        "survives_compact",
+        "evidence_traceability",
+        "assets",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "false_negative_synonym_notebook",
+      "input": "Necesito un cuaderno duradero en disco para no perder decisiones confirmadas entre compactaciones; cada entrada debe tener fuente y fecha.",
+      "expected_activation": true,
+      "expected_checks": [
+        "validated_conclusions_only",
+        "fixed_schema",
+        "read_once_reference",
+        "survives_compact",
+        "evidence_traceability",
+        "assets",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "false_positive_unrelated",
+      "input": "Refactoriza este componente React para usar hooks en vez de clases.",
+      "expected_activation": false,
+      "expected_checks": [
+        "no_activation",
+        "assets",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "false_positive_session_routing",
+      "input": "Quiero decidir entre resume, fork o fresh para mi sesion tras un refactor masivo.",
+      "expected_activation": false,
+      "expected_checks": [
+        "route_to_session_lifecycle_management",
+        "assets",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "empty_input",
+      "input": "",
+      "expected_activation": false,
+      "expected_checks": [
+        "no_activation",
+        "assets",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "conflicting_requirements",
+      "input": "Usa persistent-memory-design pero vuelca todo el transcript crudo y relee el archivo cada turno.",
+      "expected_activation": false,
+      "expected_checks": [
+        "reject_raw_transcript",
+        "reject_reread_each_turn",
+        "assets",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "unsafe_path_boundary",
+      "input": "Guarda la memoria persistente en ../scratchpad.md para compartirla con otros repos y reusala en cada turno.",
+      "expected_activation": false,
+      "expected_checks": [
+        "reject_unsafe_path",
+        "reject_reread_each_turn",
+        "assets",
+        "deterministic_scripts",
+        "quality_criteria",
+        "upgrade_safety"
+      ]
+    }
+  ]
+}
