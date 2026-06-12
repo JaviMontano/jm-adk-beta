@@ -4,7 +4,7 @@
   "skills": [
     {
       "id": "accessibility",
-      "desc": "Accessibility: WCAG audit, testing, design, writing.",
+      "desc": "Accessibility router: WCAG audit, testing, accessible design, inclusive writing. Routes…",
       "tier": "router",
       "params": {
         "topic": [
@@ -21,7 +21,7 @@
     },
     {
       "id": "adaptive-investigation-method",
-      "desc": "Investigar dominios desconocidos con mapeo barato, budget acotado y re-plan disciplinado…",
+      "desc": "Investigar dominios desconocidos (repos, datasets, corpus) con mapeo barato, budget de…",
       "tier": "standalone",
       "evals": true
     },
@@ -104,7 +104,7 @@
     },
     {
       "id": "architecture",
-      "desc": "Software/system architecture: API design, DDD, events, realtime, caching, performance…",
+      "desc": "Software/system architecture router: API design, DDD, events, realtime, caching…",
       "tier": "router",
       "params": {
         "topic": [
@@ -147,7 +147,7 @@
     },
     {
       "id": "business-analysis",
-      "desc": "Business analysis and change: process modeling, requirements, feasibility, scenarios…",
+      "desc": "Business analysis and change router: process modeling, requirements, feasibility…",
       "tier": "router",
       "params": {
         "topic": [
@@ -200,13 +200,13 @@
     },
     {
       "id": "context-window-engineering",
-      "desc": "Ingenieria de ventana de contexto: prefix caching estatico-first y mitigacion de dilucion…",
+      "desc": "Disena el ensamblado de la ventana de contexto de un agente para maximizar reuso de…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "custom-tooling-extension",
-      "desc": "Extender Claude Code con slash commands y skills usando context fork, allowed-tools…",
+      "desc": "Decidir slash command vs skill y escribir su frontmatter de producción (context fork…",
       "tier": "standalone",
       "evals": true
     },
@@ -218,7 +218,7 @@
     },
     {
       "id": "data-governance",
-      "desc": "Data governance: privacy patterns, strategy, documentation, storytelling.",
+      "desc": "Router for data governance work: privacy patterns, data strategy, catalog/documentation…",
       "tier": "router",
       "params": {
         "topic": [
@@ -259,13 +259,13 @@
     },
     {
       "id": "dbr-daily-plan",
-      "desc": "Cadencia DBR: selecciona <=3 prioridades del dia y produce el plan diario (P09).",
+      "desc": "Cadencia DBR: selecciona <=3 prioridades-tambor del dia y emite el plan diario P09 con…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "devops-deploy",
-      "desc": "CI/CD and release engineering: pipelines, environments, deployment gates, rollbacks…",
+      "desc": "CI/CD and release engineering router: pipelines, environments, deployment gates…",
       "tier": "router",
       "params": {
         "topic": [
@@ -288,7 +288,7 @@
     },
     {
       "id": "docs-writing",
-      "desc": "Documentation and professional writing: technical docs, changelogs, diagrams, memos…",
+      "desc": "Documentation and professional writing router: technical docs, changelogs, diagrams…",
       "tier": "router",
       "params": {
         "topic": [
@@ -337,7 +337,7 @@
     },
     {
       "id": "firebase",
-      "desc": "Firebase platform: auth, hosting, functions, firestore-adjacent setup, emulators, deploy…",
+      "desc": "Firebase platform router: auth, hosting, functions, firestore-adjacent setup, emulators…",
       "tier": "router",
       "params": {
         "topic": [
@@ -365,13 +365,13 @@
     },
     {
       "id": "frontload-prompt",
-      "desc": "Reformatea un input largo o ambiguo a estructura SPEC antes de procesarlo.",
+      "desc": "Reformatea un input largo o ambiguo a estructura SPEC…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "google-workspace",
-      "desc": "Google APIs and Workspace: sheets, docs, slides, drive, calendar, maps, analytics, API…",
+      "desc": "Router for Google APIs/Workspace work — pick one topic and load its playbook: Sheets…",
       "tier": "router",
       "params": {
         "topic": [
@@ -466,7 +466,7 @@
     },
     {
       "id": "integrations",
-      "desc": "Third-party service integration: payments, webhooks, push notifications, and captcha.",
+      "desc": "Third-party service integration router: routes to one playbook for payment-integration…",
       "tier": "router",
       "params": {
         "topic": [
@@ -483,13 +483,13 @@
     },
     {
       "id": "jarvis-bootstrap",
-      "desc": "Bootstrap del Jarvis OS: CLAUDE.md y MEMORY.md raiz y estructura N0-N4 minima…",
+      "desc": "Bootstrap del Jarvis OS: crea CLAUDE.md y MEMORY.md raiz y la estructura minima de…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "jarvis-os",
-      "desc": "Pack paraguas del Personal Jarvis OS: COOL, 5 sectores, 12 niveles, 8 capacidades…",
+      "desc": "Pack paraguas del Personal Jarvis OS: aplica COOL, detecta sector/estación, enruta a las…",
       "tier": "standalone",
       "evals": true
     },
@@ -538,13 +538,13 @@
     },
     {
       "id": "lab-session",
-      "desc": "Crea una sesion de Lab con los 4 archivos canonicos: notas, hipotesis, referencias…",
+      "desc": "Scaffold a JM Labs Lab session: the 4 canonical files (notas, hipotesis, referencias…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "legal-compliance",
-      "desc": "Legal and compliance: contract review, compliance frameworks, and assessments.",
+      "desc": "Route legal/compliance work to one playbook: contract-review, compliance-assessment…",
       "tier": "router",
       "params": {
         "topic": [
@@ -608,13 +608,13 @@
     },
     {
       "id": "message-batch-orchestration",
-      "desc": "Orquestar Message Batches API para cargas offline con custom_id unico y fragmentacion…",
+      "desc": "Orquestar Message Batches API para cargas offline con custom_id unico, fragmentacion…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "monthly-audit",
-      "desc": "Auditoria mensual de salud del jarvis con rubrica de 6 preguntas (P22).",
+      "desc": "Auditoria mensual de salud del jarvis: rubrica de 6 preguntas (P22) que puntua, evidencia…",
       "tier": "standalone",
       "evals": true
     },
@@ -638,25 +638,25 @@
     },
     {
       "id": "official-source-verifier",
-      "desc": "Consult official sources (ADK, Agent Skills spec, GitHub/Git docs, framework docs) when a…",
+      "desc": "Verify a decision against official sources (ADK, Agent Skills spec, GitHub/Git…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "persistent-memory-design",
-      "desc": "Disenar scratchpad persistente en disco con conclusiones validadas que sobrevive a…",
+      "desc": "Disena un scratchpad persistente en disco (Hypotheses/Decisions/Findings/Open) con solo…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "plan-mode-workflow",
-      "desc": "Operar repos desconocidos en Plan Mode read-only con plan firmado antes de escribir…",
+      "desc": "Disenar un gate de dos modos: explorar un repo desconocido en Plan Mode read-only, firmar…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "pm-delivery",
-      "desc": "Project and delivery management: budgets, estimation, capacity, roadmaps, OKRs, risks…",
+      "desc": "Project and delivery management router: budgets, estimation, capacity, roadmaps, OKRs…",
       "tier": "router",
       "params": {
         "topic": [
@@ -686,7 +686,7 @@
     },
     {
       "id": "product-analytics",
-      "desc": "Product and business analytics: event instrumentation, KPIs, A/B tests, cohorts, funnels…",
+      "desc": "Product and business analytics router: event instrumentation, KPIs, A/B tests, cohorts…",
       "tier": "router",
       "params": {
         "topic": [
@@ -707,7 +707,7 @@
     },
     {
       "id": "project-create",
-      "desc": "Crea un proyecto P-NNN-slug del Jarvis OS con CLAUDE.md, MEMORY.md y TAREAS.md (P07).",
+      "desc": "Scaffold a Jarvis OS project P-NNN-slug under 02_Proyectos/ with compliant CLAUDE.md…",
       "tier": "standalone",
       "evals": true
     },
@@ -719,43 +719,43 @@
     },
     {
       "id": "prompting-and-meta-prompting",
-      "desc": "Transform intentions into durable prompts, meta-prompts, acceptance criteria, and…",
+      "desc": "Turn vague intentions into durable, eval-ready prompts, meta-prompts, acceptance…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "provenance-engineering",
-      "desc": "Preservar provenance tipada con invariante no hay claim sin source y conflictos marcados…",
+      "desc": "Disenar pipelines de extraccion/sintesis con provenance tipada: invariante no hay claim…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "qbr-quarterly",
-      "desc": "Cadencia QBR: auditoria trimestral y plan del proximo trimestre (P13).",
+      "desc": "Cadencia QBR (P13): audita el trimestre cerrado contra OKRs y planifica el proximo con…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "revisor-veracidad",
-      "desc": "Marca afirmaciones no verificables con tags de veracidad y propone el siguiente paso de…",
+      "desc": "Audita un texto, etiqueta cada afirmacion no reproducible con un tag de veracidad y…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "runtime-routing",
-      "desc": "Route agentic work across Claude, Codex, Gemini, Antigravity, VS Code, and local adapters…",
+      "desc": "Route agentic work across Claude, Codex, Gemini, Antigravity, VS Code, and local…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "safe-scripting-and-bash",
-      "desc": "Design and review safe, portable, dry-run-first scripts for local agentic development…",
+      "desc": "Design and review safe, portable, dry-run-first Bash scripts for local agentic workflows…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "sales-bizdev",
-      "desc": "Sales and business development: prospecting, outreach, dossiers, proposals, pitches, and…",
+      "desc": "Router for sales and business development in an ES/EN consulting context — prospecting…",
       "tier": "router",
       "params": {
         "topic": [
@@ -775,7 +775,7 @@
     },
     {
       "id": "security",
-      "desc": "Application security: auth, RBAC, input sanitization, headers/CORS, rate limiting…",
+      "desc": "Router for application security playbooks: auth, RBAC, input sanitization, headers/CORS…",
       "tier": "router",
       "params": {
         "topic": [
@@ -798,13 +798,13 @@
     },
     {
       "id": "self-correction-loops",
-      "desc": "Construir verificacion cruzada declarado vs calculado con mismatch flag y escalada; nunca…",
+      "desc": "Construir verificacion cruzada declarado-vs-calculado con mismatch flag tipado y escalada…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "seo-growth",
-      "desc": "SEO and conversion growth: technical SEO, content SEO, landing pages, funnels, CRO, and…",
+      "desc": "SEO and conversion growth router: technical SEO, content SEO, landing pages, funnels…",
       "tier": "router",
       "params": {
         "topic": [
@@ -831,7 +831,7 @@
     },
     {
       "id": "session-workspace",
-      "desc": "Agent session lifecycle: bootstrap, protocol, state management, context…",
+      "desc": "Router for agent session lifecycle: bootstrap, protocol, state/context-window management…",
       "tier": "router",
       "params": {
         "topic": [
@@ -851,7 +851,7 @@
     },
     {
       "id": "skill-foundry",
-      "desc": "Create/certify skills, agents, commands, prompts, hooks, MCP servers, workflows.",
+      "desc": "Router for building/certifying agentic assets — skills, agents, commands, prompts, hooks…",
       "tier": "router",
       "params": {
         "topic": [
@@ -880,13 +880,13 @@
     },
     {
       "id": "station-create",
-      "desc": "Crea una estacion del Jarvis OS (universal o dedicada) con su CLAUDE.md y estructura…",
+      "desc": "Scaffold a Jarvis OS station (universal or dedicated) with its own CLAUDE.md and…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "structured-output-design",
-      "desc": "Disenar extraccion estructurada con JSON Schema defensivo: required reales, nullable…",
+      "desc": "Disenar extraccion estructurada Claude como contrato de datos: JSON Schema defensivo…",
       "tier": "standalone",
       "evals": true
     },
@@ -898,13 +898,13 @@
     },
     {
       "id": "task-subfolder",
-      "desc": "Crea una sub-tarea T-NNN multi-sesion con CLAUDE.md, task.md y log.md (P33).",
+      "desc": "Crea/retoma una sub-tarea T-NNN multi-sesion con CLAUDE.md, task.md y log.md (P33)…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "testing-qa",
-      "desc": "Software testing strategy and execution: unit, E2E, BDD, cross-browser, and performance…",
+      "desc": "Router for software testing strategy and execution: pick one topic — bdd-full-spectrum…",
       "tier": "router",
       "params": {
         "topic": [
@@ -960,7 +960,7 @@
     },
     {
       "id": "ux-research",
-      "desc": "User research and validation: interviews, surveys, usability testing, and prototyping.",
+      "desc": "User research and validation router: route to interviews, surveys, usability testing, or…",
       "tier": "router",
       "params": {
         "topic": [
@@ -983,13 +983,13 @@
     },
     {
       "id": "wbr-weekly-review",
-      "desc": "Cadencia WBR: repaso semanal de avances, estancado y friccion (P11).",
+      "desc": "Cadencia WBR (P11): repaso semanal de avances, estancado y friccion; produce un acta…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "web-frontend",
-      "desc": "Frontend implementation: frameworks, component/CSS architecture, builds, PWA, i18n, and…",
+      "desc": "Frontend implementation router: pick ONE topic (react/angular/web-components…",
       "tier": "router",
       "params": {
         "topic": [
@@ -1017,13 +1017,13 @@
     },
     {
       "id": "weekly-retro",
-      "desc": "Cadencia de retro semanal: que ayudo, que friccion, que se vuelve regla (P12).",
+      "desc": "Cadencia de retro semanal (P12): captura que ayudo, que friccion hubo, y promueve…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "workspace-setup",
-      "desc": "Design deterministic local workspace profile setup plans with runtime preferences…",
+      "desc": "Design a deterministic, dry-run-first local workspace profile plan for .jm-adk.local.json…",
       "tier": "standalone",
       "evals": true
     }

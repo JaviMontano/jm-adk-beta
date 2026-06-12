@@ -1,6 +1,7 @@
 ---
 name: guardrails
 description: "Deterministic guard layer: pre/post tool guards, prompt filter, output contracts, secrets, constitution compliance. Thin doc over hooks/scripts. Topics: constitution-compliance, input-tolerance, integrity-chain-validation, management, output-contract-enforcer, permission-fast-path, post-tool-use-validator, pre-tool-use-guard, quality-gatekeeper, secrets-sanitization, stop-validator, user-prompt-filter."
+version: 1.1.0
 params:
   topic:
     enum: [constitution-compliance, input-tolerance, integrity-chain-validation, management, output-contract-enforcer, permission-fast-path, post-tool-use-validator, pre-tool-use-guard, quality-gatekeeper, secrets-sanitization, stop-validator, user-prompt-filter]
@@ -26,9 +27,42 @@ routes:
 
 # guardrails
 
-Router skill. Resolve `topic` from the request, then Read EXACTLY ONE playbook
-from `routes:`. Never load the whole cluster. `depth=deep` → apply the playbook
-exhaustively with verification at each step; `quick` → essentials only.
+Router skill. Resolve `topic`, then Read EXACTLY ONE playbook from `routes:`. [EXPLICIT]
 
-Spine: Discover → Analyze → Execute → Validate.
-Quality gates: constitution v6.0.0 (enforcement), evidence tags, script-first rule.
+## When to use
+A request targets a deterministic guard: block a command, validate a tool result,
+filter a prompt, enforce an output contract, sanitize secrets, check a quality
+gate or constitution principle, validate the integrity chain / stop conditions.
+Triggers: `/jm:verify`, `/jm:advance`, gate/PR readiness, pre-delivery. [INFERENCE]
+
+## Inputs → Outputs
+**In:** `topic` (enum, required) + `depth` (quick|deep). **Out:** that playbook's
+verdict — pass/fail/block with evidence-tagged reasons + remediation; never
+green-by-default. [DOC]
+
+## Routing
+1. Map the request to one `topic`. Disambiguate from `routes.json` `desc` if two
+   plausibly fit; if still ambiguous, ask — do NOT load several. [INFERENCE]
+2. Read that playbook only. Never load the whole cluster (12 files). [EXPLICIT]
+3. `deep` → apply exhaustively, verify each step (Discover → Analyze → Execute →
+   Validate); `quick` → essentials. Gates: constitution v6.0.0, evidence tags,
+   script-first. [CONFIG]
+
+## Evidence tags
+Alfa core family only: `[EXPLICIT]` `[CODE]` `[CONFIG]` `[DOC]` `[INFERENCE]`
+`[ASSUMPTION]`. One tag per claim; never mix families; canon in
+`../../references/verification-tags.md`. [DOC]
+
+## Acceptance criteria
+- Exactly one playbook read; `topic` ∈ enum; verdict carries evidence tags. [DOC]
+- Script-first (prefer the hook/script the playbook names) and fail-closed:
+  missing evidence ⇒ fail/block, never pass. [CONFIG]
+
+## Anti-patterns
+Loading multiple playbooks "to be safe"; guessing `topic` when ambiguous;
+reimplementing guard logic the hooks/scripts already enforce; reporting success
+without running the gate. [DOC]
+
+## Self-correction
+Two files opened, an untagged verdict, or "pass" with unmet criteria → stop;
+re-resolve `topic`, re-run the named script, re-tag. [INFERENCE]

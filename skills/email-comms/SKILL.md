@@ -18,9 +18,35 @@ routes:
 
 # email-comms
 
-Router skill. Resolve `topic` from the request, then Read EXACTLY ONE playbook
-from `routes:`. Never load the whole cluster. `depth=deep` → apply the playbook
-exhaustively with verification at each step; `quick` → essentials only.
+Router skill. Resolve `topic`, then Read EXACTLY ONE playbook from `routes:`. [DOC]
 
-Spine: Discover → Analyze → Execute → Validate.
-Quality gates: constitution v6.0.0 (enforcement), evidence tags, script-first rule.
+## When to use
+Any email task: provider/transactional sending, building responsive HTML
+templates, picking a template, or designing a newsletter. Not for in-app
+messaging, push, or SMS — those route elsewhere. [INFERENCE]
+
+## Topic selection
+- **email-sending** — wiring a provider/extension to actually send mail. [DOC]
+- **email-template-builder** — authoring new responsive HTML (table layout,
+  inline CSS, 600px max-width). [CODE]
+- **email-templates** — choosing/applying an existing template. [DOC]
+- **newsletter-design** — layout/content for broadcast newsletters. [DOC]
+
+If the request maps to two topics, run the prerequisite first
+(builder → templates → sending). [INFERENCE]
+
+## Procedure
+1. Map request → one `topic` enum; if ambiguous, ask one question — do not guess. [DOC]
+2. Read ONLY that route's playbook. Never load the whole cluster. [DOC]
+3. Set `depth`: `quick` = essentials; `deep` = exhaustive, verify each step. [DOC]
+4. Run the playbook spine: Discover → Analyze → Execute → Validate. [DOC]
+
+## Guardrails
+- Quality gates: constitution v6.0.0 (enforcement), evidence tags, script-first. [CONFIG]
+- Tags use Alfa core EN ([DOC]/[INFERENCE]/[CODE]/[CONFIG]/[ASSUMPTION]); never
+  mix the Jarvis `{…}` family. An unresolvable topic is stop-and-ask, not an [ASSUMPTION]. [DOC]
+
+## Anti-patterns
+- Loading multiple playbooks "to be safe" — defeats the router. [INFERENCE]
+- Inventing a topic outside the enum, or editing `routes:` to fit a request. [DOC]
+- Marking done without the Validate step. [DOC]

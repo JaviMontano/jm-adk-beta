@@ -1,6 +1,6 @@
 ---
 name: seo-growth
-description: "SEO and conversion growth: technical SEO, content SEO, landing pages, funnels, CRO, and trust patterns. Topics: conversion-optimization, funnel-design, indexability-validator, landing-page-builder, landing-pages, seo-architecture, seo-content, social-proof."
+description: "SEO and conversion growth router: technical SEO, content SEO, landing pages, funnels, CRO, trust patterns. Topics: conversion-optimization, funnel-design, indexability-validator, landing-page-builder, landing-pages, seo-architecture, seo-content, social-proof."
 params:
   topic:
     enum: [conversion-optimization, funnel-design, indexability-validator, landing-page-builder, landing-pages, seo-architecture, seo-content, social-proof]
@@ -22,9 +22,36 @@ routes:
 
 # seo-growth
 
-Router skill. Resolve `topic` from the request, then Read EXACTLY ONE playbook
-from `routes:`. Never load the whole cluster. `depth=deep` → apply the playbook
-exhaustively with verification at each step; `quick` → essentials only.
+Router skill. Resolve `topic`, then Read EXACTLY ONE playbook from `routes:`.
+Never load the whole cluster — one topic, one file. [DOC]
 
-Spine: Discover → Analyze → Execute → Validate.
-Quality gates: constitution v6.0.0 (enforcement), evidence tags, script-first rule.
+## Inputs / Outputs
+- **In:** `topic` (one enum), `depth` (quick|deep), the growth goal + any
+  URL/page/funnel context. Route to the narrowest topic the request names. [INFERENCE]
+- **Out:** the single playbook's deliverable. `quick` → essentials; `deep` →
+  apply exhaustively with verification at each step. [DOC]
+
+## Topic disambiguation [INFERENCE]
+- **landing-page-builder** = build a new page end-to-end; **landing-pages** =
+  patterns/critique for existing pages.
+- **seo-architecture** = structure/indexing/internal links; **seo-content** =
+  on-page copy/keywords; **indexability-validator** = audit crawl/index status.
+- **conversion-optimization** = CRO experiments on a page; **funnel-design** =
+  multi-step journey; **social-proof** = trust elements.
+
+## Spine
+Discover → Analyze → Execute → Validate. Don't skip Validate even on `quick`. [DOC]
+
+## Quality gates [DOC]
+Constitution v6.0.0 enforcement; evidence tags (Alfa core set, single family);
+script-first rule (prefer a script over manual steps).
+
+## Acceptance (route is correct when)
+- Exactly one playbook Read; topic matches an enum verbatim. [DOC]
+- Deliverable matches the playbook's contract; gates satisfied. [DOC]
+
+## Anti-patterns / self-correction [INFERENCE]
+- Reading multiple playbooks "to be safe" — pick one or ask once.
+- Inventing metrics/traffic figures: tag derived numbers, never fabricate.
+- Request spans 2+ topics or topic is ambiguous → ask, don't guess. Missing
+  playbook for the resolved topic → stop and report.

@@ -22,9 +22,35 @@ routes:
 
 # brand-output
 
-Router skill. Resolve `topic` from the request, then Read EXACTLY ONE playbook
-from `routes:`. Never load the whole cluster. `depth=deep` → apply the playbook
-exhaustively with verification at each step; `quick` → essentials only.
+Router skill for **branded deliverable generation** with Sofka DS tokens. Resolve
+`topic`, then Read EXACTLY ONE playbook from `routes:` — never load the cluster. [EXPLICIT]
+
+## When to use
+Any request to produce a branded artifact: HTML pages/folios, DOCX, XLSX, slides,
+or reusable templates. **Not** for raw content authoring (no brand) or non-Sofka
+output — route those elsewhere. [INFERENCE]
+
+## Inputs / Outputs
+- **In:** `topic` (one of the 8 enums), `depth`, the source content/data, target format.
+- **Out:** one branded file using `references/brand` tokens; provenance-tagged where
+  claims aren't reproducible from the prompt. [CONFIG]
+
+## Routing
+1. Infer `topic` from the request; ask only if genuinely ambiguous (≥2 enums fit equally). [EXPLICIT]
+2. Read that single playbook. `deep` → apply exhaustively, verify each step; `quick` → essentials. [EXPLICIT]
+3. Format-vs-topic disambiguation:
+   - HTML: `brand-html` (general) · `html-brand` (token-heavy/deep) · `branded-html-output` (lightweight) · `folio-generator` (paginated folios). [INFERENCE]
+   - Slides → `presentation-design`. DOCX → `brand-docx`. XLSX → `brand-xlsx` (one-off) vs `xlsx-template-creator` (reusable template). [INFERENCE]
 
 Spine: Discover → Analyze → Execute → Validate.
-Quality gates: constitution v6.0.0 (enforcement), evidence tags, script-first rule.
+
+## Validation gate (done = all true)
+- Exactly one playbook loaded; topic matches the artifact actually produced. [EXPLICIT]
+- Sofka DS tokens applied from `references/brand`; no hardcoded brand values. [CONFIG]
+- Constitution v6.0.0 enforcement + script-first rule honored (generate via script, not hand-edits). [EXPLICIT]
+- Evidence tags present on non-obvious claims; family not mixed (kit set: `[EXPLICIT]`/`[INFERENCE]`/`[ASSUMPTION]`/`[CONFIG]`/`[DOC]`). [DOC]
+
+## Anti-patterns
+- Loading multiple playbooks "to compare" — pick one, re-route only if wrong. [EXPLICIT]
+- Mixing brands in one output, or inventing tokens/prices. [EXPLICIT]
+- Skipping the script-first rule by hand-crafting the file. [ASSUMPTION]

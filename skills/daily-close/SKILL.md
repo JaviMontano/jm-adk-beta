@@ -1,6 +1,6 @@
 ---
 name: daily-close
-version: 0.1.0
+version: 0.2.0
 description: "Cadencia de cierre diario: captura cerrado/pendiente/aprendido y siembra el dia siguiente (P10)."
 owner: "JM Labs"
 triggers:
@@ -15,66 +15,118 @@ allowed-tools:
 
 # Daily Close
 
-## Inputs Expected
+Cadencia P10 de fin de jornada. Cierra el dia en tres ejes — **cerrado**,
+**pendiente**, **aprendido** — y deja sembrado el dia siguiente para que el
+arranque no parta de cero. Operador-facing: usa la familia de tags Jarvis OS
+`{...}` (ver `references/verification-tags.md`). {MEMORIA}
 
-- Goal or task to complete.
-- Relevant context, constraints, and audience.
-- Existing files or references when the request depends on a codebase or document.
+## When to use
 
-## Outputs Expected
+- Trigger explicito `daily-close` / `cierre-diario`, o al final de una jornada
+  de ejecucion. {EXTRAIDO_HILO}
+- NO usar para: planificacion semanal/mensual, retros de proyecto, o resumen
+  de una sola tarea aislada — eso es otra cadencia. {INFERENCIA}
 
-- A concise deliverable in the requested format.
-- Evidence notes for non-obvious claims.
-- Validation status and remaining risks.
+## Inputs
+
+| Input | Obligatorio | Si falta |
+|---|---|---|
+| Fecha del cierre | si | autocompleta hoy `{AUTOCOMPLETADO}`, marca la suposicion |
+| Fuente del dia (TAREAS.md, hilo, notas) | si | `{VACIO_CRITICO}`: pregunta que cerrar antes de inventar |
+| Bitacora/MEMORY destino donde persistir | si | usa el destino por defecto del workspace activo |
+| Foco/objetivo del dia siguiente | no | se infiere de los pendientes priorizados |
+
+## Outputs
+
+- **Bloque de cierre** con tres secciones: Cerrado, Pendiente, Aprendido.
+- **Semilla del dia siguiente**: 1-3 pendientes priorizados + primer paso
+  concreto de cada uno (accionable sin recontexto).
+- **Notas de evidencia** con tags Jarvis OS en toda afirmacion no obvia.
+- **Estado de validacion** y riesgos/bloqueos abiertos que cruzan al manana.
 
 ## Procedure
 
-### Discover
+### 1. Discover
+Lee la fuente del dia (TAREAS.md, hilo, notas) y MEMORY/bitacora destino antes
+de escribir. Read-before-write es obligatorio. {MEMORIA} Identifica la fecha; si
+no es explicita, autocompleta hoy y marca `{AUTOCOMPLETADO}`.
 
-Read the user request, inspect relevant project artifacts, and identify missing critical information.
+### 2. Classify
+Asigna cada item a exactamente un eje:
+- **Cerrado** — completado y verificable hoy. Liga evidencia (commit, archivo,
+  hilo). {EXTRAIDO_HILO}
+- **Pendiente** — abierto; anota por que no cerro y el primer paso de manana.
+- **Aprendido** — insight, friccion o decision reusable. Sin esto, el cierre es
+  un changelog, no una cadencia. {INFERENCIA}
 
-### Analyze
+### 3. Seed next day
+Prioriza 1-3 pendientes (no la lista entera) y para cada uno escribe el primer
+paso ejecutable en frio. Una semilla que necesita recontexto no esta sembrada.
 
-Map intent to the skill domain, choose the smallest viable approach, and identify risks before execution.
+### 4. Persist
+Aplica el cierre de forma **aditiva** (append) a la bitacora/MEMORY destino con
+Write/Edit. Nunca sobrescribas historico ni ediciones locales sin `--force` tras
+revisar el diff. {SUPUESTO}
 
-### Execute
+### 5. Validate
+Corre el gate de aceptacion antes de declarar cierre.
 
-Produce the deliverable using the allowed tools and keep changes scoped to the request.
+## Validation gate (acceptance criteria)
 
-### Validate
+- [ ] Los tres ejes presentes; ninguno vacio sin justificacion explicita.
+- [ ] Cada item Cerrado tiene evidencia ligada y verificable. {DOC}
+- [ ] La semilla tiene 1-3 pendientes priorizados, cada uno con primer paso.
+- [ ] Toda afirmacion no obvia lleva exactamente un tag Jarvis OS; sin mezclar
+      familias; `{WEB}` sin cita es invalido. {DOC}
+- [ ] Persistencia aditiva; historico y ediciones locales intactos.
+- [ ] Bloqueos abiertos marcados `{POR_CONFIRMAR}` con paso de verificacion.
 
-Check quality criteria, edge cases, assumptions, and evidence requirements before final delivery.
+Si algun check falla, corrige y reevalua — no entregues un cierre parcial.
 
-## Quality Criteria
+## Self-correction triggers
 
-- The output directly addresses the user goal.
-- Claims are tagged with evidence when required by the host environment.
-- No local overrides or generated files are overwritten without explicit force.
-- The result is actionable and has clear acceptance criteria.
+- Item ambiguo entre Cerrado y Pendiente → es Pendiente (el cierre se gana, no
+  se asume). {INFERENCIA}
+- Eje Aprendido vacio → relee la jornada por fricciones/decisiones antes de
+  declararlo vacio; el vacio real es legitimo, el vacio por pereza no.
+- Semilla > 3 items → re-prioriza; sembrar todo es no sembrar nada.
+- Fecha o fuente ausente → `{VACIO_CRITICO}`, detente y pregunta.
 
-## Edge Cases
+## Edge cases
 
-- Empty input: ask for the missing objective.
-- Conflicting requirements: state the conflict and choose the safer interpretation.
-- Local customization: preserve local files and prefer additive changes.
+- **Dia sin actividad**: registra el cierre igual (mantiene la cadencia) y
+  marca explicitamente "sin avances" en lugar de omitir la entrada.
+- **Dia desbordado**: captura cabeceras, no transcripcion; el cierre es indice,
+  no acta.
+- **Requisitos en conflicto** (p.ej. "cierra pero ignora validacion"): nombra el
+  conflicto y elige la interpretacion segura — la validacion no es opcional.
+- **Cierre tardio/retroactivo**: fecha el bloque al dia real, no al de captura;
+  marca `{SUPUESTO}` lo reconstruido de memoria.
+- **Multi-workspace**: cierra por workspace activo; no fusiones bitacoras de
+  marcas/proyectos distintos (disciplina de marca unica).
 
-## Assumptions and Limits
+## Anti-patterns (anti-scope)
 
-- This skill does not replace expert review for high-risk legal, medical, financial, or security decisions.
-- If evidence is unavailable, mark the claim as an assumption or open question.
+- Convertir el cierre en changelog (solo Cerrado, sin Aprendido ni semilla).
+- Volcar la lista completa de pendientes como "semilla" sin priorizar.
+- Sobrescribir el historico en vez de hacer append.
+- Mezclar familias de tags Jarvis `{...}` y Alfa `[...]` en el mismo documento.
+- Inventar items para llenar un eje vacio.
 
-## Related Skills
+## Assumptions and limits
 
-- `workspace-governance`
-- `workflow-forge`
-- `quality-guardian`
+- No reemplaza revision experta para decisiones de alto riesgo (legal, medico,
+  financiero, seguridad).
+- Sin evidencia disponible, marca el item como `{SUPUESTO}` o `{POR_CONFIRMAR}`
+  con su paso de verificacion; nunca lo presentes como hecho.
 
-## Evidence Requirements
+## Related skills
 
-- Cite code, config, docs, or tests used to justify findings.
-- Mark inferences and assumptions explicitly.
+- `workspace-governance` — destino y disciplina de persistencia.
+- `workflow-forge` — encadenar daily-close en cadencias mayores.
+- `quality-guardian` — refuerza el gate de validacion.
 
-## Update-Safety Notes
+## Update-safety notes
 
-- Generated support files are missing-only by default.
-- Use `--force` only after reviewing diffs.
+- Archivos de soporte generados: missing-only por defecto.
+- `--force` solo tras revisar diffs; preserva ediciones locales.
