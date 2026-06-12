@@ -51,6 +51,15 @@ Examples:
 - HTML siempre incluye Google Fonts link, print stylesheet, y skip-to-content
 - Markdown incluye front-matter YAML con metadata del brand-config
 
+### Acceptance Criteria (output is "done" when ALL hold) [EXPLICIT]
+
+- `:root` contains exactly the 8 brand tokens + 10 semantic + 5 chart tokens; no orphan/undefined `var()` references resolve to nothing.
+- Zero hex literals outside `:root` (grep `#[0-9A-Fa-f]{3,8}` over component HTML returns only the `:root` block).
+- `--semantic-positive` is yellow `#FFD700`, never green — this is the v4 hard rule and the most common failure.
+- Hero `border-bottom` and footer `border-top` are `8px solid var(--brand-primary)`.
+- Every `.sev-medium` / `.sev-low` / `.card-warning` uses BLACK text on its tint (WCAG AA on light backgrounds).
+- `MODO`/`FORMATO`/`VARIANTE` from `$ARGUMENTS` are reflected: e.g. `VARIANTE=ejecutiva` MUST omit raw CSS dumps.
+
 ## Brand Configuration Schema
 
 All brand identity lives in `brand-config.json`. No brand values hardcoded in skill or templates. [EXPLICIT]
@@ -107,9 +116,32 @@ In ALL templates and components, reference `var(--brand-primary)` never a hex li
 }
 ```
 
+> Note: `var(--from-config, fallback)` is a generation-time convention — the generator string-replaces config values into `:root` and keeps the hex as the literal fallback. It is NOT runtime CSS cascade. If a token is absent in config, the fallback (neutral default) renders. [EXPLICIT]
+
+### Worked Example: minimal config → injected `:root` [EXPLICIT]
+
+Config `{ "brand": { "primary": "#7C3AED", "background": "#FAFAFA" } }` (only 2 keys provided) yields:
+
+```css
+:root {
+  --brand-primary: #7C3AED;            /* from config */
+  --brand-primary-light: #9D6BF5;      /* DERIVED: lighten primary ~12% (no config key) */
+  --brand-primary-dark: #5B21B6;       /* DERIVED: darken primary ~12% */
+  --brand-primary-dim: rgba(124,58,237,0.10); /* DERIVED from primary */
+  --brand-background: #FAFAFA;         /* from config */
+  --brand-black: #000000;              /* neutral default (no config key) */
+  --brand-white: #FFFFFF;
+  --brand-muted: #9CA3AF;
+}
+```
+
+Rule: missing `primary_light`/`primary_dark`/`primary_dim` are derived from `primary`; other missing tokens fall back to neutral defaults. Derivation (`light` = +12% L, `dark` = −12% L in HSL) is deterministic so the same config always yields identical output. [EXPLICIT]
+
 ## Semantic Colors (Brand-Independent)
 
-These are universal and do NOT change per brand:
+These are universal and do NOT change per brand.
+
+**Decision — success is yellow (#FFD700), not green (v4):** green is reserved as a *decorative* chart color, so reusing it for "success" creates ambiguity in dashboards where green also means "a data series." Yellow gives a distinct success signal AND survives red-green color blindness (deuteranopia/protanopia), where green↔red success/error states collapse. Trade-off: yellow needs black text for AA contrast (white-on-yellow fails); this is enforced in `.sev-low` and `.callout-success`. [EXPLICIT]
 
 | Token | Value | Usage |
 |-------|-------|-------|
@@ -225,6 +257,27 @@ For full component HTML snippets, read: `${CLAUDE_SKILL_DIR}/references/componen
 - **Decorative** (green, teal, violet, pink, yellow): charts and data visualization ONLY
 - **NEVER** use hex literals in component HTML — always reference var(--token-name)
 
+## Failure Modes (symptom → cause → fix) [EXPLICIT]
+
+| Symptom | Root cause | Fix |
+|---------|-----------|-----|
+| Success badges render green | Used `--chart-green` or a raw green for state | Map success to `--semantic-positive` (#FFD700); green is decorative-only |
+| Unreadable text on success/warning tint | White text on light tint | Force black text on positive/warning/medium/low; reserve white for critical/high/info dark fills |
+| Brand color "didn't apply" | Generator never injected config; `var()` resolved to fallback | Confirm config was loaded; check `:root` shows config hex, not default |
+| Hero/footer accent looks gray | Border used `--brand-muted` instead of `--brand-primary` | Borders are always `8px solid var(--brand-primary)` |
+| Print/PDF has floating nav over content | Sticky nav not disabled in print stylesheet | Add `@media print { nav { position: static } }`, reduce shadows |
+| Dark hero text invisible on dark brand primary | Brand primary is near-black (e.g. #1A1A2E) | Use `--brand-primary-light` for highlight span on hero; verify 3:1 contrast |
+| `VARIANTE=ejecutiva` output still dumps raw CSS | Variant param ignored | Ejecutiva = component quick ref + brand config only, no CSS source |
+| Fonts flash then fall back / never load | Google Fonts CDN blocked or offline | Ensure `font-display: swap`; ship system-font fallback in stack; pre-host fonts for offline |
+
+## Anti-Scope (this reference does NOT cover) [EXPLICIT]
+
+- Full component HTML/CSS source — lives in `references/component-snippets.md`.
+- Brand tone, copy, messaging — see `brand-voice`.
+- Content authoring / markdown writing standard — see `markdown-excellence`.
+- Application state, JS interactivity, data binding — design tokens are presentation-only.
+- Multi-brand theming at runtime — generation emits one brand per bundle (see Edge Cases).
+
 ## Responsive Breakpoints
 
 - Mobile: < 768px (1rem padding)
@@ -302,7 +355,7 @@ Before delivering design system output:
 - Responsive breakpoint matrix
 
 ---
-**Author:** Javier Montano | **Last updated:** March 18, 2026
+**Author:** Javier Montano | **Last updated:** June 11, 2026 | **Version:** v4.1
 
 ## Usage
 

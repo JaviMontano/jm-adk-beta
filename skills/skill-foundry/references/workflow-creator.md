@@ -7,6 +7,11 @@ validated. A valid workflow is a 17-field contract with 3-7 ordered steps,
 each step carrying 12 traceability fields, plus DoD, QA, RACI, KPIs, fallback,
 and escalation routes. [EXPLICIT]
 
+**Scope:** authoring of one workflow definition per request. **Anti-scope:**
+executing workflows, orchestrating multi-workflow programs, editing the owning
+skill, or asserting strategic correctness — those belong to runtime,
+`workflow-forge`, and human review respectively. [EXPLICIT]
+
 ## Deterministic Assets
 
 Load only the local assets needed for the request. [EXPLICIT]
@@ -22,7 +27,10 @@ Load only the local assets needed for the request. [EXPLICIT]
 
 The validator reads local JSON only. It does not call APIs, MCP tools, model
 providers, the network, system time, random sources, or repo-global state beyond
-the provided files. [EXPLICIT]
+the provided files. This keeps a given spec+contract pair reproducible across
+machines and runs; identical inputs yield an identical exit code. [EXPLICIT]
+If an asset is absent, state which gate is unverifiable rather than skipping it
+silently. [EXPLICIT]
 
 ## When To Activate
 
@@ -37,6 +45,7 @@ lists. [EXPLICIT]
 | "Give me a quick checklist" | No | Checklist does not require full workflow contract |
 | "Write a project plan" | No | Use planning/project-management skills unless workflow fields are requested |
 | "What is a workflow?" | No | Answer directly without loading assets |
+| "Run / trigger this workflow now" | No | Authoring skill; route to runtime/executor |
 
 If the user provides a workflow ID but no owning skill, ask for the owning skill
 or state that the workflow is standalone before producing the final spec.
@@ -58,7 +67,10 @@ Minimum input required before final output: [EXPLICIT]
 | `failure_modes` | At least one recoverable and one unrecoverable failure route |
 
 Ask for missing blocking inputs. If the user asks to proceed with gaps, mark
-each gap `[OPEN]` and lower confidence instead of inventing facts. [EXPLICIT]
+each gap `[OPEN]` and lower confidence instead of inventing facts. Never
+fabricate agent IDs, KPI targets, or owning skills to satisfy a gate — a
+fabricated value passes structural validation but fails closed in execution.
+[EXPLICIT]
 
 ## Output Contract
 
@@ -113,6 +125,15 @@ must contain these 17 top-level fields in this order: [EXPLICIT]
   escalationRoute: "{agent-id or human role}"
 ```
 
+Field semantics worth fixing to avoid common errors: [EXPLICIT]
+- `accountable` is exactly one owner — never a list, never `none`. [EXPLICIT]
+- `validationRule` describes success; `failureSignal` is its observable
+  negation, not a paraphrase of the same condition. [EXPLICIT]
+- `promptToUse` is `null` for mechanical steps (scripts, file ops); a non-null
+  prompt implies a model call and must be self-contained. [EXPLICIT]
+- `fallbackRoute` is what runs when the workflow cannot complete;
+  `recoveryAction` is per-step and runs first. [INFERRED]
+
 When a deterministic check is required, mirror the YAML as JSON and run:
 
 ```bash
@@ -150,6 +171,84 @@ python3 skills/workflow-creator/scripts/validate_workflow_spec.py \
 | `recoveryAction` | "Stop, patch missing asset or eval case, rerun the gate" | "Try again" |
 | `kpis` | "`local_gate_failures`, target `0`, unit `count`" | "Quality is good" |
 
+## Worked Example (minimal)
+
+A 3-step workflow showing the contract's intent. The owning skill is unknown,
+so it is flagged rather than invented. [EXPLICIT]
+
+```yaml
+- id: "pr-gate-review"
+  title: "PR Gate Review"
+  objective: "Produce a reviewed PR package with all local gates green"
+  trigger: "`/pr-gate-review {branch}` is invoked"
+  preconditions:
+    - "Branch exists and is pushed"
+  inputs:
+    - name: "branch"
+      type: "string"
+      required: true
+      description: "Git branch under review; selects the diff to gate"
+  steps:
+    - stepNumber: 1
+      title: "Collect Diff"
+      desc: "Fetch the branch diff against base."
+      whyThisMatters: "A stale or empty diff certifies the wrong code."
+      inputNeeded: "branch (string), base ref (string)"
+      actionInstruction: "Run `git diff {base}...{branch}`, capture exit code"
+      promptToUse: null
+      expectedOutput: "Unified diff text, non-empty"
+      validationRule: "Exit 0 and diff length > 0"
+      failureSignal: "Exit non-zero or empty diff"
+      recoveryAction: "Confirm branch/base names with user; refetch"
+      handoffIfNeeded: null
+    - stepNumber: 2
+      title: "Run Gates"
+      desc: "Execute lint, tests, and security scan."
+      whyThisMatters: "Skipping a gate ships an unverified change."
+      inputNeeded: "diff (string), repo root (path)"
+      actionInstruction: "Run `make gate`, capture per-gate exit codes"
+      promptToUse: null
+      expectedOutput: "Gate report with pass/fail per gate"
+      validationRule: "All gates report `pass`"
+      failureSignal: "Any gate reports `fail` or errors"
+      recoveryAction: "Surface failing gate to author; stop"
+      handoffIfNeeded: "code-author"
+    - stepNumber: 3
+      title: "Assemble Package"
+      desc: "Bundle diff, gate report, and summary."
+      whyThisMatters: "An incomplete package blocks reviewer decision."
+      inputNeeded: "diff (string), gate report (object)"
+      actionInstruction: "Render `pr-package.md` from template"
+      promptToUse: "Summarize the diff and gate results for a reviewer: {context}"
+      expectedOutput: "`pr-package.md` with summary + green gate table"
+      validationRule: "File exists and gate table shows all pass"
+      failureSignal: "File missing or any gate not pass"
+      recoveryAction: "Return to step 2; do not assemble on red"
+      handoffIfNeeded: "reviewer"
+  mainOutput: "`pr-package.md` review bundle"
+  secondaryOutputs:
+    - "Gate report log"
+  DoD:
+    - "All gates pass and package file exists"
+  qaChecklist:
+    - "Diff matches intended branch"
+    - "No gate was skipped"
+  raci:
+    responsible: "ci-runner-agent"
+    accountable: "code-author"
+    consulted: "reviewer"
+    informed: "none"
+  kpis:
+    - metric: "local_gate_failures"
+      target: "0"
+      unit: "count"
+      measurement: "Count of fail exits per run"
+  cadence: "per-request"
+  errorHandling: "On unrecoverable gate error, stop and emit failing gate name"
+  fallbackRoute: "stop-and-ask"
+  escalationRoute: "reviewer"
+```
+
 ## Validation Gate
 
 - [ ] All 17 top-level fields are present.
@@ -163,11 +262,22 @@ python3 skills/workflow-creator/scripts/validate_workflow_spec.py \
   sequential.
 - [ ] Every `validationRule`, `failureSignal`, and `recoveryAction` is
   observable enough to fail closed.
-- [ ] RACI fields name concrete agents or roles.
+- [ ] `failureSignal` is the negation of `validationRule`, not a restatement.
+- [ ] RACI fields name concrete agents or roles; `accountable` is a single owner.
 - [ ] KPI units are measurable and target values are bounded.
 - [ ] `fallbackRoute` and `escalationRoute` name concrete destinations.
 - [ ] No placeholder values such as `TBD`, `when needed`, `someone`, or
   `check everything` remain.
+
+## Failure Modes
+
+| Failure | Symptom | Response |
+|---|---|---|
+| Structurally valid but semantically empty | Validator passes, fields are vague ("Check the skill") | Block on Quality Standards table, not just the schema |
+| Branching logic forced into steps | Step desc contains "if/else" or parallel paths | Move alternatives into `validationRule`/`recoveryAction`/sub-workflow |
+| Invented owner to clear a gate | `owning_skill_id` or agent named without evidence | Revert to `[OPEN]`; lower stated confidence |
+| Non-idempotent step replays harmfully | Recovery rerun duplicates side effects | Make `recoveryAction` idempotent or gate it on prior-state check |
+| KPI unmeasurable | `unit` is `boolean` for a continuous quantity | Re-pick unit; ensure `measurement` is executable |
 
 ## Edge Cases
 
@@ -180,14 +290,30 @@ python3 skills/workflow-creator/scripts/validate_workflow_spec.py \
 - **Workflow too small:** Recommend a checklist or runbook instead of forcing
   the 17-field contract.
 - **Workflow too large:** Split into parent workflow plus sub-workflows.
+- **Retry/idempotency:** State whether a step is safe to re-run; non-idempotent
+  steps need a guard in `recoveryAction`. [EXPLICIT]
+
+## Decisions And Trade-offs
+
+- **17 fixed fields over a flexible schema:** trades author freedom for
+  reviewability and deterministic validation. Workflows that genuinely need
+  fewer fields should be checklists/runbooks instead. [INFERRED]
+- **Linear steps only:** a single ordered sequence is auditable; branching is
+  pushed into recovery/fallback/sub-workflows so the happy path stays readable.
+  Cost: deeply conditional processes need decomposition into several
+  workflows. [INFERRED]
+- **Offline validation only:** guarantees reproducibility and zero side effects,
+  at the cost of not catching strategic or semantic errors — which is why human
+  review and the Quality Standards table remain mandatory. [EXPLICIT]
 
 ## Assumptions And Limits
 
 - This skill creates workflow definitions; it does not execute them.
 - Deterministic validation proves structure, not strategic correctness.
-- Catalog alignment depends on local files available in the current workspace.
+- Catalog alignment depends on local files available in the current workspace;
+  absent files make the corresponding gate unverifiable, not passed. [EXPLICIT]
 - Network lookup is off by default and requires explicit user request plus
   source attribution.
 
 ---
-**Author:** Javier Montano | **Last updated:** 2026-06-05
+**Author:** Javier Montano | **Last updated:** 2026-06-11

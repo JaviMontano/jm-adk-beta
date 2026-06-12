@@ -4,27 +4,30 @@
 
 ## Qué es
 
-Claude Code expone un conjunto de built-in tools, cada una con un uso primario y un failure mode:
+Claude Code expone built-in tools, cada una con un uso primario y un failure mode. Elegir la tool correcta es mecánica de examen y separa agentes eficientes de los que queman contexto cada turno. [DOC]
 
-- `Grep`: busca contenido por regex sobre el cuerpo de los archivos.
-- `Glob`: busca paths por patrón de nombre (no mira contenido).
-- `Read`: carga un archivo concreto en contexto.
-- `Edit`: modificación dirigida sobre un anchor de texto único.
-- `Write`: sobrescribe un archivo completo.
-- `Bash`: ejecuta comandos de shell.
+| Tool | Uso primario | Failure mode | Señal de selección |
+|---|---|---|---|
+| `Grep` | Buscar **contenido** por regex en el cuerpo de archivos | Regex mal escapado → 0 o demasiados hits | Conoces un símbolo/string, no el path |
+| `Glob` | Buscar **paths** por patrón de nombre (no mira contenido) | Patrón muy amplio → ruido | Conoces el nombre/extensión, no el contenido |
+| `Read` | Cargar **un** archivo concreto en contexto | Archivo enorme → tokens desperdiciados | Ya identificaste el path exacto |
+| `Edit` | Modificación dirigida sobre un **anchor único** | Anchor no único o inexistente → falla | Cambio puntual y el anchor es inequívoco |
+| `Write` | Sobrescribir un archivo **completo** | Pisa contenido no leído → pérdida de datos | Reescritura total o fallback de `Edit` |
+| `Bash` | Ejecutar comandos de shell | Side effects no idempotentes | Acción del sistema, no exploración de código |
 
-La estrategia incremental canónica es `Grep` → `Read` → `Edit`: buscar primero los entry points por contenido, leer selectivamente siguiendo imports, y aplicar una modificación puntual.
+La estrategia incremental canónica es `Grep` → `Read` → `Edit`: localizar entry points por contenido, leer selectivamente siguiendo imports, y aplicar una modificación puntual. [DOC]
 
 ## Por qué importa (falla que evita)
 
-Hacer `Read` sobre todo el repositorio carga miles de tokens innecesarios y quema el presupuesto de contexto. Un `Edit` con un anchor que no es único (matchea varias líneas) o que no existe simplemente falla. Saber qué tool aplica en cada momento es mecánica básica del examen y separa a los agentes eficientes de los que desperdician contexto en cada turno.
+`Read` sobre todo el repositorio carga miles de tokens inútiles y quema el presupuesto de contexto. [INFERENCIA] Un `Edit` con anchor no único (matchea varias líneas) o inexistente falla sin aplicar cambios. [DOC] Confundir `Grep` (contenido) con `Glob` (paths) hace que la búsqueda devuelva el conjunto equivocado y el agente lea archivos irrelevantes. [INFERENCIA]
 
 ## Modelo mental
 
-- `Grep` = buscar contenido. `Glob` = buscar paths. `Read` = cargar archivo. `Edit` = mod puntual. `Write` = reescribir. `Bash` = shell.
-- Estrategia: `Grep` primero (encontrar entry points) → `Read` selectivo (seguir imports) → `Edit`/`Write` puntual.
-- Failure mode de `Edit`: anchor no único o inexistente → falla. Fallback: `Read` entero + `Write` completo.
-- Nunca "leer todo el repo upfront": eso es el anti-patrón que destruye el presupuesto de tokens.
+- `Grep` = contenido · `Glob` = paths · `Read` = cargar archivo · `Edit` = mod puntual · `Write` = reescribir · `Bash` = shell. [DOC]
+- Pipeline: `Grep` (entry points) → `Read` selectivo (seguir imports) → `Edit`/`Write` puntual. [DOC]
+- Regla de decisión: ¿sé el **contenido** pero no el path? → `Grep`. ¿Sé el **nombre** pero no el contenido? → `Glob`. ¿Ya tengo el **path**? → `Read`. ¿Anchor inequívoco? → `Edit`; si no, `Read`+`Write`. [INFERENCIA]
+- Failure de `Edit`: anchor no único/inexistente → falla. Fallback: `Read` entero + `Write` completo, con razón explícita. [DOC]
+- Nunca "leer todo el repo upfront": anti-patrón que destruye el presupuesto de tokens. [DOC]
 
 ## Patrón correcto
 
@@ -38,6 +41,8 @@ edit(
 )
 ```
 
+`Grep` acota a un único candidato; `Read` carga solo ese archivo; el anchor `if amount > 1000:` es único en el archivo, así que `Edit` aplica de forma determinística. [INFERENCIA]
+
 ## Anti-patrón
 
 ```python
@@ -48,35 +53,40 @@ for f in all_files:
 edit(old_text="if amount", ...)  # múltiples líneas matchean → falla
 ```
 
+Dos errores: cargar el repo entero (presupuesto), y un anchor (`if amount`) que matchea varias líneas (no único → `Edit` falla). [INFERENCIA]
+
+## Casos límite
+
+- **Anchor no único** → no fuerces `Edit`. Amplía el anchor con contexto circundante hasta que sea único, o usa `replace_all` solo si **todas** las ocurrencias deben cambiar igual. [SUPUESTO]
+- **Grep con 0 hits** → puede ser regex sobre-escapado o el símbolo no existe. Verifica el escape antes de concluir ausencia. [INFERENCIA]
+- **Archivo no leído antes de `Write`** → `Write` ciego pisa contenido; el fallback exige `Read` completo previo + razón. [DOC]
+- **`Glob` para encontrar texto** → error de tool-fit: `Glob` ignora el cuerpo del archivo; usa `Grep`. [DOC]
+- **`Bash` para leer/editar código** (`cat`/`sed`) → preferir `Read`/`Edit`; `Bash` se reserva para acciones de sistema. [SUPUESTO]
+
+## Anti-scope
+
+- No cubre selección de **MCP tools** ni custom commands/skills (ver skills relacionadas). [DOC]
+- No define cómo escribir regex de `Grep`; asume sintaxis válida. [SUPUESTO]
+- No reemplaza la planificación de exploración (plan-mode); decide la tool, no el plan. [INFERENCIA]
+
 ## Argumento de certificación
 
-- Escoger el tool correcto en una decisión rápida según uso primario.
-- Describir el failure mode de `Edit` (anchor no único/inexistente) y su fallback `Read` + `Write`.
-- Defender la estrategia `Grep` → `Read` → `Edit`.
-- Rechazar el `Read` masivo upfront sobre el repositorio.
-- Emitir reportes críticos compatibles con `assets/builtin-tool-selection-report-contract.json`.
-- Validar tool-fit, economía de lectura y seguridad de anchor con `scripts/check.sh`.
+- Escoger el tool correcto en una decisión rápida según uso primario. [DOC]
+- Describir el failure mode de `Edit` (anchor no único/inexistente) y su fallback `Read` + `Write`. [DOC]
+- Defender la estrategia `Grep` → `Read` → `Edit`. [DOC]
+- Rechazar el `Read` masivo upfront sobre el repositorio. [DOC]
 
-## Contrato determinístico
+## Criterios de aceptación
 
-La skill usa `assets/` como contrato offline:
-
-- `assets/tool-fit-policy.json`: contenido usa `Grep`, paths usan `Glob`, lectura usa `Read`, edición dirigida usa `Edit`, fallback completo usa `Write`.
-- `assets/read-economy-policy.json`: si el target es desconocido, buscar antes de leer; `Read` masivo upfront queda bloqueado.
-- `assets/edit-anchor-policy.json`: `Edit` requiere `unique_match_count=1`; `Write` como fallback requiere lectura completa previa y razón explícita.
-- `assets/evidence-policy.json`: evidencia local, sin red ni random.
-
-Validación local:
-
-```bash
-bash skills/katas-builtin-tool-selection/scripts/check.sh
-```
+- Cada paso de exploración elige la tool por su uso primario, no por hábito. [DOC]
+- Ningún `Read` masivo upfront; toda lectura va precedida de `Grep`/`Glob` cuando el target es desconocido. [DOC]
+- Todo `Edit` declara un anchor único (matchea exactamente una línea); si no, degrada a `Read`+`Write` con razón explícita. [INFERENCIA]
 
 ## Cuándo activar
 
-- Cuando el agente debe explorar o modificar un codebase y necesita elegir entre `Grep`, `Glob`, `Read`, `Edit`, `Write` o `Bash`.
-- Cuando un `Edit` falla por un anchor ambiguo y hay que decidir el fallback.
-- Cuando un plan de exploración propone cargar el repositorio entero y hay que corregirlo.
+- El agente debe explorar/modificar un codebase y elegir entre `Grep`, `Glob`, `Read`, `Edit`, `Write` o `Bash`. [DOC]
+- Un `Edit` falla por anchor ambiguo y hay que decidir el fallback. [DOC]
+- Un plan de exploración propone cargar el repositorio entero y hay que corregirlo. [DOC]
 
 ## Skills relacionadas
 

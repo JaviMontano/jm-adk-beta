@@ -6,6 +6,10 @@
 
 **Principio Rector:** Evidence over assumption. Every claim carries an evidence tag. No speculation presented as fact.
 
+**Evidence taxonomy (this skill's local convention — do not swap for the kit-wide Alfa set):** `[EXPLICIT]` = stated by a primary source; `[INFERRED]` = derived from signals; `[OPEN]` = unknown, needs research. These three drive the S6 protocol, the HTML chip CSS classes (`.src.explicit/.inferred/.open`), and the Validation Gate. They are intentionally domain-specific to OSINT confidence and are NOT interchangeable with `[DOC]`/`[CONFIG]`/`[SUPUESTO]`. [EXPLICIT]
+
+**Definition of done (one line):** entity classified → matching track(s) executed → every claim tagged → `[OPEN]` items carry a resolution path → branded bilingual HTML emitted with an evidence log → trade-off level declared and honored. [EXPLICIT]
+
 ---
 
 ## When to Activate
@@ -16,10 +20,14 @@
 - User says "contact points for", "entry strategy for [market]", "who are the players in [sector]"
 - User needs a structured evidence-backed report on a market, company, or public figure [EXPLICIT]
 
-**Do NOT activate when:**
-- User needs a quick one-liner fact (use WebSearch directly instead)
-- User is asking about internal company data they own (use input-analysis skill)
-- Request is purely financial modeling (use cost-estimation skill)
+**Do NOT activate when (anti-scope, with the right tool):**
+- Quick one-liner fact → `WebSearch` directly. Threshold: if one query answers it, do not spin up a report. [INFERRED]
+- Internal company data the user already owns → `input-analysis` skill (this skill is for *external* OSINT). [EXPLICIT]
+- Purely financial modeling (DCF, unit economics, pricing) → `cost-estimation` / `pricing-strategy`. [EXPLICIT]
+- Deep single-account dossier with contacts → hand to `client-dossier`; this skill is the breadth pass, not the depth pass. [INFERRED]
+- Target is a minor, or request needs non-public data → refuse (see Edge Cases + Assumptions). [EXPLICIT]
+
+**Pre-flight (run before S1):** confirm real-time web access is available; if static-knowledge-only, declare the cutoff and downgrade every time-sensitive claim to `[OPEN]` rather than presenting stale facts as `[EXPLICIT]`. [EXPLICIT]
 
 ---
 
@@ -39,6 +47,12 @@ Classify the target entity before starting research. This determines the researc
 2. If ambiguous (e.g., "Amazon" — company or territory?), ask one clarifying question [INFERRED]
 3. If entity has multiple dimensions (e.g., a sector in a territory), run both tracks [INFERRED]
 4. Log classification decision with rationale before proceeding [OPEN]
+
+**Decision rule (no clarifying question needed when):** the user supplied a disambiguator (URL, ticker, country, role) — proceed and state the chosen reading. Ask only when two readings would change the data sources used. Trade-off: one extra question costs a round-trip but a wrong classification wastes the whole research budget — when in doubt, ask once. [INFERRED]
+
+**Worked example:** input "research Stripe in Brazil" → classify as Company (Stripe) × Territory (Brazil), run tracks 2a + 2b, intersect findings in the Opportunity Map. Input "Stripe" alone → Company track only. [INFERRED]
+
+**Edge:** entity does not exist / typo / zero web footprint → do not fabricate a profile; return `[OPEN]` with "entity not found in public sources, confirm spelling or provide a URL." [EXPLICIT]
 
 ---
 
@@ -102,6 +116,12 @@ Classify the target entity before starting research. This determines the researc
 - Buyer behavior patterns (procurement cycles, decision makers) [INFERRED]
 - Regulatory tailwinds and headwinds [EXPLICIT]
 
+**Track failure modes & guards** (apply across 2a/2b/2c):
+- *Stale signal mistaken for current* — a funding round or headcount from 3 years ago read as "now". Guard: every momentum claim carries an as-of date; no date ⇒ `[OPEN]`. [EXPLICIT]
+- *Single-source inflation* — one blog's TAM figure repeated as consensus. Guard: market-size claims need source + vintage year; a lone uncorroborated figure is `[INFERRED]`, never `[EXPLICIT]`. [EXPLICIT]
+- *Namespace collision in headcount/traffic* — wrong same-name entity's metrics. Guard: pin the canonical URL/legal name in S1 before pulling any quantitative signal. [INFERRED]
+- *Vendor-marketing as fact* — a company's own "leader" claim. Guard: self-positioning is `[EXPLICIT]` only as "claims X," never as verified market share. [EXPLICIT]
+
 ---
 
 ## S3 — Public Figure Profile
@@ -138,9 +158,11 @@ Use when entity type = Person (executive, politician, investor, influencer, SME)
 Extract actionable contact intelligence from public sources only. [EXPLICIT]
 
 **Email Pattern Detection**
-- Infer corporate email pattern from known public emails or breach data indices [INFERRED]
+- Infer corporate email pattern from known public emails [INFERRED]
 - Common patterns: firstname@domain, f.lastname@domain, firstname.lastname@domain
 - Never fabricate — mark as [INFERRED] with confidence level (High/Medium/Low)
+- **Anti-scope:** do NOT use breach dumps, leaked credential indices, or scrapers that bypass auth — public-source-only is a hard governance limit (see Assumptions). A pattern is a *guess to verify by the user*, not a delivered address. [EXPLICIT]
+- Confidence calibration: High = ≥2 confirmed public addresses share the pattern; Medium = 1 confirmed; Low = pattern assumed from domain conventions only. [INFERRED]
 
 **LinkedIn Channel**
 - Direct InMail eligibility (premium connection) [INFERRED]
@@ -210,6 +232,12 @@ JavaScript toggle between `data-l="es"` and `data-l="en"` via `.gold` button.
 6. Evidence Log (all sources with URLs and access date)
 7. Recommended Next Steps
 
+**Output acceptance criteria:** self-contained single `.html` (fonts via Google Fonts CDN, no other external CSS/JS); brand tokens applied verbatim; every chip class maps to a real S6 tag; ES/EN toggle flips all `data-l` nodes; evidence log rows each have URL + access date; passes the Validation Gate below. [EXPLICIT]
+
+**Design decision — single self-contained file over a multi-asset bundle.** Trade-off: a single file is heavier and not cache-friendly, but it is portable (email/share without breakage) and has zero dependency on a server or asset path — the right call for a deliverable the client opens once. Use the Deep tier's `HTML + CSV` split only when the user needs the raw rows for their own tooling. [INFERRED]
+
+**Failure modes:** (a) untoggled `data-l` node ⇒ mixed-language render — guard: toggle script selects by attribute, not by id. (b) chip with no backing tag in the evidence log ⇒ broken provenance — guard: chips are generated from tagged claims, never hand-typed. (c) CDN font blocked offline ⇒ fallback to the `sans-serif` stack already declared in the tokens. [INFERRED]
+
 ---
 
 ## S6 — Evidence Tagging Protocol
@@ -226,6 +254,10 @@ Apply evidence tags to **every factual claim** in all outputs. No exceptions. [E
 - Untagged claims are forbidden in MOAT-grade outputs [EXPLICIT]
 - If a claim cannot be tagged, it must be removed or converted to a question [INFERRED]
 - [OPEN] tags must include a note on how to resolve them [EXPLICIT]
+- One tag per claim; when two could apply, pick the weaker (less-certain) one — an `[INFERRED]` dressed as `[EXPLICIT]` is the failure that erodes trust. [EXPLICIT]
+- Do not tag the report's own structure, restated user input, or self-evident statements — over-tagging kills scannability. [INFERRED]
+
+**Why a local 3-tag set (decision + trade-off):** OSINT confidence is the axis that matters here, so the file uses `[EXPLICIT]/[INFERRED]/[OPEN]` rather than the kit-wide Alfa set (`[DOC]/[CONFIG]/[SUPUESTO]`). Trade-off: it diverges from the kit canon, but the HTML chip classes, S6 table, and Validation Gate are all wired to these three names — renaming them would silently break the rendered report. Keep them. [EXPLICIT]
 
 ---
 
@@ -261,6 +293,10 @@ Apply evidence tags to **every factual claim** in all outputs. No exceptions. [E
 | Public figure has scrubbed their online presence | Document what was found, note the scrubbing as signal, do not speculate |
 | Territory has unreliable government data (conflict zone, sanctions) | Use World Bank / IMF as primary; flag reliability concern |
 | User requests information on a minor (person under 18) | Refuse the person profile; redirect to the organization they're associated with |
+| Sources conflict (two figures for the same fact) | Present both with sources, tag the synthesis `[INFERRED]`, never silently pick one |
+| User pushes for private data (home address, personal phone, non-public email) | Refuse the private item, deliver the public-channel equivalent, cite the governance limit |
+| Multi-dimensional target but budget is Quick tier | Pick the dimension with highest decision-value, declare the deferral, list the skipped track as `[OPEN]` |
+| Target is a direct competitor of the user's own firm | Proceed (public OSINT is fair); flag any claim that would imply non-public knowledge and drop it |
 
 ---
 

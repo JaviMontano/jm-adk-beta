@@ -30,6 +30,9 @@ The user provides an organization or department name as `$ARGUMENTS`. Parse `$1`
 - `{VARIANTE}`: `ejecutiva` (~40%) | `tecnica` (full, default)
 - `{HORIZONTE}`: `6m` | `12m` (default) | `24m`
 
+**Minimum viable input to start.** Org/department name + a list of current teams with rough sizes. Without team-to-architecture mapping the Conway analysis degrades to `[SUPUESTO]`; without value streams the stream-aligned boundaries are inferred and must be flagged `[INFERENCIA]`. [INFERENCIA]
+**Anti-scope (do NOT do).** No headcount/RIF planning, no individual performance assessment, no compensation bands, no formal HR reporting-line redesign — those belong to People Ops. This skill designs *flow*, not org-chart authority. [EXPLICIT]
+
 ## Deliverables
 
 1. **Team topology map** — Visual map of all teams classified by type with ownership boundaries
@@ -43,11 +46,25 @@ The user provides an organization or department name as `$ARGUMENTS`. Parse `$1`
 1. **Map current structure** — Document current teams, their responsibilities, sizes, and reporting lines
 2. **Analyze Conway's Law** — Map how current team boundaries reflect (or conflict with) the software architecture
 3. **Classify teams** — Categorize each team: stream-aligned (business capability), platform (internal services), enabling (capability uplift), complicated-subsystem (deep expertise)
-4. **Evaluate cognitive load** — Assess each team's cognitive load: intrinsic (domain complexity), extraneous (tooling, process overhead), germane (learning, improvement)
-5. **Identify anti-patterns** — Detect: teams too large (>9), too many dependencies, shared ownership, siloed knowledge, handoff chains
-6. **Design target topology** — Define target team structure aligned with desired architecture and value streams
-7. **Map interactions** — Define interaction mode per team pair: collaboration (temporary, high-bandwidth), X-as-a-service (API-like, low-coupling), facilitating (enabling team helps others)
-8. **Plan evolution** — Create phased transition plan with organizational change management, communication, and success metrics
+4. **Evaluate cognitive load** — Score each team on intrinsic (domain complexity), extraneous (tooling/process overhead — the only one you should actively shrink), and germane (learning toward the goal). Use a proxy score, not gut feel (see Cognitive Load Scoring). [EXPLICIT]
+5. **Identify anti-patterns** — Detect: teams too large (>9), too many dependencies, shared ownership, siloed knowledge, handoff chains (see Failure Modes for thresholds and the move each one forces). [EXPLICIT]
+6. **Design target topology** — Define target team structure aligned with desired architecture and value streams. Stream-aligned teams are the default and majority; the other three types exist only to reduce a stream-aligned team's load. [EXPLICIT]
+7. **Map interactions** — Define interaction mode per team pair: collaboration (temporary, high-bandwidth, weeks→one quarter max), X-as-a-service (API-like, low-coupling, the steady state), facilitating (enabling team helps others, time-boxed to the uplift). A pair stuck in collaboration past a quarter is an unresolved boundary, not a mode. [EXPLICIT]
+8. **Plan evolution** — Create phased transition plan with organizational change management, communication, and success metrics. Sequence: reduce load first (split or platformize), *then* rewire interactions — never both for the same team in one phase. [INFERENCIA]
+
+## Cognitive Load Scoring
+
+Proxy score per team; cap a single stream-aligned team at one comprehensible domain. Score = sum of weighted indicators; treat >12 as overloaded, 8–12 as watch, <8 as healthy. [SUPUESTO] — calibrate the threshold against two known-healthy and two known-overloaded teams in the org before trusting it; verification step: retro velocity + on-call pages correlate with the score.
+
+| Indicator | Weight | Reads as overload when |
+|---|---|---|
+| Distinct business domains owned | ×3 | > 1 |
+| Services/repos on-call for | ×1 | > 5 |
+| Synchronous dependencies to ship | ×2 | > 2 teams |
+| Distinct tech stacks maintained | ×2 | > 2 |
+| Context-switches/week (interrupt classes) | ×1 | > 3 |
+
+Worked example — "Payments" team (9 eng): 2 domains (payments + fraud) ×3 = 6, 7 services ×1 = 7, deps on Platform+Identity (2) ×2 = 4 → already 17 before stacks. Diagnosis: overloaded. Move: split fraud into its own stream-aligned team, or absorb fraud's deep ML rules into a complicated-subsystem team so Payments keeps one domain. [INFERENCIA]
 
 ## Quality Criteria
 
@@ -59,13 +76,17 @@ The user provides an organization or department name as `$ARGUMENTS`. Parse `$1`
 - [ ] Team sizes within recommended bounds (5-9 members)
 - [ ] Dependencies between teams explicitly mapped and minimized
 - [ ] Change management considerations included in evolution plan
+- [ ] Every overloaded team (score > 12) has exactly one named remediation move
+- [ ] Evolution plan obeys the rule: no team changes both its load *and* its interactions in the same phase
+- [ ] At least one fitness function defined so the change is measurable post-rollout
 
 ## Assumptions & Limits
 
-- Assumes leadership support for organizational restructuring
+- Assumes leadership support for organizational restructuring; without it, deliver the analysis but mark the evolution plan `[SUPUESTO]` and gate it on a sponsor. [INFERENCIA]
 - Team topology is a model — real organizations have nuances the model simplifies
-- Does not address HR, compensation, or formal reporting line changes
-- Effectiveness depends on alignment between architecture evolution and team evolution
+- Does not address HR, compensation, or formal reporting line changes (see Anti-scope)
+- Effectiveness depends on alignment between architecture evolution and team evolution; if architecture is not also moving, this produces an org chart, not a topology. [INFERENCIA]
+- Not for teams < ~4 people total — there is nothing to partition; the output collapses to a single stream-aligned team plus a watch-list of future splits. [INFERENCIA]
 
 ## Edge Cases
 
@@ -73,6 +94,20 @@ The user provides an organization or department name as `$ARGUMENTS`. Parse `$1`
 2. **Equipo unico responsable de todo (startup temprana)** — El skill no fuerza los 4 tipos; en su lugar identifica responsabilidades que deberian separarse primero y define triggers de division basados en carga cognitiva medible. [EXPLICIT]
 3. **Fusion o adquisicion con equipos duplicados** — El skill mapea capacidades duplicadas, propone consolidacion basada en fortalezas complementarias y disena plan de transicion que minimiza perdida de conocimiento institucional. [EXPLICIT]
 4. **Equipos distribuidos en multiples paises con diferencia cultural** — La matriz de interacciones se ajusta por zona horaria y cultura de comunicacion, priorizando X-as-a-service sobre colaboracion para minimizar dependencia de comunicacion sincrona. [EXPLICIT]
+
+## Failure Modes (anti-patterns → forced move)
+
+| Anti-pattern | Detection threshold | Forced move |
+|---|---|---|
+| Team too large | > 9 members | Split along a domain seam, not by function. [EXPLICIT] |
+| Dependency overload | > 2 sync deps to ship | Convert the most-blocking dep to X-as-a-service; if it cannot be API-ized, the boundary is wrong — re-cut it. [INFERENCIA] |
+| Shared ownership | 2+ teams own one service | Assign single owner; others consume via API. Shared ownership = no ownership. [EXPLICIT] |
+| Siloed knowledge | bus-factor = 1 on a domain | Time-boxed enabling-team rotation, then leave. [INFERENCIA] |
+| Handoff chain | > 1 handoff per change | Collapse the chain into one stream-aligned team or platformize the intermediate step. [INFERENCIA] |
+| Platform-as-bottleneck | every stream blocked on platform tickets | Platform must expose self-service (X-as-a-service); ticket queue is the smell. [INFERENCIA] |
+| Permanent collaboration | a pair collaborating > 1 quarter | Promote to a merged team or demote to X-as-a-service; collaboration is a transition, not a destination. [EXPLICIT] |
+
+**Fitness functions** (track post-change, not just at design time): lead-time for change per stream-aligned team, % of work shippable without a sync dependency, platform self-service adoption %, cognitive-load score trend. A topology that doesn't move these is decorative. [INFERENCIA]
 
 ## Decisions & Trade-offs
 
@@ -150,7 +185,7 @@ graph TD
 - **metodologia-product-strategy:** Value streams that drive stream-aligned team boundaries
 
 ---
-**Autor:** Javier Montaño · Comunidad MetodologIA | **Version:** 1.0.0
+**Autor:** Javier Montaño · Comunidad MetodologIA | **Version:** 1.1.0
 
 ## Usage
 

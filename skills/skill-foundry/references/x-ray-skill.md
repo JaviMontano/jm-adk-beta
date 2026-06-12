@@ -27,15 +27,21 @@ Each skill is standalone. Use assembly-skill to run the full pipeline in one com
 
 Parse the argument as the path to a skill directory containing SKILL.md. If the path points to a .skill ZIP file, extract it to a temp directory first. [EXPLICIT]
 
+**Anti-scope (what this skill does NOT do):** No file modification (use surgeon-skill). No final go/no-go verdict for shipping (use certify-skill). No before/after delta (use benchmark-skill). No runtime/behavioral testing of the skill's output (use skill-creator's eval loop). X-Ray diagnoses; it never treats. [INFERENCE]
+
+**Input contract:** exactly one path argument. Reject (don't guess) when: zero args → print Usage; multiple paths → analyze the first, warn the rest are ignored; path is a file that is not `.skill` and not `SKILL.md` → ask the user for the directory. [INFERENCE]
+
 ## Deterministic Assets
 
-Use the bundled compiler when a repeatable first-pass scorecard is needed before human review. [EXPLICIT]
+Use the bundled compiler when a repeatable first-pass scorecard is needed before human review. The compiler's output is a *first-pass draft*, not a substitute for the LLM read — script scores seed the rubric table; you still verify each with cited evidence (Step 4). [EXPLICIT]
 
 ```bash
 python3 scripts/compile-x-ray-report.py --skill-dir /path/to/skill --format markdown
 ```
 
 Load `assets/rubric-policy.json` for scoring thresholds, `assets/gate-policy.json` for binary checkpoints, and `assets/report-template.md` for the report shape. Run `scripts/check.sh` after editing this skill or its fixtures. [EXPLICIT]
+
+**When the script and the LLM disagree:** the LLM read wins, but record both — a systematic gap (script consistently lower on Density) signals a stale threshold in `rubric-policy.json` worth filing, not a one-off. [INFERENCE]
 
 ## The Diagnostic Process
 
@@ -81,6 +87,10 @@ Parse SKILL.md YAML frontmatter. Verify each field:
 | context | | fork only when isolated subagent needed? | | INFO |
 
 **Detection method for trigger quality:** Read the description aloud. If a colleague couldn't tell when to use this skill from the description alone, triggers are insufficient. Count quoted phrases — fewer than 3 is a gap.
+
+**Worked frontmatter judgment:** `description: "Audits skills."` → BLOCKER: zero triggers, no third-person subject clarity, no pushy clause. `description: "Use when the user asks to 'audit a skill', 'score a skill', or 'check skill quality' — run even if they only say the skill 'feels off'."` → PASS: three quoted triggers + pushy context. The second is ~3x longer and that length is earned, not filler. [EXPLICIT]
+
+**`allowed-tools` over-permissioning test:** a read-only diagnostic skill that lists `Write`, `Edit`, or `Bash(rm:*)` is over-broad — WARNING, because a scanning skill should not be able to mutate what it scans. Absent field = inherits all tools = also a WARNING for a read-only skill. [INFERENCE]
 
 ### Step 3: Body Audit
 
@@ -148,6 +158,10 @@ Run the 13-point gate from `references/quality-rubric.md`. Each checkpoint is bi
 
 Gate result: **PASS** (13/13) / **CONDITIONAL** (11-12) / **BLOCKED** (<11)
 
+**Gate vs rubric — why both:** the gate is binary structural pass/fail (does the section exist?); the rubric is graded quality (is it any good?). A skill can pass all 13 gates and still average 5/10 (every section present but shallow), or fail one gate yet score 8/10 elsewhere. Certification requires BOTH (see formula in Step 7). [EXPLICIT]
+
+**Checkpoints 12 and 13 are judgment, not grep** — a checklist can't catch a prompt-injection payload in a reference file or a skill whose actual effect diverges from its name. Read for intent, don't pattern-match. [INFERENCE]
+
 ### Step 6: Systemic Coherence (multi-file skills only)
 
 Skip this step for single-file skills — report N/A. [EXPLICIT]
@@ -206,6 +220,10 @@ Synthesize into the X-Ray Report. This is the only deliverable — every previou
 
 **Prioritization logic for Top 5:** BLOCKER gate failures first (they prevent certification), then lowest rubric scores (they drag the average below 8), then systemic issues (they compound across files). Each issue gets a severity tag and a specific action — never "improve quality."
 
+**Certification formula (the only definition of CERTIFIED):** `gate == 13/13` AND `every dimension >= 7` AND `average >= 8`. All three required — a 9.0 average with one dimension at 6 is CONDITIONAL, not CERTIFIED, because the weak dimension is the user's real risk. CONDITIONAL = gate 11-12 OR one fixable dim < 7. BLOCKED = gate < 11 OR any dim < 4. Tie-break toward the lower verdict; X-Ray under-promises. [EXPLICIT]
+
+**Next-step routing (deterministic, from verdict):** BLOCKED → surgeon-skill (structural repair). CONDITIONAL with ≤2 narrow fixes → name them, hand to the user, then certify-skill. CONDITIONAL with broad gaps → surgeon-skill. CERTIFIED → stop; recommending further edits invites regression. [INFERENCE]
+
 ## Assumptions & Limits
 
 - Read-only. This skill never modifies the skill being analyzed.
@@ -223,7 +241,10 @@ Synthesize into the X-Ray Report. This is the only deliverable — every previou
 | Frontmatter not parseable | YAML parse error | Report as BLOCKER. The skill cannot trigger without valid frontmatter. |
 | Skill is a .skill ZIP | File extension is .skill, not a directory | Extract to temp dir, analyze, note archive format in report. |
 | Rubric score disagreement with prior run | Same skill, different scores | Expected for subjective dims (1-point variance). Flag if difference > 2 — likely a scoring inconsistency. |
-| Massive skill (50+ files) | Glob returns many files | Prioritize: SKILL.md first, then evals, then references. Sample 5 reference files for cross-checks instead of all. |
+| Massive skill (50+ files) | Glob returns many files | Prioritize: SKILL.md first, then evals, then references. Sample 5 reference files for cross-checks instead of all. Note sampling in the report so the score's confidence is honest. |
+| Referenced file path resolves but file is empty/stub | `wc -l` returns 0-2 lines | Treat as MISSING-CRITICAL, not PRESENT — a referenced-but-empty file is a broken promise to the reader. |
+| Two SKILL.md files (nested) | Glob returns >1 SKILL.md | BLOCKER on checkpoint 1. Report both paths; do not silently pick one — ambiguous load target is itself the defect. |
+| Path is a symlink to outside the repo | `ls -l` shows `->` | Resolve and analyze the target, but flag the indirection — skills loaded via symlink can drift from the canonical source. |
 
 ## Edge Cases
 
@@ -263,8 +284,10 @@ Before delivering the X-Ray report:
 - [ ] All 13 gate checkpoints have a binary pass/fail with verification method
 - [ ] Top 5 issues are prioritized: BLOCKERs before WARNINGs before INFOs
 - [ ] Each issue has a specific action (not "improve" or "fix")
-- [ ] Certification level matches the scoring formula: all dims >= 7, avg >= 8, gate 13/13
+- [ ] Certification level matches the formula exactly: CERTIFIED iff gate 13/13 AND all dims >= 7 AND avg >= 8 (tie-break to lower verdict)
 - [ ] Report follows the template structure (no missing sections, no extra commentary)
+- [ ] No file was modified during the scan (read-only invariant held)
+- [ ] If files were sampled (massive skill), the report states what was sampled and what was not
 
 ## Reference Files
 
@@ -277,4 +300,4 @@ Before delivering the X-Ray report:
 | `scripts/compile-x-ray-report.py` | Read-only compiler for directory or fixture-backed X-Ray scorecards | Run when the user needs a repeatable scorecard |
 
 ---
-**Author:** Javier Montano | **Last updated:** March 18, 2026
+**Author:** Javier Montano | **Last updated:** June 11, 2026

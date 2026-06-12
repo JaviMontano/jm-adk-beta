@@ -10,6 +10,15 @@ Un archivo externo a la conversación (`investigation-scratchpad.md`) donde el a
 
 Cuando el contexto se compacta (Kata 11 · compactación), se pierde detalle. Si un descubrimiento crítico vivía solo en el historial conversacional, desaparece sin dejar rastro. El scratchpad es la red de seguridad: memoria persistente curada por el agente que sobrevive a cualquier compactación o reset de sesión, de modo que las conclusiones validadas nunca dependen de la ventana de contexto.
 
+## Supuestos y límites (anti-scope)
+
+- **Supone** un filesystem persistente entre turnos/sesiones (la ruta sobrevive a `/compact` y reinicio). No aplica a runtimes efímeros sin disco escribible.
+- **Supone** que el agente cura: filtra señal validada de ruido. Si no hay disciplina de curado, el scratchpad degenera en un segundo historial conversacional sucio.
+- **No** es un log de auditoría ni un transcript: no captura cada turno, solo conclusiones durables. Para trazabilidad turn-by-turn usa otro mecanismo.
+- **No** sustituye verificación: lo que se escribe ya debe estar validado (test que pasó, bug replicado, decisión cerrada), no una hipótesis viva.
+- **No** es memoria compartida multi-agente por defecto: un único archivo append-only sin locking corrompe escrituras concurrentes (ver Failure modes).
+- **Límite de tamaño:** si crece sin poda, releerlo entero al inicio infla el prefijo. Compactarlo periódicamente (fusionar pendientes resueltos) es parte del curado, no opcional.
+
 ## Modelo mental
 
 - Conversación = memoria volátil: puede compactarse o resetearse en cualquier momento.
@@ -17,6 +26,15 @@ Cuando el contexto se compacta (Kata 11 · compactación), se pierde detalle. Si
 - El agente escribe SOLO conclusiones validadas: hipótesis confirmadas, decisiones, hallazgos, pendientes. No vuelca monólogo interno, hipótesis sin confirmar ni dudas pasajeras.
 - Estructura fija por secciones (`## Decisiones`, `## Hallazgos`, `## Pendientes`) para que sea anexable y legible.
 - Al inicio de cada sesión el agente lee el scratchpad UNA vez; después referencia y anexa, no re-lee cada turno (preserva el prefijo de cache, Kata 10).
+
+Gate **escribir vs descartar** (el más confundido):
+
+| Candidato | ¿Validado y durable? | Acción |
+|---|---|---|
+| `pydantic v2` compatible (test T-19 pasó) | sí, decisión cerrada | append a `## Decisiones` |
+| "creo que el bug está en el parser" | hipótesis sin confirmar | NO escribir; vive en conversación |
+| bug replicado en `parser.py:142` | sí, hallazgo reproducible | append a `## Hallazgos` |
+| "tal vez después revise los flags" | duda pasajera | NO escribir; si es acción real, va a `## Pendientes` como tarea concreta |
 
 ## Activos determinísticos
 
@@ -47,6 +65,18 @@ def append_scratchpad(section, entry):
 - Confiar en la conversación como memoria de largo plazo: tras `/compact` el hallazgo desaparece.
 - Scratchpad sin estructura, o re-leído cada turno: rompe el cache de prefijo (Kata 10) y ensucia la señal.
 - Volcar monólogo interno, hipótesis no confirmadas o dudas pasajeras al scratchpad: contamina la memoria persistente con ruido no validado.
+- Sobrescribir (`open(path, "w")`) en vez de anexar: borra el historial durable que es justo el activo a proteger.
+
+## Decisión de diseño: append-only vs reescritura curada
+
+Append-only (`mode="a"`) es la elección por defecto porque es atómica a nivel de entrada y nunca pierde una conclusión ya escrita. **Trade-off:** acumula entradas obsoletas (pendientes ya resueltos) que inflan el archivo. Se acepta y se mitiga con poda periódica explícita (reescritura curada en un paso de mantenimiento consciente), NO con sobrescritura automática por turno —que reintroduce el riesgo de borrado accidental. Regla: escritura del turno = append; compactación del scratchpad = operación deliberada, separada y validada.
+
+## Failure modes
+
+- **Escritura concurrente:** dos agentes anexando al mismo archivo sin lock entrelazan líneas y corrompen secciones. Mitigación: un escritor por scratchpad, o un archivo por agente con merge explícito.
+- **Drift de ruta:** el agente asume `investigation-scratchpad.md` relativo al cwd y el cwd cambia entre llamadas (los hilos de agente lo resetean). Mitigación: ruta absoluta fijada al inicio de sesión.
+- **Cache invalidado al releer:** releer el scratchpad mutado a mitad de sesión lo coloca antes del borde dinámico e invalida el prefijo (Kata 10). Mitigación: leer una vez al inicio; después solo anexar.
+- **Memoria envenenada:** una hipótesis falsa escrita como hallazgo se trata como verdad en sesiones futuras. Mitigación: el gate "validado y durable" es duro; ante duda, no se escribe.
 
 ## Argumento de certificación
 

@@ -2,7 +2,9 @@
 <!-- This skill should be used when the user asks to "design security architecture", "model -->
 # Security Architecture: Threat Modeling, Identity & Compliance Design
 
-Security architecture defines how systems protect data, verify identity, enforce access, and maintain compliance across the entire technology stack. The skill produces comprehensive security designs covering threat modeling, zero trust implementation, identity management, data protection, application security pipelines, and compliance mapping. [EXPLICIT]
+Security architecture defines how systems protect data, verify identity, enforce access, and maintain compliance across the entire technology stack. The skill produces comprehensive security designs covering threat modeling, zero trust implementation, identity management, data protection, application security pipelines, and compliance mapping. [DOC]
+
+> **Evidence tags.** This is a kit/repo reference, so it uses the **Alfa core** set per `references/verification-tags.md`: `[DOC]` (documented spec/behavior), `[INFERENCIA]` (derived reasoning), `[SUPUESTO]` (claim without direct in-repo evidence). One tag per claim; trivially self-evident statements are left untagged. [DOC]
 
 ## Principio Rector
 
@@ -10,20 +12,22 @@ Security architecture defines how systems protect data, verify identity, enforce
 
 ### Filosofía de Security Architecture
 
-1. **Zero Trust everywhere.** No hay red confiable, no hay usuario confiable, no hay servicio confiable. Cada request se autentica, autoriza y cifra — sin excepciones. [EXPLICIT]
-2. **Threat modeling before design.** Modelar amenazas DESPUÉS del diseño es auditoría. Modelarlas ANTES es arquitectura. STRIDE/PASTA en la fase de diseño reduce 100x el costo de remediación. [EXPLICIT]
-3. **Compliance is minimum bar, not maximum goal.** Pasar un audit no significa ser seguro. Los frameworks (SOC2, PCI-DSS, ISO 27001) definen el piso — la arquitectura de seguridad define el techo. [EXPLICIT]
+1. **Zero Trust everywhere.** No hay red confiable, no hay usuario confiable, no hay servicio confiable. Cada request se autentica, autoriza y cifra — sin excepciones. [DOC]
+2. **Threat modeling before design.** Modelar amenazas DESPUÉS del diseño es auditoría. Modelarlas ANTES es arquitectura. STRIDE/PASTA en la fase de diseño reduce ~100x el costo de remediación vs. encontrarlo en producción (ver S5 shift-left). [INFERENCIA]
+3. **Compliance is minimum bar, not maximum goal.** Pasar un audit no significa ser seguro. Los frameworks (SOC2, PCI-DSS, ISO 27001) definen el piso — la arquitectura de seguridad define el techo. [DOC]
+
+**Anti-pattern guard rails** (the failure modes this skill exists to prevent): (a) "perimeter firewall = secure" — defeated by any insider or phished credential; (b) "we passed SOC 2, therefore secure" — SOC 2 attests process, not threat resistance; (c) "encrypt everything" without key management — encryption with co-located, never-rotated keys is theater; (d) threat model authored once and never refreshed — stale after the first major architecture change. [INFERENCIA]
 
 ## Inputs
 
-The user provides a system or organization name as `$ARGUMENTS`. Parse `$1` as the **system/organization name** used throughout all output artifacts. [EXPLICIT]
+The user provides a system or organization name as `$ARGUMENTS`. Parse `$1` as the **system/organization name** used throughout all output artifacts. [DOC]
 
 **Parameters:**
 - `{MODO}`: `piloto-auto` (default) | `desatendido` | `supervisado` | `paso-a-paso`
-  - **piloto-auto**: Auto para threat enumeration y control mapping, HITL para Zero Trust maturity y compliance scope decisions. [EXPLICIT]
-  - **desatendido**: Cero interrupciones. Security architecture documentada automáticamente. Supuestos documentados. [EXPLICIT]
-  - **supervisado**: Autónomo con checkpoint en threat model review y IAM design. [EXPLICIT]
-  - **paso-a-paso**: Confirma cada threat, mitigation, encryption decision, y compliance mapping. [EXPLICIT]
+  - **piloto-auto**: Auto para threat enumeration y control mapping, HITL para Zero Trust maturity y compliance scope decisions. [DOC]
+  - **desatendido**: Cero interrupciones. Security architecture documentada automáticamente. Supuestos documentados. [DOC]
+  - **supervisado**: Autónomo con checkpoint en threat model review y IAM design. [DOC]
+  - **paso-a-paso**: Confirma cada threat, mitigation, encryption decision, y compliance mapping. [DOC]
 - `{FORMATO}`: `markdown` (default) | `html` | `dual`
 - `{VARIANTE}`: `ejecutiva` (~40% — S1 threat model + S2 zero trust + S6 compliance) | `técnica` (full 6 sections, default)
 
@@ -40,7 +44,7 @@ All deliverables map to the six NIST CSF 2.0 functions:
 | **Respond** | Incident management, analysis, mitigation, reporting | RS.MA, RS.AN, RS.MI |
 | **Recover** | Recovery execution, communication | RC.RP, RC.CO |
 
-Use the Govern function to ensure security architecture has executive sponsorship and integrates into enterprise risk management. CSF 2.0 explicitly addresses supply chain security, zero trust, and AI-related risks. [EXPLICIT]
+Use the Govern function to ensure security architecture has executive sponsorship and integrates into enterprise risk management. CSF 2.0 explicitly addresses supply chain security, zero trust, and AI-related risks. [DOC]
 
 Before generating architecture, detect the technology context:
 
@@ -78,7 +82,7 @@ Read ${CLAUDE_SKILL_DIR}/references/security-frameworks.md
 
 ### S1: Threat Modeling
 
-Systematically identify threats using structured methodologies applied to the system's architecture. [EXPLICIT]
+Systematically identify threats using structured methodologies applied to the system's architecture. [DOC]
 
 **Methodology selection:**
 - **STRIDE** (per-element): Spoofing, Tampering, Repudiation, Information Disclosure, DoS, Elevation of Privilege. Best for component-level analysis.
@@ -93,9 +97,17 @@ Systematically identify threats using structured methodologies applied to the sy
 
 **Attacker profiles:** External anonymous, authenticated user, malicious insider, supply chain compromise
 
+**Risk scoring (5x5).** Likelihood {Rare=1 … Almost-certain=5} × Impact {Negligible=1 … Catastrophic=5}. Bands: 1–4 accept/monitor, 5–9 mitigate next quarter, 10–14 mitigate this sprint, 15–25 block release. [INFERENCIA]
+
+*Worked example (public file-upload API):* threat = unauthenticated malware upload (STRIDE: Tampering + Elevation). Likelihood 4 (internet-facing, common attack), Impact 4 (RCE on processing host) → score 16 → block release. Mitigation: content-type allowlist + AV scan + sandboxed processing + size cap. Residual after mitigation: Likelihood 2 × Impact 4 = 8 → accept with monitoring. [INFERENCIA]
+
+**Acceptance criteria (S1):** every trust boundary in the DFD has ≥1 enumerated threat; every threat scored ≥10 has a named mitigation or an explicit, signed-off residual-risk acceptance; STRIDE applied per-element (not once globally). [DOC]
+
+**Failure modes:** (a) DFD omits admin/back-office paths — the most over-privileged surface; (b) scoring inflated to "all critical," destroying prioritization; (c) supply-chain attacker profile skipped despite third-party dependencies. [INFERENCIA]
+
 ### S2: Zero Trust Architecture
 
-Design identity-centric security that assumes no implicit trust regardless of network location. [EXPLICIT]
+Design identity-centric security that assumes no implicit trust regardless of network location. [DOC]
 
 **Core principles:** Verify explicitly, least privilege access, assume breach.
 
@@ -121,7 +133,7 @@ Design identity-centric security that assumes no implicit trust regardless of ne
 
 ### S3: Identity & Access Management
 
-Design authentication, authorization, and secret management for human and machine identities. [EXPLICIT]
+Design authentication, authorization, and secret management for human and machine identities. [DOC]
 
 **Authentication:** OAuth 2.0 / OIDC for user flows, client credentials for S2S, WebAuthn/FIDO2 for passwordless
 **MFA:** TOTP/WebAuthn for users, certificate-based for services, risk-based triggers
@@ -137,11 +149,15 @@ Design authentication, authorization, and secret management for human and machin
 | **ABAC** | Attribute-level | High | Multi-tenant, data-level access, regulatory |
 | **ReBAC** | Relationship-level | Medium | Social graphs, document sharing (Google Zanzibar) |
 
-**Token decisions:** JWT (stateless, verifiable, larger) vs. opaque (requires introspection, revocable). Use JWT for S2S, opaque for user sessions needing immediate revocation.
+**Token decisions:** JWT (stateless, verifiable, larger) vs. opaque (requires introspection, revocable). Use JWT for S2S, opaque for user sessions needing immediate revocation. Default JWT access-token TTL ≤15 min with refresh rotation — long-lived JWTs cannot be revoked before expiry, so a leaked 24h token is a 24h breach. [INFERENCIA]
+
+**Acceptance criteria (S3):** no long-lived secrets in code, env files, or images (workload identity or Vault-issued short-lived creds only); every privileged role has a named owner and a recertification cadence; MFA enforced on all human admin paths including break-glass. [DOC]
+
+**Failure modes & edge cases:** (a) RBAC role explosion — >50 roles signals you needed ABAC; migrate before it ossifies; (b) service account with human-equivalent standing privilege — the top lateral-movement vector; scope to least privilege + short-lived; (c) break-glass account with no expiry/alerting — must be vaulted, time-boxed, and alert on use; (d) SSO federation trusting an external IdP whose assurance level is unknown — pin acceptable AuthN context (AMR/ACR) claims. [INFERENCIA]
 
 ### S4: Data Protection
 
-Design encryption, key management, and data loss prevention across the data lifecycle. [EXPLICIT]
+Design encryption, key management, and data loss prevention across the data lifecycle. [DOC]
 
 **Encryption at rest:** Database TDE, filesystem encryption, backup encryption — AES-256 minimum
 **Encryption in transit:** TLS 1.3 everywhere, certificate management (ACME/Let's Encrypt), certificate pinning for mobile
@@ -158,9 +174,13 @@ Design encryption, key management, and data loss prevention across the data life
 | **Internal** | Org communications | In transit | All employees | 1-3 years |
 | **Public** | Marketing, docs | In transit (integrity) | Anyone | Indefinite |
 
+**Acceptance criteria (S4):** keys never co-located with the data they protect (separate KMS/HSM trust domain); every Restricted dataset has a documented encryption + retention + lawful-deletion path; backups encrypted and restore-tested. [DOC]
+
+**Failure modes:** (a) DEK and ciphertext in the same blob/DB — single compromise yields both; (b) certificate/key rotation that has no rollback, causing an outage that pressures teams to disable TLS verification; (c) "tokenized" data that is reversible via a lookup table sitting in the same trust boundary — not tokenization, just indirection. [INFERENCIA]
+
 ### S5: Application Security
 
-Integrate security testing into the development lifecycle. [EXPLICIT]
+Integrate security testing into the development lifecycle. [DOC]
 
 **Shift-Left Cost Multiplier:**
 
@@ -200,7 +220,7 @@ Integrate security testing into the development lifecycle. [EXPLICIT]
 
 ### S6: Compliance & Audit
 
-Map regulatory frameworks to technical controls with evidence collection and continuous compliance. [EXPLICIT]
+Map regulatory frameworks to technical controls with evidence collection and continuous compliance. [DOC]
 
 **Compliance Framework Mapping Table:**
 
@@ -217,6 +237,10 @@ Map regulatory frameworks to technical controls with evidence collection and con
 **Continuous compliance:** Automated policy checks (OPA, Cloud Custodian), drift detection
 **Tooling:** Vanta, Drata for automated evidence collection; manual for complex controls
 **Audit readiness:** Evidence repository, control owner assignments, pre-audit checklists
+
+**Acceptance criteria (S6):** every in-scope framework requirement maps to ≥1 implemented control with a named evidence source and owner; no control marked "compliant" without retrievable evidence; gaps tracked with remediation dates. [DOC]
+
+**Failure modes:** (a) mapping a requirement to a control that exists on paper but is not enforced (policy without OPA gate); (b) evidence that cannot survive auditor scrutiny because it is a screenshot, not a queryable log; (c) treating overlapping controls (e.g. SOC 2 CC6.1 ≈ ISO A.9) as separate work instead of one control satisfying many — the cross-framework table above is the dedup map. [INFERENCIA]
 
 ---
 
@@ -288,7 +312,7 @@ Before finalizing delivery, verify:
 | `html` | On demand | Branded HTML (Design System). Visual impact. |
 | `dual` | On demand | Both formats. |
 
-Default output is Markdown with embedded Mermaid diagrams. HTML generation requires explicit `{FORMATO}=html` parameter. [EXPLICIT]
+Default output is Markdown with embedded Mermaid diagrams. HTML generation requires explicit `{FORMATO}=html` parameter. [DOC]
 
 ## Output Artifact
 
@@ -297,4 +321,4 @@ Default output is Markdown with embedded Mermaid diagrams. HTML generation requi
 **Secondary:** Threat model diagrams (DFD), control matrix spreadsheet, compliance gap analysis, secret rotation runbook.
 
 ---
-**Author:** Javier Montano | **Last updated:** March 18, 2026
+**Author:** Javier Montano | **Last updated:** June 11, 2026
