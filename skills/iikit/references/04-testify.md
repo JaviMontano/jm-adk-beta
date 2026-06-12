@@ -2,7 +2,11 @@
 <!-- >- -->
 # Intent Integrity Kit Testify
 
-Generate executable Gherkin `.feature` files from requirement artifacts before implementation. Enables TDD by creating hash-locked BDD scenarios that serve as acceptance criteria. [EXPLICIT]
+Generate executable Gherkin `.feature` files from requirement artifacts before implementation. Enables TDD by creating hash-locked BDD scenarios that serve as immutable acceptance criteria. [EXPLICIT]
+
+**Position in pipeline**: phase 04, after `01-specify` + `02-plan` (+ optional `03`), before `05-implement`. This skill is the requirements→tests boundary: everything upstream is intent, everything downstream is held to the scenarios locked here. [INFERENCIA]
+
+**Why hash-lock the scenarios** (decision): tests authored from requirements are only trustworthy if they cannot be silently edited to match buggy code. The SHA256 hash + git note make tampering detectable at implement time. Trade-off: legitimate requirement changes force a re-run of this skill (intentional — change must flow from spec, not from the test file). [INFERENCIA]
 
 ## User Input
 
@@ -10,7 +14,7 @@ Generate executable Gherkin `.feature` files from requirement artifacts before i
 $ARGUMENTS
 ```
 
-This skill accepts **no user input parameters** — it reads artifacts automatically. [EXPLICIT]
+This skill accepts **no user input parameters** — it reads artifacts automatically. Any text in `$ARGUMENTS` is ignored, not treated as a feature selector; feature selection happens via the prerequisites `needs_selection` flow below. [EXPLICIT]
 
 ## Constitution Loading
 
@@ -22,6 +26,8 @@ Load constitution per [constitution-loading.md](../iikit-core/references/constit
 - Implicit (SHOULD + "quality gates", "coverage requirements") -> **optional**
 - Prohibition (MUST + "test-after", "no unit tests") -> **forbidden** (ERROR, halt)
 - None found -> **optional**
+
+**Determination affects only the report, never generation**: `mandatory`/`optional` both proceed to generate `.feature` files; the label tells the user whether downstream `05-implement` will hard-block on missing tests. `forbidden` is the only branch that halts before generation. [INFERENCIA] On conflicting signals (e.g. one MUST for TDD and one MUST against), treat as **forbidden** and surface both citations — a constitution that both requires and prohibits test-first is a constitution bug the user must resolve, not one this skill should silently pick a side on. [SUPUESTO]
 
 Report per [formatting-guide.md](../iikit-core/references/formatting-guide.md) (TDD Assessment section). [EXPLICIT]
 
@@ -41,7 +47,7 @@ Report per [formatting-guide.md](../iikit-core/references/formatting-guide.md) (
 
 ## Acceptance Scenario Validation
 
-Search spec.md for Given/When/Then patterns. If none found: ERROR with `Run: /iikit-clarify`. [EXPLICIT]
+Search spec.md for Given/When/Then patterns. If none found: ERROR with `Run: /iikit-clarify`. [EXPLICIT] Rationale: this skill transforms scenarios, it does not invent them — generating Gherkin from a spec that has no acceptance scenarios would fabricate untraceable tests, defeating the integrity guarantee. Clarify is the correct upstream fix. [INFERENCIA]
 
 ## Execution Flow
 
@@ -56,7 +62,7 @@ Create `.feature` files in `FEATURE_DIR/tests/features/`: [EXPLICIT]
 
 **Output directory**: `FEATURE_DIR/tests/features/` (create if it does not exist)
 
-**File organization**: Generate one `.feature` file per user story or logical grouping. Use descriptive filenames (e.g., `login.feature`, `user-management.feature`).
+**File organization**: Generate one `.feature` file per user story or logical grouping. Use descriptive filenames (e.g., `login.feature`, `user-management.feature`). [EXPLICIT] One-file-per-story (decision) keeps `@US-XXX` feature-level tags unambiguous and lets diffs map cleanly to a single requirement; trade-off is more files, accepted because BDD runners glob the directory anyway. Filenames are kebab-case, lowercase, ASCII — no spaces, no story IDs in the name (the `@US-XXX` tag carries the ID). [SUPUESTO]
 
 #### 2.1 Gherkin Tag Conventions
 
@@ -68,7 +74,13 @@ Every scenario MUST include traceability tags: [EXPLICIT]
 - `@P1` / `@P2` / `@P3` — priority level
 - `@acceptance` / `@contract` / `@validation` — test type
 
-**SC-XXX coverage rule**: For each SC-XXX in spec.md, ensure at least one scenario is tagged with the corresponding `@SC-XXX`. If an FR scenario already covers the success criterion, add the `@SC-XXX` tag to that scenario rather than creating a duplicate.
+**SC-XXX coverage rule**: For each SC-XXX in spec.md, ensure at least one scenario is tagged with the corresponding `@SC-XXX`. If an FR scenario already covers the success criterion, add the `@SC-XXX` tag to that scenario rather than creating a duplicate. [EXPLICIT]
+
+**Tag invariants** (must hold across all generated files): [INFERENCIA]
+- `@TS-XXX` is globally unique and never reused — even for a deprecated scenario the ID is retired, not recycled (the hash and coverage matrix key on it).
+- Exactly one priority tag (`@P1|@P2|@P3`) and one test-type tag (`@acceptance|@contract|@validation`) per scenario; zero or two is a generation defect.
+- Every `@FR-XXX`/`@SC-XXX`/`@US-XXX` on a scenario must resolve to an ID that actually exists in spec.md — a tag pointing at a non-existent requirement is worse than no tag (false traceability). Drop or correct it; do not emit a dangling reference.
+- Priority derives from the source requirement's priority in spec.md; if the source is unprioritized, default `@P2` and note it. [SUPUESTO]
 
 Feature-level tags for shared metadata: [EXPLICIT]
 - `@US-XXX` on the Feature line for the parent user story
@@ -78,6 +90,25 @@ Feature-level tags for shared metadata: [EXPLICIT]
 **From spec.md — Acceptance Tests**: For each Given/When/Then scenario, generate a Gherkin scenario.
 
 Use [testspec-template.md](../iikit-core/templates/testspec-template.md) as the Gherkin file template. For transformation examples, advanced constructs (Background, Scenario Outline, Rule), and syntax validation rules, see [gherkin-reference.md](references/gherkin-reference.md). [EXPLICIT]
+
+**Worked example** — spec.md scenario → tagged Gherkin: [INFERENCIA]
+
+> spec.md (FR-002, SC-001, US-003): *"Given a registered user with a valid password, when they submit the login form, then a session is created and they land on the dashboard."*
+
+```gherkin
+@TS-007 @FR-002 @SC-001 @US-003 @P1 @acceptance
+Scenario: Registered user logs in with valid credentials
+  Given a registered user "ana@example.com" with a valid password
+  When she submits the login form
+  Then a session is created
+  And she lands on the dashboard
+```
+
+**Transformation rules made explicit**: [INFERENCIA]
+- One spec scenario → one `Scenario` (or one `Scenario Outline` row-set when the spec enumerates variants). Do not collapse distinct Given/When/Then triples into a shared scenario — it destroys per-row traceability.
+- Bind ambiguous nouns to concrete example values (`"ana@example.com"`) so steps are executable, not abstract.
+- Negative/error paths in the spec become their own scenarios tagged `@validation`, never an afterthought in the happy-path scenario.
+- Contract assertions from plan.md (status codes, schemas) become `@contract` scenarios; keep them separate from `@acceptance` behavior scenarios.
 
 ### 3. Add DO NOT MODIFY Markers
 
@@ -99,6 +130,8 @@ If `tests/features/` already contains `.feature` files: [EXPLICIT]
 - Mark removed scenarios as deprecated (comment out with `# DEPRECATED:`)
 - Show diff summary of changes
 
+**Idempotency contract** (decision: stable IDs, additive-by-default): re-running on an unchanged spec is a no-op that re-emits identical content and therefore an identical hash. [INFERENCIA] "Unchanged source scenario" is matched by semantic content, not by text equality — reflowing whitespace in the spec must not churn TS-XXX assignments. Never re-number existing `@TS-XXX` to close gaps left by deprecation; gaps are expected and harmless. A run that changes the hash without any spec change is a bug, not idempotency. [SUPUESTO]
+
 ### 5. Store Assertion Integrity Hash
 
 **CRITICAL**: Store SHA256 hash of assertion content in both locations:
@@ -118,6 +151,11 @@ pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powe
 ```
 
 The implement skill verifies this hash before proceeding, blocking if `.feature` file assertions were tampered with. [EXPLICIT]
+
+**Hash scope and failure modes**: [INFERENCIA]
+- The hash covers **assertion content** (steps + tags), not surrounding comments or file ordering — so adding/editing a `# DO NOT MODIFY` banner does not break the lock, but editing a `Then` step does. This is deliberate: the lock guards behavior, not formatting.
+- Both writes (context.json and git note) must succeed. If `store-git-note` fails because the repo has **no commits yet** or the features dir has no `.feature` file, report it and do not claim LOCKED — a hash in context.json alone is mutable and not tamper-resistant. [SUPUESTO]
+- Storing the hash is the **last** generation step: any later edit to a `.feature` file invalidates the lock and must trigger a re-run, not a manual re-hash. Manually re-hashing edited assertions silently defeats the entire integrity mechanism — never do it.
 
 ### 5b. Generate QA Test Coverage Matrix
 
@@ -151,11 +189,16 @@ Output: TDD determination, scenario counts by source (acceptance/contract/valida
 | Condition | Response |
 |-----------|----------|
 | No constitution | ERROR: Run /iikit-00-constitution |
-| TDD forbidden | ERROR with evidence |
+| TDD forbidden (or conflicting MUST signals) | ERROR with both citations, halt before generation |
 | No plan.md | ERROR: Run /iikit-02-plan |
 | No spec.md | ERROR: Run /iikit-01-specify |
 | No acceptance scenarios | ERROR: Run /iikit-clarify |
-| .feature syntax error | FIX: Auto-correct and report |
+| `.feature` syntax error | FIX: Auto-correct and report the correction; never emit invalid Gherkin |
+| Prereq script absent / wrong OS | ERROR: surface the missing path; do not fabricate `FEATURE_DIR`/`AVAILABLE_DOCS` |
+| `needs_selection` but `features` empty | ERROR: no feature to testify; run an upstream phase first |
+| Tag references non-existent FR/SC/US | Drop or correct the tag; never emit a dangling reference |
+| `store-git-note` fails (no commit / no `.feature`) | Report; status is NOT LOCKED — do not claim integrity |
+| Tampered hash on re-run with unchanged spec | Generation bug: investigate; do not manually re-hash |
 
 ## Commit
 
@@ -205,22 +248,31 @@ Example invocations: [EXPLICIT]
 
 ## Validation Gate
 
-- [ ] Output follows the defined structure and format [EXPLICIT]
-- [ ] All claims are tagged with evidence markers [EXPLICIT]
-- [ ] No placeholder content (TBD, TODO) [EXPLICIT]
-- [ ] Actionable recommendations with priority levels [EXPLICIT]
-- [ ] Assumptions explicitly documented [EXPLICIT]
+Skill-specific acceptance criteria — all must hold before reporting LOCKED: [EXPLICIT]
+- [ ] Every `@SC-XXX` in spec.md is covered by ≥1 tagged scenario (matrix shows 0 untested SC) [EXPLICIT]
+- [ ] Every generated scenario carries unique `@TS-XXX` + exactly one priority + one test-type tag [INFERENCIA]
+- [ ] No tag references an FR/SC/US absent from spec.md (no dangling traceability) [INFERENCIA]
+- [ ] Every `.feature` file parses as valid Gherkin and starts with the DO NOT MODIFY banner [EXPLICIT]
+- [ ] Assertion hash stored in BOTH context.json and git note; status reported as LOCKED [EXPLICIT]
+- [ ] `qa/test-coverage.md` regenerated and consistent with emitted tags [EXPLICIT]
+- [ ] No placeholder content (TBD, TODO, `<...>`) left in any `.feature` file [EXPLICIT]
 
 ## Assumptions & Limits
 
-- Assumes access to project artifacts (code, docs, configs) [EXPLICIT]
-- Requires English-language output unless otherwise specified [EXPLICIT]
-- Does not replace domain expert judgment for final decisions [EXPLICIT]
+- Requirements live in `spec.md`/`plan.md` at the resolved `FEATURE_DIR`; this skill does not read source code to infer behavior — untested-but-implemented behavior is out of scope by design. [INFERENCIA]
+- Generates scenario specs only — it writes `.feature` files, never step definitions or production code (that is `05-implement`). [EXPLICIT]
+- Anti-scope: does not run the tests, measure runtime pass/fail, or compute code coverage — "coverage" here means requirement→scenario mapping, not line/branch coverage. [INFERENCIA]
+- English-language Gherkin keywords assumed unless the constitution specifies a localized dialect. [SUPUESTO]
+- Quality of generated tests is bounded by spec.md quality: vague acceptance scenarios yield vague tests. It does not replace domain-expert review of the scenarios. [EXPLICIT]
 
 ## Edge Cases
 
 | Scenario | Handling |
 |----------|----------|
-| Empty or minimal input | Request clarification before proceeding |
-| Conflicting requirements | Flag conflicts explicitly, propose resolution |
-| Out-of-scope request | Redirect to appropriate skill or escalate |
+| Spec has FRs but zero Given/When/Then | ERROR → /iikit-clarify (cannot invent scenarios) |
+| Two spec scenarios describe identical behavior | Emit once; tag with both FR/SC IDs rather than duplicating |
+| Spec scenario maps to no FR/SC/US | Generate scenario, flag the missing requirement link in the report |
+| Requirement removed since last run | Comment out as `# DEPRECATED:`, retire its TS-XXX (never reuse) |
+| Empty or minimal spec input | Request clarification before generating |
+| Conflicting requirements in spec | Flag the conflict explicitly; do not silently pick one path |
+| Out-of-scope request (e.g. "write the code") | Redirect to /iikit-05-implement |

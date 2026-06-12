@@ -23,6 +23,9 @@ AI design patterns define reusable solutions to recurring architectural problems
 1. **Tácticas primero, patrones después.** Las tácticas (detección de fallas, recuperación, prevención) son los bloques constituyentes. Los patrones combinan tácticas en soluciones cohesivas. Seleccionar un patrón sin entender las tácticas subyacentes produce implementaciones frágiles. [EXPLICIT]
 2. **Anti-patrones como guía negativa.** Conocer los anti-patrones (Training-Serving Skew, YOLO Deploy, Silent Degradation) es tan valioso como conocer los patrones. La detección de anti-patrones en el sistema existente informa qué patrones aplicar. [EXPLICIT]
 3. **El contexto determina el patrón, no la moda.** Feature Store no es necesario para un modelo único con features simples. Champion-Challenger no aplica si solo hay un modelo. Shadow Deployment no justifica su costo para modelos de bajo riesgo. Cada patrón debe justificarse por las necesidades del sistema. [EXPLICIT]
+4. **Cada patrón paga renta operativa.** Un patrón añade superficie de monitoreo, runbooks y un modo de fallo nuevo. Si el equipo no puede operar el patrón (alertas atendidas, rollback ensayado), el patrón es deuda, no activo. Recomendar solo patrones que el equipo pueda sostener. [INFERENCIA]
+
+**Regla de decisión por defecto:** ante duda entre añadir o no un patrón, no lo añadas hasta que un requisito concreto (riesgo, escala, conteo de modelos, regulación) lo exija. El costo de un patrón ausente es visible y recuperable; el de un patrón mal operado es silencioso. [INFERENCIA]
 
 ## Inputs
 
@@ -123,6 +126,13 @@ Identifies tactics that ensure the AI system detects, recovers from, and prevent
 - Fallback hierarchy (cached prediction -> previous model -> human -> graceful denial)
 - Monitoring granularity vs. performance overhead
 
+**Worked fallback chain (fraud scoring, must always return a decision):** [INFERENCIA]
+1. Live model times out (>200ms) → serve cached score for the same entity if fresh (<1h).
+2. No cache → score with the previous registered model version (Rollback path).
+3. Previous model also unavailable → route to rules-based heuristic + flag for human review.
+4. All automated paths down → *graceful denial*: deny the high-risk action and queue it, never silently approve.
+Design rule: the terminal fallback must fail *safe* for the domain — for fraud that is "deny + queue," for recommendations it is "popular items." The safe direction is domain-specific and must be stated. [SUPUESTO — confirm safe-default with the risk owner]
+
 ### S3: AI-Specific Patterns Catalog
 
 Catalogs the patterns purpose-built for AI system challenges. [EXPLICIT]
@@ -140,6 +150,18 @@ Catalogs the patterns purpose-built for AI system challenges. [EXPLICIT]
 - **Guardrail Pattern**: Input/output validation layer between user and model (content safety, PII, topic control)
 
 For each pattern: intent, structure, key decisions, and trade-offs. Detail in `references/ai-patterns-detail.md`. [EXPLICIT]
+
+**Acceptance criteria per pattern recommendation** (a recommendation is incomplete if any is missing) [INFERENCIA]:
+- Names the concrete requirement it satisfies (e.g., "regulator mandates explanation" → Explainability Wrapper), not a generic virtue.
+- States the dominant trade-off cost in the system's own terms (e.g., "+40ms p95", "2x serving compute").
+- Lists prerequisite patterns (see dependency graph) and confirms they are present or also recommended.
+- Defines the success/failure signal that proves the pattern works (e.g., drift alarm fired before accuracy dropped >2pts).
+
+**Common failure mode — patterns that look adopted but are not** [INFERENCIA]:
+- Feature Store written by training but read by serving via a *different* code path → still skewed. The store must be the single read path for both.
+- Drift Detection that computes metrics but routes alerts nowhere a human reads → silent degradation with extra cost.
+- Champion-Challenger where challenger traffic is too small for significance → promotes on noise. Pre-compute the sample size for the target effect.
+- Canary whose rollback is manual and un-rehearsed → a "deployment safety" pattern that cannot actually roll back under pressure.
 
 **Key decisions:**
 - Which patterns are required vs. optional for the system
@@ -192,6 +214,21 @@ Identifies known anti-patterns, detects their presence, and prescribes remediati
 
 For each: symptom, cause, detection signal, and recommended pattern fix. [EXPLICIT]
 
+**Detection signal → fix (codebase-grep level)** — concrete, so detection does not depend on self-report [INFERENCIA]:
+
+| Anti-pattern | Detectable signal in repo/ops | Pattern fix |
+|---|---|---|
+| Training-Serving Skew | Feature logic duplicated in training notebook and serving service; no shared module | Feature Store (single read path) |
+| YOLO Deploy | No staging/shadow stage in CI; model artifact promoted on merge | Shadow + Canary Deployment |
+| Notebook-to-Production | `.ipynb` imported by serving code; cells copied into handlers | Model-as-a-Service + module extraction |
+| Silent Model Degradation | No metric job comparing live vs. baseline; no drift alarm sink | Drift Detection wired to a paged channel |
+| Feature Sprawl | Hundreds of features, no registry/ownership, duplicates by name | Feature Store + governance |
+| Alert Fatigue | Alert volume high, ack rate low, thresholds static | Tune thresholds + dedupe + severity tiers |
+| Unguarded LLM | Raw model call with user input concatenated into prompt, no I/O filter | Guardrail Pattern |
+| Token Budget Blindness | Agent loop with no max-iteration / max-token cap; no per-call cost log | Budget caps + Prompt Caching |
+
+**Remediation ordering rule:** fix anti-patterns that cause *silent* harm (Skew, Silent Degradation, Unguarded LLM) before those that cause *visible* harm (Alert Fatigue, Feature Sprawl) — silent failures erode trust in the model's outputs without warning. [INFERENCIA]
+
 **Key decisions:**
 - Which anti-patterns are present in the current system
 - Remediation priority (risk-based ordering)
@@ -222,6 +259,17 @@ Shadow Deployment -> Canary Deployment -> Blue & Gold CI/CD
 - Phase 3 (Optimization): Champion-Challenger, Shadow Deployment, Canary
 - Phase 4 (Governance): Explainability Wrapper, N-Party Voting, compliance patterns
 
+**Worked example — credit-scoring model (regulated, high-risk, single model, low volume):** [INFERENCIA]
+- Risk=high + Regulatory=yes → Explainability Wrapper and audit trail are *mandatory*, not Phase 4. Pull forward to Phase 1.
+- Model count=1 → skip Champion-Challenger and Feature Store until a second model exists (edge case below).
+- Scale=low → skip Balancer/Throttle/Batch; they add ops cost with no load to manage.
+- Selected set: Drift Detection (regulator may set thresholds) + Explainability Wrapper + Model Registry + Canary. Rejected: Champion-Challenger (one model), Shadow (low traffic doesn't justify 2x compute), N-Party Voting (latency budget tight, not adversarial). The rejection list is part of the deliverable — it shows the choices were deliberate. [EXPLICIT]
+
+**Worked example — high-volume GenAI chatbot (low individual risk, public-facing):** [INFERENCIA]
+- Public + GenAI → Guardrail Pattern is mandatory (fixes Unguarded LLM); Token Budget caps mandatory (fixes Token Budget Blindness).
+- High volume + repeated queries → Prompt Caching and Batch Inference pay for themselves.
+- Selected set: Guardrail + Prompt Caching + Budget caps + Drift Detection (prompt/response distribution). Defer Explainability and N-Party Voting (individual decisions are low-stakes).
+
 ---
 
 ## Trade-off Matrix
@@ -244,11 +292,13 @@ Shadow Deployment -> Canary Deployment -> Blue & Gold CI/CD
 
 ## Assumptions
 
-- System has or will build AI pipeline infrastructure (not running ad-hoc scripts)
-- Team understands the distinction between model development and model operations
-- Infrastructure supports the compute requirements for pattern implementation (e.g., shadow deployment doubles compute)
-- Monitoring and observability budget is allocated
-- Model registry exists or is planned (many patterns depend on it)
+Each assumption is paired with the check that would confirm it; if a check fails, that pattern set is out of reach until remediated. [SUPUESTO]
+
+- System has or will build AI pipeline infrastructure (not ad-hoc scripts). *Verify:* a deployable serving artifact and a scheduled/triggered pipeline exist.
+- Team understands the model-development vs. model-operations distinction. *Verify:* an owner is named for production model health, separate from the training author.
+- Infrastructure supports pattern compute (e.g., Shadow doubles serving compute; N-Party multiplies by model count). *Verify:* headroom check against current peak utilization before recommending.
+- Monitoring/observability budget is allocated. *Verify:* an alert sink (paging channel) exists and is staffed; without it Drift Detection degrades to Silent Degradation.
+- Model registry exists or is planned. *Verify:* rollback can name and load a prior model version; many patterns (Rollback, Champion-Challenger, Canary) hard-depend on it.
 
 ## Limits
 
@@ -273,6 +323,15 @@ Different teams may implement the same pattern differently (e.g., each team buil
 
 **Regulated Environment Pattern Requirements:**
 In finance and healthcare, Explainability Wrapper and audit trails are mandatory, not optional. Drift Detection thresholds may be set by regulators. Champion-Challenger experiments may require ethics board approval. Document regulatory pattern mandates separately from optional patterns. [EXPLICIT]
+
+**Incompatible / tension pairs (do not recommend blindly together):** [INFERENCIA]
+- **Prompt Caching vs. Drift Detection on responses:** caching freezes outputs, masking drift in the live model. If both are used, compute drift on *cache-miss* traffic only, or sample uncached calls.
+- **N-Party Voting vs. tight latency budget:** voting adds the slowest model's latency plus aggregation; incompatible with sub-100ms p95 unless models run in parallel and the budget absorbs the tail.
+- **Model Distillation vs. Explainability mandate:** a distilled model may lose the structure that made the teacher explainable. In regulated domains, validate that the distilled model still satisfies the explanation requirement before shipping.
+- **Champion-Challenger vs. low traffic:** insufficient traffic yields no significance; the experiment never concludes. Use offline/backtest comparison instead until traffic supports a powered test.
+
+**"All patterns at once" anti-pattern:**
+A roadmap that schedules every pattern in Phase 1 is itself a smell — it signals patterns chosen by catalog, not by requirement. Force a rejection list: for each catalog pattern *not* selected, one line on why. An empty rejection list means the selection was not actually a decision. [INFERENCIA]
 
 ---
 

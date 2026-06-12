@@ -2,17 +2,15 @@
 <!-- This skill should be used when the user asks to "create diagrams", "generate Mermaid", -->
 # Mermaid Diagramming Engine
 
-Generates syntactically valid, semantically precise Mermaid diagrams for discovery deliverables. Every diagram earns its place — no decorative visuals. Each diagram must compress complexity into clarity, replacing paragraphs of prose with a single visual that a reader grasps in seconds. [EXPLICIT]
+Generates syntactically valid, semantically precise Mermaid diagrams for discovery deliverables. Every diagram earns its place — no decorative visuals. Each diagram must compress complexity into clarity, replacing paragraphs of prose with a single visual a reader grasps in seconds. [EXPLICIT]
 
 ## Principio Rector
 
-**Un diagrama que no comprime complejidad en claridad no merece existir.** Cada diagrama Mermaid debe reemplazar párrafos de prosa con una visual que el lector comprende en segundos. Decoración ≠ documentación — solo diagramas que ganan su lugar sobreviven.
+**Un diagrama que no comprime complejidad en claridad no merece existir.** Decoración ≠ documentación. Tres reglas no negociables, en orden de prioridad cuando entran en conflicto:
 
-### Filosofía de Diagramación
-
-1. **Densidad informativa.** Si un diagrama no transmite más que 3 oraciones de texto, es ruido visual. Eliminar. [EXPLICIT]
-2. **Sintaxis impecable.** Un diagrama que no renderiza es peor que ningún diagrama. Validación antes de entrega. [EXPLICIT]
-3. **Contexto > estética.** Los nodos se nombran con significado de dominio, no con códigos. Las flechas llevan etiquetas. Los subgrafos agrupan con propósito. [EXPLICIT]
+1. **Sintaxis impecable.** Un diagrama que no renderiza es peor que ningún diagrama — gana primero. Validar antes de entregar. [EXPLICIT]
+2. **Densidad informativa.** Si transmite ≤3 oraciones de texto, es ruido visual: eliminar o fusionar. [EXPLICIT]
+3. **Contexto > estética.** Nodos con significado de dominio (no códigos), flechas etiquetadas, subgrafos con propósito. [EXPLICIT]
 
 ## Inputs ($ARGUMENTS)
 
@@ -94,18 +92,87 @@ Each discovery deliverable has recommended diagram types:
 
 Minimum: 1 diagram per deliverable. Recommended: 2. Maximum: 4 (avoid visual overload). [EXPLICIT]
 
+## S3.5 — Worked Examples (copy-paste baselines)
+
+Canonical, render-tested templates for the highest-frequency types. Adapt node names to domain; keep the structural pattern. [EXPLICIT]
+
+**Quadrant (Stakeholder influence × interest):**
+```mermaid
+quadrantChart
+  title Stakeholder Influence vs Interest
+  x-axis Low Interest --> High Interest
+  y-axis Low Influence --> High Influence
+  quadrant-1 Manage Closely
+  quadrant-2 Keep Satisfied
+  quadrant-3 Monitor
+  quadrant-4 Keep Informed
+  CFO: [0.85, 0.90]
+  EndUsers: [0.75, 0.30]
+```
+
+**Flowchart with subgraph + classDef (integration map):**
+```mermaid
+flowchart LR
+  classDef critical fill:#f96,stroke:#333,stroke-width:2px
+  subgraph Frontend
+    web["Web App"]
+  end
+  subgraph Backend
+    api["Order API"]:::critical
+    db[("Postgres")]
+  end
+  web -->|"REST /orders"| api
+  api -->|"SQL"| db
+```
+
+**Sequence (E2E flow):**
+```mermaid
+sequenceDiagram
+  participant U as User
+  participant A as Auth Service
+  participant O as Order API
+  U->>A: POST /login
+  A-->>U: JWT token
+  U->>O: GET /orders (Bearer JWT)
+  O-->>U: 200 order list
+```
+
+**ER (data model — note crow's-foot cardinality):**
+```mermaid
+erDiagram
+  CUSTOMER ||--o{ ORDER : places
+  ORDER ||--|{ LINE_ITEM : contains
+  CUSTOMER {
+    string id PK
+    string email
+  }
+```
+
+**Gantt (roadmap phases):**
+```mermaid
+gantt
+  title Solution Roadmap
+  dateFormat YYYY-MM-DD
+  section Discovery
+  AS-IS Analysis :done, d1, 2026-01-06, 10d
+  section Build
+  MVP :active, b1, after d1, 30d
+```
+
 ## S4 — Quality Validation
 
-Every diagram passes through validation:
+Every diagram must pass ALL criteria — any single fail blocks delivery. [EXPLICIT]
 
-| Criterion | Check |
-|-----------|-------|
-| Syntax | Renders without errors in Mermaid Live Editor |
-| Semantics | Accurately represents the source data |
-| Readability | Understandable in <10 seconds for target audience |
-| Information density | Conveys info that would take ≥3 sentences in prose |
-| Consistency | Uses same terminology as the surrounding document |
-| Cross-reference | Node names match entity names used elsewhere in the deliverable |
+| Criterion | Pass condition (testable) |
+|-----------|---------------------------|
+| Syntax | Renders without errors in Mermaid Live Editor; no reserved-char or cardinality faults (see Failure Modes) |
+| Semantics | Every node/edge traces to a source fact; no invented entities |
+| Readability | Target audience grasps intent in <10s; ≤20 nodes, ≤4 style classes |
+| Information density | Replaces ≥3 sentences of prose; otherwise cut |
+| Consistency | Same terminology as surrounding document |
+| Cross-reference | Node names exactly match entity names used elsewhere in the deliverable |
+| Accessibility | A 1-line text summary precedes the diagram |
+| Governance | No PII/credentials/internal IPs; abstracted to categories |
 
 ## S5 — Output Format Integration
 
@@ -151,6 +218,24 @@ Embed Mermaid via `<pre class="mermaid">` tag with Mermaid JS CDN include. Add `
 - If source data is insufficient for a meaningful diagram → skip diagram, note gap
 - If two diagram types are equally valid → prefer the one with fewer nodes
 - If diagram would contain sensitive data (credentials, internal IPs) → abstract to categories
+- If the deliverable already has 4 diagrams → drop the lowest-density candidate, do not add a 5th
+
+## Failure Modes (most common broken-render causes)
+
+These break rendering silently or produce parse errors. Check each before delivery. [EXPLICIT]
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| Parse error on a node label | Label contains `()`, `[]`, `:`, `;`, `#`, or `>` unquoted | Wrap label in double quotes: `n["Order (v2)"]` |
+| Edge label with spaces fails | Unquoted multi-word edge text | Quote it: `a -->\|"sends to"\| b` |
+| Diagram silently blank | First non-comment line is not a valid type keyword | Ensure line 1 is `flowchart LR`, `sequenceDiagram`, etc. — no leading prose |
+| `classDef` ignored | Applied with wrong syntax | Apply via `nodeId:::className` or `class nodeId className` |
+| ER cardinality error | Wrong crow's-foot tokens | Use `\|\|--o{`, `\|\|--\|{`, `}o--o{` (left-mid-right symbols) |
+| Gantt task not shown | `dateFormat` missing or task date malformed | Declare `dateFormat YYYY-MM-DD`; use `after <id>` for dependencies |
+| C4 diagram fails in GitHub | Renderer lacks C4 extension | Fall back to `flowchart` with subgraphs; reserve C4 for Mermaid Live / supported targets |
+| Mindmap indent error | Mixed tabs/spaces or inconsistent depth | Use consistent 2-space indents; root must be a single node |
+
+**Reserved-character rule of thumb:** when in doubt, quote the label. Quoting never breaks a valid label. [EXPLICIT]
 
 ## Validation Gate
 
@@ -182,4 +267,4 @@ Default output is Markdown with embedded Mermaid diagrams. HTML generation requi
 
 **Supported diagram types:** C4Context, C4Container, flowchart, sequenceDiagram, erDiagram, stateDiagram-v2, gantt, mindmap, quadrantChart, classDiagram, gitGraph, journey.
 
-**Author:** Javier Montaño | **Last updated:** 2026-03-12
+**Author:** Javier Montaño | **Last updated:** 2026-06-11

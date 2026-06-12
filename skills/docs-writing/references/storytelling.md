@@ -111,6 +111,28 @@ Source: metodologia-sector-intelligence skill provides benchmarks
 | **Progression** | Building the case | Evidence 1 + Evidence 2 + Evidence 3 = Conclusion |
 | **Callback** | Cross-deliverable coherence | "Como vimos en 03_AS-IS § Acoplamiento..." |
 
+**Failure modes per technique** (what breaks the technique): [EXPLICIT]
+
+- **Contrast** fails when the "after" number is unsourced — reader reads it as a sales promise, not evidence. Anchor every TO-BE metric to a scenario assumption tagged `[SUPUESTO]`.
+- **Escalation** fails when it skips a rung (finding → crisis with no implication/cascade between) — reads as fear-mongering. Each rung must be one quantified step from the prior.
+- **Analogy** fails when the analogy is closer to the writer's world than the reader's ("es como un microservicio…" to a CFO). Pick the analogy from the *audience's* domain.
+- **Callback** fails when the referenced section was cut or renamed — produces a dangling cross-reference. Verify the anchor exists before shipping; if a deliverable is absent (partial discovery), drop the callback rather than reference a missing section.
+
+## Audience Tone Calibration
+
+The Validation Gate requires "Tone calibrated (Executive ≠ technical ≠ mixed)" but the differences are otherwise implicit. Concrete contract: [EXPLICIT]
+
+| Dimension | `executive` | `technical` | `mixed` |
+|-----------|-------------|-------------|---------|
+| Lead with | Business consequence + decision | Evidence + mechanism | Consequence, then evidence |
+| Evidence depth | Headline metric + 1 tag | Full tag chain, file/line refs | Headline + drill-down callout |
+| FTE/cost framing | FTE-months + ROI horizon (never prices) | Effort breakdown by component | FTE-months, summarized |
+| Jargon | Avoid; analogy from business domain | Precise technical terms expected | Define on first use |
+| Length per act | ≤1 paragraph | As needed for rigor | Layered: summary + optional depth |
+| Risk tone | Consequential, factual | Probabilistic, mechanistic | Consequential with evidence anchor |
+
+Trade-off: a `mixed` narrative is longer (it serves two readers). When length is constrained, default to `executive` framing with technical detail in callouts/appendices, not inline. [INFERENCIA]
+
 ## Thread Management
 
 Narrative threads that must be consistent across ALL deliverables:
@@ -131,14 +153,15 @@ Narrative threads that must be consistent across ALL deliverables:
 
 ## Validation Gate
 
-| Criterion | Check |
+| Criterion | Check (acceptance = pass condition) |
 |-----------|-------|
-| Narrative arc present | Tension → Decision → Resolution visible |
-| Evidence-grounded | No story without data; no data without story |
-| Cross-references active | Callbacks to prior deliverables where relevant |
-| Personalization present | At least one stakeholder perspective per major finding |
-| Tone calibrated | Executive ≠ technical ≠ mixed |
-| No orphan stories | Every narrative thread resolved by Pitch/Handover |
+| Narrative arc present | All 3 acts present and labeled; each act has ≥1 sentence of tension/decision/resolution |
+| Evidence-grounded | Every quantified claim carries a tag; every tagged data point serves a narrative beat (no orphan numbers) |
+| Cross-references active | Each active thread (Thread Management table) has ≥1 callback between intro and resolution deliverable; no dangling references to absent sections |
+| Personalization present | ≥1 named stakeholder perspective per major finding; perspective references a real role from 01 Stakeholders |
+| Tone calibrated | Lead-with, evidence depth, and jargon match the Audience Tone Calibration row for `$2` |
+| No orphan stories | Every thread in Thread Management resolved by 08 Pitch or 09 Handover; a partial-discovery arc resolves within its available terminal deliverable |
+| No green-as-success | Positive metrics framed as evidence toward a decision, never as a self-congratulatory verdict |
 
 ## Assumptions & Limits
 
@@ -155,6 +178,9 @@ Narrative threads that must be consistent across ALL deliverables:
 | AS-IS positivo (sistema en buen estado, caso raro) | Buscar tension en escalabilidad, costo de oportunidad, o presion competitiva. "El sistema funciona hoy, pero el crecimiento proyectado de X% lo llevara al limite en Y meses." |
 | Multiples streams de transformacion en paralelo | Tejer narrativas paralelas con punto de resolucion compartido. Usar tecnica de "callback" entre streams. Crear timeline visual que muestre convergencia. |
 | Audiencia hostil o esceptica al cambio | Liderar con datos incuestionables [CODIGO]. Evitar recomendaciones tempranas. Construir caso acumulativamente: evidencia 1 + 2 + 3 = conclusion inevitable. Incluir "devil's advocate" section. |
+| Discovery parcial (faltan entregables del arco 00-12) | Adaptar el arco maestro a los entregables disponibles; el thread debe resolverse en el entregable terminal presente (no en uno ausente). No dejar threads huerfanos apuntando a secciones que no se generaran. |
+| Thread sin resolucion al llegar a Pitch/Handover | Es un defecto, no un caso valido. O se resuelve el thread, o se reclasifica explicitamente como riesgo abierto con tag [SUPUESTO] y owner asignado. Nunca silenciarlo. |
+| Datos contradictorios entre entregables (ej. AS-IS dice X, Flows dice Y) | No promediar ni ocultar. Convertir la contradiccion en tension narrativa explicita y escalar a editorial-director para reconciliar la fuente. |
 
 ## Decisions & Trade-offs
 
@@ -316,16 +342,23 @@ graph TD
 - `metodologia-editorial-director` — Coordinacion del arco maestro cross-entregable
 - `metodologia-sector-intelligence` — Benchmarks y analogias sectoriales para success reference stories
 
-## Edge Cases
+## Worked Example: Data Point → Story (Risk Narrative, executive)
 
-- **Client with no prior analysis**: Build narrative from code analysis alone. Frame as "discovery reveals what code tells us".
-- **Positive AS-IS (rare)**: Still find tension — usually in scalability, opportunity cost, or competitive pressure.
-- **Multiple transformation streams**: Weave parallel narratives with shared resolution point.
+Shows the transformation this skill performs. Input is a raw finding; output is the same fact wrapped in tension and a path to action. [EXPLICIT]
 
-## Limits
+**Raw finding (input, not a story):**
+> El módulo de pagos tiene 0% de cobertura de tests. 14 incidentes en producción en los últimos 3 meses. `[CODIGO]`
 
-- This skill owns **narrative structure and story arcs**. It does NOT own prose quality (that's metodologia-copywriting) or data visualization narratives (that's metodologia-data-viz-storytelling).
-- Stories must always be anchored in evidence. Speculation must be explicitly tagged [SUPUESTO].
+**Storytelled (output, executive tone — consequential, factual, no prices):**
+> El módulo de pagos —el que mueve el ingreso— corre hoy sin red de seguridad: 0% de cobertura `[CODIGO]`. Eso ya cuesta: 14 incidentes en 3 meses `[CODIGO]`, cada uno consumiendo al operador de turno y erosionando la confianza del cliente. Con esa tendencia (~4.7 incidentes/mes), un cambio mayor en el roadmap multiplica el riesgo de regresión silenciosa en el camino crítico del negocio `[SUPUESTO]`. La decisión no es *si* invertir en cobertura, sino *antes o después* del próximo release de pagos.
+
+What changed, and why it qualifies as a story (not decoration):
+1. **Stakeholder anchored** — "el operador de turno", "el cliente": the data now has a human who feels it.
+2. **Consequence chain** — coverage gap → incidents → operator load + trust erosion → release risk: escalation without skipping a rung.
+3. **Decision framed** — ends on a fork (*antes o después*), the Act-2 tension, not a verdict.
+4. **Tags preserved** — every number keeps `[CODIGO]`; the projection is honestly `[SUPUESTO]`. No green-as-success: the 0% is never spun.
+
+Anti-pattern to avoid (alarmist, untagged, no decision): *"¡El sistema de pagos va a colapsar y perderemos clientes!"* — no evidence, no path, destroys credibility with a technical reader.
 
 ## Usage
 

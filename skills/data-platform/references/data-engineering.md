@@ -10,9 +10,11 @@ Data engineering architecture defines how data is ingested, orchestrated, stored
 
 ### Filosofía de Data Engineering
 
-1. **Idempotency por diseño.** Cada pipeline puede re-ejecutarse sin duplicar datos. Si no es idempotente, no es production-ready. [EXPLICIT]
+1. **Idempotency por diseño.** Cada pipeline puede re-ejecutarse sin duplicar datos. Si no es idempotente, no es production-ready. Esta es la propiedad fundacional de confiabilidad — referenciada por S1 (exactly-once), S2 (orchestration) y el Validation Gate. [EXPLICIT]
 2. **Schema evolution, no schema revolution.** Los schemas cambian — backward/forward compatibility es obligatorio. Breaking changes son planificados, no sorpresas. [EXPLICIT]
 3. **Data contracts entre equipos.** El productor define el contrato, el consumidor lo valida. Sin contratos, la calidad es responsabilidad de nadie. [EXPLICIT]
+
+**Convención de evidencia:** este documento usa la familia Alfa core (`references/verification-tags.md`). `[EXPLICIT]` marca comportamiento estipulado por la spec del skill (homólogo a `[DOC]`); `[INFERENCIA]` para deducciones; `[SUPUESTO]` para defaults sin evidencia directa, cada uno pareado con su paso de verificación. Una sola familia, una sola ortografía. [DOC]
 
 ## Inputs
 
@@ -79,7 +81,7 @@ Defines how data enters the platform — sources, methods, schema handling. [EXP
 - Connector selection (Fivetran, Airbyte, custom, native connectors — managed preferred for standard SaaS sources)
 - Schema evolution strategy (backward/forward/full compatibility modes per topic)
 - Initial load vs incremental strategy (full dump, watermark, CDC log)
-- Data format standards (Parquet for analytics, Avro for streaming, Iceberg/Delta for lakehouse)
+- Data format standards: see the canonical format standard in S3 (Avro on the streaming hop, Parquet at rest)
 
 **Exactly-once delivery patterns:**
 - Kafka: enable idempotent producers (`enable.idempotence=true`) + transactional consumers (`isolation.level=read_committed`) for end-to-end exactly-once
@@ -91,6 +93,16 @@ Defines how data enters the platform — sources, methods, schema handling. [EXP
 - Batch vs CDC vs streaming: latency requirement per source drives selection (daily-acceptable = batch, minutes = CDC, seconds = streaming)
 - Managed connectors vs custom: managed for standard SaaS (Fivetran/Airbyte handles 80% of sources); custom only when managed fails
 - Schema-on-read vs schema-on-write: schema-on-write preferred for production pipelines; schema-on-read for exploratory
+
+**Worked example — CDC from Postgres orders table:**
+Debezium → Kafka topic `orders.cdc` (AVRO + Schema Registry, `BACKWARD` compatibility); idempotent producer on; sink to Iceberg `raw.orders` via MERGE on `order_id` (natural key); watermark = `updated_at`; out-of-order tolerance = 2x max observed lag. Re-running the sink job produces identical rows — replay-safe by construction. [INFERENCIA]
+
+**Failure modes to design against:**
+- Schema drift on source (column dropped) → CI compatibility check blocks deploy; without it, downstream reads break silently. [EXPLICIT]
+- CDC tool offset loss → reseed from last warehouse watermark, not full re-snapshot. [INFERENCIA]
+- Late/duplicate events → dedup window sized at 2x max latency; events older than the window route to quarantine (S4), never silently dropped. [EXPLICIT]
+
+**Acceptance criteria (S1):** every source has an ingestion method + freshness SLA + format; schema compatibility mode is declared per topic; every stage is replay-safe. [EXPLICIT]
 
 ### S2: Orchestration Design
 
@@ -116,12 +128,19 @@ Practical guidance: run Dagster for new analytics/ML pipelines; keep Airflow for
 - Dependency management (cross-DAG dependencies, sensors, external triggers)
 - SLA definition and monitoring (pipeline completion time, data freshness guarantees)
 - Failure handling (retry policies with exponential backoff, dead-letter queues, alerting, escalation)
-- Idempotency design: every task must produce identical results on re-execution (partition-overwrite for batch, upsert for CDC, deduplication windows for streaming)
+- Idempotency mechanics per pattern: partition-overwrite for batch, upsert/MERGE for CDC, dedup windows for streaming (the *why* lives in principle 1, not repeated here)
 
 **Key decisions:**
 - Monolithic DAG vs micro-DAGs: micro-DAGs for independent domains; monolithic only when strict ordering is required across domains
 - Time-triggered vs event-triggered: time for predictability, event for responsiveness — hybrid is common
-- Retry strategy: exponential backoff with max 3 retries; distinguish transient (network, throttle) vs permanent (schema, permission) failures
+- Retry strategy: exponential backoff with max 3 retries; distinguish transient (network, throttle, 5xx — retry) vs permanent (schema, permission, 4xx — fail fast to DLQ, never retry-loop)
+
+**Failure modes to design against:**
+- Retrying a permanent failure → wasted compute + delayed alert; classify before retrying. [EXPLICIT]
+- Non-idempotent task retried mid-run → duplicated rows; only partition-overwrite/upsert tasks are safe to auto-retry. [INFERENCIA]
+- Sensor deadlock (DAG waits on upstream that already failed) → set sensor timeouts + `reschedule` mode to free workers. [INFERENCIA]
+
+**Acceptance criteria (S2):** every task idempotent and retryable; retries classified transient vs permanent; each pipeline has a completion-time SLA with alerting; DLQ exists for un-retryable records. [EXPLICIT]
 
 ### S3: Storage Architecture
 
@@ -141,17 +160,21 @@ Designs the data platform storage layers — zones, formats, and lifecycle. [EXP
 
 Decision guidance: Iceberg is the 2025-2026 momentum leader for multi-engine portability; Delta Lake for Databricks-committed shops; Hudi only for CDC-dominant workloads. [EXPLICIT]
 
+**Canonical format standard (referenced by S1 and S6):** Parquet for analytics/at-rest, Avro for streaming/in-transit, Iceberg/Delta as the lakehouse table layer over Parquet, JSON only for prototyping. This is the single source of truth — other sections point here rather than restate. [EXPLICIT]
+
 **Includes:**
-- Zone architecture (landing/raw → curated/clean → consumption/marts → archive)
-- Storage format selection (Parquet for analytics, Avro for streaming, JSON only for prototyping)
-- Partitioning strategy (date-based for 80% of cases, hash for high-cardinality joins)
+- Zone architecture (landing/raw → curated/clean → consumption/marts → archive); validate at every zone boundary (S4)
+- Storage format selection per the canonical standard above
+- Partitioning strategy (date-based for 80% of cases, hash for high-cardinality joins; avoid over-partitioning — a partition < target file size creates the small-file problem)
 - Catalog management (Unity Catalog, AWS Glue Catalog, Polaris — choose by cloud + engine)
 - Data lifecycle (retention policies, archival, deletion, compliance holds)
 
 **Key decisions:**
 - Lakehouse is the 2025-2026 baseline: open table formats + catalog on object storage; pure warehouse for teams prioritizing simplicity; pure lake only when cost dominates
 - Hot/warm/cold tiering: access frequency drives storage class (S3 Standard → Infrequent Access → Glacier)
-- Small file problem: set minimum file size targets (128-256MB for Parquet); schedule compaction for active tables daily, stable tables weekly
+- **Small-file policy (canonical, referenced by S6):** target 128-256MB files; compact active tables daily, stable tables weekly. Symptom of violation: query planning time dominates execution; thousands of <10MB files per partition. [EXPLICIT]
+
+**Acceptance criteria (S3):** zones have explicit boundaries + naming + lifecycle; table format chosen against the comparison matrix; partition keys map to query predicates; compaction scheduled. [EXPLICIT]
 
 ### S4: Data Quality Framework
 
@@ -178,8 +201,12 @@ Selection criteria: Elementary for dbt shops (zero incremental infra); Soda for 
 
 **Key decisions:**
 - Fail-fast vs fail-safe: block pipeline on quality failure for critical datasets; log and continue for non-critical
-- Quality SLAs: agreed thresholds per dataset with consumer teams — document in data contracts
+- Quality SLAs: agreed thresholds per dataset with consumer teams — document in data contracts (S1)
 - Remediation ownership: data engineering owns pipeline failures; source system team owns data quality at origin
+
+**Failure mode:** silent fail-safe on a critical dataset → bad data reaches consumers before anyone notices. Critical datasets MUST fail-fast; only non-critical may log-and-continue. [EXPLICIT]
+
+**Acceptance criteria (S4):** checks exist at every zone boundary; severity classified (block vs warn); quarantine path defined for rejected records; thresholds documented in the data contract. [EXPLICIT]
 
 ### S5: Lineage & Observability
 
@@ -194,26 +221,32 @@ Tracks data flow, monitors pipeline health, and enables incident response. [EXPL
 - Metadata management (technical + business + operational metadata in unified catalog)
 
 **Key decisions:**
-- Lineage granularity: table-level is achievable with OpenLineage; column-level requires dedicated tooling investment
+- Lineage granularity: table-level is achievable with OpenLineage; column-level requires dedicated tooling investment (justified only for regulated/100+-table estates — see Trade-off Matrix)
 - Alert fatigue prevention: group related failures, deduplicate retries, snooze during known maintenance
 - Observability tool: Elementary/Soda for data-specific; Datadog/Grafana for infrastructure + data combined
+
+**Failure mode:** alert-per-task on a 200-task DAG → on-call ignores the channel → real incident missed. Group by DAG-run, page only on SLA breach or critical-dataset failure. [INFERENCIA]
+
+**Acceptance criteria (S5):** lineage at table level for all critical paths; one runbook per critical pipeline; alerts routed by severity (page vs notify); metadata unified in one catalog. [EXPLICIT]
 
 ### S6: Scalability & Cost Management
 
 Optimizes data platform for growth while controlling costs. [EXPLICIT]
 
 **Includes:**
-- Partitioning and compaction (target 128-256MB files; compact daily for active, weekly for stable)
+- Partitioning and compaction: see the canonical small-file policy in S3 (128-256MB; daily/weekly)
 - Compute scaling (auto-scaling clusters, serverless for bursty workloads, spot instances for fault-tolerant jobs — 60-90% savings)
-- Retention policies (90-day hot, 1-year warm, 7-year cold — adjust by compliance requirement)
+- Retention policies (90-day hot, 1-year warm, 7-year cold — adjust by compliance requirement; align with S3 tiering and S4 contracts)
 - Cost attribution (per-pipeline cost tracking via query tags, team chargeback, budget alerts at 80% threshold)
 - Capacity planning (growth projections at 6-month intervals, storage forecasting, compute headroom of 30%)
 - Performance tuning (parallelism, memory tuning, shuffle optimization, predicate pushdown)
 
 **Key decisions:**
-- Spot vs on-demand: spot for batch jobs with checkpointing; on-demand for SLA-critical pipelines
+- Spot vs on-demand: spot for batch jobs with checkpointing; on-demand for SLA-critical pipelines (spot reclaim mid-job is the failure mode — only safe with checkpointing). [EXPLICIT]
 - Cost per GB ingested: track as key platform efficiency metric; benchmark against industry ($0.01-0.10/GB depending on complexity)
 - Warehouse isolation: heavy transforms on dedicated compute; ad-hoc on separate auto-suspend cluster
+
+**Acceptance criteria (S6):** per-pipeline cost attributable via tags; budget alert at 80%; compute scaling policy matches workload shape (spot/serverless/dedicated); retention aligned to compliance. [EXPLICIT]
 
 ---
 
@@ -238,12 +271,14 @@ Optimizes data platform for growth while controlling costs. [EXPLICIT]
 - Data consumers (analytics, ML, applications) have defined requirements
 - Budget covers compute, storage, and tooling for data platform
 
-## Limits
+## Limits (anti-scope — route elsewhere)
 
-- Focuses on *data platform and pipelines*, not transformation modeling
-- Does not design *consumption layer* (dashboards, KPIs)
-- Does not address *ML-specific pipelines* (feature stores, model serving)
-- Infrastructure provisioning details (Terraform, networking) are out of scope
+- Transformation modeling / dbt → **analytics-engineering** skill
+- Consumption layer (dashboards, KPIs) → **bi-architecture** skill
+- ML-specific pipelines (feature stores, model serving) → **data-science-architecture** skill
+- App-level architecture → **software-architecture** skill
+- Infrastructure provisioning (Terraform, networking, IAM) → out of scope; assume provisioned (see Assumptions)
+- Boundary rule: this skill stops at the curated/marts zone handoff — what consumes the data is another skill's job. [INFERENCIA]
 
 ---
 
@@ -300,4 +335,4 @@ Default output is Markdown with embedded Mermaid diagrams. HTML generation requi
 **Secondary:** Source inventory catalog, DAG dependency diagram, storage zone map, pipeline runbook templates, cost attribution dashboard spec.
 
 ---
-**Author:** Javier Montano | **Last updated:** March 18, 2026
+**Author:** Javier Montano | **Last updated:** June 11, 2026

@@ -102,6 +102,25 @@ Maps the internal module structure through the 6-layer AI architecture stack: Ha
 - Shared components: feature stores, model registries, embedding caches — minimize coupling
 - Cross-module contracts: data contracts between pipeline stages, model interface contracts
 
+**Worked example (dependency violation):** A serving module that imports `training.featurizer` directly couples inference to a training-only package; any training refactor silently breaks production scoring. Fix: both consume a shared `features/contract` module with a versioned schema, so neither side reaches across the layer boundary. [INFERENCIA]
+
+**Acceptance (S1 done when):** every module maps to exactly one layer; every cross-layer edge points downward; every shared component has a named owning team; each detected cycle has a logged break-the-cycle action. [EXPLICIT]
+
+**Failure modes:** (a) "god pipeline" module owning data+model+serving — undecomposable, untestable; (b) hidden upward edge (data layer reads an application config) inverting the dependency rule; (c) two teams co-owning one module → no clear accountability for drift. [INFERENCIA]
+
+**6-layer quick reference** (canon: `assets/layer-model.json`): [EXPLICIT]
+
+| Layer | Typical modules | Primary owner |
+|---|---|---|
+| Hardware | GPU/CPU pools, accelerators, autoscaling groups | Platform |
+| Data | Ingestion, validation, feature store, labeling | Data eng |
+| Model | Training, registry, versioning, eval harness | ML eng |
+| Inference | Serving, batching, caching, A/B router | ML eng + Platform |
+| Application | API, business logic, UX integration | Product eng |
+| Monitoring & Control | Drift detection, metrics, alerting, governance | ML eng + Ops |
+
+Dependency rule: each layer may depend only on layers below it; Monitoring & Control observes all layers but is depended on by none (it is a sink, not a source). [INFERENCIA]
+
 ### S2: AI Component View
 
 Decomposes selected modules into components — what they do, interfaces exposed, dependencies. Focus on the five core production pipeline components. [EXPLICIT]
@@ -117,6 +136,12 @@ Decomposes selected modules into components — what they do, interfaces exposed
 - Component interfaces: input/output contracts, versioning for stability
 - Dependency injection for model swapping without pipeline changes
 - Monitoring hooks: performance metrics, prediction distributions, resource utilization
+
+**Worked example (DI for model swap):** ML Model component depends on a `Predictor` interface, not a concrete class. Champion and challenger are two `Predictor` implementations wired at startup; promoting the challenger is a config change, satisfying the Modifiability scenario (S4: swap requires <=3 module changes). [INFERENCIA]
+
+**Acceptance (S2 done when):** each of the five components has a typed I/O contract, a version field, and at least one monitoring hook; no component reads another's private state. [EXPLICIT]
+
+**Failure modes:** Results Store writing prediction logs in a schema no downstream contract declares → undeclared-consumer debt (S6); Data Transformation embedding logic duplicated in training and serving → training-serving skew. [INFERENCIA]
 
 ### S3: Design Patterns
 
@@ -136,6 +161,10 @@ Documents selected patterns with justification, detected anti-patterns, and alte
 
 **Principle:** Patterns serve quality attributes. A Feature Store without multiple consumers is overhead. Shadow Deployment without evaluation criteria is wasted compute.
 
+**Worked remediation (training-serving skew):** *Location*: `train/featurize.py` computes a rolling mean over 30 days; serving computes it over "available" rows (often <30). *Consequence*: offline accuracy overstates production accuracy; silent degradation. *Remediation*: extract one shared featurizer behind the `features/contract` module, add a parity test that asserts identical output on a fixed sample, gate CI on it. [INFERENCIA]
+
+**Selection heuristic:** adopt a pattern only when a named quality-attribute scenario (S4) requires it; if you cannot name the scenario, the pattern is speculative complexity. [INFERENCIA]
+
 ### S4: Quality Attribute Scenarios (ATAM + AI)
 
 ATAM-style scenarios extended with AI-specific quality attributes: **Stimulus → Response → Measure**
@@ -152,6 +181,12 @@ ATAM-style scenarios extended with AI-specific quality attributes: **Stimulus �
 | **Modifiability** | Swapping model algorithm requires changes to <=3 modules |
 | **Deployability** | New model version deployed in <15 min with instant rollback |
 | **Compliance** | All model decisions have complete audit trails; governance review workflows enforced |
+
+**Worked scenario (full ATAM decomposition):** *Source*: 1000 concurrent users; *Stimulus*: inference request arrives; *Artifact*: serving module + feature lookup; *Environment*: peak load, feature store warm; *Response*: prediction returned; *Measure*: p95 <= 200ms. Each row above is shorthand for this six-part form — when a row's measure is contested, expand it to all six parts before negotiating the trade-off. [EXPLICIT]
+
+**Threshold vs objective:** threshold = ship gate (below it, do not deploy); objective = target the roadmap drives toward. A scenario with only one number hides whether a near-miss blocks release. State both. [INFERENCIA] When no threshold exists, propose one from industry standards and tag it for team validation (see Manejo de Inputs Ambiguos). [SUPUESTO]
+
+**Conflicting scenarios are the point:** Explainability latency vs. Performance p95, and Accuracy vs. Robustness-under-perturbation, are direct trade-offs — surface the pair in an ADR rather than optimizing one in isolation. [INFERENCIA]
 
 ### S5: Architecture Decision Records (ADRs)
 
@@ -171,6 +206,10 @@ Captures significant AI architecture decisions with context, decision, consequen
 
 **Scope:** Decisions affecting multiple pipeline stages, requiring significant refactoring if changed, or trading off AI quality attributes.
 
+**Worked ADR (condensed):** *Title*: Real-time vs. batch inference for fraud scoring. *Status*: Accepted. *Context*: <100ms decision budget at checkout; feature freshness matters. *Decision*: real-time serving with a 24h precomputed feature cache, because batch cannot meet the latency budget. *Consequences*: +meets latency (positive); +cache staleness risk on volatile features (negative); requires drift monitoring on cached features (neutral). *Alternatives*: pure batch (rejected: too slow), streaming features (deferred: cost). *Related*: feature-store-adoption ADR. [EXPLICIT]
+
+**Acceptance (an ADR is complete when):** it names >=2 real alternatives with the reason each was rejected; states at least one negative consequence (an ADR with no downside is unexamined); and links the quality attribute(s) it trades off. [INFERENCIA] A reversible decision should say so explicitly so future teams know the change cost. [SUPUESTO]
+
 ### S6: Debt & Evolution Plan
 
 Identifies current architectural debt — including AI-specific debt — and a strategy for evolution. [EXPLICIT]
@@ -185,12 +224,16 @@ Identifies current architectural debt — including AI-specific debt — and a s
 - **Responsible AI debt**: Missing fairness audits, absent explainability mechanisms, no bias monitoring — accumulates regulatory and reputational risk
 - **LLMOps debt**: Prompt templates without version control, untracked context window usage, no cost attribution per LLM call
 
+**Debt quantification & prioritization:** Score each item by *blast radius* (modules/consumers affected) x *likelihood of triggering* x *cost-to-fix-later vs. now*. Rank highest-product first. Responsible-AI and model-drift debt carry a risk multiplier because their failure mode is regulatory/reputational, not just latency. [INFERENCIA] *Worked example:* training-serving skew touching the top-3 features = high blast radius x near-certain x cheap-now → fix first; a dead feature column = low blast radius x harmless → defer. [INFERENCIA]
+
 **Evolution strategy:**
 - Phased approach: debt reduction does not block feature delivery
 - Strangler fig for pipeline modernization: old and new pipelines coexist during transition
 - Testing coverage: increase before major refactors — especially model regression tests
 - Monitoring-first: instrument before optimizing
 - Team structure: align teams to pipeline boundaries (data, model, serving, ops)
+
+**Failure mode:** treating model-drift debt as "later" because the model still scores — it degrades silently with no compile error or test failure, so absent monitoring it surfaces only as a business-metric drop weeks later. [INFERENCIA]
 
 ---
 

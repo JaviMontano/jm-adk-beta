@@ -9,7 +9,11 @@ read-only discovery before mutation. Use this skill for Drive search/list,
 upload, download/export, folder organization, copy/update, and
 sharing/permissions. Use `scripts/compile-google-drive-mcp.py` when the request
 can be represented as structured JSON and a reproducible offline checklist is
-useful. [EXPLICIT]
+useful. [DOC]
+
+**Mental model:** discovery is cheap and reversible; mutation is gated. Never
+mutate before you have searched/listed the target, picked the least-privilege
+scope, and obtained human confirmation. [INFERENCE]
 
 ## Prerequisites
 
@@ -30,39 +34,71 @@ useful. [EXPLICIT]
   copy/update, or sharing change.
 - Make Drive search explicit: include a `q` query, `trashed = false`, `fields`,
   `spaces=drive`, and efficient `corpora` (`user` or a specific `drive` before
-  `allDrives`).
+  `allDrives`). `allDrives` is the slowest and may silently drop results when
+  paged — narrow first. [INFERENCE]
 - Request only useful fields such as `files(id,name,mimeType,parents,webViewLink,
   capabilities/canDownload,capabilities/canShare)` and `nextPageToken`.
+
+Worked example (find decks edited in the user's own corpus, last 30 days): [INFERENCE]
+```
+q = "mimeType='application/vnd.google-apps.presentation' and trashed=false and modifiedTime > '2026-05-12T00:00:00'"
+corpora=user  spaces=drive  pageSize=50
+fields=nextPageToken,files(id,name,mimeType,parents,modifiedTime,webViewLink,capabilities/canShare)
+```
+Page until `nextPageToken` is absent; do not assume one page is complete. [INFERENCE]
 
 ### Step 2: Select Scope And Operation Mode
 - Use `assets/scope-policy.json` to choose the least-privilege scope profile.
 - Treat `drive.file` as the preferred mutation profile for files created or
   selected for the app; do not escalate to full `drive` unless the task truly
-  requires account-wide mutation.
+  requires account-wide mutation. Trade-off: `drive.file` cannot see files the
+  app did not create/open, so account-wide search needs `drive.readonly` for
+  read or full `drive` for mutation — request the wider scope only for that
+  step, not the whole session. [INFERENCE]
 - Treat metadata-only lookup as `drive.metadata.readonly`; treat download/export
   of all accessible files as `drive.readonly`.
 - Keep the offline compiler in `scripts/` for plan generation only. It must not
   call Drive, OAuth, or MCP.
 
 ### Step 3: Plan File And Folder Work
-- For uploads, choose `uploadType=media` for small media-only uploads,
-  `uploadType=multipart` for small uploads with metadata, and
-  `uploadType=resumable` for files greater than 5 MB or interruption-prone
-  uploads.
-- For downloads, distinguish blob files from Google Workspace files: blob content
-  uses media download semantics, while Google Docs/Sheets/Slides use export MIME
-  types such as PDF, DOCX, XLSX, PPTX, CSV, or Markdown.
-- For folders, use `application/vnd.google-apps.folder`, verify the parent, and
-  check inherited sharing before creating or moving content.
+- Uploads — pick `uploadType` from size and metadata need, and justify: [INFERENCE]
+  - `media`: small (<5 MB) content-only, no metadata. Fewest round-trips.
+  - `multipart`: small upload that also sets name/parents/mimeType in one call.
+  - `resumable`: files >5 MB OR any interruption-prone link. Survives network
+    drops via byte-range resume; default to it when size is unknown.
+- Downloads distinguish blob files from Google Workspace files: blob content uses
+  media download semantics, while Google Docs/Sheets/Slides require an export MIME
+  type. Export reference: [DOC]
+
+  | Source type | Export to | MIME type |
+  |---|---|---|
+  | Docs | PDF / DOCX / Markdown | `application/pdf`, `…wordprocessingml.document`, `text/markdown` |
+  | Sheets | XLSX / CSV | `…spreadsheetml.sheet`, `text/csv` (CSV = first sheet only) |
+  | Slides | PPTX / PDF | `…presentationml.presentation`, `application/pdf` |
+
+  Export caps the output at ~10 MB; for larger Workspace files export to PDF via
+  `webContentLink` or split the source. [INFERENCE]
+- Folders use `application/vnd.google-apps.folder`. Verify the parent exists and
+  check inherited sharing before creating or moving content — a child inherits
+  the parent's permissions on move. [INFERENCE]
 
 ### Step 4: Confirm Mutations
 - Ask for human confirmation before upload, folder creation, copy/update, or
-  permission changes.
+  permission changes. Confirmation is per mutation, not per session. [INFERENCE]
 - For sharing, verify `capabilities.canShare`, permission `type`, role, email or
   domain target, notification behavior, expiration if applicable, and whether
   link/domain/anyone access is being introduced.
 - Avoid broad `anyone` or domain-level sharing unless the user explicitly
   confirms recipient, role, duration, and business reason.
+
+Worked example (least-privilege share confirmation prompt): [INFERENCE]
+```
+Mutation: add permission to folder <id>
+type=user  role=writer  emailAddress=ana@company.com
+sendNotificationEmail=true  expirationTime=<none>
+canShare=true (verified)  introduces anyone/domain access? NO
+Confirm? (y/N)
+```
 
 ### Step 5: Validate And Report
 - Return evidence-tagged output with source of truth, selected MCP tool, query or
@@ -73,16 +109,16 @@ useful. [EXPLICIT]
 
 - [ ] Read-only discovery happens before mutating Drive actions
 - [ ] Search/list requests include `q`, `fields`, `trashed = false`, `spaces`, and
-      efficient `corpora`
+      efficient `corpora`; results paged until `nextPageToken` is absent
 - [ ] OAuth scope profile is least privilege for the requested operation
 - [ ] Upload plan selects `media`, `multipart`, or `resumable` from file size and
-      metadata needs
+      metadata needs (>5 MB or interruption-prone → `resumable`)
 - [ ] Download/export plan distinguishes blob content from Google Workspace
-      document export
+      document export and names the target export MIME type
 - [ ] Folder operations verify parent, MIME type, and inherited permission impact
 - [ ] Sharing/permission changes include human confirmation and capability checks
 - [ ] Scripts stay offline and deterministic; no Drive, OAuth, or MCP calls
-- [ ] Evidence tags applied to all claims
+- [ ] Evidence tags applied to all claims, one tag per claim, single family
 
 ## Anti-Patterns
 
@@ -96,6 +132,9 @@ useful. [EXPLICIT]
   `drive.metadata.readonly` is sufficient
 - Deep recursive folder moves without a count, parent, and inherited-permission
   review
+- Assuming one page of search results is complete (ignoring `nextPageToken`)
+- Retrying a non-resumable upload from byte zero after a network drop instead of
+  switching to `resumable`
 
 ## Related Skills
 
@@ -114,22 +153,33 @@ useful. [EXPLICIT]
 
 ## Assumptions & Limits
 
-- Requires authenticated local Google Workspace MCP server [EXPLICIT]
+- Requires authenticated local Google Workspace MCP server [ASSUMPTION]
 - Uses local assets under `assets/` for deterministic Drive API policy, not live
-  Drive inspection [EXPLICIT]
+  Drive inspection [DOC]
 - `scripts/compile-google-drive-mcp.py` renders a plan/checklist only; it does
-  not call Drive, OAuth, or MCP [EXPLICIT]
+  not call Drive, OAuth, or MCP [DOC]
 - Real Drive outcomes depend on account access, OAuth scopes, Shared Drive
-  policy, file capabilities, and user confirmation [EXPLICIT]
-- Large files may take time to upload/download/export in real MCP execution
-  [EXPLICIT]
+  policy, file capabilities, and user confirmation [DOC]
+- Large files may take time to upload/download/export in real MCP execution [DOC]
+- Anti-scope: this playbook plans Drive operations; it does not own Docs/Sheets/
+  Slides content editing (delegate to the sibling skills) or org-level Admin SDK
+  policy. [INFERENCE]
+- Drive API quotas and per-user rate limits are enforced server-side; this
+  playbook cannot raise them, only respect them. [INFERENCE]
 
 ## Edge Cases
 
 | Scenario | Handling |
 |----------|----------|
 | Empty or broad search | Request a narrower `q`, target corpus, fields, and page size before calling Drive |
-| Shared Drive target | Use `corpora=drive`, `driveId`, and all-drive support flags when the MCP tool exposes them |
-| Google Docs/Sheets/Slides download | Export to a supported MIME type instead of blob download |
+| Paginated results | Loop on `nextPageToken`; treat a present token as "more results exist", never stop at page 1 [INFERENCE] |
+| Shared Drive target | Use `corpora=drive`, `driveId`, and `supportsAllDrives`/`includeItemsFromAllDrives` flags when the MCP tool exposes them |
+| Google Docs/Sheets/Slides download | Export to a supported MIME type instead of blob download; honor the ~10 MB export cap |
+| Export exceeds 10 MB | Export to PDF or split the source; do not silently truncate [INFERENCE] |
 | Permission mutation | Require human confirmation and verify `capabilities.canShare` first |
+| `canShare=false` | Stop; surface that the account lacks share rights rather than attempting the call [INFERENCE] |
 | Broad access request | Surface risk and ask for explicit recipient, role, expiry, and reason |
+| Rate limit / 403 `userRateLimitExceeded` | Back off with exponential retry + jitter; do not hammer the quota [INFERENCE] |
+| Resumable upload interrupted | Resume from the last confirmed byte offset, not from zero [INFERENCE] |
+| Duplicate name in target folder | Drive allows duplicate names by `id`; confirm intent before creating a second same-named file/folder [INFERENCE] |
+| Abusive-content export blocked | A `cannotDownloadAbusiveFile`/scan flag blocks export; report it, do not bypass [INFERENCE] |

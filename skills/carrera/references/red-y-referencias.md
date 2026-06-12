@@ -8,16 +8,38 @@ Manage professional references and networking follow-ups without guessing consen
 
 Use this skill for relationship tracking and consent-safe referral planning. Do not use it to scrape social networks, enrich contacts, bypass consent, or send messages through live services unless the user separately supplies explicit data and approval.
 
+## Assumptions and Anti-Scope
+
+- `[EXPLICIT]` The user supplies all evidence; this skill never enriches, scrapes, or invents contacts, consent, or dates.
+- `[EXPLICIT]` `as_of` is authoritative for every time decision. The current clock is never read — this keeps packets reproducible and audit-safe.
+- `[INFERRED]` Absent evidence, `consent_status` defaults to the most restrictive non-actionable state, never to a permissive one.
+- Anti-scope (out of bounds): sending messages via live mailbox/calendar/social; deriving willingness from friendship/title/seniority; storing raw PII; ranking or scoring contacts; CRM sync.
+
 ## Deterministic Contract
 
 Follow `assets/output-contract.json` and validate packets with `scripts/reference_network_validator.py`. The packet must include:
 
-- `as_of` ISO date supplied by the user or report author.
-- Evidence records for every consent, relationship, follow-up, and action claim.
+- `as_of` ISO date (`YYYY-MM-DD`) supplied by the user or report author.
+- Evidence records for every consent, relationship, follow-up, and action claim. No claim without an `E-###` reference.
 - Contacts with `consent_status` from `assets/consent-policy.json`.
 - Allowed actions derived only from explicit consent and evidence.
 - Follow-up decisions computed from `as_of`, not from the current clock.
 - Privacy-safe labels instead of direct email, phone, payment, or private channel details.
+
+### Acceptance Criteria (packet is `ready` only if ALL hold)
+
+- `[EXPLICIT]` Every contact, edge, follow-up, and action carries ≥1 resolvable `E-###` reference.
+- `[EXPLICIT]` No action exists whose contact `consent_status != explicit_granted`.
+- `[EXPLICIT]` All dates are absolute ISO; zero relative tokens ("ayer", "next week", "soon").
+- `[EXPLICIT]` Every `network_edge` resolves to two existing `C-###` nodes plus evidence.
+- `[EXPLICIT]` No stale follow-up lacks a paired remediation action.
+- `[EXPLICIT]` Validator exits 0 and no direct contact detail (email/phone/payment) appears anywhere.
+
+### Decisions and Trade-offs
+
+- `[EXPLICIT]` `as_of`-only time vs. live clock: chosen for deterministic, replayable, auditable output. Trade-off — caller must pass a fresh `as_of` each run or follow-ups silently age out.
+- `[EXPLICIT]` Fail-closed consent default: a missing/ambiguous status blocks rather than permits. Trade-off — more `blocked` packets, but zero non-consented outreach.
+- `[INFERRED]` Labels over raw contact data: privacy by construction. Trade-off — the packet alone cannot send; a separate authorized step must rehydrate details.
 
 ## Workflow
 
@@ -28,6 +50,23 @@ Follow `assets/output-contract.json` and validate packets with `scripts/referenc
 5. Build network edges only when both contacts exist and the edge has evidence.
 6. Create actions with IDs such as `A-001`, due dates in ISO format, action type from policy, and one evidence reference.
 7. Validate JSON with `scripts/reference_network_validator.py` before producing the markdown handoff from `templates/output.md`.
+
+### Edge Cases
+
+- Same person, two evidence sources: one `C-###`, multiple `consent_evidence_ref`; never duplicate the contact.
+- Consent granted then revoked: latest-dated evidence wins; revocation forces `blocked` and strips `allowed_actions`.
+- `last_contact_date` after `as_of`: invalid input → block; do not compute negative staleness.
+- Edge references a contact not yet created: unresolved edge → block (step 5 ordering matters).
+- Consent scoped to one channel (e.g. LinkedIn only): allowed actions limited to that channel; other channels stay `[OPEN]`.
+
+### Worked Example
+
+Input: "Ana (ex-manager) said by email 2026-05-02 she'll give a reference; last spoke 2026-03-01. as_of 2026-06-11."
+Output: `E-001` (email 2026-05-02), `C-001` Ana `relationship: former_manager`, `consent_status: explicit_granted`, `consent_evidence_ref: E-001`, `allowed_actions: [request_reference]`. Follow-up from `2026-03-01` vs `as_of 2026-06-11` → stale → emits `A-001 follow_up` due ISO date, ref `E-001`. Tag the reference claim `[EXPLICIT]`; tag "ex-manager" relationship `[INFERRED]` if only the email implies it.
+
+### Failure Modes (validator blocks)
+
+Missing evidence ref · non-consented action · stale follow-up without action · relative/ambiguous date · duplicate `C/E/A` ID · unresolved edge · exposed email/phone/payment · `last_contact_date > as_of`.
 
 ## Output Rules
 

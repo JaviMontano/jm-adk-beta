@@ -54,6 +54,32 @@ network, or MCP tools. [CODE]
 - Use Markdown output for human review and JSON output for stable downstream automation. [CODE]
 - Live API execution remains outside this skill; this skill compiles a plan/checklist only. [CODE]
 
+## Worked Example
+
+Request: "append a row to a tracking sheet and create a Calendar invite." Plan: [INFERENCIA]
+
+- `sheets.spreadsheets.values.append` — OAuth, scope `spreadsheets`, `idempotency_key=sheet-append-<runId>`, retry profile `quota-backoff`, read-back via `values.get` on the appended range. [CODE]
+- `calendar.events.insert` — OAuth, scope `calendar.events`, consent required (sends invitations), `idempotency_key=cal-<eventHash>`, `sendUpdates=all` only after consent confirmed. [CODE]
+- Compiler emits both operations as mutating, blocks until `human_consent.status=confirmed`, and rejects if either scope is broadened to `spreadsheets`+`calendar` full-access. [CODE]
+
+## Per-Service Defaults
+
+| Service | Default auth | Narrowest common scope/key | Mutating? |
+|---|---|---|---|
+| sheets | OAuth | `spreadsheets.readonly` → `spreadsheets` | yes on append/update [DOC] |
+| docs | OAuth | `documents.readonly` → `documents` | yes on batchUpdate [DOC] |
+| calendar | OAuth | `calendar.events.readonly` → `calendar.events` | yes on insert/patch/delete [DOC] |
+| maps_js | restricted API key | HTTP-referrer + API allowlist (no scope) | browser-render only [DOC] |
+| youtube | OAuth or API key | `youtube.readonly` → `youtube.upload` | yes on upload/insert [DOC] |
+
+## Failure Modes (compiler rejects)
+
+- Mutating op without `idempotency_key` or `human_consent` → blocked before render, not warned. [CODE]
+- `maps_js` carrying an OAuth scope, or any service requesting a scope absent from `auth-scope-policy.json` → rejected. [CODE]
+- Operation not present in `service-catalog.json` (typo, deprecated, or non-existent surface) → rejected; the skill never invents a surface. [CODE]
+- Secret-shaped value (client secret, refresh token, key file path) in fixtures or browser config → rejected by `consent-secrets-policy.json`. [CODE]
+- Partial multi-service plan: if one operation fails validation, the whole plan is rejected — no partial render, so callers cannot ship a half-validated plan. [INFERENCIA]
+
 ## Quality Criteria
 
 - [ ] Operations map to official Sheets, Docs, Calendar, Maps JavaScript, or YouTube API surfaces. [DOC]
@@ -81,8 +107,23 @@ network, or MCP tools. [CODE]
 - `python3 skills/google-apis-integration/scripts/compile-google-apis-integration.py --format json --input skills/google-apis-integration/scripts/fixtures/google-apis-integration-input.json`. [CODE]
 - `bash skills/google-apis-integration/scripts/check.sh`. [CODE]
 
+## Anti-Scope
+
+- Does NOT execute, authenticate, or call any Google/OAuth/HTTP/MCP endpoint — plan compilation only. [CODE]
+- Does NOT manage Google Cloud project setup, API enablement, OAuth consent-screen config, or billing. [DOC]
+- Does NOT cover non-listed Google surfaces (Drive, Gmail, Admin SDK, Vertex); add to `service-catalog.json` first or use a dedicated skill. [SUPUESTO]
+- Does NOT store, rotate, or vault secrets; it only blocks them from appearing in inputs. [CODE]
+
+## Edge Cases
+
+- Same operation requested twice in one plan: each needs a distinct `idempotency_key`; identical keys are treated as one logical mutation. [INFERENCIA]
+- Public YouTube read with no user data: API-key profile is valid and consent is not required. [DOC]
+- Batch surfaces (`docs.batchUpdate`, `values.batchUpdate`) count as a single mutating op for consent but should carry per-batch read-back. [DOC]
+- Mixed read+write plan: only the mutating subset triggers consent gates; read-only ops still validate scope minimality. [CODE]
+
 ## Assumptions & Limits
 
 - The compiler validates local JSON and assets only; it does not verify live OAuth clients, enabled APIs, quotas, ACLs, domain policy, or billing state. [CODE]
 - Generated scopes and operations must be reviewed against the target Google Cloud project before deployment. [DOC]
-- API references can evolve; rerun a source review against official Google docs before changing policies or publishing externally. [DOC]
+- API references can evolve; rerun a source review against `assets/source-map.md` and official Google docs before changing policies or publishing externally. [DOC]
+- Assumed surfaces beyond the five listed services are out of scope until catalogued; verify by diffing the request against `service-catalog.json` keys. [SUPUESTO]

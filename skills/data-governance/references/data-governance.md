@@ -8,6 +8,8 @@ Data governance defines how data assets are discovered, owned, classified, retai
 
 **Datos sin dueño son datos sin calidad.** El modelo de ownership se establece ANTES de catalogar. La clasificación determina la protección — no al revés. Privacy by design no es un afterthought sino el punto de partida de cada pipeline. Cada activo de datos tiene un dueño con nombre y apellido, un nivel de clasificación, y una política de retención vinculada a regulación específica.
 
+**Operating sequence (do not reorder):** ownership model → inventory/catalog → classification → handling rules → retention → privacy workflows → computational enforcement. Cataloging before ownership produces orphan assets nobody maintains; classifying before handling rules produces tiers with no operational meaning. [INFERENCE]
+
 ## Inputs
 
 The user provides an organization or data domain as `$ARGUMENTS`. Parse `$1` as the **organization/domain name** used throughout all output artifacts. [EXPLICIT]
@@ -20,6 +22,11 @@ The user provides an organization or data domain as `$ARGUMENTS`. Parse `$1` as 
   - **paso-a-paso**: Confirma cada asset, clasificación, owner y política de retención. [EXPLICIT]
 - `{FORMATO}`: `markdown` (default) | `html` | `dual`
 - `{VARIANTE}`: `ejecutiva` (~40% — S1 catalog + S3 classification + S5 privacy compliance) | `técnica` (full 6 sections, default)
+
+**Parameter resolution & failure modes:**
+- Missing `$1` (org/domain name): in `desatendido`/`piloto-auto`, autofill `Organización` and tag `[ASSUMPTION]`; in `supervisado`/`paso-a-paso`, ask once. Never leave artifact titles blank. [ASSUMPTION]
+- Conflicting flags (e.g. `desatendido` + a privacy decision that legally requires sign-off): `desatendido` does NOT override the legal-counsel gate in S4/S5 — document the assumption and flag it for human review rather than fabricating a compliant-looking decision. [INFERENCE]
+- `ejecutiva` variant omits S2/S4/S6: state this explicitly in the output so the reader knows ownership, retention, and computational governance were scoped out — silent omission reads as "not needed." [INFERENCE]
 
 Before generating governance artifacts, detect the data landscape:
 
@@ -52,6 +59,8 @@ Select or combine based on organizational context. These are complementary, not 
 
 **Practical recommendation:** Use DAMA DMBOK as the knowledge base, DCAM to assess maturity, and supplement with ISO/COBIT for regulatory or board-level requirements.
 
+**Anti-pattern:** adopting all four frameworks at once. They overlap heavily; stacking them produces redundant artifacts and assessment fatigue. Pick one primary (almost always DMBOK), add others only to satisfy a named external requirement (a regulator asks for COBIT controls, a board mandates ISO certification). [INFERENCE]
+
 ---
 
 ## Governance Maturity Model
@@ -67,6 +76,19 @@ Assess current state before prescribing solutions. 5-level model aligned with DA
 | **5** | Optimizing | Continuous improvement, predictive compliance, self-serve | Computational — policy as code | >95% assets cataloged, <1% policy violations |
 
 **Assessment method:** Score each criterion (policy documentation, ownership coverage, classification completeness, automation ratio, compliance incident rate) from 1-5. Average determines level. Target: advance one level per 6-12 months.
+
+**Scoring caveat:** the average hides bimodal maturity. An org with policy-as-code (5) but 25% catalog coverage (2) averages ~3.5, yet is operationally Level 2 — you cannot automate governance over assets you have not inventoried. Report the **minimum** criterion alongside the average; the floor, not the mean, gates which section is actionable next. [INFERENCE]
+
+**Worked example:** policy docs 4, ownership 2, classification 3, automation 4, incidents 3 → average 3.2, minimum 2. Verdict: nominally Level 3, but ownership at Level 2 is the bottleneck. Next move is S2 (assign owners), not more automation. Do not prescribe S6 computational governance to a Level-2-ownership org. [INFERENCE]
+
+**Where to start, by floor level** (use the minimum criterion, per scoring caveat): [INFERENCE]
+| Floor | First moves | Defer until later |
+|---|---|---|
+| **1 Initial** | S1 inventory of critical elements; assign interim owners (S2); 3-tier classification | Federation, policy-as-code, predictive compliance |
+| **2 Developing** | Complete ownership (S2 RACI signed); formalize taxonomy (S3); draft retention (S4) | Automated enforcement, data-mesh self-governance |
+| **3 Defined** | Automate classification (S3); operationalize DSAR (S5); first blocking policy gate (S6) | Domain autonomy before global guardrails exist |
+| **4 Managed** | Federate (S6 global/local boundary); SLA enforcement; metrics dashboards | — |
+| **5 Optimizing** | Predictive compliance, self-serve, policy-as-code everywhere | — |
 
 ---
 
@@ -116,6 +138,10 @@ Maps data assets across the organization. [EXPLICIT]
 - Lineage granularity: table-level (fast) vs column-level (precise) vs row-level (expensive)
 - Catalog scope: start with critical data elements, expand iteratively
 
+**Acceptance:** every critical data element resolves to a catalog entry with technical + business + operational metadata, and lineage traces source→consumption for at least the critical path. A catalog with technical metadata only (schema, no business definitions/owner) is a schema browser, not a governance catalog. [INFERENCE]
+
+**Failure modes:** (1) crawler indexes 10k tables, 90% stale/unused — coverage looks high but signal-to-noise is low; gate inclusion on usage telemetry, not existence. (2) Business glossary diverges from technical reality because no one owns terms — assign glossary stewardship in S2 before launch. [INFERENCE]
+
 ### S2: Ownership & Stewardship Model
 
 Defines who is accountable for data assets and who maintains them. [EXPLICIT]
@@ -132,6 +158,12 @@ Defines who is accountable for data assets and who maintains them. [EXPLICIT]
 - Owner authority: can owners restrict access, define SLAs, deprecate assets?
 - Steward capacity: dedicated role vs part-time (dedicated required at Level 4+)
 - Accountability metrics: ownership coverage %, issue resolution time (target: <48h)
+
+**Owner vs steward (do not conflate):** the **owner** is accountable (a business leader who answers for the asset's existence, access, and risk — typically a director/VP); the **steward** is responsible (a practitioner who maintains metadata, fields questions, runs quality checks). One owner can delegate to many stewards; a steward without a named owner above them has accountability but no authority. [INFERENCE]
+
+**Acceptance:** 100% of in-scope domains have a named owner (a person, not a team alias) and at least one steward; the RACI is signed, not drafted; escalation paths have a target SLA and a named arbiter for ties. "Ownership = the data team" fails acceptance — that is the absence of ownership restated. [INFERENCE]
+
+**Failure mode:** owners assigned without authority (cannot restrict access or set SLAs) become rubber stamps. Pair every ownership assignment with the specific authorities granted, or accountability is theater. [INFERENCE]
 
 ### S3: Classification & Sensitivity
 
@@ -150,6 +182,14 @@ Assigns sensitivity tiers enabling proportional security and handling. [EXPLICIT
 - Cross-border sensitivity: data classified differently in different jurisdictions
 - Derived data: classification of aggregated or anonymized datasets (anonymization must be irreversible to downgrade classification)
 
+**Propagation rule:** classification inherits to the **maximum** sensitivity of any contributing column. A join of an Internal table with one Restricted column yields a Restricted product — never the average or the majority. Downgrade is allowed ONLY through verified irreversible anonymization, never through aggregation alone (re-identification via quasi-identifiers defeats naive aggregation). [INFERENCE]
+
+**Worked example:** `users(email[Restricted-PII], signup_date[Internal], country[Internal])` → table classified Restricted; a view exposing only `country, count(*)` may be Internal **if** small-group suppression (e.g. k-anonymity, suppress cells <5) is enforced — otherwise it stays Restricted because counts can re-identify. [INFERENCE]
+
+**Acceptance:** every catalog asset carries exactly one tier; each tier has documented, enforceable handling rules (encryption, masking, access, audit); PII columns are detected AND a human has confirmed/overridden the auto-tag where classification changed. Auto-detection without a confirmation step for downgrades fails acceptance. [INFERENCE]
+
+**Failure mode:** regex/ML PII detection produces false negatives on free-text and concatenated fields (e.g. an SSN inside a notes column). Treat unstructured/free-text fields as Confidential-by-default until proven otherwise, rather than Public-by-default. [INFERENCE]
+
 ### S4: Retention & Lifecycle
 
 Governs how long data is kept, when archived, when purged. [EXPLICIT]
@@ -166,6 +206,12 @@ Governs how long data is kept, when archived, when purged. [EXPLICIT]
 - Archival accessibility: hours-to-restore tolerance for archived data
 - Purge verification: who approves irreversible deletion? (minimum: data owner + compliance)
 - Regulatory conflicts: when retention and privacy requirements conflict, document resolution with legal counsel
+
+**Resolution precedence when retention conflicts with erasure:** a legal-hold or statutory-retention obligation (e.g. tax records, audit trail) overrides a deletion request for the **specific fields** under obligation — but only those fields, and only for the mandated period. The correct pattern is field-level legal hold + erase everything not held, not "keep the whole record." Document the legal basis per held field. [INFERENCE]
+
+**Acceptance:** every data type maps to a retention period justified by a cited regulation or a documented business need; purge is reversible-until-verified then irreversible-with-dual-approval; legal holds can be applied at field granularity and have a defined release procedure; storage cost per tier is quantified. A retention matrix with periods but no regulatory/business justification fails acceptance. [INFERENCE]
+
+**Failure mode:** soft-delete that never hard-deletes silently becomes infinite retention — a privacy liability disguised as caution. Define and enforce the hard-delete horizon, with verification that the row is gone from backups/replicas within the backup-rotation window. [INFERENCE]
 
 ### S5: Privacy & Compliance
 
@@ -193,6 +239,12 @@ Maps privacy regulations to data assets and operationalizes compliance workflows
 - Anonymization vs pseudonymization: irreversible (lower classification) vs re-identifiable with key (maintains classification)
 - DSAR SLA: regulatory maximum is the ceiling; target 50% of regulatory window for internal processing
 
+**Acceptance:** each row of the regulation-mapping table resolves to a concrete data-asset list and an owning workflow (not just a citation); DSAR is operational end-to-end (discovery → extraction → redaction → response) with a tested SLA timer; consent state is queryable per subject and purpose; the audit trail is append-only/immutable. A privacy section that documents regulations but cannot answer "which tables hold this subject's data" fails acceptance — that is the question every DSAR begins with. [INFERENCE]
+
+**Cross-jurisdiction rule:** when a subject is covered by multiple regimes, apply the **strictest** applicable requirement (shortest response window, narrowest legal basis, broadest deletion right). Building to GDPR generally satisfies CCPA/LGPD timelines; the reverse does not hold. [INFERENCE]
+
+**Failure mode:** DSAR discovery misses shadow copies (exports, analytics replicas, spreadsheets, vendor systems). Catalog lineage from S1 is the discovery backbone; an asset absent from the catalog is invisible to DSAR — close that gap before promising an SLA. [INFERENCE]
+
 ### S6: Computational Governance & Data Products
 
 Applies governance as executable code in federated architectures. [EXPLICIT]
@@ -219,6 +271,21 @@ Applies governance as executable code in federated architectures. [EXPLICIT]
 - Central team scope: enablement (tooling, training, templates) vs enforcement (blocking gates)
 - Cross-domain data products: ownership of joins/aggregations follows the consumer-creates-derived-product model
 
+**Worked example (OPA/Rego gate, illustrative):** a deploy-time check that rejects any published table where a column matches a PII pattern but carries no classification tag —
+```rego
+deny[msg] {
+  col := input.table.columns[_]
+  pii_pattern(col.name)            # e.g. matches email|ssn|phone
+  not col.tags.classification      # classification tag absent
+  msg := sprintf("column %q looks like PII but has no classification tag", [col.name])
+}
+```
+Wire this into CI/CD so non-compliant data products never reach production; the same rule re-runs at query time for defense in depth. [INFERENCE]
+
+**Acceptance:** at least one global policy is enforced as code in a blocking gate (not a lint warning that everyone overrides); the global/local boundary is written down and the two lists are disjoint; data products expose a machine-readable contract (schema + SLOs). "Policy as code" that only warns, or that any team can bypass without record, fails acceptance — an unenforced policy is documentation. [INFERENCE]
+
+**Prerequisite gate:** do not prescribe S6 below Level 3 maturity. Computational governance over an un-owned, under-cataloged estate automates the wrong state faster. Earn S6 with S1–S2 coverage first. [INFERENCE]
+
 ---
 
 ## Trade-off Matrix
@@ -231,6 +298,10 @@ Applies governance as executable code in federated architectures. [EXPLICIT]
 | **Manual Classification** | Accuracy, business context | Slow, doesn't scale | Small data estates, initial taxonomy |
 | **Aggressive Retention** | Regulatory safety, historical analysis | Storage costs, privacy risk | Regulated industries, audit-heavy |
 | **Minimal Retention** | Cost savings, privacy compliance | Lost historical data | Privacy-first orgs, GDPR-sensitive |
+| **Hybrid Governance** | Global guardrails + domain speed | Boundary disputes, needs platform | Most mid-large orgs in transition (Level 3) |
+| **Tiered Retention** | Per-class cost/risk fit | Policy complexity, more rules to test | Mixed estates: short for PII, long for audit |
+
+These are dials, not switches. The common end-state is **hybrid**: classification/privacy/naming are global and enforced as code; schema, cadence, and tooling are local. Pure-centralized doesn't scale past a few domains; pure-federated without global guardrails fragments into inconsistency. [INFERENCE]
 
 ---
 
@@ -241,6 +312,10 @@ Applies governance as executable code in federated architectures. [EXPLICIT]
 - Retention policies must be reviewed by legal counsel; this skill provides structure, not legal advice
 - Maturity model assessment is point-in-time; re-assess quarterly for accuracy
 - Cross-cloud governance assumes catalog tooling supports multi-cloud metadata federation
+- Platform/connector access to source systems exists; an asset the crawler cannot reach is invisible and silently uncovered — verify connector coverage, do not assume it [ASSUMPTION]
+- This skill produces a framework and artifacts; it does not implement the catalog, write production policies, or render legal/compliance determinations — those require the named tools, engineers, and counsel [DOC]
+
+**Anti-scope (explicitly NOT delivered here):** pipeline/ETL design, data-quality rule authoring and monitoring, infrastructure/storage sizing, and enterprise capability mapping. See "When NOT to Use." Producing these here duplicates sibling skills and dilutes the governance deliverable. [INFERENCE]
 
 ## Edge Cases
 
@@ -288,4 +363,4 @@ Default output is Markdown with embedded Mermaid diagrams. HTML generation requi
 **Secondary:** Classification taxonomy document, RACI matrix, retention policy matrix, DSAR workflow diagram, OPA/Rego policy templates, catalog evaluation scorecard.
 
 ---
-**Author:** Javier Montano | **Last updated:** March 18, 2026
+**Author:** Javier Montano | **Last updated:** June 11, 2026

@@ -18,6 +18,24 @@ Use the deterministic policies in `assets/` for audit dimensions, severity, evid
 
 3. **Remediation is part of the audit.** Un informe que solo lista problemas sin soluciones ejecutables es un documento de quejas. Cada finding incluye patrón de remediación, esfuerzo estimado, y dependencias. [EXPLICIT]
 
+4. **Absence of evidence is itself a finding.** Si una capacidad no se puede medir (sin monitoreo, sin logs, sin tests), el hallazgo no es "OK" ni "desconocido neutro" — es un finding MEDIUM+ sobre la falta de observabilidad que impide auditar. No reportar verde por ausencia de datos. [INFERENCIA]
+
+---
+
+## Severity Rubric
+
+Toda severidad referenciada en S1-S6 se asigna con esta escala fija. Calibrar contra impacto real, no contra esfuerzo de fix. [INFERENCIA]
+
+| Severity | Criterio de asignación | SLA de remediación |
+|----------|------------------------|--------------------|
+| **CRITICAL** | Explotable hoy / pérdida de datos / fuga de PII / outage activo / incumplimiento regulatorio con multa | Este sprint, bloquea release |
+| **HIGH** | Degradación silenciosa de accuracy, sin rollback, sin drift detection en modelo en producción | Este quarter |
+| **MEDIUM** | Gap de proceso sin daño inmediato (threshold no definido, doc faltante, test coverage bajo) | Próximo quarter |
+| **LOW** | Mejora de higiene, deuda cosmética, optimización de costo no urgente | Backlog oportunista |
+| **INFO** | Observación sin acción requerida; contexto para futuros auditores | Ninguna |
+
+**Regla de escalado:** un MEDIUM se eleva a HIGH si afecta un sistema en producción con usuarios reales; un HIGH se eleva a CRITICAL si hay datos regulados (PHI/PII/PCI) en el path. [INFERENCIA]
+
 ---
 
 ## Inputs
@@ -127,13 +145,32 @@ Load references:
 - Circuit Breaker: ¿Fallback definido? ¿Testeado? ¿Rollback automático?
 - Guardrails: ¿Input/output validation? ¿PII masking? ¿Content safety?
 
-**Anti-patterns detectados:**
-- Escanear código por Training-Serving Skew (feature computation divergence)
-- Revisar pipeline por YOLO Deploy (direct-to-production)
-- Detectar Silent Degradation (no drift monitoring)
-- Identificar Pipeline Jungle (dependency analysis)
-- Buscar Unguarded LLM (no input validation on model calls)
-- Detectar Token Budget Blindness (no cost tracking)
+**Anti-patterns detectados** (cada uno con método de detección concreto y la evidencia que constituye el hallazgo):
+
+| Anti-pattern | Señal de detección | Evidencia mínima |
+|--------------|--------------------|--------------------|
+| Training-Serving Skew | Feature computada en >1 lugar con lógica distinta (training notebook vs. serving code) | Dos snippets divergentes para la misma feature [CÓDIGO] |
+| YOLO Deploy | Modelo desplegado sin gate de CI/CD ni aprobación; `git log` directo a rama de prod | Ausencia de pipeline de promoción [CONFIG] |
+| Silent Degradation | Sin job de drift ni alerta sobre métricas de modelo | Inexistencia de monitor/alerta [HERRAMIENTA] |
+| Pipeline Jungle | Grafo de dependencias con ciclos o fan-in alto entre stages | Import graph con ciclos [HERRAMIENTA] |
+| Unguarded LLM | Llamada a modelo sin validación de input/output ni guardrail | Call site sin sanitización [CÓDIGO] |
+| Token Budget Blindness | Sin logging de tokens/costo por request | Ausencia de métrica de costo [MÉTRICA] |
+
+**Comandos de detección sugeridos** (adaptar al stack; documentar el comando exacto usado como evidencia [HERRAMIENTA]):
+- Skew / dual feature logic: `grep -rn "def .*feature\|transform(" src/ | sort` y comparar ramas training vs serving
+- Unguarded LLM: `grep -rnE "client\.(messages|chat)\.create|\.invoke\(|\.generate\(" src/` y revisar si cada call site tiene validación previa/posterior
+- Token blindness: `grep -rniE "usage|token|cost|budget" src/ monitoring/` — cero hits ⇒ finding
+- Pipeline Jungle: `pydeps --show-cycles <pkg>` o `jdepend` para ciclos
+
+**Worked example (formato esperado por finding):**
+```
+[HIGH] Training-Serving Skew en feature `user_recency`
+  Evidencia: training/featurize.py:42 usa `now() - last_seen` en días;
+             serving/handler.py:88 usa horas. [CÓDIGO]
+  Impacto: predicciones sesgadas ~24x en magnitud de recency; accuracy de prod no refleja la de eval.
+  Remediación: extraer a feature library compartida (ver ai-pipeline-architecture: Feature Store). Esfuerzo: M.
+  DoD: un solo módulo computa la feature; test de paridad training/serving pasa.
+```
 
 **Entregable:** Matriz de patrones (esperado/encontrado/gap), lista de anti-patrones con evidencia y severidad.
 
@@ -206,11 +243,13 @@ Load references:
 - Score 4-8: Plan (próximo quarter)
 - Score 1-3: Backlog (oportunista)
 
-**Roadmap phases:**
-- Phase 1 — Critical Safety (Sprint 1-2): Security vulnerabilities, governance basics, data quality gates
-- Phase 2 — Quality Foundation (Sprint 3-4): Drift detection, fairness testing, circuit breakers
-- Phase 3 — Operational Excellence (Sprint 5-8): Full observability, CI/CD, Feature Store
-- Phase 4 — Optimization (Sprint 9-12): Multi-model tiering, caching, cost optimization
+**Roadmap phases** (orden por *risk-first*, no por facilidad — se paga primero lo que puede causar daño irreversible): [INFERENCIA]
+- Phase 1 — Critical Safety (Sprint 1-2): Security vulnerabilities, governance basics, data quality gates. *Por qué primero:* daño irreversible (fuga, multa) > todo lo demás.
+- Phase 2 — Quality Foundation (Sprint 3-4): Drift detection, fairness testing, circuit breakers. *Por qué antes que ops:* sin estos no se puede medir si las fases siguientes funcionan.
+- Phase 3 — Operational Excellence (Sprint 5-8): Full observability, CI/CD, Feature Store.
+- Phase 4 — Optimization (Sprint 9-12): Multi-model tiering, caching, cost optimization. *Último a propósito:* optimizar antes de estabilizar amplifica defectos.
+
+**Trade-off explícito:** este orden retrasa ahorros de costo (Phase 4) hasta tener seguridad y observabilidad. Aceptable porque optimizar un sistema inestable o inseguro multiplica el riesgo. Si el driver de la auditoría es puramente costo, reordenar es válido pero debe documentarse como desviación consciente. [INFERENCIA]
 
 **Para cada finding:**
 - Patrón de remediación (referencia a ai-design-patterns o ai-pipeline-architecture)
@@ -261,6 +300,34 @@ Load references:
 4. **Multi-team ownership**: Findings pueden cruzar boundaries de equipo. Documentar ownership por finding. Roadmap debe considerar coordinación cross-team. [EXPLICIT]
 
 5. **Post-incident audit**: Foco en la cadena causal del incidente. S4 (security) y S2 (quality) tienen prioridad. Remediation roadmap empieza por la causa raíz del incidente. [EXPLICIT]
+
+---
+
+## Failure Modes of the Audit Itself
+
+Modos en que la auditoría produce un resultado engañoso. Cada uno tiene un guardrail de mitigación. [INFERENCIA]
+
+| Failure mode | Síntoma | Guardrail |
+|--------------|---------|-----------|
+| **Green by absence** | Dimensión marcada OK porque no se encontró nada — pero no se buscó | Cada "OK" exige evidencia positiva, no ausencia de evidencia |
+| **Threshold theater** | Quality attributes comparados contra thresholds inventados por el auditor | Thresholds deben venir de CONOPS/SLA; si se proponen, marcarlos `[SUPUESTO]` |
+| **Severity inflation** | Todo es CRITICAL → el equipo ignora el informe | Máx. ~20% de findings en CRITICAL+HIGH; forzar distribución por la rúbrica |
+| **Remediation hand-wave** | "Mejorar seguridad" sin patrón ni DoD | Validation Gate rechaza findings sin pattern + esfuerzo + DoD |
+| **Snapshot bias** | Audita un instante; ignora tendencia (drift acelerándose) | S2 y S5 exigen tendencia, no solo valor puntual |
+| **Stale evidence** | Métricas de hace meses tratadas como actuales | Cada evidencia lleva fecha; >30 días ⇒ re-medir o degradar a `[SUPUESTO]` |
+
+---
+
+## Acceptance Criteria
+
+El output de este skill se considera completo solo si: [INFERENCIA]
+
+1. Cada dimensión S1-S6 tiene un score 0-5 **o** una justificación explícita de omisión.
+2. Cada finding cita evidencia con tag de la taxonomía y, donde aplique, ubicación (`archivo:línea` o nombre de métrica).
+3. La distribución de severidades respeta la rúbrica (sin inflación; CRITICAL solo para criterios listados).
+4. Cada anti-pattern reportado nombra el comando/método de detección usado.
+5. El roadmap S6 ordena findings por Priority Score y resuelve dependencias (ningún fix depende de otro posterior).
+6. Existe al menos un próximo paso accionable que el equipo puede empezar sin pedir aclaraciones.
 
 ---
 
