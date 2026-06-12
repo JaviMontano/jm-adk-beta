@@ -1,0 +1,17 @@
+{
+  "skill": "email-comms",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json/rubric",
+      "purpose": "Weighted scoring rubric (routing, deliverability, render, content, governance) for grading an email-comms run at the Validate gate.",
+      "used_by": ["agents/guardian.md", "evals/evals.json"]
+    },
+    {
+      "path": "assets/routing-checklist.md",
+      "type": "markdown/checklist",
+      "purpose": "Pre-flight checklist enforcing one-topic-per-run, prerequisite sequencing, and deliverability-vs-content diagnosis.",
+      "used_by": ["prompts/primary.md", "agents/lead.md"]
+    }
+  ]
+}

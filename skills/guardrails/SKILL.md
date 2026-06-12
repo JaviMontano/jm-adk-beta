@@ -57,6 +57,8 @@ Alfa core family only: `[EXPLICIT]` `[CODE]` `[CONFIG]` `[DOC]` `[INFERENCE]`
 - Exactly one playbook read; `topic` ∈ enum; verdict carries evidence tags. [DOC]
 - Script-first (prefer the hook/script the playbook names) and fail-closed:
   missing evidence ⇒ fail/block, never pass. [CONFIG]
+- Verdict quality bar in `assets/quality-rubric.json`; pre-emit checks in
+  `assets/checklist.md`. [CONFIG]
 
 ## Anti-patterns
 Loading multiple playbooks "to be safe"; guessing `topic` when ambiguous;

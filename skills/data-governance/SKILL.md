@@ -50,6 +50,9 @@ Discover → Analyze → Execute → Validate. `deep` → apply the playbook exh
 - Evidence tags present (Alfa set: `[DOC]`/`[INFERENCE]`/`[ASSUMPTION]`); every `[ASSUMPTION]` has a verification step. [CONFIG]
 - Quality gates honored: constitution v6.0.0 enforcement, script-first rule. [CONFIG]
 
+## Assets
+Routing checklist and grading rubric live in `assets/` (see `assets/manifest.json`). [CONFIG]
+
 ## Anti-patterns
 - Reading multiple playbooks "to be safe" — defeats the router. [INFERENCE]
 - Guessing `topic` silently when the request is truly ambiguous — ask one question. [ASSUMPTION]

@@ -115,7 +115,7 @@ description: "hace cosas con git"   # ANTI: description vaga, no es contrato de 
 
 ## Checklist de validación (gate)
 
-No marques la skill como lista hasta que TODO sea sí:
+No marques la skill como lista hasta que TODO sea sí (gate operativo en `assets/checklist.md`, rúbrica en `assets/quality-rubric.json`):
 
 - [ ] ¿Elegiste **command vs skill** por trigger (explícito vs contextual) y por scope? [DOC]
 - [ ] ¿Scope **project** si el artefacto se replica al equipo? (user no replica) [DOC]

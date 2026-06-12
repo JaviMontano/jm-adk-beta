@@ -51,3 +51,5 @@ scorecard → `audit`. If the request spans two, run them in sequence, not merge
 
 Spine: Discover → Analyze → Execute → Validate.
 Gates: constitution v6.0.0 (enforcement), evidence tags, script-first rule. [CONFIG]
+Gate against `assets/checklist.md` and score with `assets/quality-rubric.json`
+before declaring done; see the DoD bundle in `assets/`. [DOC]

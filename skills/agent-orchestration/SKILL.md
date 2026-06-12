@@ -51,6 +51,7 @@ NOT for single-agent tasks, content generation, or domain skills — route those
 
 ## Acceptance gate
 Done only if: one playbook loaded (not many); spine completed; gates passed; tags single-family + EN/ES consistent. [DOC]
+Walk `assets/routing-checklist.md` before emitting; Guardian scores with `assets/quality-rubric.json`. [CONFIG]
 
 ## Anti-patterns
 - Loading multiple playbooks "to be safe" — defeats the router; pick one or ask. [INFERENCE]

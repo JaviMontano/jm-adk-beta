@@ -59,6 +59,7 @@ none skips Validate. [DOC]
   script-first rule. [CONFIG]
 - No invented prices; never report green-as-success; no client PII; single brand
   per output. [DOC]
+- Apply the acceptance rubric in `assets/quality-rubric.json` at Validate. [CONFIG]
 
 ## Acceptance (done = all true)
 - Exactly one route read and executed; topic matches the request. [INFERENCIA]

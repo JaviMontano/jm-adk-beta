@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "id": "route-ai-vs-human-review",
+      "input": "Claude flagged three issues in our auth diff; can you turn that into a proper AI-assisted review report with file-line evidence?",
+      "expected_checks": ["correct_topic_ai-code-review", "single_playbook_loaded", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "route-human-tool-review",
+      "input": "Here is a staged diff on src/billing/invoice.ts — review it for correctness and tests and give me a merge decision.",
+      "expected_checks": ["correct_topic_code-review", "decision_matches_worst_severity", "quality_criteria", "evidence_file_line"]
+    },
+    {
+      "id": "route-score-vs-detect",
+      "input": "Our RAG summarizer has no gold labels — score how grounded its summaries are against the retrieved chunks and report a baseline.",
+      "expected_checks": ["correct_topic_llm-evaluation", "baseline_reported", "assets", "quality_criteria"]
+    },
+    {
+      "id": "route-content-detection-nonaccusatory",
+      "input": "A 900-word essay was submitted with no watermark; tell us the likelihood it was AI-generated without accusing the student.",
+      "expected_checks": ["correct_topic_ai-content-detection", "authorship_not_determined", "human_review_gate", "deterministic_scripts"]
+    },
+    {
+      "id": "route-strategy-vs-generation",
+      "input": "Define the full testing strategy for our fraud-scoring API across model, data-quality, fairness, and CI/CD layers.",
+      "expected_checks": ["correct_topic_ai-testing-strategy", "matrix_36_cells_verdict", "assets", "quality_criteria"]
+    },
+    {
+      "id": "route-assisted-testing-oracle",
+      "input": "Propose pytest cases plus a bounded fuzz spec for pricing/discount.py, and tell me which generated assertions are tautological.",
+      "expected_checks": ["correct_topic_ai-assisted-testing", "oracle_explicit_per_test", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "route-safety-chain",
+      "input": "Build a safety packet for a customer-support chatbot that must refuse medical-advice prompts and escalate to a human owner.",
+      "expected_checks": ["correct_topic_ai-safety", "risk_to_control_chain_no_orphans", "assets", "deterministic_scripts"]
+    },
+    {
+      "id": "route-documentation-evidence",
+      "input": "Generate API reference docs for our handlers from openapi.yaml and flag any endpoints the spec describes but the code does not implement.",
+      "expected_checks": ["correct_topic_ai-documentation", "evidence_id_per_section", "quality_criteria", "assets"]
+    },
+    {
+      "id": "route-workflow-gate-before-effect",
+      "input": "Design an LLM-in-the-loop support-triage workflow with a human approval gate before any auto-reply is sent.",
+      "expected_checks": ["correct_topic_ai-workflow-automation", "gate_precedes_external_effect", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "ambiguity-tie-asks",
+      "input": "Is this generated marketing blurb good enough to ship, and is it even AI-written?",
+      "expected_checks": ["detects_two_topics", "asks_or_splits_not_guesses", "quality_criteria"]
+    },
+    {
+      "id": "single-route-discipline",
+      "input": "Review this model output for hallucinations and also write the unit tests for the parser in the same answer.",
+      "expected_checks": ["loads_only_one_playbook", "second_intent_routed_separately", "deterministic_scripts", "assets"]
+    },
+    {
+      "id": "green-not-safe-discipline",
+      "input": "Our safety validator passed — can you confirm the chatbot is safe to launch to all users?",
+      "expected_checks": ["green_not_reported_as_safety_guarantee", "human_review_required", "quality_criteria"]
+    }
+  ]
+}

@@ -57,6 +57,7 @@ Discover → Analyze → Execute → Validate.
 
 ## Quality gates
 - Constitution v6.0.0 (enforcement), evidence tags, script-first rule. [DOC]
+- Apply the reusable gates in `assets/` (`assets/quality-rubric.json` + `assets/checklist.md`) before "done". [DOC]
 - Validate before "done": rules tested in emulator, deploys dry-run first,
   cost claims backed by billing/usage data — never asserted. [DOC]
 

@@ -1,0 +1,17 @@
+{
+  "skill": "carrera",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Gate dimensions the guardian uses to pass or block a carrera deliverable (single-playbook, contract shape, evidence-tied, tag family, determinism, stop-on-empty, governance).",
+      "used_by": ["agents/guardian.md", "templates/output.md", "SKILL.md"]
+    },
+    {
+      "path": "assets/routing-keywords.json",
+      "type": "lookup",
+      "purpose": "Deterministic topic-disambiguation hints mapping intent keywords to the twelve routes.json playbooks.",
+      "used_by": ["README.md", "prompts/primary.md", "SKILL.md"]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "nodes": [
+    { "id": "router", "label": "docs-writing router", "kind": "skill" },
+    { "id": "spine", "label": "Discover-Analyze-Execute-Validate spine", "kind": "process" },
+    { "id": "topic", "label": "topic (one of 13 enum values)", "kind": "param" },
+    { "id": "depth", "label": "depth (quick | deep)", "kind": "param" },
+    { "id": "playbook", "label": "routed reference playbook", "kind": "artifact" },
+    { "id": "api-documentation", "label": "API documentation", "kind": "route" },
+    { "id": "changelog-writing", "label": "Changelog writing", "kind": "route" },
+    { "id": "documentation-standards", "label": "Documentation standards", "kind": "route" },
+    { "id": "internal-memo", "label": "Internal memo", "kind": "route" },
+    { "id": "openapi", "label": "OpenAPI 3.0 standard", "kind": "standard" },
+    { "id": "diataxis", "label": "Diataxis quadrants", "kind": "standard" },
+    { "id": "keep-a-changelog", "label": "Keep a Changelog + SemVer", "kind": "standard" },
+    { "id": "bluf", "label": "Bottom Line Up Front", "kind": "standard" },
+    { "id": "evidence-tags", "label": "Alfa-core evidence taxonomy", "kind": "governance" },
+    { "id": "validate-gate", "label": "Validate quality gate", "kind": "gate" }
+  ],
+  "edges": [
+    { "from": "router", "to": "topic", "rel": "resolves" },
+    { "from": "router", "to": "depth", "rel": "reads" },
+    { "from": "topic", "to": "playbook", "rel": "selects" },
+    { "from": "router", "to": "playbook", "rel": "loads-exactly-one" },
+    { "from": "playbook", "to": "spine", "rel": "executes" },
+    { "from": "spine", "to": "validate-gate", "rel": "ends-with" },
+    { "from": "api-documentation", "to": "playbook", "rel": "is-a" },
+    { "from": "changelog-writing", "to": "playbook", "rel": "is-a" },
+    { "from": "documentation-standards", "to": "playbook", "rel": "is-a" },
+    { "from": "internal-memo", "to": "playbook", "rel": "is-a" },
+    { "from": "api-documentation", "to": "openapi", "rel": "applies" },
+    { "from": "changelog-writing", "to": "keep-a-changelog", "rel": "applies" },
+    { "from": "documentation-standards", "to": "diataxis", "rel": "applies" },
+    { "from": "internal-memo", "to": "bluf", "rel": "applies" },
+    { "from": "playbook", "to": "evidence-tags", "rel": "enforces" },
+    { "from": "validate-gate", "to": "evidence-tags", "rel": "checks" }
+  ]
+}

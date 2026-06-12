@@ -48,6 +48,9 @@ router owns only these ten topics; hand non-deploy parts to sibling skills. [INF
 
 Spine: Discover → Analyze → Execute → Validate. [DOC]
 
+Gate tooling: `assets/` holds the quality rubric and reviewer checklist that
+back the validation gate below. [DOC]
+
 ## Validation gate (done = all true)
 - Exactly one topic resolved and one playbook Read — not the cluster. [DOC]
 - Topic ∈ the `routes:` enum (no invented topics; enum is source of truth). [CONFIG]

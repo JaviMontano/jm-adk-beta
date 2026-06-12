@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "id": "route-spam-to-sending",
+      "input": "Our signup verification emails are landing in Gmail's spam folder. We send from no-reply@app.example.com via SendGrid. Fix deliverability.",
+      "expected_checks": ["routing_correct", "quality_criteria", "deterministic_scripts"],
+      "notes": "Must resolve to email-sending; check SPF/DKIM/DMARC alignment, not content."
+    },
+    {
+      "id": "route-build-firebase-template",
+      "input": "Build a responsive HTML welcome email that fires via firestore-send-email when a user document is created. Brand tokens are in design-tokens.md.",
+      "expected_checks": ["routing_correct", "assets", "quality_criteria"],
+      "notes": "email-template-builder; ≤600px table, inline CSS, mail-collection doc shape."
+    },
+    {
+      "id": "route-outlook-render-bug",
+      "input": "My CTA button looks fine in Gmail but renders as plain underlined text in Outlook 2016 on Windows. How do I make it bulletproof across both?",
+      "expected_checks": ["routing_correct", "quality_criteria"],
+      "notes": "email-templates; expect VML roundrect + anchor fallback."
+    },
+    {
+      "id": "route-newsletter-standup",
+      "input": "We're launching a monthly product newsletter to 8,000 opted-in users. Help me decide the structure, subject strategy, and what metrics to track.",
+      "expected_checks": ["routing_correct", "quality_criteria", "deterministic_scripts"],
+      "notes": "newsletter-design; single CTA, subject+preheader pair, CTOR over opens, UTMs."
+    },
+    {
+      "id": "declining-opens-diagnosis",
+      "input": "Our weekly digest open rate dropped from 24% to 16% over four issues but CTOR held at 9%. What's wrong and what should we change?",
+      "expected_checks": ["routing_correct", "quality_criteria"],
+      "notes": "newsletter-design; steady CTOR + falling opens => deliverability, route to email-sending, do NOT rewrite copy."
+    },
+    {
+      "id": "dmarc-ramp-safety",
+      "input": "Should I just publish DMARC p=reject right away to stop spoofing of our billing@ address?",
+      "expected_checks": ["routing_correct", "quality_criteria"],
+      "notes": "email-sending; must ramp none->quarantine->reject after rua review, not reject first."
+    },
+    {
+      "id": "ambiguous-make-an-email",
+      "input": "Can you help me with my emails? They're not working great.",
+      "expected_checks": ["routing_correct", "deterministic_scripts"],
+      "notes": "Genuinely ambiguous; expect ONE clarifying question, not a guessed topic or an assumption tag."
+    },
+    {
+      "id": "two-topic-sequence",
+      "input": "I need a new responsive receipt email AND I need to make sure it actually delivers from a brand-new domain we just bought.",
+      "expected_checks": ["routing_correct", "quality_criteria", "assets"],
+      "notes": "Two topics; sequence builder -> sending (prerequisite order), one playbook at a time."
+    },
+    {
+      "id": "gmail-clip-footer-missing",
+      "input": "Our marketing email shows a 'View entire message' link in Gmail and the unsubscribe footer is cut off. Why?",
+      "expected_checks": ["routing_correct", "quality_criteria"],
+      "notes": "email-templates; HTML over ~102KB is clipped; trim to under 100KB."
+    },
+    {
+      "id": "out-of-scope-sms",
+      "input": "Set up SMS OTP delivery for our login flow.",
+      "expected_checks": ["routing_correct", "deterministic_scripts"],
+      "notes": "Out of scope for email-comms (SMS/push route elsewhere); redirect, do not invent a topic."
+    }
+  ]
+}

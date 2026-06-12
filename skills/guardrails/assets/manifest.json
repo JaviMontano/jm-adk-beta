@@ -1,0 +1,17 @@
+{
+  "skill": "guardrails",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Weighted criteria a guard verdict must satisfy (single-playbook, fail-closed, evidence-tagged, no-green-by-default, script-first determinism, secret masking, aggregated violations, rule citation).",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "text/markdown",
+      "purpose": "Operational pre-emit checklist mirroring the rubric; walked before any verdict ships.",
+      "used_by": ["templates/output.md", "agents/guardian.md"]
+    }
+  ]
+}

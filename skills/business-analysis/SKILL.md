@@ -51,6 +51,7 @@ Quality gates: constitution v6.0.0 (enforcement), evidence tags (Alfa core set,
 EN spelling: `[DOC]`/`[INFERENCE]`/`[ASSUMPTION]`/`[CONFIG]`/`[CODE]`), script-first rule. [CONFIG]
 
 ## Acceptance (gate before "done")
+- Run the gate in `assets/checklist.md`; score against `assets/quality-rubric.json`. [DOC]
 - Exactly one playbook loaded; topic matches user intent. [DOC]
 - Every non-obvious claim tagged, one family, consistent spelling. [DOC]
 - Outputs (flows, matrices, requirements) trace to evidence, not invention. [ASSUMPTION]

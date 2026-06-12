@@ -1,0 +1,23 @@
+{
+  "skill": "ai-quality",
+  "assets": [
+    {
+      "path": "assets/routing-matrix.json",
+      "type": "application/json",
+      "purpose": "Canonical topic->playbook map, per-topic intent/anti-scope, disambiguation rules, and router invariants used to resolve exactly one topic.",
+      "used_by": ["SKILL.md", "agents/lead.md", "agents/specialist.md"]
+    },
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Guardian scoring rubric: router-level blocking criteria, per-topic gate pointers, and anti-patterns that force a block verdict.",
+      "used_by": ["agents/guardian.md", "templates/output.md"]
+    },
+    {
+      "path": "assets/README.md",
+      "type": "text/markdown",
+      "purpose": "Explains the asset bundle and how the router and guardian consume the routing matrix and quality rubric.",
+      "used_by": ["README.md"]
+    }
+  ]
+}

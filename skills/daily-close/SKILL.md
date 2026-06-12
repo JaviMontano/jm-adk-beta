@@ -82,6 +82,7 @@ Corre el gate de aceptacion antes de declarar cierre.
 - [ ] Bloqueos abiertos marcados `{POR_CONFIRMAR}` con paso de verificacion.
 
 Si algun check falla, corrige y reevalua — no entregues un cierre parcial.
+El gate se opera con `assets/checklist.md` y `assets/quality-rubric.json`.
 
 ## Self-correction triggers
 

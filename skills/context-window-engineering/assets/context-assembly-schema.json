@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "context-assembly-schema",
+  "description": "Declara el ensamblado de la ventana de contexto antes de escribir prompts o adapters.",
+  "type": "object",
+  "required": ["provider", "window_limit_tokens", "blocks", "compaction"],
+  "properties": {
+    "provider": { "type": "string" },
+    "prefix_caching_supported": { "type": "boolean" },
+    "window_limit_tokens": { "type": "integer", "minimum": 1 },
+    "blocks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "zone"],
+        "properties": {
+          "id": { "type": "string" },
+          "kind": { "enum": ["role", "tools", "policies", "schema", "few_shot", "history", "reminder"] },
+          "zone": { "enum": ["prefix", "compactable", "dynamic_tail"] },
+          "per_turn": { "type": "boolean" },
+          "critical_rule": { "type": "boolean" },
+          "restated_at_end": { "type": "boolean" }
+        }
+      }
+    },
+    "compaction": {
+      "type": "object",
+      "required": ["threshold", "strategy", "preserve_edges"],
+      "properties": {
+        "threshold": { "type": "number", "minimum": 0, "maximum": 1 },
+        "strategy": { "enum": ["summarize", "truncate"] },
+        "preserve_edges": { "const": true }
+      }
+    }
+  }
+}

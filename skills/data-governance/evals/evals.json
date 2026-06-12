@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "id": "privacy-export-before-vendor",
+      "input": "We're exporting customers (email, name, DOB, postal code) and support_tickets (free-text agent notes) to an external churn-modeling vendor under GDPR. What must we do so the export isn't identifiable, and how do we honor later deletion requests?",
+      "expected_checks": ["routes_to_data-privacy-patterns", "single_playbook_loaded", "quality_criteria", "reidentification_test", "consent_erasure_path"]
+    },
+    {
+      "id": "audit-trail-admin-actions",
+      "input": "Design a tamper-evident audit log for admin actions in our payments console: who changed a payout limit, when, from where. Regulators require 7-year immutable retention.",
+      "expected_checks": ["routes_to_audit-trail-design", "single_playbook_loaded", "record_schema_complete", "integrity_chain_verifiable", "quality_criteria"]
+    },
+    {
+      "id": "documentation-orphan-columns",
+      "input": "Our analytics team can't tell where fct_orders.total_amount comes from and half the columns have no owner. Build us a data dictionary and column-level lineage for the orders mart.",
+      "expected_checks": ["routes_to_data-documentation", "single_playbook_loaded", "lineage_named_source", "doc_drift_zero", "deterministic_scripts"]
+    },
+    {
+      "id": "pipeline-gates-dq-checkpoints",
+      "input": "Add quality checkpoints between the bronze, silver, and gold stages of our ELT so a malformed silver table can't flow to gold. We want a hard stop, not a warning.",
+      "expected_checks": ["routes_to_pipeline-governance", "single_playbook_loaded", "gates_g0_g3_evaluated", "confidence_threshold_enforced", "deterministic_scripts"]
+    },
+    {
+      "id": "strategy-greenfield-platform",
+      "input": "We're a 12-source retailer standing up a new data platform; GDPR is in scope and marketing needs same-day order data. Recommend an architecture, governance model, and quality-SLA approach.",
+      "expected_checks": ["routes_to_data-strategy", "single_playbook_loaded", "named_owners", "quality_rules_metric_threshold_action", "quality_criteria"]
+    },
+    {
+      "id": "governance-operating-model",
+      "input": "Nobody owns our customer-360 dataset and disputes about field definitions never get resolved. Set up an ownership, stewardship, and escalation model.",
+      "expected_checks": ["routes_to_data-governance", "single_playbook_loaded", "named_decision_maker", "escalation_path_defined", "quality_criteria"]
+    },
+    {
+      "id": "storytelling-metrics-to-narrative",
+      "input": "Turn this quarter's retention metrics into a 3-slide narrative for the exec team: churn rose in the SMB segment but enterprise improved. Make it honest, not spin.",
+      "expected_checks": ["routes_to_data-storytelling", "single_playbook_loaded", "claims_traceable_to_metric", "no_green_as_success", "quality_criteria"]
+    },
+    {
+      "id": "ambiguous-privacy-vs-governance",
+      "input": "We need to 'get our data house in order' for an upcoming audit — there's something about who can see HR salary fields and who's accountable for them. Where do we start?",
+      "expected_checks": ["topic_disambiguation_one_question", "prefer_more_specific_topic", "single_playbook_loaded", "assets"]
+    },
+    {
+      "id": "anti-scope-etl-authoring",
+      "input": "Write the dbt model SQL that joins stripe.charges to orders and divides amount by 100.",
+      "expected_checks": ["recognizes_out_of_scope", "redirects_not_authors_etl", "single_playbook_loaded", "assets"]
+    },
+    {
+      "id": "missing-input-blocker",
+      "input": "Anonymize our patients table for research before Friday.",
+      "expected_checks": ["routes_to_data-privacy-patterns", "missing_input_blocker_supuesto", "verification_step_present", "assets", "quality_criteria"]
+    }
+  ]
+}

@@ -55,6 +55,11 @@ Discover → Analyze → Execute → Validate. Quality gates: constitution v6.0.
 - Credentials/scopes confirmed present; no secrets pasted inline. [ASSUMPTION]
 - Output carries one-family evidence tags; assumptions pair with a verify step. [DOC]
 
+## Assets
+Routing gate is backed by `assets/` — `assets/routing-checklist.md` (resolve →
+load → plan → gate) and `assets/quality-rubric.json` (8-criterion acceptance
+gate). See `assets/README.md`. [DOC]
+
 ## Anti-patterns
 - Loading multiple routes "to be safe" — defeats the router. [INFERENCE]
 - Answering Google-API questions from memory instead of the playbook. [INFERENCE]

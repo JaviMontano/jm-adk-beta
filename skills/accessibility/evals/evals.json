@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "id": "route-audit-existing-spa",
+      "input": "We shipped a React checkout SPA. Run a WCAG 2.1 AA audit on /cart and /checkout and give me a gap scorecard with tickets.",
+      "expected_checks": ["correct_topic_audit", "single_playbook_loaded", "wcag_criterion_cited", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "route-design-combobox",
+      "input": "Before we build it, spec an accessible country-selector combobox: keyboard model, ARIA, focus, and contrast tokens.",
+      "expected_checks": ["correct_topic_design", "native_before_aria", "keyboard_contract_present", "assets", "quality_criteria"]
+    },
+    {
+      "id": "route-testing-regression",
+      "input": "Author a regression test plan with axe-core plus keyboard and screen-reader smoke for our payment dialog flow.",
+      "expected_checks": ["correct_topic_testing", "automated_plus_manual", "at_browser_pairing_named", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "route-writing-alt-error",
+      "input": "Write alt text for these three product images and rewrite the 'Error 0x80004005' message into accessible copy.",
+      "expected_checks": ["correct_topic_writing", "alt_treatment_by_job", "no_invented_visual_detail", "quality_criteria", "assets"]
+    },
+    {
+      "id": "axe-clean-but-manual-fail",
+      "input": "Our axe-core run reports 0 violations on the homepage. Can we say it's WCAG compliant?",
+      "expected_checks": ["rejects_green_as_success", "automated_first_manual_finality", "status_vocabulary", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "no-target-gap-report",
+      "input": "Make our app accessible.",
+      "expected_checks": ["requests_target_or_gap_report", "single_playbook_loaded", "no_hypothetical_audit", "quality_criteria"]
+    },
+    {
+      "id": "contrast-on-gradient",
+      "input": "The CTA button sits on a gradient hero. Verify whether the label text meets contrast at /landing.",
+      "expected_checks": ["contrast_threshold_applied", "browser_rendered_contrast", "not_verified_when_unmeasurable", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "multi-topic-sequence",
+      "input": "Design an accessible toast/live-region component and then give me a test plan to verify it.",
+      "expected_checks": ["sequences_design_then_testing", "single_playbook_per_pass", "no_merged_playbooks", "quality_criteria", "assets"]
+    },
+    {
+      "id": "aaa-escalation",
+      "input": "Certify our portal as WCAG 2.1 AAA and produce the VPAT for procurement.",
+      "expected_checks": ["escalates_out_of_scope", "named_human_owner_required", "no_unsupported_compliance_claim", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "suppression-hygiene",
+      "input": "We want to suppress an axe color-contrast rule on the legacy banner so CI passes. How should we record it?",
+      "expected_checks": ["suppression_has_owner_expiry", "re_enable_criteria_required", "no_green_ci_as_accessible", "assets", "quality_criteria"]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "nodes": [
+    { "id": "control_loop", "label": "Loop de control del agente", "kind": "concept" },
+    { "id": "stop_reason", "label": "stop_reason (señal tipada)", "kind": "signal" },
+    { "id": "end_turn", "label": "end_turn (halt limpio)", "kind": "signal" },
+    { "id": "tool_use", "label": "tool_use (despacho)", "kind": "signal" },
+    { "id": "max_tokens", "label": "max_tokens (truncado)", "kind": "signal" },
+    { "id": "unhandled_stop", "label": "UnhandledStop", "kind": "exception" },
+    { "id": "budget", "label": "Budget duro (max_iterations)", "kind": "control" },
+    { "id": "budget_exceeded", "label": "BudgetExceeded", "kind": "exception" },
+    { "id": "handler", "label": "Handler de herramienta", "kind": "component" },
+    { "id": "tool_result", "label": "tool_result (rol user + tool_use_id)", "kind": "message" },
+    { "id": "parallel_tools", "label": "Tool calls en paralelo", "kind": "edge_case" },
+    { "id": "instrumentation", "label": "Instrumentación / traza", "kind": "control" },
+    { "id": "prose_control", "label": "Control por prosa (anti-patrón)", "kind": "antipattern" },
+    { "id": "loop_contract", "label": "Contrato del loop (assets)", "kind": "artifact" }
+  ],
+  "edges": [
+    { "from": "control_loop", "to": "stop_reason", "rel": "se_enruta_por" },
+    { "from": "stop_reason", "to": "end_turn", "rel": "puede_ser" },
+    { "from": "stop_reason", "to": "tool_use", "rel": "puede_ser" },
+    { "from": "stop_reason", "to": "max_tokens", "rel": "puede_ser" },
+    { "from": "end_turn", "to": "control_loop", "rel": "detiene_limpio" },
+    { "from": "tool_use", "to": "handler", "rel": "despacha_a" },
+    { "from": "handler", "to": "tool_result", "rel": "produce" },
+    { "from": "tool_result", "to": "control_loop", "rel": "se_reinyecta_en" },
+    { "from": "tool_use", "to": "parallel_tools", "rel": "puede_traer" },
+    { "from": "parallel_tools", "to": "tool_result", "rel": "recolecta_N_en_user" },
+    { "from": "stop_reason", "to": "unhandled_stop", "rel": "falla_fuerte_si_desconocida" },
+    { "from": "max_tokens", "to": "unhandled_stop", "rel": "trata_como_no_feliz" },
+    { "from": "budget", "to": "budget_exceeded", "rel": "dispara" },
+    { "from": "control_loop", "to": "budget", "rel": "esta_acotado_por" },
+    { "from": "control_loop", "to": "instrumentation", "rel": "emite" },
+    { "from": "prose_control", "to": "control_loop", "rel": "veta_a" },
+    { "from": "loop_contract", "to": "control_loop", "rel": "se_compila_en" }
+  ]
+}

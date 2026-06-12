@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "id": "route-process-modeling",
+      "input": "Our AP team's invoice approval takes 11 days end-to-end. Map how it runs today with swimlanes and find where the time goes.",
+      "expected_checks": ["routing_single_topic", "quality_criteria", "evidence_tags"]
+    },
+    {
+      "id": "route-flow-mapping",
+      "input": "We have a checkout, an orders service, and a payments service. Trace the end-to-end business flows across these bounded contexts with sequence diagrams and an integration matrix.",
+      "expected_checks": ["routing_single_topic", "assets", "evidence_tags"]
+    },
+    {
+      "id": "route-requirements",
+      "input": "Turn 'users should be able to reset their password via email' into INVEST stories with Given/When/Then acceptance criteria and a traceability matrix.",
+      "expected_checks": ["quality_criteria", "deterministic_scripts", "evidence_tags"]
+    },
+    {
+      "id": "route-feasibility",
+      "input": "Can we migrate the monolith auth module to a managed IdP within a 2-sprint window with our current team? Give a go/no-go with confidence.",
+      "expected_checks": ["routing_single_topic", "quality_criteria", "stack_lens"]
+    },
+    {
+      "id": "route-scenario",
+      "input": "Compare three implementation options for our notifications system: Firebase-native, hybrid on Hostinger, and an off-stack custom build. Weighted trade-off please.",
+      "expected_checks": ["assets", "stack_lens", "quality_criteria"]
+    },
+    {
+      "id": "route-change-readiness",
+      "input": "We're rolling out a new ERP to branch operations staff and a prior rollout stalled. Assess whether they're ready to adopt and where the resistance is.",
+      "expected_checks": ["quality_criteria", "evidence_tags", "deterministic_scripts"]
+    },
+    {
+      "id": "gate-assumption-banner",
+      "input": "Run feasibility on this initiative, but I can't give you team velocity data or the integration docs yet.",
+      "expected_checks": ["assets", "deterministic_scripts", "evidence_tags"]
+    },
+    {
+      "id": "gate-phase-separation",
+      "input": "Map our order-fulfilment process and while you're at it design the target microservice architecture and price the build.",
+      "expected_checks": ["phase_separation", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "route-tie-disambiguation",
+      "input": "Help me with a discovery session for the new claims platform.",
+      "expected_checks": ["routing_single_topic", "quality_criteria"]
+    },
+    {
+      "id": "gate-no-green-success",
+      "input": "Score the feasibility of our data-warehouse migration and tell me if the dashboard is all green.",
+      "expected_checks": ["quality_criteria", "evidence_tags", "assets"]
+    }
+  ]
+}

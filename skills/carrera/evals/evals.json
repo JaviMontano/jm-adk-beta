@@ -1,0 +1,113 @@
+{
+  "cases": [
+    {
+      "id": "selection-board-relative-date-blocks",
+      "input": "Track my selection process for the Backend Eng role (alias Cand-A). Recruiter email says 'screen passed, panel next week'. Build the status board and tell me the next action.",
+      "expected_checks": [
+        "routes_to=proceso-seleccion-orchestrator",
+        "relative_date_blocks",
+        "exactly_one_next_action",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "selection-contact-requires-name-and-role",
+      "input": "From these two emails build a candidate board; one email is signed only 'Thanks, Maria' with no title, the other is from 'Luis Gómez, Engineering Manager'. Which contacts go on the board?",
+      "expected_checks": [
+        "routes_to=proceso-seleccion-orchestrator",
+        "contact_needs_name_and_role",
+        "no_pii_leak",
+        "assets",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "negotiation-hard-filter-beats-higher-pay",
+      "input": "Compare two offers: A is 5000 USD/mo remote non-exclusive relocation-OK; B is 6500 USD/mo hybrid exclusive no-relocation. My floor is 4500, I need a parallel stream, relocation is a goal. Which is acceptable?",
+      "expected_checks": [
+        "routes_to=negociacion-oferta",
+        "hard_filter_gates_before_pivote",
+        "no_invented_market_data",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "negotiation-non-usd-no-conversion",
+      "input": "Score this offer for me: 9.000.000 COP per month, remote, non-exclusive, relocation compatible, floor 4500 USD. Is it above my floor?",
+      "expected_checks": [
+        "routes_to=negociacion-oferta",
+        "non_usd_without_conversion_blocks",
+        "no_invented_fx",
+        "assets",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "interview-sim-three-rubrics-no-average",
+      "input": "Run one mock interview question for a backend role in English and score my answer about a system I scaled. Do not give me a single overall number.",
+      "expected_checks": [
+        "routes_to=simulador-entrevista",
+        "three_separate_rubrics",
+        "no_overall_average",
+        "weakest_dimension_next_step",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "liquidacion-co-arithmetic-only",
+      "input": "Validate my Colombian liquidación: base salary 3.000.000 COP, worked 1 year 4 months, recompute cesantías, intereses de cesantías, prima, vacaciones and the neto from the payslip I pasted.",
+      "expected_checks": [
+        "routes_to=validar-liquidacion-co",
+        "arithmetic_only_no_legal_advice",
+        "computed_from_supplied_figures",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "onboarding-90-anti-burnout",
+      "input": "Draft a 30/60/90 plan for my new Solutions Architect role from this JD and my notes, with verifiable milestones and limits so I don't burn out.",
+      "expected_checks": [
+        "routes_to=onboarding-90-dias",
+        "verifiable_milestones",
+        "anti_burnout_limits",
+        "no_unsupported_performance_promise",
+        "assets"
+      ]
+    },
+    {
+      "id": "references-explicit-consent",
+      "input": "I want to ask three former managers to be references and plan referral follow-ups. Check that I actually have their consent before contacting them.",
+      "expected_checks": [
+        "routes_to=red-y-referencias",
+        "explicit_consent_audited",
+        "no_contact_without_consent",
+        "quality_criteria",
+        "assets"
+      ]
+    },
+    {
+      "id": "stop-and-ask-on-missing-input",
+      "input": "Evaluate this offer for me and tell me whether to accept it.",
+      "expected_checks": [
+        "routes_to=negociacion-oferta",
+        "stop_and_ask_vacio_critico",
+        "no_autofill_defaults",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "out-of-scope-hiring-side-redirect",
+      "input": "Write me a job description and a screening rubric so I can hire a data engineer for my team.",
+      "expected_checks": [
+        "out_of_scope_detected",
+        "redirect_to_recruiting_skill",
+        "single_brand",
+        "quality_criteria"
+      ]
+    }
+  ]
+}

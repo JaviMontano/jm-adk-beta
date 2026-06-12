@@ -135,6 +135,11 @@ Entregar SOLO si todas se cumplen: [DOC]
   `{POR_CONFIRMAR}`, `{VACIO_CRITICO}`. No mezclar con la familia Alfa. [DOC]
 - `{VACIO_CRITICO}` es terminal: detener y preguntar, nunca auto-rellenar.
 
+## Assets
+
+- Rubrica y checklist del gate en `assets/` (`quality-rubric.json`,
+  `gate-checklist.md`); ver `assets/README.md`.
+
 ## Update-Safety Notes
 
 - Los archivos de soporte generados son missing-only por defecto.

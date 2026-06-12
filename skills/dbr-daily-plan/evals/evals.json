@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "skill": "dbr-daily-plan",
+  "cases": [
+    {
+      "id": "morning_overloaded_backlog",
+      "input": "Tengo 9 tareas y 3 reuniones hoy, 5 horas reales de foco. Dame el plan del dia DBR.",
+      "expected_activation": true,
+      "expected_checks": ["drum_max_3", "capacity_respects_constraint", "no_hoy_present", "quality_criteria"]
+    },
+    {
+      "id": "explicit_p09_request",
+      "input": "Emite el P09 de hoy: backlog en MEMORY.md, deadline del informe a las 4pm.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "first_step_under_15", "assets"]
+    },
+    {
+      "id": "empty_backlog_terminal",
+      "input": "Hazme el plan del dia. (No adjunto tareas ni agenda.)",
+      "expected_activation": true,
+      "expected_checks": ["empty_backlog_critical", "evidence", "quality_criteria"]
+    },
+    {
+      "id": "everything_is_p0",
+      "input": "Las 6 tareas de hoy son todas P0 criticas, dame las prioridades de hoy.",
+      "expected_activation": true,
+      "expected_checks": ["drum_max_3", "force_ranking", "no_hoy_present"]
+    },
+    {
+      "id": "meeting_saturated_day",
+      "input": "Hoy tengo 7 horas de reuniones de 8 disponibles, plan diario por favor.",
+      "expected_activation": true,
+      "expected_checks": ["protect_focus_block", "evidence", "quality_criteria"]
+    },
+    {
+      "id": "verifiable_results_enforced",
+      "input": "Mi plan dice 'avanzar en la propuesta' y 'mirar el bug'. Conviertelo en un P09 real.",
+      "expected_activation": true,
+      "expected_checks": ["verifiable_result", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "false_buffer_detected",
+      "input": "Tengo 8h de tareas estimadas para 8h disponibles, dame el plan DBR de hoy.",
+      "expected_activation": true,
+      "expected_checks": ["capacity_respects_constraint", "buffer_present", "quality_criteria"]
+    },
+    {
+      "id": "carryover_from_yesterday",
+      "input": "Arrastro el plan de ayer con 2 tareas abiertas; rehaz el plan diario de hoy.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "revalidate_drum", "assets"]
+    },
+    {
+      "id": "weekly_scope_rejected",
+      "input": "Planifica mi trimestre y las dependencias del proyecto a 6 semanas.",
+      "expected_activation": false,
+      "expected_checks": ["out_of_scope_weekly", "quality_criteria"]
+    },
+    {
+      "id": "local_override_preserved",
+      "input": "Completa los archivos de soporte del plan diario sin pisar mi config .local.",
+      "expected_activation": true,
+      "expected_checks": ["upgrade_safety", "deterministic_scripts", "assets"]
+    }
+  ]
+}

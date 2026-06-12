@@ -1,0 +1,42 @@
+{
+  "nodes": [
+    { "id": "router", "label": "ai-architecture router", "kind": "skill" },
+    { "id": "topic", "label": "topic (one enum value)", "kind": "param" },
+    { "id": "depth", "label": "depth (quick|deep)", "kind": "param" },
+    { "id": "conops", "label": "ai-conops", "kind": "topic" },
+    { "id": "design-patterns", "label": "ai-design-patterns", "kind": "topic" },
+    { "id": "pipeline", "label": "ai-pipeline-architecture", "kind": "topic" },
+    { "id": "software-arch", "label": "ai-software-architecture", "kind": "topic" },
+    { "id": "audit", "label": "audit", "kind": "topic" },
+    { "id": "rag", "label": "rag-patterns", "kind": "topic" },
+    { "id": "embedding", "label": "embedding-strategy", "kind": "topic" },
+    { "id": "prompt", "label": "prompt-engineering", "kind": "topic" },
+    { "id": "structured", "label": "structured-output", "kind": "topic" },
+    { "id": "implementation", "label": "implementation", "kind": "topic" },
+    { "id": "ieee1362", "label": "IEEE 1362-2022 CONOPS", "kind": "standard" },
+    { "id": "six-layer", "label": "6-layer AI stack", "kind": "model" },
+    { "id": "grounding", "label": "cite-or-abstain grounding", "kind": "rule" },
+    { "id": "enforcement-tier", "label": "schema enforcement tier", "kind": "rule" },
+    { "id": "eval-gate", "label": "playbook eval gate", "kind": "gate" },
+    { "id": "evidence-tags", "label": "Alfa core evidence tags", "kind": "governance" }
+  ],
+  "edges": [
+    { "from": "router", "to": "topic", "rel": "resolves" },
+    { "from": "router", "to": "depth", "rel": "reads" },
+    { "from": "topic", "to": "rag", "rel": "may-select" },
+    { "from": "topic", "to": "conops", "rel": "may-select" },
+    { "from": "topic", "to": "prompt", "rel": "may-select" },
+    { "from": "conops", "to": "ieee1362", "rel": "conforms-to" },
+    { "from": "conops", "to": "software-arch", "rel": "precedes" },
+    { "from": "software-arch", "to": "six-layer", "rel": "uses" },
+    { "from": "rag", "to": "embedding", "rel": "delegates-to" },
+    { "from": "rag", "to": "grounding", "rel": "enforces" },
+    { "from": "structured", "to": "enforcement-tier", "rel": "applies" },
+    { "from": "pipeline", "to": "software-arch", "rel": "constrains" },
+    { "from": "audit", "to": "design-patterns", "rel": "checks-against" },
+    { "from": "implementation", "to": "pipeline", "rel": "realizes" },
+    { "from": "rag", "to": "eval-gate", "rel": "gated-by" },
+    { "from": "prompt", "to": "eval-gate", "rel": "gated-by" },
+    { "from": "router", "to": "evidence-tags", "rel": "governed-by" }
+  ]
+}

@@ -53,6 +53,7 @@ is not LLM/AI-system shaped, do not route here. [INFERENCIA]
 
 Spine: Discover → Analyze → Execute → Validate.
 Quality gates: constitution v6.0.0 (enforcement), evidence tags, script-first rule. [CONFIG]
+Deterministic routing aids: `assets/` (routing-rubric.json, routing-checklist.md). [CONFIG]
 
 ## Validation gate (before handing off)
 - Exactly one `topic` resolved and present in the enum. [DOC]

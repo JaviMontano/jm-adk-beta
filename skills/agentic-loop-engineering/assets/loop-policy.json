@@ -1,0 +1,24 @@
+{
+  "control": "stop_reason",
+  "signals": {
+    "end_turn": "halt_clean",
+    "tool_use": "dispatch_all_blocks",
+    "max_tokens": "raise",
+    "pause_turn": "raise",
+    "refusal": "raise"
+  },
+  "unhandled_policy": "raise UnhandledStop",
+  "budget": {
+    "kind": "iterations",
+    "limit": 20,
+    "on_exceeded": "raise BudgetExceeded"
+  },
+  "tool_result": {
+    "role": "user",
+    "requires_tool_use_id": true,
+    "collect_parallel": true,
+    "on_handler_error": "propagate"
+  },
+  "instrumentation": ["iteration", "stop_reason", "tool", "latency"],
+  "_evidence": "[CONFIG] política por defecto; ajustar limit/on_handler_error por agente. Verificar nombres de señal contra el SDK en uso [SUPUESTO]."
+}

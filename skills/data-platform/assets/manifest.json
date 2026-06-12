@@ -1,0 +1,17 @@
+{
+  "skill": "data-platform",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Weighted scoring rubric over the 8 DoD dimensions (routing, idempotency, watermark, batch cap, rollback, reconciliation, evidence tags) with a 0.85 pass threshold.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "text/markdown",
+      "purpose": "Done checklist mirroring the SKILL.md validation gate; walked item-by-item during the Validate stage.",
+      "used_by": ["agents/guardian.md", "templates/output.md"]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "skill": "ai-quality",
+  "purpose": "Scoring rubric the guardian applies to a router run before calling it done.",
+  "scale": { "pass": "all blocking criteria met", "warn": "non-blocking gaps remain", "block": "a blocking criterion failed" },
+  "router_criteria": [
+    { "id": "RQ-1", "criterion": "Resolved topic is in the fixed enum and exactly one playbook was read", "blocking": true, "tag": "[CÓDIGO]" },
+    { "id": "RQ-2", "criterion": "Single Alfa tag family throughout; no mixed families", "blocking": true, "tag": "[DOC]" },
+    { "id": "RQ-3", "criterion": "No [CÓDIGO] tag without an inspected in-repo referent (else downgraded to [SUPUESTO])", "blocking": true, "tag": "[DOC]" },
+    { "id": "RQ-4", "criterion": "depth honored: deep verified each step, quick stayed at essentials", "blocking": false, "tag": "[CONFIG]" },
+    { "id": "RQ-5", "criterion": "Offline determinism: no network, wall-clock, or RNG in validated checks", "blocking": true, "tag": "[CONFIG]" },
+    { "id": "RQ-6", "criterion": "A passing offline check is reported as well-formedness, never as a safety/correctness guarantee", "blocking": true, "tag": "[INFERENCIA]" }
+  ],
+  "topic_gate_pointers": {
+    "ai-testing-strategy": "all 36 matrix cells carry a verdict; aggregate-pass but slice-fail fails the gate",
+    "ai-assisted-testing": "every test has target/rationale/oracle/evidence; status in {proposed,generated,executed}",
+    "ai-code-review": "every finding cites file+line; no pass/fail claim without an executed command; gapless IDs",
+    "code-review": "decision equals worst severity present; style-only is never a blocker without a cited policy",
+    "llm-evaluation": "every score has a baseline; eval set+model+prompt versioned; judge config disclosed",
+    "ai-safety": "every risk maps to >=1 control; no critical risk on allow-only; no orphan ids",
+    "ai-content-detection": "authorship_claim stays not-determined; >=2 concordant signals before a non-inconclusive label",
+    "ai-documentation": "every section cites >=1 evidence id; unverified content tagged [OPEN]; safe relative paths",
+    "ai-workflow-automation": "gates precede external effects; bounded retries+fallback; input/output contracts per AI step"
+  },
+  "anti_patterns_that_force_block": [
+    "loading more than one playbook",
+    "answering from the router without reading a playbook",
+    "guessing an ambiguous topic instead of disambiguating or asking",
+    "claiming a test/runtime result with no executed command",
+    "reporting green as a safety guarantee"
+  ]
+}

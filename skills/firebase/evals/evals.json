@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "id": "route-scheduled-vs-functions",
+      "input": "We need a job that runs every night at 02:00 to expire stale carts. Where does this go in the firebase skill?",
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "owner-only-rules",
+      "input": "Write Firestore Security Rules so a signed-in user can read/edit only their own notes, an admin can read any, and ownerId can never change after create.",
+      "expected_checks": ["assets", "quality_criteria"]
+    },
+    {
+      "id": "list-rule-rejection",
+      "input": "Our list query on /orders returns PERMISSION_DENIED even though a single get works. The list rule is admin-only. Explain and fix.",
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "composite-index-failure",
+      "input": "A query ordering orders by createdAt DESC filtered by userId throws FAILED_PRECONDITION at runtime. What index do we add and where?",
+      "expected_checks": ["deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "idempotent-trigger",
+      "input": "Our onCreate Firestore trigger sometimes double-charges because it fires twice. How do we make the Cloud Function handler safe?",
+      "expected_checks": ["quality_criteria", "assets"]
+    },
+    {
+      "id": "cost-read-explosion",
+      "input": "The dashboard reads 500 docs per page load 10k times a day and the Firestore bill is climbing. Cut the read cost without breaking the feature.",
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "emulator-allow-deny",
+      "input": "Set up the Emulator Suite so we can unit-test our notes rules for both allow and deny before deploying.",
+      "expected_checks": ["deterministic_scripts", "assets"]
+    },
+    {
+      "id": "no-price-cost-estimate",
+      "input": "Give me a monthly cost figure in dollars for 5M Firestore reads per day so I can put it in the proposal.",
+      "expected_checks": ["quality_criteria", "assets"]
+    },
+    {
+      "id": "out-of-scope-multicloud",
+      "input": "Design our Firebase project to also fail over to AWS DynamoDB and run the functions in a Kubernetes cluster.",
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "architecture-full",
+      "input": "Design the end-to-end architecture for a notes app: Firestore schema, Functions topology, Security Rules strategy, and a cost estimate at 5k users.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    }
+  ]
+}

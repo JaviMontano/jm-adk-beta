@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "agentic-loop-engineering/loop-contract.schema.json",
+  "title": "Agentic Loop Contract",
+  "description": "Contrato estructurado del bucle de control de un agente. Se declara ANTES de escribir el loop y se compila a un esqueleto Python verificable.",
+  "type": "object",
+  "required": ["control", "signals", "budget", "tool_result"],
+  "additionalProperties": false,
+  "properties": {
+    "control": {
+      "type": "string",
+      "description": "Origen del control del loop. Debe ser la señal tipada, nunca el texto del modelo.",
+      "enum": ["stop_reason"]
+    },
+    "signals": {
+      "type": "object",
+      "description": "Mapa señal -> acción. Toda señal no listada debe terminar en UnhandledStop.",
+      "required": ["end_turn", "tool_use"],
+      "properties": {
+        "end_turn": { "const": "halt_clean" },
+        "tool_use": { "const": "dispatch_all_blocks" },
+        "max_tokens": { "enum": ["raise", "continue"] },
+        "pause_turn": { "enum": ["raise", "continue"] },
+        "refusal": { "enum": ["raise"] }
+      },
+      "additionalProperties": { "enum": ["raise", "continue", "halt_clean"] }
+    },
+    "unhandled_policy": {
+      "type": "string",
+      "description": "Política para señales no contempladas.",
+      "const": "raise UnhandledStop"
+    },
+    "budget": {
+      "type": "object",
+      "required": ["kind", "limit"],
+      "properties": {
+        "kind": { "enum": ["iterations", "tokens"] },
+        "limit": { "type": "integer", "minimum": 1 },
+        "on_exceeded": { "const": "raise BudgetExceeded" }
+      }
+    },
+    "tool_result": {
+      "type": "object",
+      "description": "Contrato de reinyección de resultados de herramientas.",
+      "required": ["role", "requires_tool_use_id"],
+      "properties": {
+        "role": { "const": "user" },
+        "requires_tool_use_id": { "const": true },
+        "collect_parallel": {
+          "type": "boolean",
+          "description": "Recolectar los N tool_result de una respuesta en UN mensaje user.",
+          "const": true
+        },
+        "on_handler_error": { "enum": ["propagate", "tool_result_is_error"] }
+      }
+    },
+    "instrumentation": {
+      "type": "array",
+      "description": "Campos emitidos por iteración para auditoría.",
+      "items": { "enum": ["iteration", "stop_reason", "tool", "latency"] }
+    }
+  }
+}

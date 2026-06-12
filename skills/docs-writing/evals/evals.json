@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "id": "route-api-from-routes-file",
+      "input": "Here is our Express app with route definitions and an existing openapi.yaml. Generate the developer-facing API reference with auth docs and an error-code catalog.",
+      "expected_checks": ["routes_to_api-documentation", "single_playbook_loaded", "quality_criteria", "openapi_3.0_shape", "error_catalog_present"]
+    },
+    {
+      "id": "changelog-from-tag-range",
+      "input": "Write a user-facing changelog covering the 18 merged PRs between tag v2.3.0 and HEAD, including a migration guide for the dropped Node 16 support.",
+      "expected_checks": ["routes_to_changelog-writing", "keep_a_changelog_grouping", "migration_note_for_breaking_change", "semver_bump_matches_impact", "quality_criteria"]
+    },
+    {
+      "id": "onboarding-from-repo",
+      "input": "New backend hire starts Monday. Build an onboarding guide from our README, Makefile, and CI config that gets them to a first merged PR in week one.",
+      "expected_checks": ["routes_to_developer-onboarding", "dependency_ordered_checklist", "ramp_metrics_with_windows", "buddy_and_mentor_named", "quality_criteria"]
+    },
+    {
+      "id": "memo-decision-brief",
+      "input": "Draft an internal memo asking the eng lead to approve migrating CI from Jenkins to GitHub Actions, decision needed by Friday.",
+      "expected_checks": ["routes_to_internal-memo", "bluf_first", "action_items_have_owner_deadline", "no_invented_prices", "quality_criteria"]
+    },
+    {
+      "id": "standards-decision",
+      "input": "We have 40 docs in mixed formats with no versioning. Define the house documentation standard: templates, review cycle, and archival policy, then conform our onboarding doc to it.",
+      "expected_checks": ["routes_to_documentation-standards", "diataxis_quadrant_declared", "semver_for_docs_rule", "front_matter_complete", "quality_criteria"]
+    },
+    {
+      "id": "ambiguous-system-vs-standards",
+      "input": "Set up our doc-as-code pipeline so docs publish from CI on every merge.",
+      "expected_checks": ["routes_to_documentation-system", "single_playbook_loaded", "deterministic_scripts", "validate_stage_not_skipped"]
+    },
+    {
+      "id": "diagram-request",
+      "input": "Produce a Mermaid sequence diagram of our OAuth2 login flow from the auth service code.",
+      "expected_checks": ["routes_to_mermaid-diagramming", "valid_mermaid_syntax", "single_playbook_loaded", "deterministic_scripts"]
+    },
+    {
+      "id": "evidence-tag-governance",
+      "input": "Document our payments API but the rate-limit policy is still undecided and two examples reference real tokens.",
+      "expected_checks": ["supuesto_for_undecided_policy", "secrets_redacted", "single_tag_family", "assets", "quality_criteria"]
+    },
+    {
+      "id": "compound-request-split",
+      "input": "Write both the v3.0 changelog and the migration onboarding guide for the same release in one go.",
+      "expected_checks": ["splits_into_two_runs", "single_playbook_loaded", "assets", "deterministic_scripts"]
+    },
+    {
+      "id": "no-matching-topic",
+      "input": "Write a celebratory tweet thread announcing our funding round.",
+      "expected_checks": ["no_topic_match", "writes_directly_without_routing", "assets"]
+    }
+  ]
+}

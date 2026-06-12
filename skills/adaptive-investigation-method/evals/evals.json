@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "skill": "adaptive-investigation-method",
+  "cases": [
+    {
+      "id": "happy-path-auth-monorepo",
+      "type": "happy_path",
+      "input": "Find where auth tokens are validated in a 4000-file monorepo, with a hard budget of 8 expensive reads. Map cheaply with Glob/Grep before any deep read, then deep-dive only top-ranked nodes.",
+      "expected_behavior": "Installs a hard budget, builds a cheap surface map, ranks hypotheses by value/cost, deep-dives selectively, follows the delegation chain, and returns a deliverable citing the resolving nodes.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"],
+      "tags": ["unknown-repo", "budget"]
+    },
+    {
+      "id": "explicit-trigger-dataset",
+      "type": "happy_path",
+      "input": "/adaptive-investigation-method investigate an unfamiliar 12k-row dataset to locate which column drives the label imbalance, exploration budget 6.",
+      "expected_behavior": "Activates the workflow, maps the dataset surface cheaply, ranks column-level hypotheses, and asks for goal or budget only if absent.",
+      "expected_checks": ["assets", "quality_criteria"],
+      "tags": ["trigger", "dataset"]
+    },
+    {
+      "id": "compiler-valid-auth-markdown",
+      "type": "script_fixture",
+      "input": "Run compile-adaptive-investigation.py on auth-repo-investigation.json with markdown output.",
+      "expected_behavior": "The compiler exits zero and renders budget, surface map, ranked hypotheses, deep-dive log, replan log, deliverable, and stop reason.",
+      "expected_checks": ["deterministic_scripts", "quality_criteria"],
+      "tags": ["compiler", "markdown"]
+    },
+    {
+      "id": "compiler-valid-corpus-json",
+      "type": "script_fixture",
+      "input": "Run compile-adaptive-investigation.py on corpus-investigation.json and emit JSON, preserving the hypothesis_invalidated replan evidence.",
+      "expected_behavior": "The compiler exits zero and keeps each replan record's invalidated hypothesis and triggering evidence intact in the JSON output.",
+      "expected_checks": ["deterministic_scripts", "quality_criteria"],
+      "tags": ["compiler", "json"]
+    },
+    {
+      "id": "negative-missing-budget",
+      "type": "negative_fixture",
+      "input": "Validate an investigation spec that omits budget.total entirely.",
+      "expected_behavior": "The compiler exits non-zero and reports that budget.total is required as the termination guarantee.",
+      "expected_checks": ["deterministic_scripts", "quality_criteria"],
+      "tags": ["fail-closed", "budget"]
+    },
+    {
+      "id": "negative-reflexive-replan",
+      "type": "negative_fixture",
+      "input": "Validate an investigation spec whose replan log fires on every turn rather than only on hypothesis_invalidated.",
+      "expected_behavior": "The compiler exits non-zero because re-plan is only legal on hypothesis_invalidated.",
+      "expected_checks": ["deterministic_scripts", "quality_criteria"],
+      "tags": ["fail-closed", "replan"]
+    },
+    {
+      "id": "false-positive-tiny-config",
+      "type": "false_positive",
+      "input": "I have one 30-line config file; read it and tell me the configured port.",
+      "expected_behavior": "Does not activate the method; reading one small file is cheaper than building a surface map and budget loop.",
+      "expected_checks": ["quality_criteria"],
+      "tags": ["routing", "small-domain"]
+    },
+    {
+      "id": "conflict-skip-budget",
+      "type": "edge_case",
+      "input": "Use adaptive-investigation-method but skip the budget and just read every file in the repo.",
+      "expected_behavior": "Rejects the unsafe instruction, preserves the hard-budget requirement, and proposes a bounded mapped-then-deep-dive alternative.",
+      "expected_checks": ["assets", "quality_criteria"],
+      "tags": ["conflict", "anti-pattern"]
+    },
+    {
+      "id": "empty-surface-glob-miss",
+      "type": "edge_case",
+      "input": "Investigate where retries are configured in service/, budget 5, but Glob and Grep over service/ return no matching nodes.",
+      "expected_behavior": "Reports no detectable surface, surfaces surface_root for review, and refuses to start blind deep-dives that would burn budget.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"],
+      "tags": ["edge", "empty-map"]
+    }
+  ]
+}

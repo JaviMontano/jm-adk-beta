@@ -1,0 +1,47 @@
+{
+  "skill": "custom-tooling-extension",
+  "criteria": [
+    {
+      "id": "classification",
+      "label": "command vs skill por trigger y scope",
+      "fail_if": "command con activación contextual esperada, o skill para una acción que solo se invoca por nombre",
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "scope",
+      "label": "project scope si se replica al equipo",
+      "fail_if": "artefacto de equipo en user scope (no replica)",
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "context_economy",
+      "label": "context: fork en skill no trivial",
+      "fail_if": "skill contextual no trivial sin fork (contamina la sesión principal)",
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "blast_radius",
+      "label": "allowed-tools whitelist mínima",
+      "fail_if": "whitelist abierta o Bash sin justificación inline",
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "interface_routing",
+      "label": "description en una línea + argument-hint",
+      "fail_if": "description vaga o multilínea, o sin argument-hint",
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "convention_location",
+      "label": "convenciones permanentes en CLAUDE.md",
+      "fail_if": "skill que repite convenciones permanentes del repo",
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "upgrade_safety",
+      "label": "frontmatter válido y upgrade-safe",
+      "fail_if": "name/id renombrado o scope cambiado sin migrar invocaciones, o YAML inválido",
+      "evidence": "[INFERENCIA]"
+    }
+  ]
+}

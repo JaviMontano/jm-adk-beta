@@ -1,0 +1,22 @@
+{
+  "skill": "business-analysis",
+  "version": "1.0.0",
+  "scale": "Each criterion scored pass | partial | fail. Ship only when no fail remains.",
+  "universal": [
+    { "id": "U1", "criterion": "Exactly one playbook loaded; resolved topic matches user intent", "fail_if": "more than one reference loaded, or topic mismatches the dominant signal" },
+    { "id": "U2", "criterion": "Every non-obvious claim carries one evidence tag from a single family with consistent spelling", "fail_if": "untagged claim or mixed tag families" },
+    { "id": "U3", "criterion": "Every [ASSUMPTION] is paired with a named verification step", "fail_if": "bare assumption with no path to confirm it" },
+    { "id": "U4", "criterion": "Assumption ratio <=30%, else a WARNING banner with the gap list is present", "fail_if": "ratio over 30% and no banner" },
+    { "id": "U5", "criterion": "No phase leakage (no target architecture, API contracts, schemas, sprint plans, pricing)", "fail_if": "output designs the build or quotes a price" },
+    { "id": "U6", "criterion": "Effort expressed as FTE-time, never currency", "fail_if": "any monetary figure" },
+    { "id": "U7", "criterion": "No score or dashboard presented as success", "fail_if": "a 5 or a green state is framed as a guarantee" }
+  ],
+  "topic_specific": {
+    "business-process-modeling": ["every gateway branch and end event resolved", "PCE reported against a baseline", "to-be improvement traces to a named as-is waste", "owner signed off as-is before to-be"],
+    "flow-mapping": ["8-12 flows, each with happy + >=1 alt/error path", "one Mermaid sequenceDiagram per flow (<=12 messages)", "integration matrix reconciles every cross-context arrow both directions"],
+    "requirements-engineering": ["stories INVEST-compliant", "AC include negative + boundary cases", "traceability matrix has no orphan requirements or objectives"],
+    "feasibility-validation": ["all 7 dimensions scored with evidence", "decision rule applied (any 1 -> no/conditional-go)", "confidence % and biggest unknown stated"],
+    "scenario-analysis": [">=3 materially distinct scenarios", "weights sum to 1.0, locked pre-scoring, rationale stated", "sensitivity / close-call check performed"],
+    "change-readiness": ["all groups scored on all 5 ADKAR dimensions", "barrier = first <=3 in order, not the mean", "outcome metric beyond adoption count"]
+  }
+}

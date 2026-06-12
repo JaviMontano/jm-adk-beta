@@ -50,6 +50,7 @@ enforcement, evidence tags, script-first. [CONFIG]
 - Output addresses the user's task, not the topic in the abstract.
 - Destructive ops carry a rollback path before execution. [ASSUMPTION]
 - Claims tagged with one Alfa-core family tag (references/verification-tags.md).
+- Gate scored via `assets/quality-rubric.json` + `assets/checklist.md` (≥0.85). [DOC]
 
 ## Anti-patterns
 - Loading >1 route, or reading a playbook before fixing `topic`. [INFERENCE]

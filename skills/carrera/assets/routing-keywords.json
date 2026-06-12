@@ -1,0 +1,18 @@
+{
+  "skill": "carrera",
+  "purpose": "Deterministic topic-disambiguation hints for the router. Match on intent, not just substrings; on a tie ask one question.",
+  "topics": {
+    "proceso-seleccion-orchestrator": ["proceso de seleccion", "etapas", "entrevistadores", "status board", "siguiente accion", "tracking", "panel"],
+    "simulador-entrevista": ["simular entrevista", "mock interview", "practicar pregunta", "rubrica", "substance english presence"],
+    "negociacion-oferta": ["oferta", "negociar", "contrapropuesta", "floor", "PIVOTE", "exclusividad", "reubicacion"],
+    "cv-cover-optimizer": ["optimizar cv", "carta de presentacion", "ATS", "keywords", "lint cv"],
+    "cv-enhancement": ["mejorar cv", "reescribir cv", "logros", "bullets"],
+    "follow-up-email": ["follow up", "seguimiento", "correo despues de entrevista"],
+    "gratitud-post-proceso": ["agradecer", "gratitud", "thank you", "nota post proceso"],
+    "onboarding-90-dias": ["onboarding", "30 60 90", "plan de inicio", "primeros 90 dias"],
+    "red-y-referencias": ["referencias", "red profesional", "consentimiento", "referral"],
+    "cierre-conversacion": ["cierre de conversacion", "aprendizajes", "handoff durable"],
+    "acta-formal": ["acta", "minuta formal", "registro de reunion"],
+    "validar-liquidacion-co": ["liquidacion", "cesantias", "prima", "vacaciones", "paz y salvo", "colombia"]
+  }
+}

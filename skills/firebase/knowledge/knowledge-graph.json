@@ -1,0 +1,33 @@
+{
+  "nodes": [
+    { "id": "firestore", "label": "Firestore (Native mode)", "kind": "service" },
+    { "id": "security_rules", "label": "Security Rules", "kind": "concept" },
+    { "id": "composite_index", "label": "Composite Index", "kind": "concept" },
+    { "id": "custom_claims", "label": "Custom Claims", "kind": "concept" },
+    { "id": "auth", "label": "Firebase Auth", "kind": "service" },
+    { "id": "cloud_functions", "label": "Cloud Functions (2nd gen)", "kind": "service" },
+    { "id": "trigger", "label": "Firestore/Event Trigger", "kind": "concept" },
+    { "id": "idempotency", "label": "Idempotency (processed-marker)", "kind": "pattern" },
+    { "id": "denormalization", "label": "Denormalization", "kind": "pattern" },
+    { "id": "emulator_suite", "label": "Emulator Suite", "kind": "tool" },
+    { "id": "deployment", "label": "Deploy (dry-run/preview)", "kind": "process" },
+    { "id": "cost", "label": "Cost Optimization", "kind": "concern" },
+    { "id": "aggregation", "label": "count()/sum()/average()", "kind": "concept" },
+    { "id": "storage", "label": "Cloud Storage + lifecycle", "kind": "service" }
+  ],
+  "edges": [
+    { "from": "security_rules", "to": "firestore", "rel": "guards" },
+    { "from": "security_rules", "to": "custom_claims", "rel": "reads_role_from" },
+    { "from": "custom_claims", "to": "auth", "rel": "issued_by" },
+    { "from": "firestore", "to": "composite_index", "rel": "requires_for_compound_query" },
+    { "from": "cloud_functions", "to": "trigger", "rel": "invoked_by" },
+    { "from": "trigger", "to": "idempotency", "rel": "demands" },
+    { "from": "trigger", "to": "denormalization", "rel": "reconciles" },
+    { "from": "denormalization", "to": "firestore", "rel": "shapes_schema_of" },
+    { "from": "emulator_suite", "to": "security_rules", "rel": "tests_allow_and_deny" },
+    { "from": "deployment", "to": "emulator_suite", "rel": "follows_pass_in" },
+    { "from": "cost", "to": "aggregation", "rel": "prefers_over_reads" },
+    { "from": "cost", "to": "storage", "rel": "enforces_lifecycle_on" },
+    { "from": "cost", "to": "cloud_functions", "rel": "right_sizes" }
+  ]
+}

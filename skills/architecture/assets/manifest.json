@@ -1,0 +1,17 @@
+{
+  "skill": "architecture",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Machine-readable acceptance gate (8 gates) the guardian agent enforces before a deliverable is marked done.",
+      "used_by": ["SKILL.md", "agents/guardian.md", "templates/output.md"]
+    },
+    {
+      "path": "assets/routing-checklist.md",
+      "type": "text/markdown",
+      "purpose": "Pre-flight checklist for resolving exactly one topic and avoiding common mis-routes before loading a playbook.",
+      "used_by": ["README.md", "prompts/primary.md"]
+    }
+  ]
+}

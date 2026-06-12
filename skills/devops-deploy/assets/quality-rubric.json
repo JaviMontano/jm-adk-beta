@@ -1,0 +1,55 @@
+{
+  "skill": "devops-deploy",
+  "version": "1.0.0",
+  "constitution": "v6.0.0",
+  "scale": ["fail", "partial", "pass"],
+  "dimensions": [
+    {
+      "id": "routing_integrity",
+      "weight": 0.25,
+      "criteria": [
+        "Exactly one topic resolved from the routes.json enum",
+        "Exactly one references/<topic>.md playbook read (not the cluster)",
+        "No invented/renamed topics; routes.json unedited"
+      ]
+    },
+    {
+      "id": "topic_correctness",
+      "weight": 0.2,
+      "criteria": [
+        "Playbook acceptance and quality criteria satisfied",
+        "depth honored (quick=essentials, deep=exhaustive)",
+        "Deterministic scripts/validators run and result recorded"
+      ]
+    },
+    {
+      "id": "security_supply_chain",
+      "weight": 0.2,
+      "criteria": [
+        "Least-privilege tokens (top-level read, per-job reasoned widening)",
+        "Third-party actions SHA-pinned for release/deploy",
+        "No secret values embedded; OIDC or name-only references",
+        "No deploy from PR/unprotected branch; no untrusted input in run:"
+      ]
+    },
+    {
+      "id": "release_safety",
+      "weight": 0.2,
+      "criteria": [
+        "Rollback path chosen and tested in staging pre-deploy",
+        "Migrations expand/contract-safe; no destructive change this release",
+        "Risk tier set; high-risk forces canary and longer monitoring"
+      ]
+    },
+    {
+      "id": "governance_evidence",
+      "weight": 0.15,
+      "criteria": [
+        "Behavior evidence captured; green build not treated as proof",
+        "Handoff lists operator prerequisites",
+        "Every claim evidence-tagged; no secrets/prices/PII; single brand"
+      ]
+    }
+  ],
+  "gate": "All dimensions must be 'pass' (no 'fail') for the deliverable to be done."
+}

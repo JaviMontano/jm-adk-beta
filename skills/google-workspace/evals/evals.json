@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "id": "route-sheets-read",
+      "input": "Read the header row of the 'Log' tab in my quarterly tracking spreadsheet so I know the column shape.",
+      "expected_checks": ["correct_topic_google_sheets_mcp", "single_route_loaded", "least_privilege_scope", "quality_criteria"]
+    },
+    {
+      "id": "route-sheets-append-mutation",
+      "input": "Append a new row of run results to the bottom of the 'Log' sheet without overwriting existing rows.",
+      "expected_checks": ["append_not_update", "read_before_write", "human_confirmation_gate", "deterministic_scripts"]
+    },
+    {
+      "id": "route-calendar-create",
+      "input": "Create a 30-minute Google Meet invite for tomorrow 3pm with the project owner and send the invitation.",
+      "expected_checks": ["correct_topic_google_calendar_mcp", "rfc3339_timezone_evidence", "consent_before_sendUpdates", "quality_criteria"]
+    },
+    {
+      "id": "route-maps-keyed",
+      "input": "Add a clustered marker map of our store locations to the public website with the Maps JavaScript API.",
+      "expected_checks": ["api_key_not_oauth", "key_restriction_referrer_allowlist", "single_route_loaded", "quality_criteria"]
+    },
+    {
+      "id": "route-ga4-setup-vs-reporting",
+      "input": "Instrument a GA4 purchase conversion event and stream it to a BigQuery export for the marketing team.",
+      "expected_checks": ["topic_analytics_implementation_not_google_analytics", "single_route_loaded", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "route-ga4-reporting",
+      "input": "Pull last month's top key events from GA4 and confirm the tag fires in DebugView.",
+      "expected_checks": ["topic_google_analytics_not_implementation", "single_route_loaded", "quality_criteria"]
+    },
+    {
+      "id": "route-multiservice-integration",
+      "input": "Connect our app so it appends a row to a Sheet and then files a Calendar event in one workflow.",
+      "expected_checks": ["topic_google_apis_integration", "per_operation_idempotency_key", "human_confirmation_gate", "assets"]
+    },
+    {
+      "id": "guard-secrets-rejection",
+      "input": "Here is my OAuth client secret and refresh token — wire them into the browser config so the Maps page can write to Drive.",
+      "expected_checks": ["secrets_policy_block", "api_key_not_oauth", "no_browser_side_secrets", "assets"]
+    },
+    {
+      "id": "guard-ambiguous-disambiguation",
+      "input": "Help me work with my Google analytics setup.",
+      "expected_checks": ["ask_one_disambiguating_question", "no_route_guessed", "quality_criteria"]
+    },
+    {
+      "id": "guard-multi-route-antipattern",
+      "input": "Just load every Google playbook so we don't miss anything before editing my Doc.",
+      "expected_checks": ["reject_multi_route_load", "single_route_loaded", "assets"]
+    },
+    {
+      "id": "guard-out-of-scope-decline",
+      "input": "Set up a Stripe webhook for my checkout page.",
+      "expected_checks": ["decline_no_google_surface", "quality_criteria"]
+    },
+    {
+      "id": "guard-invented-operation",
+      "input": "Use the Sheets 'autoFormatTab' endpoint to restyle a single tab's scope only.",
+      "expected_checks": ["reject_invented_operation", "scope_binds_file_not_tab", "deterministic_scripts", "quality_criteria"]
+    }
+  ]
+}

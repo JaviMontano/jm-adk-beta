@@ -47,6 +47,9 @@ If the request maps to two topics, run the prerequisite first
 - Tags use Alfa core EN ([DOC]/[INFERENCE]/[CODE]/[CONFIG]/[ASSUMPTION]); never
   mix the Jarvis `{…}` family. An unresolvable topic is stop-and-ask, not an [ASSUMPTION]. [DOC]
 
+## Assets
+Routing checklist and quality rubric live in `assets/` (see `assets/README.md`). [DOC]
+
 ## Anti-patterns
 - Loading multiple playbooks "to be safe" — defeats the router. [INFERENCE]
 - Inventing a topic outside the enum, or editing `routes:` to fit a request. [DOC]

@@ -1,0 +1,38 @@
+{
+  "nodes": [
+    { "id": "user_scope", "label": "User scope (~/.claude/CLAUDE.md)", "kind": "scope" },
+    { "id": "team_scope", "label": "Team scope (root CLAUDE.md)", "kind": "scope" },
+    { "id": "module_scope", "label": "Module scope (module/CLAUDE.md)", "kind": "scope" },
+    { "id": "cacheable_prefix", "label": "Stable cacheable KV prefix", "kind": "property" },
+    { "id": "at_import", "label": "@import directive", "kind": "mechanism" },
+    { "id": "import_dag", "label": "Import graph (DAG)", "kind": "constraint" },
+    { "id": "path_scoped_rule", "label": "Path-scoped rule (apply to glob)", "kind": "mechanism" },
+    { "id": "recursive_glob", "label": "Recursive glob (**)", "kind": "mechanism" },
+    { "id": "precedence_table", "label": "Subpath precedence table", "kind": "artifact" },
+    { "id": "universal_rule", "label": "Universal rule", "kind": "rule_class" },
+    { "id": "per_module_rule", "label": "Per-module rule", "kind": "rule_class" },
+    { "id": "per_user_rule", "label": "Per-user preference", "kind": "rule_class" },
+    { "id": "cache_thrashing", "label": "Cache thrashing", "kind": "failure" },
+    { "id": "scope_leak", "label": "Scope leak into team repo", "kind": "failure" },
+    { "id": "compiler", "label": "compile-claude-md-architecture.py", "kind": "tool" },
+    { "id": "check_gate", "label": "scripts/check.sh gate", "kind": "tool" }
+  ],
+  "edges": [
+    { "from": "team_scope", "to": "cacheable_prefix", "rel": "forms" },
+    { "from": "universal_rule", "to": "team_scope", "rel": "lives_in" },
+    { "from": "per_module_rule", "to": "module_scope", "rel": "lives_in" },
+    { "from": "per_user_rule", "to": "user_scope", "rel": "lives_in" },
+    { "from": "at_import", "to": "user_scope", "rel": "loads" },
+    { "from": "at_import", "to": "module_scope", "rel": "loads" },
+    { "from": "at_import", "to": "import_dag", "rel": "constrained_by" },
+    { "from": "path_scoped_rule", "to": "recursive_glob", "rel": "uses" },
+    { "from": "path_scoped_rule", "to": "module_scope", "rel": "gates" },
+    { "from": "precedence_table", "to": "per_module_rule", "rel": "orders" },
+    { "from": "per_module_rule", "to": "cache_thrashing", "rel": "causes_if_misplaced_in_prefix" },
+    { "from": "per_user_rule", "to": "scope_leak", "rel": "causes_if_versioned" },
+    { "from": "compiler", "to": "team_scope", "rel": "emits" },
+    { "from": "compiler", "to": "module_scope", "rel": "emits" },
+    { "from": "check_gate", "to": "import_dag", "rel": "validates" },
+    { "from": "check_gate", "to": "precedence_table", "rel": "validates" }
+  ]
+}

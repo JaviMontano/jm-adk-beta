@@ -49,6 +49,9 @@ Not for: building features, prompt authoring, deployment — route elsewhere.
    cross-topic bleed are the failure modes. [INFERENCIA]
 4. Apply the spine: Discover → Analyze → Execute → Validate. [DOC]
 
+Routing/gate contracts live in `assets/` (`routing-matrix.json`,
+`quality-rubric.json`); see `assets/README.md`. [CONFIG]
+
 ## Validation gate (before "done")
 - [ ] Resolved topic ∈ enum; exactly one playbook Read. [CÓDIGO]
 - [ ] Quality gates honored: constitution v6.0.0, evidence tags, script-first. [CONFIG]

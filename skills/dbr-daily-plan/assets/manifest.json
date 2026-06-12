@@ -1,0 +1,17 @@
+{
+  "skill": "dbr-daily-plan",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Rubrica ponderada para puntuar un plan P09 (tambor, resultados verificables, capacidad, buffer, no-hoy, evidencia).",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/gate-checklist.md",
+      "type": "text/markdown",
+      "purpose": "Checklist operativo del Validation Gate que el guardian marca antes de entregar el P09.",
+      "used_by": ["agents/guardian.md", "templates/output.md"]
+    }
+  ]
+}

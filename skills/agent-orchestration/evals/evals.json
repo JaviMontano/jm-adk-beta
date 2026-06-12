@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "id": "route-triad-single-diff",
+      "input": "Pick the Lead, Support, and Guardian to review one Terraform diff that adds an S3 bucket policy.",
+      "expected_checks": ["routes_to:triad-composition", "single_playbook_loaded", "quality_criteria"]
+    },
+    {
+      "id": "route-recovery-429-deploy",
+      "input": "Our deploy.sh failed at step 4 of 7 with a 429 on an idempotent PUT; decide whether retry is safe and produce the recovery plan.",
+      "expected_checks": ["routes_to:error-recovery-automation", "rollback_before_retry", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "route-workflow-resumable-etl",
+      "input": "Run a 5-stage nightly ETL that must survive a crash mid-run and be replayable for audit.",
+      "expected_checks": ["routes_to:workflow-orchestration", "resume_contract_present", "deterministic_scripts", "assets"]
+    },
+    {
+      "id": "route-model-tier-summarize",
+      "input": "Decide which model tier should handle bulk summarization of 4,000 support tickets vs. the final exec summary.",
+      "expected_checks": ["routes_to:multi-model-routing", "single_playbook_loaded", "quality_criteria"]
+    },
+    {
+      "id": "route-intelligent-which-skill",
+      "input": "A user pasted a vendor MSA and asked us to flag risky clauses; which skill or agent should own this request?",
+      "expected_checks": ["routes_to:intelligent-routing", "narrowest_match", "assets"]
+    },
+    {
+      "id": "route-parallel-fanout",
+      "input": "Lint, type-check, unit-test, and build four packages concurrently and join the results without losing a partial failure.",
+      "expected_checks": ["routes_to:parallel-workflow", "concurrency_isolation", "quality_criteria"]
+    },
+    {
+      "id": "route-monitor-live-status",
+      "input": "Three subagents have been running for 12 minutes; show me their live status and flag any that have stalled.",
+      "expected_checks": ["routes_to:subagent-monitor", "stall_detection", "assets"]
+    },
+    {
+      "id": "route-debate-then-learn",
+      "input": "Run a multi-perspective debate on whether to adopt event sourcing, then capture the reusable insights for next time.",
+      "expected_checks": ["routes_to:socratic-debate", "feeds_continuous_learning", "quality_criteria"]
+    },
+    {
+      "id": "route-task-automation-schedule",
+      "input": "Schedule the morning regulatory-feed digest to trigger every weekday at 07:00 and rerun idempotently on failure.",
+      "expected_checks": ["routes_to:task-automation", "idempotent_trigger", "deterministic_scripts"]
+    },
+    {
+      "id": "tie-break-ask",
+      "input": "Set up agents to handle our requests — should be smart about who does what and run them at the same time.",
+      "expected_checks": ["asks_clarifying_question", "no_multiple_playbooks", "quality_criteria"]
+    },
+    {
+      "id": "out-of-enum-reject",
+      "input": "Use topic 'mega-swarm-mode' to orchestrate twelve agents at once.",
+      "expected_checks": ["rejects_topic_outside_enum", "single_playbook_loaded", "assets"]
+    },
+    {
+      "id": "gate-no-false-green",
+      "input": "Compose a triad for a compliance-policy redraft and tell me the gates are already passed.",
+      "expected_checks": ["no_success_before_guardian", "constitution_v6_gate", "evidence_tags_single_family", "quality_criteria"]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "skill": "brand-output",
+  "scale": ["fail", "partial", "pass"],
+  "note": "Never report pass by default; mark pass only when verified by evidence.",
+  "criteria": [
+    {
+      "id": "single_playbook",
+      "dimension": "routing",
+      "description": "Exactly one playbook loaded; topic matches the artifact actually produced.",
+      "pass_when": "one route resolved and Read; no cluster load",
+      "evidence_tag": "[EXPLICIT]"
+    },
+    {
+      "id": "correct_topic",
+      "dimension": "routing",
+      "description": "Format/brand disambiguation picked the right enum (HTML family, xlsx binary vs spec, slides, folio).",
+      "pass_when": "disambiguating signal recorded; rejected candidates named",
+      "evidence_tag": "[INFERENCIA]"
+    },
+    {
+      "id": "token_compliance",
+      "dimension": "brand",
+      "description": "DS tokens applied from resolved config; no hardcoded brand values outside :root/token files.",
+      "pass_when": "every consumer references var()/mapped style; inherited keys tagged [SUPUESTO]",
+      "evidence_tag": "[CONFIG]"
+    },
+    {
+      "id": "single_brand",
+      "dimension": "brand",
+      "description": "Exactly one brand in the output; no Sofka+MetodologIA mixing.",
+      "pass_when": "brand identified before generation; mix flagged and refused",
+      "evidence_tag": "[EXPLICIT]"
+    },
+    {
+      "id": "determinism",
+      "dimension": "reproducibility",
+      "description": "No runtime clock, remote fetch, or randomness; same inputs reproduce byte-stable output.",
+      "pass_when": "artifact_date caller-supplied; folio year from issue-date field",
+      "evidence_tag": "[INFERENCIA]"
+    },
+    {
+      "id": "script_first",
+      "dimension": "execution",
+      "description": "Artifact generated via the playbook's deterministic script, not hand-edited.",
+      "pass_when": "script invoked; tracker/state mutated only via --apply",
+      "evidence_tag": "[CODIGO]"
+    },
+    {
+      "id": "format_gate",
+      "dimension": "validation",
+      "description": "Playbook's authoritative checklist passes (landmarks/@media/favicon/WCAG or OOXML validity or folio uniqueness).",
+      "pass_when": "check.sh or compiler exits clean over valid+invalid fixtures",
+      "evidence_tag": "[CODIGO]"
+    },
+    {
+      "id": "evidence_governance",
+      "dimension": "governance",
+      "description": "Evidence tags on non-obvious claims, single Alfa family; no invented prices; no client PII.",
+      "pass_when": "Constitution v6.0.0 honored; tags not mixed across families",
+      "evidence_tag": "[DOC]"
+    }
+  ]
+}

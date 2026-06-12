@@ -1,0 +1,31 @@
+{
+  "nodes": [
+    { "id": "toc", "label": "Teoria de Restricciones (TOC)", "kind": "theory" },
+    { "id": "constraint", "label": "Restriccion del dia", "kind": "concept" },
+    { "id": "drum", "label": "Tambor (1-3 prioridades)", "kind": "concept" },
+    { "id": "buffer", "label": "Buffer de proteccion", "kind": "concept" },
+    { "id": "rope", "label": "Cuerda (limite de WIP)", "kind": "concept" },
+    { "id": "no_hoy", "label": "Lista no-hoy", "kind": "artifact" },
+    { "id": "verifiable_result", "label": "Resultado verificable", "kind": "criterion" },
+    { "id": "first_step", "label": "Primer paso <15 min", "kind": "artifact" },
+    { "id": "capacity_check", "label": "Verificacion de capacidad", "kind": "rule" },
+    { "id": "p09", "label": "Plan P09", "kind": "deliverable" },
+    { "id": "evidence_jarvis", "label": "Evidencia Jarvis OS", "kind": "taxonomy" },
+    { "id": "validation_gate", "label": "Validation Gate", "kind": "gate" }
+  ],
+  "edges": [
+    { "from": "toc", "to": "constraint", "rel": "define" },
+    { "from": "constraint", "to": "drum", "rel": "selecciona" },
+    { "from": "drum", "to": "buffer", "rel": "protegido_por" },
+    { "from": "rope", "to": "drum", "rel": "limita_WIP_de" },
+    { "from": "rope", "to": "no_hoy", "rel": "se_materializa_en" },
+    { "from": "drum", "to": "verifiable_result", "rel": "exige" },
+    { "from": "drum", "to": "first_step", "rel": "arranca_con" },
+    { "from": "capacity_check", "to": "drum", "rel": "recorta_si_no_cabe" },
+    { "from": "drum", "to": "p09", "rel": "compone" },
+    { "from": "buffer", "to": "p09", "rel": "compone" },
+    { "from": "no_hoy", "to": "p09", "rel": "compone" },
+    { "from": "evidence_jarvis", "to": "p09", "rel": "etiqueta" },
+    { "from": "validation_gate", "to": "p09", "rel": "autoriza_entrega_de" }
+  ]
+}

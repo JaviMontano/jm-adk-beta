@@ -1,0 +1,39 @@
+{
+  "skill": "context-window-engineering",
+  "policy_version": "1.0.0",
+  "rules": {
+    "prefix": {
+      "byte_identical": true,
+      "forbidden_tokens": ["timestamp", "now", "request_id", "uuid", "counter"],
+      "order": ["role", "tools", "policies", "schema", "few_shot"]
+    },
+    "dynamic_tail": {
+      "block_id": "reminder",
+      "must_be_last": true,
+      "holds_per_turn_state": true
+    },
+    "edge_placement": {
+      "critical_rules_in_prefix": true,
+      "restate_irrenunciable_only": true,
+      "forbid_center_only": true
+    },
+    "compaction": {
+      "threshold": 0.55,
+      "adaptive": false,
+      "strategy": "summarize",
+      "preserve_edges": true
+    },
+    "validation": {
+      "require_cache_hit_measurement": true,
+      "require_retention_test": true,
+      "never_green_without_both": true
+    }
+  },
+  "reject_if": [
+    "timestamp_in_prefix",
+    "critical_rule_center_only",
+    "missing_compaction_threshold",
+    "dynamic_tail_not_last",
+    "compaction_touches_edges"
+  ]
+}

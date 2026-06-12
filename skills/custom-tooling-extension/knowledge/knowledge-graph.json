@@ -1,0 +1,34 @@
+{
+  "nodes": [
+    { "id": "slash_command", "label": "Slash command", "kind": "artifact" },
+    { "id": "skill", "label": "Skill", "kind": "artifact" },
+    { "id": "trigger_explicit", "label": "Disparo explícito por nombre", "kind": "trigger" },
+    { "id": "trigger_contextual", "label": "Activación contextual/semántica", "kind": "trigger" },
+    { "id": "context_fork", "label": "context: fork", "kind": "frontmatter" },
+    { "id": "allowed_tools", "label": "allowed-tools (whitelist)", "kind": "frontmatter" },
+    { "id": "description", "label": "description (contrato de routing)", "kind": "frontmatter" },
+    { "id": "argument_hint", "label": "argument-hint (interfaz)", "kind": "frontmatter" },
+    { "id": "scope_project", "label": "Project scope (.claude/ versionado)", "kind": "scope" },
+    { "id": "scope_user", "label": "User scope (~/.claude/)", "kind": "scope" },
+    { "id": "blast_radius", "label": "Blast radius", "kind": "concept" },
+    { "id": "claude_md", "label": "CLAUDE.md (convenciones permanentes)", "kind": "artifact" },
+    { "id": "team_replication", "label": "Replicabilidad del equipo", "kind": "concept" },
+    { "id": "context_economy", "label": "Economía de contexto", "kind": "concept" },
+    { "id": "upgrade_safety", "label": "Upgrade-safety (preservar id, minor-bump)", "kind": "concept" }
+  ],
+  "edges": [
+    { "from": "trigger_explicit", "to": "slash_command", "rel": "selecciona" },
+    { "from": "trigger_contextual", "to": "skill", "rel": "selecciona" },
+    { "from": "skill", "to": "context_fork", "rel": "usa-si-no-trivial" },
+    { "from": "context_fork", "to": "context_economy", "rel": "habilita" },
+    { "from": "skill", "to": "allowed_tools", "rel": "declara" },
+    { "from": "allowed_tools", "to": "blast_radius", "rel": "acota" },
+    { "from": "skill", "to": "description", "rel": "enruta-por" },
+    { "from": "slash_command", "to": "argument_hint", "rel": "expone-interfaz" },
+    { "from": "skill", "to": "argument_hint", "rel": "expone-interfaz" },
+    { "from": "team_replication", "to": "scope_project", "rel": "exige" },
+    { "from": "scope_user", "to": "team_replication", "rel": "rompe" },
+    { "from": "claude_md", "to": "skill", "rel": "separa-convencion-de-capacidad" },
+    { "from": "scope_project", "to": "upgrade_safety", "rel": "requiere" }
+  ]
+}

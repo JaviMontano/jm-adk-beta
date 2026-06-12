@@ -1,0 +1,39 @@
+{
+  "nodes": [
+    { "id": "guardrails", "label": "Guardrails router", "kind": "skill" },
+    { "id": "topic", "label": "Guard topic (enum of 12)", "kind": "concept" },
+    { "id": "verdict", "label": "Verdict (allow/approve/block/pass/fail/blocked)", "kind": "concept" },
+    { "id": "fail_closed", "label": "Fail-closed posture", "kind": "principle" },
+    { "id": "script_first", "label": "Script-first determinism", "kind": "principle" },
+    { "id": "evidence_tags", "label": "Alfa-core evidence tags", "kind": "standard" },
+    { "id": "pre_tool_use_guard", "label": "Pre-tool-use guard", "kind": "guard" },
+    { "id": "secrets_sanitization", "label": "Secrets sanitization (G0)", "kind": "guard" },
+    { "id": "output_contract_enforcer", "label": "Output contract enforcer", "kind": "guard" },
+    { "id": "quality_gatekeeper", "label": "Quality gatekeeper (G0-G3)", "kind": "guard" },
+    { "id": "constitution_compliance", "label": "Constitution compliance v6.0.0", "kind": "guard" },
+    { "id": "exit_code_2", "label": "Exit-code-2 deny pattern", "kind": "mechanism" },
+    { "id": "gate_model", "label": "Gate model G0-G3", "kind": "mechanism" },
+    { "id": "masking", "label": "Secret masking convention", "kind": "mechanism" },
+    { "id": "check_sh", "label": "check.sh fixture gate", "kind": "artifact" }
+  ],
+  "edges": [
+    { "from": "guardrails", "to": "topic", "rel": "resolves" },
+    { "from": "topic", "to": "verdict", "rel": "produces" },
+    { "from": "verdict", "to": "fail_closed", "rel": "governed_by" },
+    { "from": "verdict", "to": "evidence_tags", "rel": "tagged_with" },
+    { "from": "guardrails", "to": "script_first", "rel": "follows" },
+    { "from": "topic", "to": "pre_tool_use_guard", "rel": "routes_to" },
+    { "from": "topic", "to": "secrets_sanitization", "rel": "routes_to" },
+    { "from": "topic", "to": "output_contract_enforcer", "rel": "routes_to" },
+    { "from": "topic", "to": "quality_gatekeeper", "rel": "routes_to" },
+    { "from": "topic", "to": "constitution_compliance", "rel": "routes_to" },
+    { "from": "pre_tool_use_guard", "to": "exit_code_2", "rel": "uses" },
+    { "from": "secrets_sanitization", "to": "masking", "rel": "uses" },
+    { "from": "secrets_sanitization", "to": "gate_model", "rel": "enforces_G0" },
+    { "from": "quality_gatekeeper", "to": "gate_model", "rel": "evaluates" },
+    { "from": "constitution_compliance", "to": "gate_model", "rel": "maps_to" },
+    { "from": "pre_tool_use_guard", "to": "check_sh", "rel": "validated_by" },
+    { "from": "quality_gatekeeper", "to": "check_sh", "rel": "validated_by" },
+    { "from": "script_first", "to": "fail_closed", "rel": "reinforces" }
+  ]
+}

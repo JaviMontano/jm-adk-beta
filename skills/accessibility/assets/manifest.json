@@ -1,0 +1,17 @@
+{
+  "skill": "accessibility",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Five weighted scoring dimensions with pass_when conditions and the pass/conditional/fail/not-verified status vocabulary; drives the guardian's final verdict.",
+      "used_by": ["agents/guardian.md", "templates/output.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "text/markdown",
+      "purpose": "Deliverable gate checklist mirroring the four playbooks' Quality Gates; blocks 'done' until every box is checked.",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    }
+  ]
+}

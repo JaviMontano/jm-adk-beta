@@ -1,0 +1,33 @@
+{
+  "skill": "accessibility",
+  "version": "1.0.0",
+  "standard": "WCAG 2.1 AA",
+  "status_vocabulary": ["pass", "conditional", "fail", "not verified"],
+  "dimensions": [
+    {
+      "id": "routing_integrity",
+      "weight": 0.2,
+      "pass_when": "Exactly one playbook (audit/design/testing/writing) loaded and topic matches user intent; multi-topic work sequenced, not merged."
+    },
+    {
+      "id": "criterion_traceability",
+      "weight": 0.2,
+      "pass_when": "Every finding cites a specific WCAG success criterion (e.g. 1.4.3) and a concrete fix or acceptance check."
+    },
+    {
+      "id": "evidence_completeness",
+      "weight": 0.2,
+      "pass_when": "Automated findings carry tool/version, target, rule id, selector, WCAG tags, artifact; manual findings carry step, expected, observed, evidence; gaps are 'not verified' with a next action."
+    },
+    {
+      "id": "no_green_as_success",
+      "weight": 0.2,
+      "pass_when": "A clean axe run or green CI is never reported as 'accessible'; final status is pass/conditional/fail/not-verified and a manual blocker is never overridden by automation."
+    },
+    {
+      "id": "tag_and_governance",
+      "weight": 0.2,
+      "pass_when": "Each claim carries exactly one evidence tag from a single family; writing copy is tag-free with a separate validation table; no invented prices, no client PII, single-brand."
+    }
+  ]
+}

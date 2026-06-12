@@ -45,6 +45,8 @@ output — route those elsewhere. [INFERENCE]
 
 Spine: Discover → Analyze → Execute → Validate.
 
+Router aids in `assets/` — `assets/routing-checklist.md` and `assets/quality-rubric.json` (see `assets/README.md`). [CONFIG]
+
 ## Validation gate (done = all true)
 - Exactly one playbook loaded; topic matches the artifact actually produced. [EXPLICIT]
 - Sofka DS tokens applied from `references/brand`; no hardcoded brand values. [CONFIG]

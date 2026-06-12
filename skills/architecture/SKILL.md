@@ -45,6 +45,7 @@ concern, run it, then chain a second invocation — do NOT merge playbooks. [INF
    `quick` → essentials only, name what you skipped. [DOC]
 3. Spine: Discover → Analyze → Execute → Validate.
 4. Gates: constitution v6.0.0 (enforcement), evidence tags, script-first. [CONFIG]
+5. Gate enforced via `assets/quality-rubric.json`; pre-flight via `assets/routing-checklist.md`. [CONFIG]
 
 ## Acceptance gate (done = all true)
 - Exactly one playbook loaded; topic ∈ enum; no cross-playbook bleed. [DOC]

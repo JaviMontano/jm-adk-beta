@@ -1,0 +1,41 @@
+{
+  "skill": "email-comms",
+  "scale": ["fail", "partial", "pass"],
+  "dimensions": [
+    {
+      "id": "routing_correct",
+      "weight": 0.30,
+      "criterion": "Resolved exactly one topic from the enum; sequenced prerequisites when two applied; asked one question when genuinely ambiguous; never invented a topic or edited routes.",
+      "pass": "One playbook read, correct topic, prerequisite order respected.",
+      "fail": "Multiple playbooks loaded, wrong topic, or topic invented outside enum."
+    },
+    {
+      "id": "deliverability",
+      "weight": 0.20,
+      "criterion": "For email-sending: SPF/DKIM/DMARC published, DMARC ramped from none, suppression on bounce/complaint, one-click List-Unsubscribe-Post, queued idempotent sends, no PII in logs.",
+      "pass": "All authentication + reputation + compliance gates met with evidence.",
+      "fail": "p=reject before alignment, no suppression, or inline blocking send."
+    },
+    {
+      "id": "render_fidelity",
+      "weight": 0.20,
+      "criterion": "For template topics: table layout with role=presentation, 100% inline CSS, <=600px single-column mobile, alt on all images, AA contrast, <100KB, Outlook MSO/VML fixes, dark-mode legible.",
+      "pass": "Renders acceptably across Gmail/Outlook/Apple Mail and images-off.",
+      "fail": "div/flex layout, head-only CSS, >100KB clip, or unstyled mobile."
+    },
+    {
+      "id": "content_measurement",
+      "weight": 0.15,
+      "criterion": "For newsletter-design: one job-to-be-done and one primary CTA, subject+preheader paired, UTMs on every link, judged by CTOR not opens, metrics vs baseline, opt-in list hygiene.",
+      "pass": "Clear CTA, instrumented links, CTOR-led measurement plan.",
+      "fail": "Multiple co-equal CTAs, no UTMs, or open-rate optimized in isolation."
+    },
+    {
+      "id": "evidence_governance",
+      "weight": 0.15,
+      "criterion": "Every claim carries an Alfa core EN tag ([DOC]/[INFERENCE]/[CODE]/[CONFIG]/[ASSUMPTION]); no Jarvis {…} tags; single brand per output; no invented prices; Validate phase actually ran.",
+      "pass": "Full tag coverage, single brand, green only with evidence.",
+      "fail": "Untagged claims, mixed tag families, or green-as-success."
+    }
+  ]
+}

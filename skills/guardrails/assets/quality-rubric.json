@@ -1,0 +1,55 @@
+{
+  "rubric": "guardrails-verdict-quality",
+  "version": "1.0.0",
+  "evidence_family": ["[EXPLICIT]", "[CODE]", "[CONFIG]", "[DOC]", "[INFERENCE]", "[ASSUMPTION]"],
+  "criteria": [
+    {
+      "id": "single_playbook",
+      "weight": "blocker",
+      "pass": "Exactly one reference playbook was read; topic is in the 12-value enum.",
+      "fail": "Two or more playbooks opened, or topic guessed under ambiguity."
+    },
+    {
+      "id": "fail_closed",
+      "weight": "blocker",
+      "pass": "Missing evidence, unreadable asset, or undecidable input yields block/fail/blocked/not_verified.",
+      "fail": "Any pass/allow emitted without provable safety."
+    },
+    {
+      "id": "evidence_tagged",
+      "weight": "blocker",
+      "pass": "Every claim carries one Alfa-core tag; single family throughout.",
+      "fail": "Untagged claim or mixed tag families."
+    },
+    {
+      "id": "no_green_by_default",
+      "weight": "blocker",
+      "pass": "No pass while any required check is fail/blocked; no allow without evidence; no block without reason; checks array non-empty.",
+      "fail": "pass with unmet criterion or empty checks array."
+    },
+    {
+      "id": "script_first_determinism",
+      "weight": "high",
+      "pass": "Named validator + check.sh run on positive and negative fixtures; re-run reproduces the packet.",
+      "fail": "Verdict authored by hand or depending on clock/network/model/random."
+    },
+    {
+      "id": "secret_masking",
+      "weight": "blocker",
+      "pass": "All findings referenced by path:line + masked token (<=4 prefix chars).",
+      "fail": "Any unmasked secret value in the verdict or logs."
+    },
+    {
+      "id": "aggregated_violations",
+      "weight": "high",
+      "pass": "All violations reported in one pass with exact, actionable repairs.",
+      "fail": "Run stops at the first failure, or repairs are vague."
+    },
+    {
+      "id": "triggering_rule_cited",
+      "weight": "medium",
+      "pass": "The decision names the policy/gate rule that governs it.",
+      "fail": "Verdict given with no rule citation."
+    }
+  ]
+}

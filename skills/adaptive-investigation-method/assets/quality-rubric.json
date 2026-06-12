@@ -1,0 +1,59 @@
+{
+  "skill": "adaptive-investigation-method",
+  "purpose": "Scored acceptance criteria for an adaptive-investigation run. Each criterion is pass/fail; all must pass for dod=pass.",
+  "criteria": [
+    {
+      "id": "hard-budget-present",
+      "weight": "blocking",
+      "check": "budget.total is set before mapping and a counter decrements per expensive read",
+      "fail_maps_to_eval": "negative-missing-budget"
+    },
+    {
+      "id": "cheap-map-zero-budget",
+      "weight": "blocking",
+      "check": "the surface map uses Glob/Grep only, no full reads, and spends no budget"
+    },
+    {
+      "id": "hypotheses-ranked-before-dive",
+      "weight": "blocking",
+      "check": "hypotheses are ranked by value/cost before the first deep-dive; no deep-dive without a justifying hypothesis"
+    },
+    {
+      "id": "replan-only-on-invalidation",
+      "weight": "blocking",
+      "check": "every replan record cites an invalidated hypothesis; no per-turn reflexive replan",
+      "fail_maps_to_eval": "negative-reflexive-replan"
+    },
+    {
+      "id": "typed-scratchpad",
+      "weight": "blocking",
+      "check": "plan, hypotheses, findings, replans, budget, stop_reason persisted as typed fields, not prose"
+    },
+    {
+      "id": "stop-reason-recorded",
+      "weight": "blocking",
+      "check": "stop_reason is one of goal_resolved | budget_exhausted | goal_unresolved"
+    },
+    {
+      "id": "findings-traceable",
+      "weight": "blocking",
+      "check": "every finding has a node reference and a provenance tag; deliverable synthesized from findings"
+    },
+    {
+      "id": "coverage-declared",
+      "weight": "advisory",
+      "check": "partial coverage is declared, never hidden"
+    },
+    {
+      "id": "discover-not-mutate",
+      "weight": "blocking",
+      "check": "no writes to the investigated domain"
+    }
+  ],
+  "governance": {
+    "brand": "JM Labs",
+    "no_invented_prices": true,
+    "no_client_pii": true,
+    "green_is_not_success_without_evidence": true
+  }
+}

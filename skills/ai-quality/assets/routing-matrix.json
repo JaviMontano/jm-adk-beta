@@ -1,0 +1,78 @@
+{
+  "skill": "ai-quality",
+  "evidence_set": "alfa",
+  "tags": ["[CÓDIGO]", "[CONFIG]", "[DOC]", "[INFERENCIA]", "[SUPUESTO]"],
+  "depths": ["quick", "deep"],
+  "topics": [
+    {
+      "topic": "ai-testing-strategy",
+      "playbook": "references/ai-testing-strategy.md",
+      "intent": "plan how to verify an AI system (6x6 matrix, model/data/fairness/CICD)",
+      "not": ["test implementation code", "pipeline architecture"]
+    },
+    {
+      "topic": "ai-assisted-testing",
+      "playbook": "references/ai-assisted-testing.md",
+      "intent": "AI generates/justifies tests, fuzz, mutation, coverage targets",
+      "not": ["running tests in prod", "human review"]
+    },
+    {
+      "topic": "ai-code-review",
+      "playbook": "references/ai-code-review.md",
+      "intent": "AI reviews a diff with file-line evidence and a JSON packet",
+      "not": ["auto-fix/merge", "human-only review"]
+    },
+    {
+      "topic": "code-review",
+      "playbook": "references/code-review.md",
+      "intent": "human/tool review of a diff with fixed severities and a decision",
+      "not": ["security pentest depth", "release-gate enforcement"]
+    },
+    {
+      "topic": "llm-evaluation",
+      "playbook": "references/llm-evaluation.md",
+      "intent": "score model output quality, groundedness, LLM-judge, benchmarks",
+      "not": ["fine-tuning", "latency/cost benchmarking", "red-teaming"]
+    },
+    {
+      "topic": "ai-safety",
+      "playbook": "references/ai-safety.md",
+      "intent": "risk taxonomy -> controls -> jailbreak tests -> metrics -> escalation",
+      "not": ["live-model attestation", "pentest"]
+    },
+    {
+      "topic": "ai-content-detection",
+      "playbook": "references/ai-content-detection.md",
+      "intent": "estimate AI-generation likelihood, watermark/provenance, hybrid policy",
+      "not": ["authorship attribution", "plagiarism detection"]
+    },
+    {
+      "topic": "ai-documentation",
+      "playbook": "references/ai-documentation.md",
+      "intent": "source-backed README/API/architecture docs and drift audits",
+      "not": ["marketing copy", "undocumented behavior"]
+    },
+    {
+      "topic": "ai-workflow-automation",
+      "playbook": "references/ai-workflow-automation.md",
+      "intent": "LLM-in-the-loop workflow plan with gates, handoffs, bounded retries",
+      "not": ["executing/scheduling workflows", "picking a model provider"]
+    }
+  ],
+  "disambiguation_rules": [
+    { "if": "AI scores/judges output", "then": "llm-evaluation" },
+    { "if": "AI writes or runs tests", "then": "ai-assisted-testing" },
+    { "if": "AI reviews a diff", "then": "ai-code-review" },
+    { "if": "human or deterministic tool reviews a diff", "then": "code-review" },
+    { "if": "how-should-we-test/gate", "then": "ai-testing-strategy" },
+    { "if": "is-this-AI-written", "then": "ai-content-detection" },
+    { "if": "is-this-output-good/grounded", "then": "llm-evaluation" }
+  ],
+  "invariants": [
+    "load exactly one playbook per request",
+    "single Alfa tag family per deliverable",
+    "no [CÓDIGO] without an in-repo referent",
+    "offline determinism: no network, wall-clock, or RNG in validated checks",
+    "a passing check is well-formedness, never a safety/correctness guarantee"
+  ]
+}

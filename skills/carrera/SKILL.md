@@ -67,3 +67,8 @@ constitution v6.0.0 enforcement, evidence tags, and the script-first rule. [CONF
 - Fabricating salary/market figures or settlement amounts to fill gaps. [INFERENCIA]
 - Mixing tag families, `{WEB}` without citation, or free-handing past a
   playbook's script-first steps. [DOC]
+
+## Assets
+Router-level support lives in `assets/` (see `assets/README.md`):
+`assets/quality-rubric.json` (guardian gates) and `assets/routing-keywords.json`
+(topic disambiguation). Per-topic policy assets stay in each playbook. [CONFIG]

@@ -1,0 +1,40 @@
+{
+  "skill": "adaptive-investigation-method",
+  "budget": {
+    "required": true,
+    "field": "budget.total",
+    "minimum": 1,
+    "decrement_on": "expensive_read",
+    "missing_action": "fail_closed",
+    "missing_message": "budget.total is required; it is the termination guarantee. Emit {VACIO_CRITICO}, stop, and ask."
+  },
+  "tools": {
+    "cheap": ["Glob", "Grep", "Bash:list"],
+    "expensive": ["Read"],
+    "cheap_tools_spend_budget": false,
+    "map_phase_full_reads_allowed": false
+  },
+  "replan": {
+    "allowed_triggers": ["hypothesis_invalidated"],
+    "reflexive_replan_action": "fail_closed",
+    "reflexive_replan_message": "Re-plan is only legal on hypothesis_invalidated; per-turn replan is rejected.",
+    "tie_break": "cheapest_to_invalidate"
+  },
+  "stop_reasons": ["goal_resolved", "budget_exhausted", "goal_unresolved"],
+  "blocked_anti_patterns": [
+    "full_upfront_plan",
+    "read_everything",
+    "reflexive_replan_every_turn",
+    "deep_dive_without_hypothesis",
+    "remap_every_turn",
+    "synthesize_from_memory",
+    "mutate_investigated_domain"
+  ],
+  "governance": {
+    "brand": "JM Labs",
+    "no_invented_prices": true,
+    "no_client_pii": true,
+    "discover_not_mutate": true,
+    "declare_partial_coverage": true
+  }
+}
