@@ -1,0 +1,17 @@
+{
+  "skill": "session-workspace",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Scorable mandatory/advisory criteria for a router dispatch decision; green is never the default.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/dispatch-checklist.md",
+      "type": "text/markdown",
+      "purpose": "Operational box-by-box gate the router walks before declaring a dispatch done, mirroring the output template's Guardian section.",
+      "used_by": ["SKILL.md", "agents/guardian.md", "templates/output.md"]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "skill": "self-correction-loops",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Codifica los 8 criterios de aceptacion del bucle declarado-vs-calculado que aplica el guardian.",
+      "used_by": ["SKILL.md", "README.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "checklist",
+      "purpose": "Gate de aceptacion operativo para copiar al pie del reporte de verificacion.",
+      "used_by": ["SKILL.md", "templates/output.md"]
+    }
+  ]
+}

@@ -151,6 +151,7 @@ PASA solo si **todos** marcan:
 - `assets/mismatch-policy.json` y `assets/escalation-policy.json` obligan a mostrar ambos valores y escalar sin sobreescribir [CONFIG].
 - `assets/structural-test-policy.json` declara las pruebas estructurales que deben quedar en `true` [CONFIG].
 - `scripts/validate_self_correction_loops.py` valida reportes offline y `scripts/check.sh` ejecuta fixtures deterministicas positivas y negativas [CODE].
+- `assets/` incluye ademas `assets/README.md`, `assets/quality-rubric.json` (8 criterios de aceptacion) y `assets/checklist.md` (gate operativo); ver `assets/manifest.json` [CONFIG].
 
 ## Katas y skills relacionadas
 

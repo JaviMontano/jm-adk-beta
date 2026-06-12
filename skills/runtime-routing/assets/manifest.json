@@ -1,0 +1,41 @@
+{
+  "skill": "runtime-routing",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Scored quality criteria the routing deliverable must meet (evidence grounding, lowest-permission, validation limits, fallback, secret boundary, guardian gate).",
+      "used_by": ["SKILL.md", "templates/output.md"]
+    },
+    {
+      "path": "assets/runtime-catalog-policy.json",
+      "type": "policy",
+      "purpose": "Allowed runtime ids and their permission levels; the lowest-permission ranking the router minimizes over.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/evidence-policy.json",
+      "type": "policy",
+      "purpose": "What may ground a capability claim and which sources promote a capability to 'supported'.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/capability-matrix-policy.json",
+      "type": "policy",
+      "purpose": "Supported / pending / unsupported axes and the model-vs-repo promotion rule.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/fallback-policy.json",
+      "type": "policy",
+      "purpose": "Requires a local-first fallback with a no-auth path and visible limits.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/runtime-routing-contract.json",
+      "type": "schema",
+      "purpose": "Shape and invariants of a valid route decision report, making the route machine-checkable.",
+      "used_by": ["SKILL.md"]
+    }
+  ]
+}

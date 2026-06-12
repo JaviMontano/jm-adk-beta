@@ -1,0 +1,48 @@
+{
+  "skill": "seo-growth",
+  "purpose": "Deterministic topic disambiguation for the router. Match request signals to exactly one enum.",
+  "topics": [
+    {
+      "topic": "seo-architecture",
+      "signals": ["rendering", "ssr", "ssg", "isr", "csr", "canonical host", "sitemap", "robots.txt", "hreflang", "redirect", "301", "indexing", "crawl budget", "migration"],
+      "not_this_if": "request is about on-page copy (-> seo-content) or README/navigation audit (-> indexability-validator)"
+    },
+    {
+      "topic": "seo-content",
+      "signals": ["meta title", "meta description", "og tags", "twitter card", "json-ld", "heading hierarchy", "h1", "keyword application", "rich snippet", "cannibalization"],
+      "not_this_if": "request is keyword research (out of scope) or rendering/canonical infra (-> seo-architecture)"
+    },
+    {
+      "topic": "indexability-validator",
+      "signals": ["readme", "missing readme", "orphan directory", "navigation chain", "indexability score", "gitignore comments", "constitution xviii", "g3"],
+      "not_this_if": "request is search-engine indexing/crawl (-> seo-architecture)"
+    },
+    {
+      "topic": "landing-page-builder",
+      "signals": ["build a new landing page", "hero section", "pricing section", "cta", "deploy a page", "create a page end-to-end"],
+      "not_this_if": "request critiques an existing page (-> landing-pages)"
+    },
+    {
+      "topic": "landing-pages",
+      "signals": ["critique this page", "review existing landing page", "what is wrong with my page", "page patterns", "audit my landing page"],
+      "not_this_if": "request is to build a new page (-> landing-page-builder)"
+    },
+    {
+      "topic": "conversion-optimization",
+      "signals": ["conversion rate", "cro", "friction", "ab test", "a/b test", "ice", "drop-off on a page", "underconverting page"],
+      "not_this_if": "request is a multi-step pre-launch journey (-> funnel-design) or post-launch diagnosis (-> funnel-analytics, out of scope)"
+    },
+    {
+      "topic": "funnel-design",
+      "signals": ["tofu", "mofu", "bofu", "lead scoring", "nurture flow", "sales handoff", "mql", "sql", "funnel blueprint", "lifecycle stage"],
+      "not_this_if": "request is single-page CRO (-> conversion-optimization) or measured drop-off (-> funnel-analytics)"
+    },
+    {
+      "topic": "social-proof",
+      "signals": ["testimonials", "logos", "trust badge", "guarantee", "risk reversal", "security badge", "credibility signal"],
+      "not_this_if": "request is a full page build (-> landing-page-builder) or page CRO program (-> conversion-optimization)"
+    }
+  ],
+  "tie_break": "If 2+ topics match, ask one clarifying question; never read two playbooks. Build-new beats critique only when the user explicitly asks to create.",
+  "out_of_scope": ["keyword research", "link building / off-page", "paid media / SEM", "post-launch funnel drop-off diagnosis", "legal/privacy review of email consent"]
+}

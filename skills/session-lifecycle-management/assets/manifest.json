@@ -1,0 +1,17 @@
+{
+  "skill": "session-lifecycle-management",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Rúbrica ponderada de 5 dimensiones (staleness, matriz de decisión, TypedSummary, aislamiento de forks, trazabilidad) para puntuar el reporte de decisión antes del done.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "checklist",
+      "purpose": "Checklist operativo del gate de aceptación, alineado con SKILL.md y el scaffold de salida; se marca antes de emitir la transición.",
+      "used_by": ["templates/output.md", "agents/guardian.md"]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "skill": "safe-scripting-and-bash",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json-rubric",
+      "purpose": "Blocking and high-priority safety checks with pass-when rules and the bound-verdict rule; consumed by the Guardian gate and the safety report.",
+      "used_by": ["SKILL.md", "templates/output.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "markdown-checklist",
+      "purpose": "Pre-ship checklist mirroring the rubric so the Lead can self-verify before declaring done.",
+      "used_by": ["README.md", "prompts/meta.md"]
+    }
+  ]
+}

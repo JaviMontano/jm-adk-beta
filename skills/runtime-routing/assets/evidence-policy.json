@@ -1,0 +1,17 @@
+{
+  "skill": "runtime-routing",
+  "description": "Every capability claim must ground in one of these sources. Only promoting sources can move a capability to 'supported'.",
+  "evidence_sources": [
+    { "source": "repo_file", "tag": "[DOC]", "promotes": true, "examples": ["AGENTS.md", "CODEX.md", ".agent/"] },
+    { "source": "config_file", "tag": "[CONFIG]", "promotes": true, "examples": ["mcp config", "settings"] },
+    { "source": "executed_check", "tag": "[CÓDIGO]", "promotes": true, "examples": ["gh auth status", "a passing script run"] },
+    { "source": "runtime_metadata", "tag": "[SUPUESTO]", "promotes": false, "note": "model capability; confirm before promoting" },
+    { "source": "user_config", "tag": "[DOC]", "promotes": true, "note": "capability explicitly stated and pinned by the user" },
+    { "source": "inference", "tag": "[INFERENCE]", "promotes": false }
+  ],
+  "rules": [
+    "A 'supported' capability MUST cite a promoting evidence id that resolves to a real source.",
+    "A fabricated or unresolvable evidence id fails the report.",
+    "Capabilities grounded only in [INFERENCE] or [SUPUESTO] stay 'validation pending'."
+  ]
+}

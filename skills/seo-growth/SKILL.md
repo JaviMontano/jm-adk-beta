@@ -46,6 +46,7 @@ Discover → Analyze → Execute → Validate. Don't skip Validate even on `quic
 ## Quality gates [DOC]
 Constitution v6.0.0 enforcement; evidence tags (Alfa core set, single family);
 script-first rule (prefer a script over manual steps).
+Routing + acceptance rubric and signal→topic matrix live in `assets/` (see `assets/README.md`).
 
 ## Acceptance (route is correct when)
 - Exactly one playbook Read; topic matches an enum verbatim. [DOC]

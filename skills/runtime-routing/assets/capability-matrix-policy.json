@@ -1,0 +1,27 @@
+{
+  "skill": "runtime-routing",
+  "description": "Axes for classifying each required capability per candidate runtime, and the promotion rule.",
+  "statuses": [
+    { "status": "supported", "meaning": "needed and backed by a promoting evidence id" },
+    { "status": "pending", "alias": "validation pending", "meaning": "needed but not yet proven by a promoting evidence id" },
+    { "status": "unsupported", "meaning": "known absent for this runtime, with absence evidence" }
+  ],
+  "capability_classes": [
+    { "id": "file_edits", "kind": "repo" },
+    { "id": "shell_validators", "kind": "repo" },
+    { "id": "git_gh_pr_flow", "kind": "repo" },
+    { "id": "hooks", "kind": "repo" },
+    { "id": "mcp_servers", "kind": "repo" },
+    { "id": "subagents_skill_routing", "kind": "repo" },
+    { "id": "multimodal_input", "kind": "model" },
+    { "id": "large_context_reasoning", "kind": "model" },
+    { "id": "ide_rules", "kind": "repo" },
+    { "id": "workspace_state", "kind": "repo" },
+    { "id": "local_file_access", "kind": "repo" }
+  ],
+  "rules": [
+    "Repo-kind capabilities promote to 'supported' only with a [DOC]/[CONFIG]/[CÓDIGO] evidence id.",
+    "Model-kind capabilities default to 'validation pending' until confirmed against runtime metadata or user config.",
+    "A runtime qualifies for recommendation only if all required capabilities are 'supported' on it."
+  ]
+}

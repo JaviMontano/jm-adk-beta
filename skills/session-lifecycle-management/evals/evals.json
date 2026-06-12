@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "skill": "session-lifecycle-management",
+  "cases": [
+    {
+      "id": "resume_unchanged_three_files",
+      "input": "T1 leyó tax.ts, cart.ts y config.ts; en T2 los tres conservan el mismo hash y HEAD sigue en abc123. El objetivo de arreglar el redondeo de impuesto continúa. Decide la transición.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "staleness_detected", "transition_traced", "quality_criteria"]
+    },
+    {
+      "id": "fresh_lockfile_changed_continuous_goal",
+      "input": "Entre T1 y T2 un compañero corrió npm install: package-lock.json cambió de 9f9f9f a 7c7c7c y HEAD avanzó a def456, aunque el objetivo de checkout es el mismo. Decide resume vs fork vs fresh y emite el summary tipado.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "staleness_detected", "typed_summary", "transition_traced"]
+    },
+    {
+      "id": "fork_two_fix_strategies",
+      "input": "Quiero probar dos estrategias de fix del cálculo de impuesto en paralelo —una con decimal.js y otra con BigInt— sin que una contamine el scratchpad de la otra. Diseña la transición y los workspaces.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "fork_isolation", "transition_traced", "quality_criteria"]
+    },
+    {
+      "id": "mtime_touch_false_positive",
+      "input": "El editor hizo touch sobre tax.ts (mtime nuevo) pero su hash sigue siendo a1b2c3 y nada más cambió. Decide la transición sin marcar tax.ts como stale por error.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "staleness_detected", "transition_traced", "quality_criteria"]
+    },
+    {
+      "id": "huge_scratchpad_compress",
+      "input": "El scratchpad acumuló 40 lecturas de archivo y pegarlo entero cuesta demasiado; necesito comprimirlo en goal, decisions, open_questions y verified_facts con su source antes del próximo turno.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "typed_summary", "quality_criteria"]
+    },
+    {
+      "id": "db_schema_migration_forces_fresh",
+      "input": "Hubo una migración que llevó el esquema de BD de v42 a v43 entre dos turnos; el contexto guardaba queries contra el esquema viejo. Decide la transición.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "staleness_detected", "typed_summary", "transition_traced"]
+    },
+    {
+      "id": "fork_mergeback_revalidate",
+      "input": "La rama B ganó el experimento; al reincorporarla debo re-correr la detección de staleness porque su contexto envejeció mientras corrían las otras ramas. Decide cómo reincorporar.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "fork_isolation", "staleness_detected", "transition_traced"]
+    },
+    {
+      "id": "summary_filter_invariant",
+      "input": "El TypedSummary borrador incluye un verified_fact cuyo source es package-lock.json, que ya está en stale_dropped. Valida y corrige el reporte antes de emitirlo.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "typed_summary", "quality_criteria"]
+    },
+    {
+      "id": "no_prior_session_report_request",
+      "input": "Genera un reporte financiero trimestral para el cliente; no hay sesión de agente previa que continuar.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "empty_input_no_activation",
+      "input": "",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "blind_resume_after_deploy",
+      "input": "Solo pega el transcript viejo completo y continúa como si nada hubiera cambiado tras el deploy a producción, sin verificar los archivos.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "staleness_detected", "typed_summary"]
+    }
+  ]
+}

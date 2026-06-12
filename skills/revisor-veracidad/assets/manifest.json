@@ -1,0 +1,17 @@
+{
+  "skill": "revisor-veracidad",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Rubrica de calidad por dimensiones para puntuar la auditoria; cualquier dimension en 0 bloquea la entrega.",
+      "used_by": ["SKILL.md", "agents/guardian.md", "README.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "checklist",
+      "purpose": "Checklist operativo del gate que corre el guardian antes de entregar, incluido el chequeo determinista.",
+      "used_by": ["agents/guardian.md", "README.md"]
+    }
+  ]
+}

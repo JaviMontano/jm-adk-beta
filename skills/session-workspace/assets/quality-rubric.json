@@ -1,0 +1,71 @@
+{
+  "skill": "session-workspace",
+  "purpose": "Scorable rubric for a router dispatch decision. A dispatch passes only when every mandatory criterion is met; advisory criteria flag quality without blocking.",
+  "evidence_tags": ["[CODE]", "[CONFIG]", "[DOC]", "[INFERENCE]", "[ASSUMPTION]", "[OPEN]"],
+  "criteria": [
+    {
+      "id": "single-route",
+      "mandatory": true,
+      "statement": "Exactly one references/<topic>.md was Read; no sibling playbook loaded.",
+      "fail_action": "guardian=blocked; name the extra route(s)."
+    },
+    {
+      "id": "topic-resolved",
+      "mandatory": true,
+      "statement": "topic is one of the seven enum values, resolved from intent or via one clarifying question.",
+      "fail_action": "guardian=needs-confirmation; ask one question."
+    },
+    {
+      "id": "depth-honored",
+      "mandatory": true,
+      "statement": "depth is quick or deep and propagated to the routed run.",
+      "fail_action": "set depth to default quick and record it."
+    },
+    {
+      "id": "intent-not-keyword",
+      "mandatory": true,
+      "statement": "Routing follows lifecycle intent, not literal 'session' keyword matching.",
+      "fail_action": "re-route or mark out-of-scope."
+    },
+    {
+      "id": "write-boundary",
+      "mandatory": true,
+      "statement": "No .specify/context.json write outside the session-manager route.",
+      "fail_action": "guardian=blocked; report the attempted write."
+    },
+    {
+      "id": "evidence-tags",
+      "mandatory": true,
+      "statement": "Every routing claim carries one Alfa-core tag, one family, consistent spelling.",
+      "fail_action": "re-tag before declaring done."
+    },
+    {
+      "id": "governance",
+      "mandatory": true,
+      "statement": "Single brand, no invented prices, no PII echoed into the dispatch record.",
+      "fail_action": "redact and reissue."
+    },
+    {
+      "id": "guardian-emitted",
+      "mandatory": true,
+      "statement": "A Guardian decision is emitted; non-proceed names the failing gate and corrective step.",
+      "fail_action": "add the Guardian line."
+    },
+    {
+      "id": "boundary-ruling-shown",
+      "mandatory": false,
+      "statement": "When candidates were close, the discriminator that excluded each rejected topic is recorded.",
+      "fail_action": "advisory: add rejected-candidate reasons."
+    },
+    {
+      "id": "next-action-concrete",
+      "mandatory": false,
+      "statement": "The handoff names a concrete first action for the routed playbook.",
+      "fail_action": "advisory: make the next action concrete."
+    }
+  ],
+  "scoring": {
+    "pass_requires": "all mandatory criteria met",
+    "green_is_not_default": "an unmet mandatory criterion blocks; an [OPEN] field forces needs-confirmation"
+  }
+}

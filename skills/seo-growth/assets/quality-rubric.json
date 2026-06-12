@@ -1,0 +1,75 @@
+{
+  "skill": "seo-growth",
+  "version": "1.0.0",
+  "evidence_taxonomy": ["EXPLICIT", "DOC", "INFERENCE", "SUPUESTO"],
+  "routing_gates": [
+    "exactly_one_playbook_read",
+    "topic_matches_enum_verbatim",
+    "validate_step_run_even_on_quick",
+    "ambiguity_or_multi_topic_triggers_one_question"
+  ],
+  "governance_gates": [
+    "evidence_tags_on_every_nonobvious_claim",
+    "single_alfa_core_family",
+    "no_invented_prices_traffic_or_baselines",
+    "no_client_pii",
+    "single_brand_voice",
+    "constitution_v6.0.0"
+  ],
+  "topic_acceptance": {
+    "seo-architecture": [
+      "structured_data_zero_errors",
+      "sitemap_only_canonical_200_indexable",
+      "single_canonical_host_via_301",
+      "bot_rendered_html_contains_primary_content",
+      "robots_allows_css_js_and_links_sitemap",
+      "no_noindex_plus_canonical_conflict"
+    ],
+    "seo-content": [
+      "title_<=60_desc_140_160_unique",
+      "og_image_absolute_>=1200x630",
+      "exactly_one_h1_no_skipped_levels",
+      "primary_keyword_in_h1_title_description",
+      "sitemap_excludes_noindex_canonicalized"
+    ],
+    "indexability-validator": [
+      "score_>=95_percent",
+      "zero_orphans",
+      "case_mismatch_flagged",
+      "stale_advisory_not_blocking",
+      "stub_readme_only_when_missing"
+    ],
+    "conversion-optimization": [
+      "targets_measured_worst_transition",
+      "friction_classified_cognitive_effort_trust",
+      "ice_ranked_act_on_top_item",
+      "one_hypothesis_one_variable",
+      "metric_mde_sample_stopdate_pre_registered",
+      "read_only_at_registered_sample_and_full_cycle"
+    ],
+    "funnel-design": [
+      "tofu_mofu_bofu_all_present",
+      "every_stage_has_intent_asset_cta_metric_owner",
+      "cta_matches_intent_altitude",
+      "threshold_based_scoring_with_negative",
+      "every_nurture_path_terminates",
+      "deterministic_handoff_sla_routing_fallback"
+    ],
+    "landing-page-builder": [
+      "hero_features_testimonials_pricing_cta_footer_present",
+      "seo_optimized_meta_and_structured_data"
+    ],
+    "landing-pages": [
+      "critique_against_pattern_checklist",
+      "weakest_conversion_levers_named"
+    ],
+    "social-proof": [
+      "trust_signal_mapped_to_named_risk",
+      "placement_near_decision_point"
+    ]
+  },
+  "scoring": {
+    "pass": "all routing + governance gates hold AND all topic_acceptance items for the resolved topic pass",
+    "blocking_finding": "any routing gate, governance gate, or topic_acceptance item fails"
+  }
+}

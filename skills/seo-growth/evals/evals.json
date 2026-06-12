@@ -1,0 +1,59 @@
+{
+  "cases": [
+    {
+      "id": "arch-csr-migration",
+      "input": "Our Next.js docs site moved /docs/* to /guides/* with no redirects, pages are CSR, and Search Console shows 'Discovered - currently not indexed'. Diagnose and give the technical SEO fixes deeply.",
+      "expected_checks": ["correct_topic_seo_architecture", "rendering_recommendation_ssg_or_isr", "redirect_301_map", "quality_criteria"]
+    },
+    {
+      "id": "content-meta-cannibalization",
+      "input": "Two blog posts both target 'crawl budget' and neither ranks; write the meta titles, descriptions, and Article JSON-LD and resolve the cannibalization. Keyword set is supplied.",
+      "expected_checks": ["correct_topic_seo_content", "title_under_60_desc_140_160", "single_h1", "structured_data_valid", "quality_criteria"]
+    },
+    {
+      "id": "indexability-readme-audit",
+      "input": "Run an indexability audit on this repo: which directories are missing README.md, which are orphaned from the parent index, and what is the score for G3 readiness?",
+      "expected_checks": ["correct_topic_indexability_validator", "indexability_score_and_orphans", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "cro-checkout-friction",
+      "input": "Checkout converts 38% and cart-to-checkout is the worst transition at 62% drop; the form has 11 fields and no return policy near the pay button. Give me a prioritized, testable CRO plan.",
+      "expected_checks": ["correct_topic_conversion_optimization", "worst_transition_targeted", "ice_ranking", "single_variable_pre_registered_test", "quality_criteria"]
+    },
+    {
+      "id": "funnel-b2b-saas-demo",
+      "input": "Design the pre-launch funnel for a B2B SaaS whose conversion event is a booked demo: map TOFU/MOFU/BOFU content, lead scoring, nurture flow, and the sales handoff. We have a structured funnel JSON.",
+      "expected_checks": ["correct_topic_funnel_design", "tofu_mofu_bofu_present", "lead_scoring_with_negative", "nurture_terminates", "deterministic_scripts", "assets"]
+    },
+    {
+      "id": "landing-build-new",
+      "input": "Build a new high-conversion landing page for our API monitoring product: hero, features, testimonials, pricing, CTA, footer, SEO-optimized and ready to deploy.",
+      "expected_checks": ["correct_topic_landing_page_builder", "page_sections_complete", "assets", "quality_criteria"]
+    },
+    {
+      "id": "landing-critique-existing",
+      "input": "Here is our current pricing landing page URL - critique it against landing-page best practices and tell me what is weakening conversion, without rebuilding it.",
+      "expected_checks": ["correct_topic_landing_pages", "critique_against_patterns", "quality_criteria"]
+    },
+    {
+      "id": "social-proof-trust-gap",
+      "input": "Exit surveys say buyers don't trust us enough to enter a card. Which trust signals should I place near the checkout CTA and why?",
+      "expected_checks": ["correct_topic_social_proof", "trust_signal_mapped_to_risk", "quality_criteria"]
+    },
+    {
+      "id": "ambiguous-rank-and-convert",
+      "input": "Make our new feature landing page both rank in Google and convert better.",
+      "expected_checks": ["ambiguity_detected", "asks_one_clarifying_question", "no_two_playbooks_read"]
+    },
+    {
+      "id": "out-of-scope-keyword-research",
+      "input": "Find me the highest-volume low-difficulty keywords to target for our SEO this quarter.",
+      "expected_checks": ["out_of_scope_keyword_research", "redirects_to_correct_skill", "no_invented_metrics"]
+    },
+    {
+      "id": "arch-canonical-host",
+      "input": "Both apex and www of our marketing site resolve with 200 and we have duplicate-content warnings; fix the canonical host and sitemap.",
+      "expected_checks": ["correct_topic_seo_architecture", "single_canonical_host_301", "sitemap_only_canonical_200", "quality_criteria"]
+    }
+  ]
+}

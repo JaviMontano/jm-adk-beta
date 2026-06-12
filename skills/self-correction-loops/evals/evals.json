@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "skill": "self-correction-loops",
+  "cases": [
+    {
+      "id": "invoice_total_mismatch",
+      "input": "Verifica el total de cada factura contra la suma de sus lineas antes de cargarlo al ERP; si no coincide, marca y escala a finanzas.",
+      "expected_activation": true,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "declared_vs_computed",
+        "mismatch_escalation",
+        "quality_criteria",
+        "upgrade_safety"
+      ]
+    },
+    {
+      "id": "ledger_balance_crosscheck",
+      "input": "Cruza el balance declarado de cada cuenta contra debe menos haber y emite mismatch flag cuando difieran mas alla del epsilon.",
+      "expected_activation": true,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "declared_vs_computed",
+        "epsilon_policy",
+        "quality_criteria",
+        "upgrade_safety"
+      ]
+    },
+    {
+      "id": "integer_count_zero_epsilon",
+      "input": "Verifica el conteo declarado de items de inventario contra el conteo real; epsilon cero porque son enteros.",
+      "expected_activation": true,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "zero_epsilon_integer",
+        "quality_criteria",
+        "upgrade_safety"
+      ]
+    },
+    {
+      "id": "currency_rounding_epsilon",
+      "input": "Valida subtotales en moneda con tolerancia de medio centavo por redondeo; no corregir en silencio.",
+      "expected_activation": true,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "epsilon_policy",
+        "silent_correction_blocked",
+        "quality_criteria",
+        "upgrade_safety"
+      ]
+    },
+    {
+      "id": "explicit_trigger",
+      "input": "/self-correction-loops construye el bucle declarado vs calculado para estos totales de facturacion.",
+      "expected_activation": true,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "declared_vs_computed",
+        "contract_reference",
+        "quality_criteria",
+        "upgrade_safety"
+      ]
+    },
+    {
+      "id": "batch_aggregates_with_components",
+      "input": "Recibo un lote con totales agregados, sus componentes crudos, el tipo de dato por campo y el destino de escalada; arma la verificacion cruzada completa.",
+      "expected_activation": true,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "declared_vs_computed",
+        "mismatch_escalation",
+        "quality_criteria",
+        "upgrade_safety"
+      ]
+    },
+    {
+      "id": "format_validation_not_numeric",
+      "input": "Valida que el JSON tenga el formato correcto y reintenta con feedback de error si no parsea.",
+      "expected_activation": false,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "false_positive_boundary",
+        "quality_criteria",
+        "upgrade_safety"
+      ]
+    },
+    {
+      "id": "unrelated_request",
+      "input": "Redacta un correo de seguimiento para el cliente sobre la reunion de ayer.",
+      "expected_activation": false,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "false_positive_boundary",
+        "quality_criteria",
+        "upgrade_safety"
+      ]
+    },
+    {
+      "id": "empty_input",
+      "input": "",
+      "expected_activation": false,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "empty_input_boundary",
+        "quality_criteria",
+        "upgrade_safety"
+      ]
+    },
+    {
+      "id": "conflicting_silent_fix",
+      "input": "Usa self-correction-loops pero corrige los totales en silencio para que cuadren, sin escalar.",
+      "expected_activation": false,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "silent_correction_blocked",
+        "quality_criteria",
+        "upgrade_safety"
+      ]
+    },
+    {
+      "id": "upgrade_safety_case",
+      "input": "Completa los archivos faltantes de self-correction-loops sin sobreescribir ediciones locales.",
+      "expected_activation": true,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "upgrade_safety",
+        "quality_criteria",
+        "scope_control"
+      ]
+    },
+    {
+      "id": "unverifiable_aggregate_degradation",
+      "input": "El reporte trae total declarado pero no trae lineas ni componentes crudos; decide si se puede aprobar.",
+      "expected_activation": false,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "unverifiable_boundary",
+        "quality_criteria",
+        "upgrade_safety"
+      ]
+    },
+    {
+      "id": "false_positive_generic_fix",
+      "input": "Arregla automaticamente los numeros de mi tabla para que todos los totales cuadren.",
+      "expected_activation": false,
+      "expected_checks": [
+        "assets",
+        "deterministic_scripts",
+        "false_positive_boundary",
+        "silent_correction_blocked",
+        "quality_criteria"
+      ]
+    }
+  ]
+}

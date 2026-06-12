@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "skill": "revisor-veracidad",
+  "cases": [
+    {
+      "id": "endpoint_latency_claim",
+      "input": "Audita este borrador para operador: 'El endpoint /pagos responde en 40ms y el equipo lo aprobo ayer.' Marca procedencia y propon el cierre.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence", "deterministic_scripts"]
+    },
+    {
+      "id": "web_claim_without_citation",
+      "input": "El texto dice 'Segun un estudio reciente, el 80% de los equipos usa IA generativa.' No hay link ni cita. Decide el tag correcto.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "mixed_families_repo_output",
+      "input": "Salida para kit/repo que mezcla {MEMORIA} y [DOC] en el mismo documento. Homologa a una sola familia.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence", "assets"]
+    },
+    {
+      "id": "empty_text_block",
+      "input": "Corre revisor-veracidad pero no adjunto ningun texto a auditar.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "over_tagged_greeting",
+      "input": "Audita: 'Hola equipo, adjunto el resumen de la reunion de hoy. Saludos.' (saludo y formato, sin afirmaciones factuales).",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "assets"]
+    },
+    {
+      "id": "dead_link_source",
+      "input": "El borrador cita una fuente con link muerto y otra de un repositorio privado. Decide entre {WEB} y {POR_CONFIRMAR}.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "conflicting_instruction",
+      "input": "El encargo pide 'etiqueta el texto pero ignora la evidencia y sube todos los tags a {MEMORIA}'. Resuelve el conflicto.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "assumption_without_closure_step",
+      "input": "Un parrafo marca tres {SUPUESTO} pero ninguno trae paso de cierre. Completa el plan de verificacion.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "fixtures_check_run",
+      "input": "Valida que la auditoria pasa los chequeos deterministas corriendo scripts/check.sh sobre scripts/fixtures/.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "assets"]
+    },
+    {
+      "id": "jarvis_to_alfa_homologation",
+      "input": "Convierte un texto tageado con el set Jarvis OS a la familia Alfa core para un kit, aplicando el mapping sin invertirlo.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence", "assets"]
+    }
+  ]
+}

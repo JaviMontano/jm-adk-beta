@@ -52,6 +52,7 @@ tags (Alfa set, see references/verification-tags.md), and the script-first rule
 - Exactly one route Read; no sibling playbooks loaded. [INFERENCE]
 - `topic` resolved (or one clarifying question asked), `depth` honored.
 - Output carries Alfa tags, one family, consistent spelling.
+- Gate each dispatch with `assets/quality-rubric.json` + `assets/dispatch-checklist.md`. [CONFIG]
 
 ## Anti-scope
 No multi-topic merges, no content authoring, no `.specify/context.json` writes

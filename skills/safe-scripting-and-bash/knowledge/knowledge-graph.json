@@ -1,0 +1,30 @@
+{
+  "nodes": [
+    { "id": "safe_script", "label": "Safe Bash script / review", "kind": "deliverable" },
+    { "id": "dry_run", "label": "Dry-run-first default", "kind": "control" },
+    { "id": "apply_force", "label": "--apply / --force flags", "kind": "control" },
+    { "id": "write_surface", "label": "Declared write surface", "kind": "concept" },
+    { "id": "broad_write", "label": "Broad write (**/* )", "kind": "risk" },
+    { "id": "destructive_cmd", "label": "Destructive command", "kind": "risk" },
+    { "id": "secret_exposure", "label": "Secret exposure", "kind": "risk" },
+    { "id": "portability_gap", "label": "Portability gap", "kind": "risk" },
+    { "id": "repo_root", "label": "Repo-root detection", "kind": "control" },
+    { "id": "tempdir", "label": "mktemp -d + trap", "kind": "control" },
+    { "id": "offline_validation", "label": "Offline validator", "kind": "gate" },
+    { "id": "safety_report", "label": "Machine-checkable safety report", "kind": "deliverable" }
+  ],
+  "edges": [
+    { "from": "safe_script", "to": "dry_run", "rel": "defaults_to" },
+    { "from": "dry_run", "to": "apply_force", "rel": "gated_by" },
+    { "from": "write_surface", "to": "broad_write", "rel": "may_be" },
+    { "from": "broad_write", "to": "apply_force", "rel": "requires" },
+    { "from": "destructive_cmd", "to": "offline_validation", "rel": "blocked_by" },
+    { "from": "secret_exposure", "to": "offline_validation", "rel": "blocked_by" },
+    { "from": "portability_gap", "to": "repo_root", "rel": "fixed_by" },
+    { "from": "portability_gap", "to": "tempdir", "rel": "fixed_by" },
+    { "from": "safe_script", "to": "repo_root", "rel": "uses" },
+    { "from": "safe_script", "to": "write_surface", "rel": "declares" },
+    { "from": "offline_validation", "to": "safety_report", "rel": "produces" },
+    { "from": "safety_report", "to": "safe_script", "rel": "certifies" }
+  ]
+}

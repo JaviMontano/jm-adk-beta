@@ -53,6 +53,8 @@ and gates-passed. [INFERENCE]
 
 Spine: Discover → Analyze → Execute → Validate. Gates: constitution v6.0.0 (enforcement), evidence tags, script-first rule. [DOC]
 
+Routing aids live in `assets/` — `assets/quality-rubric.json` (routing scorecard) and `assets/checklist.md` (spine checklist). [DOC]
+
 ## Tie-breakers (ambiguous topic) [INFERENCE]
 - create a skill → `meta-skill-creator`; design a skill (spec only) → `design-skill`.
 - improve/production-ize end-to-end → `assembly-skill`; audit only → `x-ray-skill`; certify only → `certify-skill`.
