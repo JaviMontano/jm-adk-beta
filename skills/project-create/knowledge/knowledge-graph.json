@@ -1,0 +1,36 @@
+{
+  "nodes": [
+    { "id": "intent", "label": "Project intent", "kind": "input" },
+    { "id": "slug", "label": "Kebab-case slug", "kind": "artifact" },
+    { "id": "pnnn", "label": "P-NNN id", "kind": "artifact" },
+    { "id": "project_folder", "label": "02_Proyectos/<slug>/", "kind": "artifact" },
+    { "id": "claude_md", "label": "CLAUDE.md (Rule-9 ≤70)", "kind": "file" },
+    { "id": "memory_md", "label": "MEMORY.md", "kind": "file" },
+    { "id": "tareas_md", "label": "TAREAS.md (NOW ≤3)", "kind": "file" },
+    { "id": "registry", "label": "Project registry", "kind": "store" },
+    { "id": "rule9", "label": "Rule-9 sizing", "kind": "policy" },
+    { "id": "missing_only", "label": "Missing-only safety", "kind": "policy" },
+    { "id": "naming_policy", "label": "Slug naming regex", "kind": "policy" },
+    { "id": "acceptance_gate", "label": "Acceptance gate", "kind": "gate" },
+    { "id": "sector", "label": "Parent sector (III Core default)", "kind": "context" }
+  ],
+  "edges": [
+    { "from": "intent", "to": "slug", "rel": "derives" },
+    { "from": "intent", "to": "pnnn", "rel": "reserves" },
+    { "from": "naming_policy", "to": "slug", "rel": "constrains" },
+    { "from": "slug", "to": "project_folder", "rel": "names" },
+    { "from": "sector", "to": "project_folder", "rel": "places" },
+    { "from": "project_folder", "to": "claude_md", "rel": "contains" },
+    { "from": "project_folder", "to": "memory_md", "rel": "contains" },
+    { "from": "project_folder", "to": "tareas_md", "rel": "contains" },
+    { "from": "rule9", "to": "claude_md", "rel": "limits" },
+    { "from": "missing_only", "to": "claude_md", "rel": "protects" },
+    { "from": "missing_only", "to": "memory_md", "rel": "protects" },
+    { "from": "missing_only", "to": "tareas_md", "rel": "protects" },
+    { "from": "pnnn", "to": "registry", "rel": "binds" },
+    { "from": "slug", "to": "registry", "rel": "binds" },
+    { "from": "project_folder", "to": "registry", "rel": "binds" },
+    { "from": "acceptance_gate", "to": "project_folder", "rel": "validates" },
+    { "from": "acceptance_gate", "to": "registry", "rel": "validates" }
+  ]
+}

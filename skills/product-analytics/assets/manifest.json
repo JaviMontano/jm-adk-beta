@@ -1,0 +1,17 @@
+{
+  "skill": "product-analytics",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json",
+      "purpose": "Scored validation gate (per-route + global criteria) the guardian applies before a product-analytics deliverable ships.",
+      "used_by": ["agents/guardian.md", "templates/output.md"]
+    },
+    {
+      "path": "assets/routing-checklist.md",
+      "type": "markdown",
+      "purpose": "One-in/one-out routing guard: resolve a single topic, apply tie-breakers, enforce the contract guards before reading a playbook.",
+      "used_by": ["SKILL.md", "agents/lead.md"]
+    }
+  ]
+}

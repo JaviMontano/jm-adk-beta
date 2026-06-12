@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "id": "route-loop-control",
+      "input": "Our agent loops forever or stops as soon as it writes 'all done'; we gate on scanning reply text for 'done'/'task complete'. Fix the loop control.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "routes_to_deterministic_agent_loop", "removes_text_based_halt", "adds_bounded_budget"]
+    },
+    {
+      "id": "route-false-positives",
+      "input": "Devs ignore our automated reviewer because it flags safe code as 'potential security issue' about 1 in 5 times. How do we make it trustworthy again?",
+      "expected_checks": ["assets", "quality_criteria", "routes_to_false_positive_criteria", "categorical_criteria_with_pos_neg_examples", "per_category_fp_rate"]
+    },
+    {
+      "id": "route-forced-json",
+      "input": "Our extraction step sometimes returns prose instead of the JSON object we need. How do we guarantee a typed structured result?",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "routes_to_defensive_structured_extraction", "json_schema_and_forced_tool_choice"]
+    },
+    {
+      "id": "route-guardrail-placement",
+      "input": "We put 'never run rm -rf' in the system prompt but the agent still occasionally tries destructive commands. Where should this rule actually live?",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "routes_to_pretooluse_guardrails", "deny_in_hook_not_prompt"]
+    },
+    {
+      "id": "route-subagent-isolation",
+      "input": "When we spawn a research subagent it inherits the whole parent conversation and gets confused. How do we give it a clean slate and its own model?",
+      "expected_checks": ["assets", "quality_criteria", "routes_to_hub_and_spoke_isolation", "empty_context_per_subagent"]
+    },
+    {
+      "id": "disambiguate-fp-vs-sampling",
+      "input": "Our classifier's accuracy looks fine on average but we suspect one document type is dragging it down. Is this a criteria problem or a sampling problem? Pick the right kata.",
+      "expected_checks": ["assets", "quality_criteria", "asks_or_justifies_topic_choice", "distinguishes_false_positive_from_confidence_stratified"]
+    },
+    {
+      "id": "no-matching-kata",
+      "input": "Can you recommend which GPU instance type to rent for fine-tuning a vision model on AWS?",
+      "expected_checks": ["assets", "quality_criteria", "declines_no_topic_fits", "routes_user_elsewhere"]
+    },
+    {
+      "id": "single-playbook-discipline",
+      "input": "Compare deterministic-agent-loop and validation-retry-feedback side by side and tell me which to use for my retry-on-bad-JSON case.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "reads_exactly_one_playbook", "rejects_multi_playbook_load"]
+    },
+    {
+      "id": "context-edge-placement",
+      "input": "Our long-running agent forgets the critical 'always ask before deleting' rule once the conversation gets long. What pattern fixes this?",
+      "expected_checks": ["assets", "quality_criteria", "routes_to_context_dilution_mitigation", "edge_placement_and_compaction"]
+    },
+    {
+      "id": "evidence-tag-governance",
+      "input": "Apply the prefix-caching kata to our 40k-token static system prompt and show how to read cache_creation vs cache_read tokens, with proper evidence tags.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "routes_to_prefix_caching", "alfa_core_tags_only_no_mixed_families"]
+    }
+  ]
+}

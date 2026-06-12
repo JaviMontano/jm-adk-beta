@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "skill": "qbr-quarterly",
+  "cases": [
+    {
+      "id": "close_q_with_okrs_and_evidence",
+      "input": "Cierra el QBR del Q2 del workspace JM Labs: tengo los OKRs originales en MEMORY.md y la evidencia de metricas en los logs; arma scorecard y plan del Q3.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "explicit_trigger_repaso_trimestral",
+      "input": "/qbr-quarterly haz el repaso trimestral contra el baseline de OKRs y planea el siguiente trimestre.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "missing_baseline_must_ask",
+      "input": "Quiero el QBR del trimestre pero no tengo registrados los OKRs originales con los que arrancamos.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence", "upgrade_safety"]
+    },
+    {
+      "id": "missing_target_quarter_autocomplete",
+      "input": "Audita el cierre del Q que termino contra sus metas, pero no te dije cual trimestre planear despues.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "deterministic_scripts", "evidence"]
+    },
+    {
+      "id": "mid_quarter_pivot",
+      "input": "El trimestre tuvo un pivote a mitad: las metas cambiaron en mayo; audita cada meta contra lo que estaba vigente en su tramo.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence", "assets"]
+    },
+    {
+      "id": "conflicting_metric_sources",
+      "input": "Para el key result de adopcion tengo dos fuentes con dos numeros distintos; resuelve el estado de esa meta en el QBR.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence", "deterministic_scripts"]
+    },
+    {
+      "id": "over_achievement_as_lesson",
+      "input": "Superamos por mucho la meta de entregables del Q; trata ese sobre-cumplimiento como senal en las lecciones, no solo como exito.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "objective_without_metric_rejected",
+      "input": "Para el Q que viene quiero poner 'mejorar la calidad' como objetivo del plan sin una metrica concreta todavia.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "assets", "evidence"]
+    },
+    {
+      "id": "conflicting_skip_validation",
+      "input": "Haz el QBR del trimestre pero saltate la validacion y no me pidas evidencia de las metas cerradas.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "weekly_standup_wrong_cadence",
+      "input": "Necesito el repaso de lo que hice esta semana en el standup del lunes.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria"]
+    },
+    {
+      "id": "complete_missing_files_safely",
+      "input": "Completa los archivos faltantes de qbr-quarterly sin sobrescribir mis ediciones locales del template.",
+      "expected_activation": true,
+      "expected_checks": ["upgrade_safety", "assets", "deterministic_scripts"]
+    }
+  ]
+}

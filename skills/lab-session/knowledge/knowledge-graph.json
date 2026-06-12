@@ -1,0 +1,39 @@
+{
+  "nodes": [
+    { "id": "p08", "label": "Protocol P08 (four-file Lab contract)", "kind": "standard" },
+    { "id": "session_folder", "label": "<lab-root>/<slug>/ session folder", "kind": "artifact" },
+    { "id": "notas", "label": "notas.md (running log)", "kind": "file" },
+    { "id": "hipotesis", "label": "hipotesis.md (falsifiable claim)", "kind": "file" },
+    { "id": "referencias", "label": "referencias.md (tagged sources)", "kind": "file" },
+    { "id": "decision", "label": "decision.md (keep/pivot/kill verdict)", "kind": "file" },
+    { "id": "spine", "label": "Discover-Plan-Execute-Validate", "kind": "process" },
+    { "id": "classify", "label": "CREATE vs SKIP classification", "kind": "rule" },
+    { "id": "missing_only", "label": "missing-only / never-overwrite", "kind": "rule" },
+    { "id": "force", "label": "--force after diff review", "kind": "rule" },
+    { "id": "falsifiable", "label": "falsifiable framing or explicit stub", "kind": "rule" },
+    { "id": "human_verdict", "label": "verdict written by human at close", "kind": "rule" },
+    { "id": "tags", "label": "Alfa-core tags [CODE][CONFIG][DOC][INFERENCE][ASSUMPTION]", "kind": "taxonomy" },
+    { "id": "determinism", "label": "ISO dates, offline, byte-stable", "kind": "standard" },
+    { "id": "brand", "label": "single-brand JM Labs scratch", "kind": "constraint" },
+    { "id": "gate", "label": "guardian validation gate", "kind": "control" },
+    { "id": "summary", "label": "created vs skipped summary line", "kind": "output" }
+  ],
+  "edges": [
+    { "from": "p08", "to": "session_folder", "rel": "defines" },
+    { "from": "session_folder", "to": "notas", "rel": "contains" },
+    { "from": "session_folder", "to": "hipotesis", "rel": "contains" },
+    { "from": "session_folder", "to": "referencias", "rel": "contains" },
+    { "from": "session_folder", "to": "decision", "rel": "contains" },
+    { "from": "spine", "to": "classify", "rel": "applies" },
+    { "from": "classify", "to": "missing_only", "rel": "enforces" },
+    { "from": "missing_only", "to": "force", "rel": "overridden-by" },
+    { "from": "hipotesis", "to": "falsifiable", "rel": "must-satisfy" },
+    { "from": "decision", "to": "human_verdict", "rel": "must-satisfy" },
+    { "from": "referencias", "to": "tags", "rel": "tagged-with" },
+    { "from": "notas", "to": "tags", "rel": "tagged-with" },
+    { "from": "spine", "to": "determinism", "rel": "respects" },
+    { "from": "session_folder", "to": "brand", "rel": "scoped-by" },
+    { "from": "spine", "to": "gate", "rel": "ends-at" },
+    { "from": "gate", "to": "summary", "rel": "emits" }
+  ]
+}

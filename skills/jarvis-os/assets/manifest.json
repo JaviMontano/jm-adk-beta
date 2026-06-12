@@ -1,0 +1,17 @@
+{
+  "skill": "jarvis-os",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Evalúa un ruteo COOL contra 6 criterios ponderados con umbral de pass.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "checklist",
+      "purpose": "Lista determinista del acceptance gate que recorre guardian antes de marcar completo.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    }
+  ]
+}

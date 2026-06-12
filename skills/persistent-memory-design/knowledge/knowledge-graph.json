@@ -1,0 +1,40 @@
+{
+  "nodes": [
+    { "id": "scratchpad", "label": "Persistent scratchpad (on-disk file)", "kind": "artifact" },
+    { "id": "fixed_schema", "label": "Fixed four-section schema", "kind": "contract" },
+    { "id": "hypotheses", "label": "Hypotheses section", "kind": "section" },
+    { "id": "decisions", "label": "Decisions section", "kind": "section" },
+    { "id": "findings", "label": "Findings section", "kind": "section" },
+    { "id": "open", "label": "Open section", "kind": "section" },
+    { "id": "validated_conclusion", "label": "Validated conclusion", "kind": "concept" },
+    { "id": "provenance", "label": "Provenance tag [src:source @ date]", "kind": "concept" },
+    { "id": "read_once", "label": "Read-once / reference-after", "kind": "policy" },
+    { "id": "upsert_by_key", "label": "Idempotent upsert by key", "kind": "policy" },
+    { "id": "prompt_cache", "label": "Prompt cache", "kind": "constraint" },
+    { "id": "survives_compact", "label": "Survives /compact and reset", "kind": "invariant" },
+    { "id": "concurrency_policy", "label": "Concurrency resolution", "kind": "policy" },
+    { "id": "path_safety", "label": "Stable repo-relative path", "kind": "constraint" },
+    { "id": "checker", "label": "scripts/check.sh + assets contracts", "kind": "deterministic" },
+    { "id": "session_lifecycle", "label": "session-lifecycle-management", "kind": "related-skill" }
+  ],
+  "edges": [
+    { "from": "scratchpad", "to": "fixed_schema", "rel": "conforms_to" },
+    { "from": "fixed_schema", "to": "hypotheses", "rel": "contains" },
+    { "from": "fixed_schema", "to": "decisions", "rel": "contains" },
+    { "from": "fixed_schema", "to": "findings", "rel": "contains" },
+    { "from": "fixed_schema", "to": "open", "rel": "contains" },
+    { "from": "findings", "to": "validated_conclusion", "rel": "stores_only" },
+    { "from": "decisions", "to": "validated_conclusion", "rel": "stores_only" },
+    { "from": "validated_conclusion", "to": "provenance", "rel": "requires" },
+    { "from": "read_once", "to": "prompt_cache", "rel": "preserves" },
+    { "from": "upsert_by_key", "to": "prompt_cache", "rel": "preserves" },
+    { "from": "scratchpad", "to": "read_once", "rel": "governed_by" },
+    { "from": "scratchpad", "to": "upsert_by_key", "rel": "governed_by" },
+    { "from": "scratchpad", "to": "survives_compact", "rel": "guarantees" },
+    { "from": "scratchpad", "to": "path_safety", "rel": "constrained_by" },
+    { "from": "upsert_by_key", "to": "concurrency_policy", "rel": "depends_on" },
+    { "from": "checker", "to": "fixed_schema", "rel": "validates" },
+    { "from": "checker", "to": "provenance", "rel": "validates" },
+    { "from": "session_lifecycle", "to": "scratchpad", "rel": "routes_away_from" }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "skill": "iikit",
+  "version": "1.0.0",
+  "purpose": "Scoreable rubric for an iikit routing+stage invocation. Each criterion is pass/fail; all must pass for dod=pass.",
+  "criteria": [
+    {
+      "id": "QR-01",
+      "dimension": "routing",
+      "rule": "Exactly one playbook was read; topic resolved to a single enum value.",
+      "evidence": "INFERENCE"
+    },
+    {
+      "id": "QR-02",
+      "dimension": "routing",
+      "rule": "Described intent routed to the earliest unmet stage; ambiguity resolved with one question, no fan-out.",
+      "evidence": "INFERENCE"
+    },
+    {
+      "id": "QR-03",
+      "dimension": "dependency",
+      "rule": "Predecessor artifact existed or was explicitly created; no stage ran on a missing predecessor.",
+      "evidence": "INFERENCE"
+    },
+    {
+      "id": "QR-04",
+      "dimension": "determinism",
+      "rule": "Prescribed iikit-core scripts were run (script-first); missing/non-zero scripts surfaced verbatim, not assumed-success.",
+      "evidence": "EXPLICIT"
+    },
+    {
+      "id": "QR-05",
+      "dimension": "integrity",
+      "rule": "Stage integrity controls honored (constitution phase-separation; SC->FR traceability; testify hash LOCKED in context.json + git note).",
+      "evidence": "EXPLICIT"
+    },
+    {
+      "id": "QR-06",
+      "dimension": "evidence",
+      "rule": "One evidence-tag family only; no mixed Spanish/English tag sets.",
+      "evidence": "CONFIG"
+    },
+    {
+      "id": "QR-07",
+      "dimension": "hygiene",
+      "rule": "Zero placeholder tokens; no invented prices; no client PII; single brand.",
+      "evidence": "CONFIG"
+    },
+    {
+      "id": "QR-08",
+      "dimension": "handoff",
+      "rule": "Next-step suggestion emitted from next-step.sh with model tier and dashboard link.",
+      "evidence": "EXPLICIT"
+    }
+  ]
+}

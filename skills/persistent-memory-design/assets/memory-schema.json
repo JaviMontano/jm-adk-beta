@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "persistent-memory-design — design report",
+  "description": "Required fields of a persistent-scratchpad design report, validated offline by scripts/check.sh.",
+  "type": "object",
+  "required": ["path", "schema_sections", "entry_filter", "read_protocol", "write_policy", "survives_compact"],
+  "additionalProperties": true,
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "Stable, repo-relative scratchpad path.",
+      "pattern": "^(?!.*\\.\\.).+\\.md$"
+    },
+    "schema_sections": {
+      "type": "array",
+      "description": "Fixed, invariant section order.",
+      "items": { "enum": ["Hypotheses", "Decisions", "Findings", "Open"] },
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true
+    },
+    "entry_filter": {
+      "type": "object",
+      "required": ["validated_conclusions_only", "provenance_required_in"],
+      "properties": {
+        "validated_conclusions_only": { "const": true },
+        "provenance_required_in": {
+          "type": "array",
+          "items": { "enum": ["Findings", "Decisions"] },
+          "minItems": 2
+        },
+        "rejects": {
+          "type": "array",
+          "items": { "enum": ["raw_transcript", "tool_dumps", "unvalidated_in_findings"] }
+        }
+      }
+    },
+    "read_protocol": {
+      "type": "object",
+      "required": ["read_once", "reference_after"],
+      "properties": {
+        "read_once": { "const": true },
+        "reference_after": { "const": true },
+        "reread_each_turn": { "const": false }
+      }
+    },
+    "write_policy": {
+      "type": "object",
+      "required": ["upsert_by_key", "full_rewrite"],
+      "properties": {
+        "upsert_by_key": { "const": true },
+        "full_rewrite": { "const": false },
+        "concurrency": { "enum": ["last_upsert_by_key_wins", "lock", "single_writer"] }
+      }
+    },
+    "survives_compact": { "const": true }
+  }
+}

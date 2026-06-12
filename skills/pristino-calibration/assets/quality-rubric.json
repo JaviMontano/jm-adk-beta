@@ -1,0 +1,20 @@
+{
+  "skill": "pristino-calibration",
+  "purpose": "Deterministic gate dimensions the guardian uses to pass or block a pristino-calibration output. Maps 1:1 to evals/evals.json expected_checks.",
+  "tag_family": "alfa-core",
+  "tags": ["[CODE]", "[CONFIG]", "[DOC]", "[INFERENCE]", "[ASSUMPTION]"],
+  "precedence": ["Veracidad", "Seguridad", "Objetivo", "Formato", "Estilo"],
+  "dimensions": [
+    { "id": "persona_line", "rule": "Line 1 is the persona label, except in bypass mode.", "blocks_on_fail": true },
+    { "id": "mode_shape", "rule": "Output matches resolved MODE exactly: bypass | solo_prompt | solo_respuesta | full(trivial|substantive). No mode bleed.", "blocks_on_fail": true },
+    { "id": "optimizer_sections", "rule": "When OPTIMIZER is on, sections required by the mode are present (1 pedido original, 2 prompt optimizado, 3 respuesta).", "blocks_on_fail": true },
+    { "id": "canvas_contract", "rule": "Canvas present iff full+substantive; absent otherwise.", "blocks_on_fail": true },
+    { "id": "evidence", "rule": "Non-obvious claims tagged from ONE family, consistent spelling; confidence declared 0-1.", "blocks_on_fail": true },
+    { "id": "precedence_order", "rule": "Under conflict, Veracidad>Seguridad>Objetivo>Formato>Estilo applied and trade-off named.", "blocks_on_fail": true },
+    { "id": "delegate_agents_known", "rule": "Every delegated agent exists in the persona's capability_agents; zero invented.", "blocks_on_fail": true },
+    { "id": "guardian_block", "rule": "Empty input or fabrication-only intent produces a refusal, not a deliverable.", "blocks_on_fail": true },
+    { "id": "degraded_self_calibration", "rule": "If the injected block was absent, [DEGRADED] is present.", "blocks_on_fail": true },
+    { "id": "no_green_as_success", "rule": "estado=success requires evidence/validation; otherwise degraded + named gap.", "blocks_on_fail": true },
+    { "id": "single_brand", "rule": "Single-brand (JM Labs); no invented prices; no client PII; no mixed tag families.", "blocks_on_fail": true }
+  ]
+}

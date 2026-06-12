@@ -1,0 +1,17 @@
+{
+  "skill": "official-source-verifier",
+  "report_required_fields": ["question", "status", "source_registry", "claims", "decision", "blocking_gaps"],
+  "status_enum": ["pass", "fail", "blocked"],
+  "source_registry_entry_fields": ["source_id", "source_type", "url", "accessed_date", "publisher", "official", "role"],
+  "source_role_enum": ["authority", "lead"],
+  "claim_fields": ["claim_id", "statement", "source_ids", "official_source_ids", "status", "tag"],
+  "claim_status_enum": ["verified", "unverified"],
+  "decision_fields": ["change_authorized", "justified_change", "scope", "blocking_gaps"],
+  "invariants": [
+    "accessed_date must be ISO YYYY-MM-DD and not in the future",
+    "a verified claim must have non-empty official_source_ids",
+    "no official=false source may be the sole evidence of a verified claim",
+    "change_authorized=true requires all supporting claims verified",
+    "non-empty blocking_gaps forbids status=pass"
+  ]
+}

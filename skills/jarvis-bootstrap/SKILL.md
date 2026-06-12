@@ -121,6 +121,11 @@ P00-P02 faltantes; reporta 8 creados, 1 omitido, 0 sobrescritos. {INFERENCIA}
   `references/verification-tags.md`. {DOC}
 - Marca cada inferencia y supuesto; `{VACIO_CRITICO}` es terminal: detente y pregunta. {DOC}
 
+## Assets
+
+- Bundle de validacion en `assets/`: `assets/checklist.md` y
+  `assets/quality-rubric.json` respaldan el gate del guardian (ver `assets/README.md`).
+
 ## Update-safety notes
 
 - Archivos de soporte generados: **missing-only** por defecto.

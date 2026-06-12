@@ -1,0 +1,39 @@
+{
+  "nodes": [
+    { "id": "router", "label": "legal-compliance router", "kind": "skill" },
+    { "id": "topic", "label": "topic param (3 lanes)", "kind": "param" },
+    { "id": "depth", "label": "depth param (quick|deep)", "kind": "param" },
+    { "id": "spine", "label": "Discover-Analyze-Execute-Validate", "kind": "process" },
+    { "id": "compliance-assessment", "label": "Compliance Assessment", "kind": "lane" },
+    { "id": "compliance-framework", "label": "Compliance Framework", "kind": "lane" },
+    { "id": "contract-review", "label": "Contract Review", "kind": "lane" },
+    { "id": "frameworks", "label": "GDPR/SOX/PCI-DSS/HIPAA/ISO27001/NIST", "kind": "concept" },
+    { "id": "scoring", "label": "Single scoring method (severity, L*I)", "kind": "method" },
+    { "id": "gap-matrix", "label": "Gap matrix (100% coverage)", "kind": "deliverable" },
+    { "id": "heat-map", "label": "Regulatory risk heat map", "kind": "deliverable" },
+    { "id": "roadmap", "label": "Remediation roadmap", "kind": "deliverable" },
+    { "id": "control-evidence", "label": "Control-to-evidence map", "kind": "deliverable" },
+    { "id": "clause-findings", "label": "Clause risk findings + redlines", "kind": "deliverable" },
+    { "id": "evidence-tags", "label": "Alfa core evidence tags", "kind": "governance" },
+    { "id": "disclaimer", "label": "Verbatim legal disclaimer", "kind": "governance" },
+    { "id": "guardian-gate", "label": "Validation gate", "kind": "control" }
+  ],
+  "edges": [
+    { "from": "router", "to": "topic", "rel": "resolves" },
+    { "from": "router", "to": "depth", "rel": "resolves" },
+    { "from": "topic", "to": "compliance-assessment", "rel": "routes-to" },
+    { "from": "topic", "to": "compliance-framework", "rel": "routes-to" },
+    { "from": "topic", "to": "contract-review", "rel": "routes-to" },
+    { "from": "router", "to": "spine", "rel": "executes" },
+    { "from": "compliance-assessment", "to": "frameworks", "rel": "assesses-against" },
+    { "from": "compliance-assessment", "to": "scoring", "rel": "applies" },
+    { "from": "scoring", "to": "gap-matrix", "rel": "feeds" },
+    { "from": "scoring", "to": "heat-map", "rel": "feeds" },
+    { "from": "gap-matrix", "to": "roadmap", "rel": "maps-to" },
+    { "from": "compliance-framework", "to": "control-evidence", "rel": "produces" },
+    { "from": "contract-review", "to": "clause-findings", "rel": "produces" },
+    { "from": "spine", "to": "guardian-gate", "rel": "ends-with" },
+    { "from": "guardian-gate", "to": "evidence-tags", "rel": "enforces" },
+    { "from": "guardian-gate", "to": "disclaimer", "rel": "enforces" }
+  ]
+}

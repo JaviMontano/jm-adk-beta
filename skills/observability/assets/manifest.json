@@ -1,0 +1,17 @@
+{
+  "skill": "observability",
+  "assets": [
+    {
+      "path": "assets/routing-matrix.json",
+      "type": "json/policy",
+      "purpose": "Intent-to-topic routing map: resolve one topic by symptom and load exactly one playbook; encodes the ambiguity/ask rule.",
+      "used_by": ["SKILL.md", "README.md", "agents/lead.md"]
+    },
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json/policy",
+      "purpose": "Per-topic and global quality gates the guardian applies before sign-off, including deterministic-validator references and evidence-tag vocabulary.",
+      "used_by": ["agents/guardian.md", "templates/output.md"]
+    }
+  ]
+}

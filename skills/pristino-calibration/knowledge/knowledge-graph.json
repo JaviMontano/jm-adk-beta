@@ -1,0 +1,40 @@
+{
+  "nodes": [
+    { "id": "hook", "label": "persona-calibrate.sh UserPromptSubmit hook", "kind": "control" },
+    { "id": "block", "label": "PRISTINO-CALIBRATION additionalContext block", "kind": "input" },
+    { "id": "registry", "label": "references/ontology/personas.json", "kind": "registry" },
+    { "id": "persona", "label": "resolved persona (label + id)", "kind": "param" },
+    { "id": "mode", "label": "MODE (bypass|solo_prompt|solo_respuesta|full)", "kind": "param" },
+    { "id": "complexity", "label": "COMPLEXITY (trivial|substantive)", "kind": "param" },
+    { "id": "persona_line", "label": "line-1 persona declaration", "kind": "output" },
+    { "id": "optimizer", "label": "3-section optimizer (original|optimizado|respuesta)", "kind": "process" },
+    { "id": "precedence", "label": "Veracidad>Seguridad>Objetivo>Formato>Estilo", "kind": "invariant" },
+    { "id": "delegates", "label": "capability_agents (allowed DELEGATE set)", "kind": "registry" },
+    { "id": "canvas", "label": "Canvas output contract", "kind": "output" },
+    { "id": "tags", "label": "Alfa core tags [CODE][CONFIG][DOC][INFERENCE][ASSUMPTION]", "kind": "taxonomy" },
+    { "id": "guardian", "label": "acceptance gate (8 checks)", "kind": "gate" },
+    { "id": "degraded", "label": "[DEGRADED] self-calibration path", "kind": "fallback" },
+    { "id": "evals", "label": "evals/evals.json expected_checks", "kind": "verification" }
+  ],
+  "edges": [
+    { "from": "hook", "to": "block", "rel": "emits" },
+    { "from": "hook", "to": "registry", "rel": "reads" },
+    { "from": "block", "to": "persona", "rel": "carries" },
+    { "from": "block", "to": "mode", "rel": "carries" },
+    { "from": "block", "to": "complexity", "rel": "carries" },
+    { "from": "registry", "to": "persona", "rel": "defines" },
+    { "from": "registry", "to": "delegates", "rel": "defines" },
+    { "from": "persona", "to": "persona_line", "rel": "declared_as" },
+    { "from": "mode", "to": "optimizer", "rel": "gates" },
+    { "from": "complexity", "to": "canvas", "rel": "requires" },
+    { "from": "optimizer", "to": "delegates", "rel": "delegates_only_to" },
+    { "from": "optimizer", "to": "precedence", "rel": "constrained_by" },
+    { "from": "optimizer", "to": "tags", "rel": "annotated_with" },
+    { "from": "block", "to": "degraded", "rel": "absence_triggers" },
+    { "from": "guardian", "to": "persona_line", "rel": "checks" },
+    { "from": "guardian", "to": "canvas", "rel": "checks" },
+    { "from": "guardian", "to": "delegates", "rel": "checks" },
+    { "from": "guardian", "to": "precedence", "rel": "checks" },
+    { "from": "guardian", "to": "evals", "rel": "maps_to" }
+  ]
+}

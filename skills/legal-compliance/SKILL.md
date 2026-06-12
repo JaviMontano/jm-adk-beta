@@ -39,6 +39,7 @@ Spine: Discover → Analyze → Execute → Validate.
 - Every non-obvious claim carries one Alfa-core tag (`[CÓDIGO]` `[CONFIG]` `[DOC]` `[INFERENCIA]` `[SUPUESTO]`), one spelling throughout. See `references/verification-tags.md`. [DOC]
 - Each `[SUPUESTO]` is paired with a concrete verification step; missing critical input → stop and ask. [DOC]
 - Quality gates: constitution v6.0.0 (enforcement), script-first rule. [CONFIG]
+- Check output against the binary per-lane rubric in `assets/` (see `assets/quality-rubric.json`). [CONFIG]
 
 ## Anti-patterns
 - Loading multiple playbooks "for context" — defeats the router; pick one. [INFERENCIA]

@@ -80,6 +80,8 @@ no `topic` fits, say so and route the user elsewhere rather than guessing. [DOC]
   family per `../../references/verification-tags.md` — never mix tag families. [DOC]
 - Constitution v6.0.0 gates honored: enforcement, evidence tags, script-first
   (prefer a script over manual steps when one exists). [DOC]
+- Score the result with `assets/quality-rubric.json` and run `assets/routing-checklist.md`
+  before declaring done (see `assets/README.md`). [DOC]
 
 ## Anti-patterns
 

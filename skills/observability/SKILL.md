@@ -53,3 +53,7 @@ tagged; `deep` runs verified each step. [DOC]
 ## Anti-patterns
 Loading the whole cluster; routing on a single keyword; auto-filling a missing
 target system instead of asking; emitting untagged claims. [INFERENCIA]
+
+## Assets
+Routing and acceptance policies live in `assets/` (`routing-matrix.json`,
+`quality-rubric.json`); see `assets/README.md`. [CONFIG]

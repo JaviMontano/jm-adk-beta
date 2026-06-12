@@ -1,0 +1,43 @@
+{
+  "skill": "integrations",
+  "scale": ["fail", "partial", "pass"],
+  "dimensions": [
+    {
+      "id": "routing-discipline",
+      "weight": 0.2,
+      "criterion": "Exactly one topic resolved (topic in enum) and exactly one playbook read; no cluster load; two topics sequenced not merged.",
+      "evidence_tag": "CONFIG"
+    },
+    {
+      "id": "verification-before-trust",
+      "weight": 0.25,
+      "criterion": "Signature/origin verified before any external payload field is trusted (raw-body HMAC + constant-time + timestamp; reCAPTCHA siteverify with action+hostname; payment fulfillment webhook-driven).",
+      "evidence_tag": "DOC"
+    },
+    {
+      "id": "idempotency",
+      "weight": 0.2,
+      "criterion": "Every money/event path is replay-safe, deduped on provider event id; replays cause no duplicate side effects.",
+      "evidence_tag": "INFERENCIA"
+    },
+    {
+      "id": "secrets-handling",
+      "weight": 0.15,
+      "criterion": "Secrets/keys referenced from env/Firebase secrets, never inlined or client-side; missing required secret halts as VACIO_CRITICO.",
+      "evidence_tag": "CODIGO"
+    },
+    {
+      "id": "topic-failure-coverage",
+      "weight": 0.1,
+      "criterion": "The one failure that loses money or drops events for the topic is explicitly closed (quick) or all listed failure modes exercised (deep).",
+      "evidence_tag": "DOC"
+    },
+    {
+      "id": "evidence-governance",
+      "weight": 0.1,
+      "criterion": "Every non-obvious claim tagged; no mixed tag families; provider-version facts flagged SUPUESTO; never green-by-default.",
+      "evidence_tag": "CONFIG"
+    }
+  ],
+  "gate_threshold": "no dimension at fail; verification-before-trust and idempotency must be pass"
+}

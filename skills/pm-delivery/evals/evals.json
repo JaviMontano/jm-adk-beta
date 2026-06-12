@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "id": "eval-01-risk-7categories",
+      "input": "Assess delivery risk for migrating our orders service to Firestore before Q3, given a 2-person team and a 5-table legacy Postgres DB.",
+      "expected_checks": ["routes_to_risk_assessment", "seven_categories_covered", "severity_x_likelihood_scored", "high_risks_have_mitigations", "quality_criteria"]
+    },
+    {
+      "id": "eval-02-cost-fte-bands",
+      "input": "Estimate effort for a new onboarding platform with SSO, 6 core entities, and a data migration from a legacy DB.",
+      "expected_checks": ["routes_to_cost_estimation", "fte_months_no_prices", "optimistic_expected_pessimistic_bands", "scope_multipliers_justified", "deterministic_scripts"]
+    },
+    {
+      "id": "eval-03-budget-no-prices",
+      "input": "Set a delivery budget baseline for the Q3 platform program across three workstreams.",
+      "expected_checks": ["routes_to_budget_management", "fte_months_no_prices", "no_currency_anywhere", "quality_criteria"]
+    },
+    {
+      "id": "eval-04-okr-shape",
+      "input": "Draft OKRs to make customer onboarding a competitive advantage this quarter for the product team.",
+      "expected_checks": ["routes_to_okr_design", "objective_qualitative_no_metric", "two_to_five_outcome_krs", "baseline_target_owner_due", "quality_criteria"]
+    },
+    {
+      "id": "eval-05-vendor-scorecard",
+      "input": "Evaluate three managed-search vendors for our knowledge base against our criteria and recommend one.",
+      "expected_checks": ["routes_to_vendor_evaluation", "weighted_scorecard", "fte_months_no_prices", "assets"]
+    },
+    {
+      "id": "eval-06-stakeholder-raci",
+      "input": "Map the stakeholders for the payments migration and define a communication plan for the steering committee.",
+      "expected_checks": ["routes_to_stakeholder_mapping", "power_interest_grid", "raci_matrix", "quality_criteria"]
+    },
+    {
+      "id": "eval-07-disambiguation",
+      "input": "Help me plan delivery for next quarter — I need to figure out goals and what the team can actually take on.",
+      "expected_checks": ["asks_one_disambiguating_question", "single_topic_routed", "no_topic_invented", "quality_criteria"]
+    },
+    {
+      "id": "eval-08-out-of-scope-redirect",
+      "input": "Design the microservices architecture and write the deployment Terraform for the orders service.",
+      "expected_checks": ["redirects_out_of_scope", "no_playbook_loaded_for_architecture", "quality_criteria"]
+    },
+    {
+      "id": "eval-09-single-route-enforced",
+      "input": "Give me both the full risk register and the FTE-month estimate for the migration in one pass.",
+      "expected_checks": ["loads_exactly_one_playbook", "splits_or_asks_which_first", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "eval-10-sla-error-budget",
+      "input": "Define SLOs and an error budget for our public orders API targeting 99.9% availability.",
+      "expected_checks": ["routes_to_sla_definition", "sli_slo_sla_distinguished", "error_budget_computed", "assets"]
+    },
+    {
+      "id": "eval-11-evidence-banner",
+      "input": "Risk-assess this greenfield idea — we have almost no artifacts yet, just a one-paragraph concept.",
+      "expected_checks": ["routes_to_risk_assessment", "assumption_share_tracked", "warning_banner_when_over_30pct", "quality_criteria"]
+    },
+    {
+      "id": "eval-12-team-topology",
+      "input": "Our three squads keep stepping on each other; recommend a team topology and interaction modes.",
+      "expected_checks": ["routes_to_team_topology", "conways_law_applied", "interaction_modes_defined", "assets"]
+    }
+  ]
+}

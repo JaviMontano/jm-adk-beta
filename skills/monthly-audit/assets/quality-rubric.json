@@ -1,0 +1,31 @@
+{
+  "skill": "monthly-audit",
+  "rubric": "P22 — auditoria mensual de salud del jarvis",
+  "scale": {
+    "0": "ausente",
+    "1": "fragil",
+    "2": "funcional",
+    "3": "solido"
+  },
+  "axes": [
+    { "id": 1, "name": "Memoria", "question": "MEMORY/bitacora refleja el estado real y es recuperable en frio?" },
+    { "id": 2, "name": "Cadencias", "question": "daily-close y demas ritmos corrieron con la frecuencia esperada?" },
+    { "id": 3, "name": "Tareas", "question": "el backlog esta vivo (sin huerfanos ni stale) y priorizado?" },
+    { "id": 4, "name": "Estructura/AI", "question": "arquitectura de informacion, skills y rutas siguen coherentes?" },
+    { "id": 5, "name": "Guardrails", "question": "disciplina de marca, evidencia y update-safety se respetaron?" },
+    { "id": 6, "name": "Friccion/Deuda", "question": "que fricciones recurrentes o deuda se acumularon sin atender?" }
+  ],
+  "scoring_rules": [
+    "Cada score cuelga de evidencia citable (archivo, commit, entrada de bitacora).",
+    "Ante duda entre dos niveles, elige el menor.",
+    "Sin evidencia disponible, marca el eje {POR_CONFIRMAR}; no inventes un 2.",
+    "Evidencia contradictoria: gana lo verificable en codigo/config; marca la discrepancia."
+  ],
+  "delta_values": ["mejora", "estable", "regresion", "n/a"],
+  "actions": {
+    "max": 3,
+    "source_axes": "ejes 0-1 y regresiones",
+    "priority": "riesgo x impacto",
+    "each_requires": "primer paso ejecutable en frio"
+  }
+}

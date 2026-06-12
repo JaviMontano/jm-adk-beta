@@ -1,0 +1,17 @@
+{
+  "skill": "project-create",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Weighted pass/partial/fail scoring for the six acceptance-gate criteria used by the guardian.",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "checklist",
+      "purpose": "Run-before-done acceptance checklist mapping 1:1 to the guardian gate.",
+      "used_by": ["README.md", "SKILL.md"]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "skill": "qbr-quarterly",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Seis dimensiones ponderadas con pass_when y el vocabulario pass/conditional/fail/not-verified; conduce el veredicto del guardian, el bloque de validacion del template y el meta-prompt de auto-revision.",
+      "used_by": ["agents/guardian.md", "templates/output.md", "prompts/meta.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "text/markdown",
+      "purpose": "Checklist del Acceptance Gate espejo de SKILL.md; bloquea el 'hecho' hasta marcar cada casilla con evidencia.",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    }
+  ]
+}

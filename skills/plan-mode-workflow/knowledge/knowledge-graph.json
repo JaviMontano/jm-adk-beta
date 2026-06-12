@@ -1,0 +1,34 @@
+{
+  "nodes": [
+    { "id": "plan_mode", "label": "Plan Mode (read-only)", "kind": "state" },
+    { "id": "execute_mode", "label": "Execute Mode (write habilitado)", "kind": "state" },
+    { "id": "mode_state", "label": "Estado de modo (mode + signed_plan_hash)", "kind": "data" },
+    { "id": "plan_md", "label": "plan.md firmable", "kind": "artifact" },
+    { "id": "plan_hash", "label": "Hash del plan", "kind": "signal" },
+    { "id": "approval_event", "label": "Evento de firma (hash + approved_by + plan_signed_at)", "kind": "artifact" },
+    { "id": "pre_tool_use_hook", "label": "Hook PreToolUse", "kind": "component" },
+    { "id": "write_blocklist", "label": "Write-blocklist explícita", "kind": "config" },
+    { "id": "mutating_bash", "label": "Bash mutante (rm/sed -i/redirects)", "kind": "edge_case" },
+    { "id": "deny_decision", "label": "Decisión deny con motivo", "kind": "decision" },
+    { "id": "hash_mismatch", "label": "Hash-mismatch tras firmado", "kind": "edge_case" },
+    { "id": "bypass_permissions", "label": "bypassPermissions", "kind": "antipattern" },
+    { "id": "prose_approval", "label": "Aprobación por prosa (ok en chat)", "kind": "antipattern" },
+    { "id": "final_diff", "label": "Diff final (rastro auditable)", "kind": "artifact" }
+  ],
+  "edges": [
+    { "from": "mode_state", "to": "plan_mode", "rel": "arranca_en" },
+    { "from": "plan_mode", "to": "plan_md", "rel": "produce" },
+    { "from": "plan_md", "to": "plan_hash", "rel": "se_identifica_por" },
+    { "from": "approval_event", "to": "plan_hash", "rel": "referencia" },
+    { "from": "approval_event", "to": "execute_mode", "rel": "habilita" },
+    { "from": "pre_tool_use_hook", "to": "mode_state", "rel": "lee" },
+    { "from": "pre_tool_use_hook", "to": "write_blocklist", "rel": "aplica" },
+    { "from": "write_blocklist", "to": "mutating_bash", "rel": "incluye" },
+    { "from": "pre_tool_use_hook", "to": "deny_decision", "rel": "emite_en_plan" },
+    { "from": "hash_mismatch", "to": "plan_mode", "rel": "revierte_a" },
+    { "from": "bypass_permissions", "to": "pre_tool_use_hook", "rel": "anula" },
+    { "from": "prose_approval", "to": "approval_event", "rel": "no_sustituye" },
+    { "from": "execute_mode", "to": "final_diff", "rel": "produce" },
+    { "from": "approval_event", "to": "final_diff", "rel": "se_audita_con" }
+  ]
+}

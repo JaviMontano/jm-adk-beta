@@ -109,6 +109,10 @@ Corre el gate de aceptacion antes de entregar.
 - No reemplaza revision experta en decisiones de alto riesgo (legal, financiero, seguridad). {DOC}
 - Sin evidencia, una afirmacion va como `{SUPUESTO}` o `{POR_CONFIRMAR}`, nunca como hecho.
 
+## Assets
+
+- Rubrica de calidad y checklist del gate viven en `assets/` (ver `assets/README.md`).
+
 ## Update-Safety Notes
 
 - Archivos de soporte generados son missing-only por defecto.

@@ -1,0 +1,52 @@
+{
+  "skill": "official-source-verifier",
+  "scale": "0=absent, 1=partial, 2=met",
+  "pass_rule": "All blocking criteria must score 2. Any blocking criterion below 2 forces status fail or blocked.",
+  "criteria": [
+    {
+      "id": "every_source_complete",
+      "blocking": true,
+      "statement": "Every source has url, publisher, accessed_date (ISO YYYY-MM-DD), and source_type."
+    },
+    {
+      "id": "claim_has_official_source",
+      "blocking": true,
+      "statement": "Every claim has non-empty official_source_ids, or is explicitly marked unverified."
+    },
+    {
+      "id": "no_secondary_as_authority",
+      "blocking": true,
+      "statement": "No official=false source is the sole evidence of a verified claim."
+    },
+    {
+      "id": "decision_traceable",
+      "blocking": true,
+      "statement": "decision.change_authorized=true only when all supporting claims are verified; justified_change names the exact change."
+    },
+    {
+      "id": "gaps_block_pass",
+      "blocking": true,
+      "statement": "A non-empty blocking_gaps forces a status other than pass."
+    },
+    {
+      "id": "citation_date_present",
+      "blocking": true,
+      "statement": "No claim is verified without a real, non-future accessed_date."
+    },
+    {
+      "id": "version_currency_checked",
+      "blocking": false,
+      "statement": "Where the doc states a version, currency against repo_version is recorded; cross-major docs are marked unverified."
+    },
+    {
+      "id": "conflict_recorded",
+      "blocking": false,
+      "statement": "Official-vs-official contradictions are recorded as blocking_gaps, not resolved silently."
+    },
+    {
+      "id": "evidence_tags_present",
+      "blocking": false,
+      "statement": "Every source, claim, and verdict carries a provenance tag."
+    }
+  ]
+}

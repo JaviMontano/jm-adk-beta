@@ -94,6 +94,8 @@ Input: *"jarvis: llegó un email para definir el alcance del proyecto Atlas."* �
 
 ## Validación (acceptance gate)
 
+Activos de soporte: `assets/quality-rubric.json` y `assets/checklist.md` (ver `assets/README.md`). [DOC]
+
 Marcar completo solo si TODO se cumple — si no, autocorregir y reintentar:
 
 - [ ] Estructura generada respeta sectores N0–N4 y nombres **kebab-case**. [DOC]

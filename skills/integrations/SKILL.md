@@ -47,6 +47,10 @@ resolved playbook applied with Alfa-core tags (`[CÓDIGO]` `[CONFIG]` `[DOC]`
   payment-event auth) before trusting any external payload. [DOC]
 - Idempotency on money/event paths; retries are safe to replay. [INFERENCIA]
 
+## Assets
+Run-before-done routing/gate checklist and quality rubric: `assets/` (see
+`assets/README.md`). [CONFIG]
+
 ## Anti-patterns
 - Loading multiple playbooks "for context" — defeats the router. [INFERENCIA]
 - Trusting client-side captcha scores or unverified webhook bodies. [DOC]

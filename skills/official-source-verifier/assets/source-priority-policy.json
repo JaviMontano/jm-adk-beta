@@ -1,0 +1,31 @@
+{
+  "skill": "official-source-verifier",
+  "priority_order": ["official", "vendor", "spec", "repo", "secondary"],
+  "rule": "Prefer the document closest to the affected product. A higher tier outranks a lower one as authority.",
+  "tiers": {
+    "official": {
+      "examples": ["vendor canonical docs", "ADK reference", "GitHub/Git official manual", "producer-owned SDK/API reference"],
+      "can_be_authority": true
+    },
+    "vendor": {
+      "examples": ["vendor product docs not part of the canonical spec"],
+      "can_be_authority": true
+    },
+    "spec": {
+      "examples": ["Agent Skills spec", "language/protocol specifications"],
+      "can_be_authority": true,
+      "override_note": "When a generic spec is more correct than a vendor doc on a contested point, prioritize the spec and record the rationale (SKILL.md step 6)."
+    },
+    "repo": {
+      "examples": ["the repo's own committed config/code as a fact about itself"],
+      "can_be_authority": true,
+      "note": "Authority only for facts about the repo, not for external behavior."
+    },
+    "secondary": {
+      "examples": ["blogs", "forum/StackOverflow answers", "GitHub issues/discussions", "gists", "tutorials", "AI summaries"],
+      "can_be_authority": false,
+      "allowed_role": "lead (path/vocabulary discovery only)"
+    }
+  },
+  "conflict_rule": "A genuine contradiction between official sources is escalated to blocking_gaps, never resolved silently."
+}

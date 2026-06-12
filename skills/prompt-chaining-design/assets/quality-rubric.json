@@ -1,0 +1,49 @@
+{
+  "skill": "prompt-chaining-design",
+  "version": 1,
+  "description": "Rubrica deterministica de calidad para un diseno de cadena de pases. Cada gate es bloqueante: cualquier 'block' impide marcar el diseno como completo.",
+  "gates": [
+    {
+      "id": "integration_summaries_only",
+      "criterion": "El pase de integracion consume unicamente la coleccion de resumenes; ningun dato crudo entra al pase 2.",
+      "blocking": true,
+      "evidence": "[CODIGO]"
+    },
+    {
+      "id": "schema_per_pass",
+      "criterion": "Cada pase tiene un schema de salida explicito y tipado (no dicts sin contrato).",
+      "blocking": true,
+      "evidence": "[CODIGO]"
+    },
+    {
+      "id": "typed_error_state",
+      "criterion": "El error viaja por unidad en el schema (status=error, error_detail), no como excepcion global que aborta el lote.",
+      "blocking": true,
+      "evidence": "[CODIGO]"
+    },
+    {
+      "id": "single_unit_local_pass",
+      "criterion": "El pase local procesa exactamente una unidad por invocacion, es idempotente y paralelizable.",
+      "blocking": true,
+      "evidence": "[CODIGO]"
+    },
+    {
+      "id": "transition_schema_present",
+      "criterion": "Existe un schema de transicion explicito que define la coleccion tipada que viaja entre pases.",
+      "blocking": true,
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "chain_justification",
+      "criterion": "El chaining se justifica frente a single-pass por volumen, paralelismo o aislamiento de fallos.",
+      "blocking": true,
+      "evidence": "[INFERENCIA]"
+    }
+  ],
+  "governance": [
+    "Sin precios inventados.",
+    "Sin PII de cliente en los resumenes.",
+    "Marca unica por entregable.",
+    "Verde sin evidencia no cierra el gate."
+  ]
+}

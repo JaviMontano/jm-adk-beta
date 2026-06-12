@@ -1,0 +1,17 @@
+{
+  "skill": "provenance-engineering",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json",
+      "purpose": "Rubrica de 7 dimensiones (6 criticas) para el gate del guardian: invariante claim-source, integridad de inventario, preservacion de conflicto, escalacion-no-resolucion, visibilidad de as_of, test estructural y gobernanza de evidencia.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "markdown",
+      "purpose": "Checklist operativo previo a 'done', mapeado 1:1 con el gate de aceptacion de SKILL.md: vacio critico, claim/source, conflicto, escalacion/visibilidad, blindaje y evidencia.",
+      "used_by": ["SKILL.md", "README.md"]
+    }
+  ]
+}

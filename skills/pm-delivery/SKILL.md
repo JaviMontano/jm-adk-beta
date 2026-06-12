@@ -52,6 +52,7 @@ architecture, or coding — route those to their own skills. [INFERENCE]
 - Every claim tagged `[EXPLICIT]` / `[INFERENCE]` / `[ASSUMPTION]`. [EXPLICIT]
 - No raw prices anywhere — cost work uses FTE-months + disclaimers. [EXPLICIT]
 - Constitution v6.0.0 enforcement + script-first rule satisfied. [EXPLICIT]
+- Gate verified against `assets/` (rubric + checklist) — see `assets/README.md`. [EXPLICIT]
 
 ## Self-correction triggers
 - Loaded >1 playbook, or summarized from memory instead of reading → restart at

@@ -1,0 +1,17 @@
+{
+  "skill": "prompt-chaining-design",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json",
+      "purpose": "Rubrica deterministica de 6 gates bloqueantes (sin crudos en el pase 2, schema por pase, error tipado, pase local de una unidad, schema de transicion, justificacion vs single-pass) mas gobernanza; la consume el Guardian.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "markdown",
+      "purpose": "Checklist legible espejo de la rubrica para validar un diseno de cadena de pases a mano o como seccion de validacion del entregable.",
+      "used_by": ["SKILL.md", "templates/output.md"]
+    }
+  ]
+}

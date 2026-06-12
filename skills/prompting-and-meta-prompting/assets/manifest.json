@@ -1,0 +1,17 @@
+{
+  "skill": "prompting-and-meta-prompting",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json-rubric",
+      "purpose": "Weighted, machine-checkable rubric mapping the validation gate to scored dimensions with a hard safety-boundary block.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "markdown-checklist",
+      "purpose": "Human-readable delivery checklist mirroring the rubric; run before delivering any prompt or prompt-system output.",
+      "used_by": ["agents/guardian.md", "templates/output.md"]
+    }
+  ]
+}

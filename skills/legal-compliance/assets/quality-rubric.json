@@ -1,0 +1,33 @@
+{
+  "skill": "legal-compliance",
+  "version": "1.0.0",
+  "scoring": "binary — partial credit is a fail",
+  "shared_gate": [
+    "scope (regulation/contract/control library) named explicitly; no silent assumptions",
+    "every non-obvious claim carries exactly one Alfa-core tag (CODIGO/CONFIG/DOC/INFERENCIA/SUPUESTO), one spelling",
+    "every [SUPUESTO] paired with a concrete verification step",
+    "verbatim legal disclaimer present and unaltered",
+    "no PASS/compliant asserted as fact; no invented clause numbers, control IDs, fines, or citations"
+  ],
+  "lanes": {
+    "compliance-assessment": [
+      "gap matrix covers 100% of framework requirements (every control ID present, not sampled)",
+      "every gap row has severity, evidence tag, residual-risk score, owner role, effort band",
+      "heat map and matrix use the single scoring method — no scale drift",
+      "every roadmap action maps to >=1 gap ID; no critical/high gap left unremediated",
+      "out-of-scope frameworks stated explicitly (guard against false completeness)"
+    ],
+    "compliance-framework": [
+      "every control row carries a status AND a locatable evidence pointer",
+      "no 'met' without a locatable artifact (else downgrade to gap)",
+      "framework version pinned; evidence dated against the audit window",
+      "gaps have an owner and a next step"
+    ],
+    "contract-review": [
+      "every Step-2 checklist clause addressed or explicitly marked N/A",
+      "each finding has risk level, impact, recommended action, and provenance tag",
+      "every High finding carries a negotiable fallback position",
+      "findings ranked by exposure (likelihood x business impact), not clause order"
+    ]
+  }
+}

@@ -145,5 +145,6 @@ Si algun check falla, corrige y reevalua — no entregues una auditoria parcial.
 
 ## Update-safety notes
 
+- Bundle de soporte: `assets/` (rubrica P22 y checklist del gate, ver `assets/README.md`).
 - Archivos de soporte generados: missing-only por defecto.
 - `--force` solo tras revisar diffs; preserva ediciones locales.

@@ -81,6 +81,7 @@ non-empty. Emit the created/skipped summary.
 - [ ] Summary line reports created vs skipped counts.
 
 Fail any box → fix before declaring done; do not green-light partial scaffolds.
+Machine-readable gate + per-file skeletons: `assets/` (see `assets/README.md`). [DOC]
 
 ## Edge Cases
 

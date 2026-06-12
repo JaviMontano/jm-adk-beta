@@ -1,0 +1,45 @@
+{
+  "skill": "pm-delivery",
+  "version": "1.0.0",
+  "scale": { "0": "absent", "1": "partial", "2": "met" },
+  "dimensions": [
+    {
+      "id": "single-route",
+      "criterion": "Exactly one playbook loaded; output matches its template; no merging/pre-reading.",
+      "weight": 0.20,
+      "fail_if_below": 2
+    },
+    {
+      "id": "evidence-tags",
+      "criterion": "Every non-trivial claim tagged EXPLICIT/INFERENCE/ASSUMPTION; tag summary present.",
+      "weight": 0.20,
+      "fail_if_below": 2
+    },
+    {
+      "id": "no-prices",
+      "criterion": "No currency/rates/prices; cost/budget/vendor expressed in FTE-months with disclaimer.",
+      "weight": 0.20,
+      "fail_if_below": 2
+    },
+    {
+      "id": "topic-completeness",
+      "criterion": "Topic schema fully applied (7 risk categories / opt-exp-pess bands / KR shape / RACI etc.).",
+      "weight": 0.20,
+      "fail_if_below": 1
+    },
+    {
+      "id": "governance",
+      "criterion": "Constitution v6.0.0 + script-first; phase separation; single brand; no client PII.",
+      "weight": 0.10,
+      "fail_if_below": 2
+    },
+    {
+      "id": "actionability",
+      "criterion": "Recommendations are concrete, tagged, and tied to evidence.",
+      "weight": 0.10,
+      "fail_if_below": 1
+    }
+  ],
+  "assumption_warning_threshold": 0.30,
+  "pass_rule": "No dimension below its fail_if_below and weighted score >= 0.85"
+}

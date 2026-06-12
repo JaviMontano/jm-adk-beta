@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "id": "route-case-study",
+      "input": "We cut a client's onboarding from 6 weeks to 4 days. Write that up so prospects can see it.",
+      "expected_checks": ["routes_to_case_study_writing", "single_playbook_loaded", "quality_criteria"]
+    },
+    {
+      "id": "route-press-release-launch",
+      "input": "Acme launches Orbit, an API that turns weeks of integration into hours. Draft the announcement for the wire.",
+      "expected_checks": ["routes_to_press_release", "inverted_pyramid_and_end_marker", "quality_criteria"]
+    },
+    {
+      "id": "route-copywriting-cold-traffic",
+      "input": "Landing page for an async standup tool aimed at cold, pain-aware distributed teams.",
+      "expected_checks": ["routes_to_copywriting_frameworks", "pas_selected_one_framework", "deterministic_scripts"]
+    },
+    {
+      "id": "route-content-calendar-quarter",
+      "input": "Plan a Q3 editorial calendar, 2 posts per week across LinkedIn and the blog, around our AI-adoption pillar.",
+      "expected_checks": ["routes_to_content_calendar", "pillars_and_owner_metric_per_slot", "quality_criteria"]
+    },
+    {
+      "id": "route-video-script-vertical",
+      "input": "A 30-second vertical video for muted feeds explaining why scripts ramble, ending in one comment CTA.",
+      "expected_checks": ["routes_to_video_script", "hook_under_3s_and_pace_budget", "assets"]
+    },
+    {
+      "id": "route-whitepaper-thesis",
+      "input": "Gated whitepaper for eng leads proving RAG reduces hallucination in support bots, citing our eval runs.",
+      "expected_checks": ["routes_to_whitepaper_creation", "single_thesis_and_citations_resolve", "quality_criteria"]
+    },
+    {
+      "id": "route-event-webinar-cfp",
+      "input": "Draft a webinar outline and a conference CFP abstract for our nurture audience.",
+      "expected_checks": ["asks_to_split_or_picks_one_subdomain", "single_cta_per_asset", "deterministic_scripts"]
+    },
+    {
+      "id": "route-podcast-prep-interview",
+      "input": "Prep a 40-minute interview episode: arc, tiered questions, run-of-show, and show notes.",
+      "expected_checks": ["routes_to_podcast_prep", "factcheck_flags_on_borrowed_stats", "assets"]
+    },
+    {
+      "id": "ambiguous-launch-event",
+      "input": "Big product launch next month at our user conference — get the marketing piece ready.",
+      "expected_checks": ["detects_ambiguity_press_vs_event", "asks_one_clarifying_question", "quality_criteria"]
+    },
+    {
+      "id": "governance-no-invented-price",
+      "input": "Case study for an anonymous fintech client; we don't have an approved quote or a dollar figure yet.",
+      "expected_checks": ["holds_unapproved_quote_placeholder", "no_invented_prices", "deterministic_scripts"]
+    },
+    {
+      "id": "out-of-scope-redirect",
+      "input": "Set up our paid-search bidding strategy and pick SEO keywords for the campaign.",
+      "expected_checks": ["redirects_out_of_scope", "no_playbook_loaded", "quality_criteria"]
+    },
+    {
+      "id": "governance-single-brand",
+      "input": "One asset that mixes our MetodologIA, Sofka, and JM Labs branding for the launch.",
+      "expected_checks": ["enforces_single_brand", "asks_which_brand", "assets"]
+    }
+  ]
+}

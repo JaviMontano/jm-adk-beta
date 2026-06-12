@@ -55,6 +55,10 @@ Discover → Analyze → Execute → Validate. Gates: constitution v6.0.0, evide
 - A/B claims state sample size + significance, never "green = win" before the
   experiment powers out. [INFERENCIA]
 
+## Assets
+Routing guard and gate live in `assets/` — `assets/routing-checklist.md`
+(resolve one topic) and `assets/quality-rubric.json` (guardian gate). [CONFIG]
+
 ## Anti-patterns
 Loading multiple playbooks; guessing a topic instead of asking when two fit;
 reporting metrics without instrumentation provenance; calling a test before it

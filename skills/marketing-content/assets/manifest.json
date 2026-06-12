@@ -1,0 +1,17 @@
+{
+  "skill": "marketing-content",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Weighted scoring rubric the guardian uses to reach a dod verdict across routing integrity, topic acceptance, tagging, governance, and open-item disclosure.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "checklist",
+      "purpose": "Fast pre-return checklist covering route, discover, execute, and governance gates for any marketing-content run.",
+      "used_by": ["README.md", "templates/output.md"]
+    }
+  ]
+}

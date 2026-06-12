@@ -1,0 +1,38 @@
+{
+  "nodes": [
+    { "id": "router", "label": "marketing-content router", "kind": "skill" },
+    { "id": "topic", "label": "topic (8-value enum)", "kind": "param" },
+    { "id": "depth", "label": "depth (quick|deep)", "kind": "param" },
+    { "id": "spine", "label": "Discover->Analyze->Execute->Validate", "kind": "process" },
+    { "id": "case-study-writing", "label": "Case Study Writing", "kind": "playbook" },
+    { "id": "content-calendar", "label": "Content Calendar", "kind": "playbook" },
+    { "id": "copywriting-frameworks", "label": "Copywriting Frameworks", "kind": "playbook" },
+    { "id": "event-marketing", "label": "Event Marketing", "kind": "playbook" },
+    { "id": "podcast-prep", "label": "Podcast Prep", "kind": "playbook" },
+    { "id": "press-release", "label": "Press Release", "kind": "playbook" },
+    { "id": "video-script", "label": "Video Script", "kind": "playbook" },
+    { "id": "whitepaper-creation", "label": "Whitepaper Creation", "kind": "playbook" },
+    { "id": "evidence-tags", "label": "Evidence Tags (EXPLICIT/DOC/INFERENCIA/SUPUESTO)", "kind": "standard" },
+    { "id": "constitution", "label": "Constitution v6.0.0", "kind": "standard" },
+    { "id": "single-brand", "label": "Single-brand rule", "kind": "constraint" }
+  ],
+  "edges": [
+    { "from": "router", "to": "topic", "rel": "resolves" },
+    { "from": "router", "to": "depth", "rel": "resolves" },
+    { "from": "topic", "to": "case-study-writing", "rel": "routes-to" },
+    { "from": "topic", "to": "content-calendar", "rel": "routes-to" },
+    { "from": "topic", "to": "copywriting-frameworks", "rel": "routes-to" },
+    { "from": "topic", "to": "event-marketing", "rel": "routes-to" },
+    { "from": "topic", "to": "podcast-prep", "rel": "routes-to" },
+    { "from": "topic", "to": "press-release", "rel": "routes-to" },
+    { "from": "topic", "to": "video-script", "rel": "routes-to" },
+    { "from": "topic", "to": "whitepaper-creation", "rel": "routes-to" },
+    { "from": "router", "to": "spine", "rel": "executes" },
+    { "from": "depth", "to": "spine", "rel": "modulates" },
+    { "from": "spine", "to": "evidence-tags", "rel": "enforces" },
+    { "from": "spine", "to": "constitution", "rel": "complies-with" },
+    { "from": "router", "to": "single-brand", "rel": "constrained-by" },
+    { "from": "whitepaper-creation", "to": "content-calendar", "rel": "feeds-source-asset" },
+    { "from": "content-calendar", "to": "copywriting-frameworks", "rel": "feeds-slot-copy" }
+  ]
+}

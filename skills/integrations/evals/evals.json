@@ -1,0 +1,104 @@
+{
+  "cases": [
+    {
+      "id": "route-stripe-subscription",
+      "input": "We need to add Stripe monthly subscriptions with a 14-day trial to our SaaS; gate access on subscription status.",
+      "expected_checks": [
+        "routes_to_payment_integration",
+        "single_playbook_loaded",
+        "webhook_driven_fulfillment",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-inbound-callback",
+      "input": "GitHub is POSTing push and pull_request events to our endpoint; verify them and react without polling.",
+      "expected_checks": [
+        "routes_to_webhook_handling",
+        "raw_body_signature_verification",
+        "constant_time_compare",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "route-bot-protection",
+      "input": "Protect our signup and password-reset forms from bots using reCAPTCHA v3 with an invisible score and a fallback for borderline users.",
+      "expected_checks": [
+        "routes_to_recaptcha_integration",
+        "server_side_siteverify",
+        "graduated_fallback",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-order-updates-push",
+      "input": "Send order-status push notifications to web and Android users via FCM, with per-category preferences.",
+      "expected_checks": [
+        "routes_to_push_notifications",
+        "contextual_permission",
+        "token_lifecycle",
+        "assets"
+      ]
+    },
+    {
+      "id": "idempotent-webhook-replay",
+      "input": "Stripe is retrying the same checkout.session.completed event and our user got provisioned twice — make fulfillment replay-safe.",
+      "expected_checks": [
+        "idempotency_on_event_id",
+        "no_double_fulfillment",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "reject-client-score",
+      "input": "Our frontend currently reads the reCAPTCHA score and lets the request through — move the decision server-side and stop trusting the client.",
+      "expected_checks": [
+        "server_side_siteverify",
+        "action_and_hostname_checked",
+        "secrets_server_side",
+        "assets"
+      ]
+    },
+    {
+      "id": "ambiguous-two-topics",
+      "input": "We're launching paid plans and want to push a receipt notification right after the charge succeeds — set both up.",
+      "expected_checks": [
+        "sequences_two_playbooks",
+        "no_cluster_load",
+        "single_playbook_per_invocation",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "secret-missing-halt",
+      "input": "Wire the Stripe webhook endpoint, but we haven't created the signing secret yet.",
+      "expected_checks": [
+        "halts_on_vacio_critico",
+        "no_secret_inlined",
+        "assets",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "stale-token-cleanup",
+      "input": "FCM sends are erroring with registration-token-not-registered and our delivery metrics look skewed — clean up dead device tokens.",
+      "expected_checks": [
+        "prune_on_not_registered",
+        "token_keyed_store",
+        "quality_criteria",
+        "assets"
+      ]
+    },
+    {
+      "id": "replay-timestamp-defense",
+      "input": "An attacker re-sent a captured-but-valid SendGrid webhook payload — block replays at our endpoint.",
+      "expected_checks": [
+        "timestamp_tolerance",
+        "event_id_dedup",
+        "raw_body_signature_verification",
+        "deterministic_scripts"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "cases": [
+    {
+      "id": "route-named-stage-constitution",
+      "input": "Run /iikit-00-constitution to draft the governing principles for this PREMISE.md.",
+      "expected_checks": [
+        "routes_to_single_playbook",
+        "topic_resolves_to_00_constitution",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-by-number-04",
+      "input": "iikit 04 on the payment-refund feature once the plan and spec are in place.",
+      "expected_checks": [
+        "number_maps_to_04_testify",
+        "single_playbook_read",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "infer-earliest-unmet-stage",
+      "input": "I have a spec.md and a plan.md but no tests yet — what's next for the checkout feature?",
+      "expected_checks": [
+        "infers_earliest_unmet_stage_testify",
+        "predecessor_check",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "predecessor-missing-blocks",
+      "input": "Generate the .feature files for the search feature (there is no plan.md yet).",
+      "expected_checks": [
+        "blocks_on_missing_predecessor",
+        "remediation_message_run_02_plan",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "bugfix-reroute",
+      "input": "The login page crashes when the password field is empty — fix it.",
+      "expected_checks": [
+        "detects_bugfix_intent",
+        "reroutes_to_bugfix_helper",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "ambiguous-topic-asks-once",
+      "input": "Apply iikit to my new dashboard idea.",
+      "expected_checks": [
+        "asks_one_consolidated_question",
+        "no_fan_out_across_playbooks",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "constitution-rejects-tech-stack",
+      "input": "Add a principle to the constitution that we must use PostgreSQL and React.",
+      "expected_checks": [
+        "phase_separation_rejects_tech",
+        "routes_stack_to_02_plan",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "testify-hash-lock",
+      "input": "Generate BDD scenarios for the user-auth feature and lock them before implementation.",
+      "expected_checks": [
+        "stores_assertion_hash_context_and_git_note",
+        "reports_status_locked",
+        "deterministic_scripts",
+        "assets"
+      ]
+    },
+    {
+      "id": "core-init-premise-gate",
+      "input": "/iikit-core init ./docs/prd.md in this empty repo with gh authenticated.",
+      "expected_checks": [
+        "creates_premise_no_placeholders",
+        "runs_validate_premise_script",
+        "deterministic_scripts",
+        "assets"
+      ]
+    },
+    {
+      "id": "specify-orphan-sc-flagged",
+      "input": "Write the spec for password reset via an emailed link that expires in one hour.",
+      "expected_checks": [
+        "every_sc_traces_to_fr",
+        "flags_orphan_success_criteria",
+        "quality_criteria",
+        "assets"
+      ]
+    },
+    {
+      "id": "evidence-single-family",
+      "input": "Run /iikit-06-analyze and give me the consistency report for the billing feature.",
+      "expected_checks": [
+        "single_evidence_tag_family",
+        "no_placeholder_tokens",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "taskstoissues-confirmation-gate",
+      "input": "Turn the task list for the onboarding feature into GitHub issues.",
+      "expected_checks": [
+        "requires_explicit_user_confirmation",
+        "no_auto_issue_creation",
+        "deterministic_scripts"
+      ]
+    }
+  ]
+}

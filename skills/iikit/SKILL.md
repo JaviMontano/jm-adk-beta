@@ -58,6 +58,8 @@ Pipeline (each output feeds the next): 00-constitution → 01-specify → 02-pla
   explicitly created (no stage on a missing predecessor). [INFERENCE]
 - Constitution v6.0.0 enforcement honored; script-first rule applied; tags from
   ONE family only. [CONFIG]
+- Score against `assets/quality-rubric.json` (QR-01…QR-08); see the `assets/`
+  bundle for the routing checklist. [CONFIG]
 
 ## Anti-patterns & self-correction
 - Loading multiple playbooks "to be safe" — read one, re-route if wrong. [INFERENCE]

@@ -116,3 +116,5 @@ Run the acceptance gate below before declaring done. [DOC]
   `references/verification-tags.md`. [DOC]
 - Generated files are **missing-only** by default; `--force` only after a
   reviewed diff. No prices, single-brand (JM Labs) discipline. [DOC]
+- Gate scoring uses `assets/` (`quality-rubric.json`, `checklist.md`); see
+  `assets/README.md`. [DOC]

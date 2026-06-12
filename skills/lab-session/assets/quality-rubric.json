@@ -1,0 +1,55 @@
+{
+  "skill": "lab-session",
+  "protocol": "P08",
+  "gate": "all criteria must pass; any failure blocks completion",
+  "criteria": [
+    {
+      "id": "four_file_contract",
+      "statement": "Exactly notas.md, hipotesis.md, referencias.md, decision.md are present — not more, not fewer.",
+      "evidence": "post-run folder listing",
+      "severity": "blocker"
+    },
+    {
+      "id": "no_overwrite",
+      "statement": "Every SKIP file is byte-identical to its pre-run snapshot.",
+      "evidence": "mtime/byte comparison",
+      "severity": "blocker"
+    },
+    {
+      "id": "falsifiable_hypothesis",
+      "statement": "hipotesis.md states a refutable claim or an explicit {HIPOTESIS_POR_DEFINIR} stub.",
+      "evidence": "hipotesis.md content",
+      "severity": "blocker"
+    },
+    {
+      "id": "tag_hygiene",
+      "statement": "Every referencias.md entry and non-obvious note carries one Alfa-core tag, one spelling throughout.",
+      "evidence": "notas.md + referencias.md content",
+      "severity": "blocker"
+    },
+    {
+      "id": "decision_deferred",
+      "statement": "decision.md is {POR_CONFIRMAR}; the skill wrote no keep/pivot/kill verdict.",
+      "evidence": "decision.md content",
+      "severity": "blocker"
+    },
+    {
+      "id": "determinism",
+      "statement": "ISO dates, offline, identical inputs produce identical CREATE bytes.",
+      "evidence": "two runs on same inputs",
+      "severity": "blocker"
+    },
+    {
+      "id": "summary_line",
+      "statement": "A created vs skipped summary line is emitted.",
+      "evidence": "console output",
+      "severity": "blocker"
+    },
+    {
+      "id": "brand_signal_hygiene",
+      "statement": "Single-brand JM Labs; green is never used as a success signal in sample content.",
+      "evidence": "all written files",
+      "severity": "blocker"
+    }
+  ]
+}

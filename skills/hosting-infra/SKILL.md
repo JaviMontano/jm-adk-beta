@@ -48,6 +48,8 @@ Topic cues (route to the named playbook): [INFERENCIA]
 
 Spine: Discover → Analyze → Execute → Validate.
 
+Gate criteria + per-invocation checklist live in `assets/` (`assets/quality-rubric.json`, `assets/checklist.md`). [CONFIG]
+
 ## Validation gate (before "done")
 - [ ] Exactly one playbook was read and followed; no cluster-wide loading. [EXPLICIT]
 - [ ] Topic matches user intent (re-confirm if a single request spans two — split, don't merge). [INFERENCIA]

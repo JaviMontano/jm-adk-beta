@@ -1,0 +1,17 @@
+{
+  "skill": "iikit",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Pass/fail scoring rubric for an iikit routing+stage invocation; consumed by the guardian gate.",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "text/markdown",
+      "purpose": "Resolve/Depend/Execute/Validate pre-done checklist for the router flow.",
+      "used_by": ["README.md", "prompts/meta.md"]
+    }
+  ]
+}

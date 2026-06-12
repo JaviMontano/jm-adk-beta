@@ -58,3 +58,4 @@ case-study-writing · content-calendar · copywriting-frameworks · event-market
 - Loading multiple playbooks "to compare" — defeats the router. [INFERENCE]
 
 Quality gates: constitution v6.0.0 (enforcement), evidence tags, script-first rule. [DOC]
+Routing rubric + checklist: `assets/` (quality-rubric.json, checklist.md). [CONFIG]

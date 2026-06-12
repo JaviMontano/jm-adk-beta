@@ -57,4 +57,5 @@ vertical/regulatory → `sector-intelligence`; messaging/channel →
 - Emitting market figures as fact without a `{WEB}`+citation or `[DOC]` tag. [DOC]
 
 Quality gates: constitution v6.0.0 (enforcement), evidence tags, script-first
-rule. [CONFIG]
+rule. The guardian applies `assets/quality-rubric.json` and
+`assets/routing-checklist.md` before any deliverable is emitted. [CONFIG]

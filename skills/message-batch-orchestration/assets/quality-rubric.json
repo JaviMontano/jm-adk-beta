@@ -1,0 +1,43 @@
+{
+  "skill": "message-batch-orchestration",
+  "version": "1.0.0",
+  "scale": { "0": "absent/violates", "1": "partial", "2": "fully met" },
+  "pass_threshold": "every dimension >= 1 AND all gate dimensions == 2",
+  "dimensions": [
+    {
+      "id": "offline_gate",
+      "gate": true,
+      "criterion": "Load is offline / latency-tolerant; realtime/streaming is rejected as out of scope."
+    },
+    {
+      "id": "custom_id_uniqueness",
+      "gate": true,
+      "criterion": "custom_id is unique and stable from the business ID; uniqueness validated before send, raises on duplicate."
+    },
+    {
+      "id": "batch_lifecycle",
+      "gate": true,
+      "criterion": "create -> poll processing_status (backoff, until ended) -> results, with batch.id persisted before polling."
+    },
+    {
+      "id": "fragmentation",
+      "gate": true,
+      "criterion": "Results split by result.type: succeeded persisted; errored/expired/canceled routed to retry."
+    },
+    {
+      "id": "selective_retry_cap",
+      "gate": true,
+      "criterion": "Only failed custom_id retried; cap > 0; unresolved IDs returned on exhaustion."
+    },
+    {
+      "id": "no_sync_loop",
+      "gate": false,
+      "criterion": "No synchronous one-by-one messages.create() on the offline path."
+    },
+    {
+      "id": "evidence",
+      "gate": false,
+      "criterion": "When required, JSON report passes scripts/check.sh; evidence tags from one family; no invented prices."
+    }
+  ]
+}

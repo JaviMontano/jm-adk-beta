@@ -1,0 +1,17 @@
+{
+  "skill": "message-batch-orchestration",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Score a batch-orchestration deliverable across offline gate, custom_id uniqueness, lifecycle, fragmentation, selective retry + cap, no-sync-loop, and evidence.",
+      "used_by": ["agents/guardian.md", "prompts/variations/deep.md"]
+    },
+    {
+      "path": "assets/acceptance-checklist.md",
+      "type": "checklist",
+      "purpose": "Pre-emit acceptance gate the orchestrator walks before declaring a batch run done.",
+      "used_by": ["SKILL.md", "templates/output.md", "prompts/variations/deep.md"]
+    }
+  ]
+}

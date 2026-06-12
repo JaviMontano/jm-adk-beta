@@ -69,7 +69,9 @@ Resultado: un artefacto auditable donde un humano traza cualquier dato hasta su 
 
 ## Assets y validacion offline
 
-> Estos assets/scripts son el contrato deterministico previsto del skill; aun no estan materializados en el repo, por eso van tagueados `[SUPUESTO]`, no `[CÓDIGO]`. [SUPUESTO]
+> Bundle determinista materializado en `assets/` (`assets/quality-rubric.json`, `assets/checklist.md`, `assets/README.md`, `assets/manifest.json`): rubrica del guardian y checklist del gate de aceptacion. [CÓDIGO]
+
+> Los assets/scripts siguientes son el contrato deterministico previsto del skill; aun no estan materializados en el repo, por eso van tagueados `[SUPUESTO]`, no `[CÓDIGO]`. [SUPUESTO]
 
 - `assets/provenance-engineering-contract.json` — reportes JSON auditables. [SUPUESTO]
 - `assets/claim-source-policy.json` — exige `source_id`, `locator`, `as_of`, `source_type`. [SUPUESTO]

@@ -1,0 +1,17 @@
+{
+  "skill": "kata",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json",
+      "purpose": "Five-dimension scoring rubric for the guardian gate (routing precision, single-playbook isolation, pattern fidelity, acceptance criteria, evidence governance).",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/routing-checklist.md",
+      "type": "markdown",
+      "purpose": "Before/after checklist enforcing single-playbook reading, structure fidelity, and evidence tagging.",
+      "used_by": ["SKILL.md", "README.md"]
+    }
+  ]
+}

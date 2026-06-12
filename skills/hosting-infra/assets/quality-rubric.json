@@ -1,0 +1,23 @@
+{
+  "skill": "hosting-infra",
+  "version": "1.0.0",
+  "scoring": "each criterion pass/fail; gate=pass only when all applicable criteria pass",
+  "global_criteria": [
+    { "id": "single-playbook", "check": "Exactly one routes: playbook was read and followed (no cluster loading)", "weight": "blocking" },
+    { "id": "topic-match", "check": "Resolved topic matches user intent; cross-cutting requests sequenced, not merged", "weight": "blocking" },
+    { "id": "evidence-tags", "check": "Every non-obvious claim carries exactly one Alfa tag", "weight": "blocking" },
+    { "id": "no-invented-values", "check": "No fabricated hostnames, IPs, cert paths, auth codes, or registrar prices; unknowns tagged [SUPUESTO]", "weight": "blocking" },
+    { "id": "secrets-safe", "check": "No credentials, SSH keys, or auth codes echoed into output or logs", "weight": "blocking" }
+  ],
+  "topic_criteria": {
+    "dns-architecture": ["apex on A/ALIAS never CNAME", "CAA + SPF/DKIM/DMARC present", "TTLs staged for cutover/failover", "propagation verified from >=2 geos"],
+    "ssl-management": ["full chain served", "renewal automated", "HSTS only after HTTPS proven", "cert valid >=14 days"],
+    "domain-management": ["EPP/auth code used for transfer", "transfer-lock window respected", "renewal owner assigned"],
+    "cdn-configuration": ["cache-key designed", "long TTL + targeted invalidation over short TTL", "TLS-termination layer decided"],
+    "serverless-patterns": ["single responsibility per function", "auth on HTTP endpoints", "idempotent dedupe guard", "saga steps have inverses", "no AWS/Azure"],
+    "infrastructure-design": ["sized to tier not worst case", "topology documented"],
+    "backup-strategy": ["snapshot frequency matches RPO", "retention defined", "restore proven not assumed"],
+    "disaster-recovery": ["RTO/RPO per tier traced to business owner", "failover AND failback documented", "game-day drill date recorded"],
+    "hostinger-deployment": ["deploy scripted (no manual upload)", "pm2 startup set for reboot survival", "atomic symlink swap rollback", "Node port not publicly exposed", "HTTP 200 + new build hash verified"]
+  }
+}
