@@ -1,5 +1,6 @@
 ---
 name: hosting-infra
+version: 1.0.0
 description: "Hosting and infrastructure: DNS, domains, SSL, CDN, serverless, backup/DR, and provider-specific deployment. Topics: backup-strategy, cdn-configuration, disaster-recovery, dns-architecture, domain-management, hostinger-deployment, infrastructure-design, serverless-patterns, ssl-management."
 params:
   topic:

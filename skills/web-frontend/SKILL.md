@@ -1,5 +1,6 @@
 ---
 name: web-frontend
+version: 1.0.0
 description: "Frontend implementation router: pick ONE topic (react/angular/web-components, component/css architecture, build-optimization, pwa, dark-mode, i18n/localization, form-engineering, or a site type — ecommerce/blog-cms/portfolio/admin) and load only that playbook. Topics: admin-dashboards, angular-development, blog-cms, build-optimization, component-architecture, css-architecture, dark-mode, ecommerce-frontend, form-engineering, internationalization, localization-guide, portfolio-sites, pwa-architecture, react-development, web-components."
 params:
   topic:

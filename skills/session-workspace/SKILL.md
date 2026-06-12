@@ -1,5 +1,6 @@
 ---
 name: session-workspace
+version: 1.0.0
 description: "Router for agent session lifecycle: bootstrap, protocol, state/context-window management, compaction preservation, notifications, end-cleanup. Topics: context-window-management, notification-handler, pre-compact-context, session-end-cleanup, session-manager, session-protocol, session-start-bootstrap."
 params:
   topic:

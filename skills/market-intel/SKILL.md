@@ -1,5 +1,6 @@
 ---
 name: market-intel
+version: 1.0.0
 description: "Market and competitive intelligence: positioning, pricing, sector context, benchmarks, and partnerships. Topics: benchmarking-analysis, competitive-intelligence, competitive-positioning, market-intelligence, marketing-context, partnership-strategy, pricing-strategy, sector-intelligence."
 params:
   topic:

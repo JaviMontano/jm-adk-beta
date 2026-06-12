@@ -1,5 +1,6 @@
 ---
 name: legal-compliance
+version: 1.0.0
 description: "Route legal/compliance work to one playbook: contract-review, compliance-assessment (GDPR/SOX/PCI-DSS/HIPAA/ISO 27001/NIST CSF), or compliance-framework design."
 params:
   topic:

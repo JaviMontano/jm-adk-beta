@@ -1,5 +1,6 @@
 ---
 name: docs-writing
+version: 1.0.0
 description: "Documentation and professional writing router: technical docs, changelogs, diagrams, memos, meeting notes, reports, training, knowledge management. Topics: api-documentation, changelog-writing, developer-onboarding, documentation-standards, documentation-system, internal-memo, knowledge-management, meeting-notes, mermaid-diagramming, reporting-templates, storytelling, technical-writing-patterns, training-material."
 params:
   topic:

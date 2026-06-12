@@ -1,5 +1,6 @@
 ---
 name: integrations
+version: 1.0.0
 description: "Third-party service integration router: routes to one playbook for payment-integration, push-notifications, recaptcha-integration, or webhook-handling. Use when wiring an external provider (Stripe/PayPal, FCM/APNs, reCAPTCHA, inbound webhooks)."
 params:
   topic:

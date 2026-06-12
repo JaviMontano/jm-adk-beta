@@ -1,5 +1,6 @@
 ---
 name: agent-orchestration
+version: 1.0.0
 description: "Multi-agent orchestration: workflow execution, triad composition, routing, parallelism, subagent monitoring, error recovery, and learning loops. Topics: continuous-learning, error-recovery-automation, intelligent-routing, multi-model-routing, parallel-workflow, socratic-debate, subagent-monitor, task-automation, triad-composition, workflow-orchestration."
 params:
   topic:

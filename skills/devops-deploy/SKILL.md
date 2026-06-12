@@ -1,5 +1,6 @@
 ---
 name: devops-deploy
+version: 1.0.0
 description: "CI/CD and release engineering router: pipelines, environments, deployment gates, rollbacks, git hooks, watchers, and repo hygiene. Routes one topic per call. Topics: ci-pipeline-design, dependency-management, deployment-checklist, environment-management, file-watcher, git-hook-integration, github-actions-ci, lighthouse-ci, linting-formatting, rollback-strategy."
 params:
   topic:

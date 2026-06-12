@@ -1,5 +1,6 @@
 ---
 name: business-analysis
+version: 1.0.0
 description: "Business analysis and change router: process modeling, requirements, feasibility, scenarios, enterprise change management, and workshops. Topics: business-process-modeling, change-management-enterprise, change-readiness, feasibility-validation, flow-mapping, requirements-engineering, scenario-analysis, workshop-design, workshop-facilitator."
 params:
   topic:

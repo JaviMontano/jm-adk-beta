@@ -1,5 +1,6 @@
 ---
 name: iikit
+version: 1.0.0
 description: "Intent Integrity Kit: spec-driven development pipeline (constitution->specify->plan->checklist->testify->tasks->analyze->implement). Consumes upstream intent-integrity-chain/kit conventions. Topics: 00-constitution, 01-specify, 02-plan, 03-checklist, 04-testify, 05-tasks, 06-analyze, 07-implement, 08-taskstoissues, bugfix, clarify, core."
 params:
   topic:

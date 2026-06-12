@@ -1,5 +1,6 @@
 ---
 name: marketing-content
+version: 1.0.0
 description: "Marketing content production: copywriting, calendars, PR, case studies, whitepapers, video scripts, podcasts, and events. Topics: case-study-writing, content-calendar, copywriting-frameworks, event-marketing, podcast-prep, press-release, video-script, whitepaper-creation."
 params:
   topic:

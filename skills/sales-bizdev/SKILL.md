@@ -1,5 +1,6 @@
 ---
 name: sales-bizdev
+version: 1.0.0
 description: "Router for sales and business development in an ES/EN consulting context — prospecting, outreach, dossiers, proposals, pitches, and collateral. Topics: b2b-outreach, client-dossier, client-prospecting, executive-pitch, lead-generation, proposal-writing, sales-collateral."
 params:
   topic:

@@ -1,5 +1,6 @@
 ---
 name: security
+version: 1.0.0
 description: "Router for application security playbooks: auth, RBAC, input sanitization, headers/CORS, rate limiting, audits, security testing. Resolve one topic, load one reference. Topics: architecture, audit-security, auth-architecture, cors-configuration, dual-layer-verification, http-headers, input-sanitization, rate-limiting, rbac-patterns, testing."
 params:
   topic:

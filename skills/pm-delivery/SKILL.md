@@ -1,5 +1,6 @@
 ---
 name: pm-delivery
+version: 1.0.0
 description: "Project and delivery management router: budgets, estimation, capacity, roadmaps, OKRs, risks, stakeholders, vendors, SLAs, team topology, and retrospectives. Topics: budget-management, capacity-planning, cost-estimation, okr-design, product-roadmapping, retrospective-facilitation, risk-assessment, sla-definition, stakeholder-mapping, team-topology, vendor-evaluation."
 params:
   topic:

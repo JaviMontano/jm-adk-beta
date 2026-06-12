@@ -1,5 +1,6 @@
 ---
 name: observability
+version: 1.0.0
 description: "Production health: monitoring, logging, alerting, health checks, and incident response. Topics: alerting-strategy, health-check-automation, incident-response, log-management, monitoring-setup."
 params:
   topic:

@@ -1,5 +1,6 @@
 ---
 name: email-comms
+version: 1.0.0
 description: "Email systems and communication: transactional sending, templates, and newsletters. Topics: email-sending, email-template-builder, email-templates, newsletter-design."
 params:
   topic:

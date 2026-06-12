@@ -1,5 +1,6 @@
 ---
 name: data-governance
+version: 1.0.0
 description: "Router for data governance work: privacy patterns, data strategy, catalog/documentation, audit-trail design, pipeline governance, data storytelling. Resolves a topic and loads exactly one playbook. Topics: audit-trail-design, data-documentation, data-governance, data-privacy-patterns, data-storytelling, data-strategy, pipeline-governance."
 params:
   topic:

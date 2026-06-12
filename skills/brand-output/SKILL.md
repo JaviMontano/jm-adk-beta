@@ -1,5 +1,6 @@
 ---
 name: brand-output
+version: 1.0.0
 description: "Branded output generation: HTML, DOCX, XLSX, folios, templates (Sofka DS tokens in references/brand). Topics: brand-docx, brand-html, brand-xlsx, branded-html-output, folio-generator, html-brand, presentation-design, xlsx-template-creator."
 params:
   topic:

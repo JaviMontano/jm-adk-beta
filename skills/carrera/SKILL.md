@@ -1,5 +1,6 @@
 ---
 name: carrera
+version: 1.0.0
 description: "Pack de carrera (es): proceso de seleccion, entrevistas, negociacion, CV, onboarding, red. Topics: acta-formal, cierre-conversacion, cv-cover-optimizer, cv-enhancement, follow-up-email, gratitud-post-proceso, negociacion-oferta, onboarding-90-dias, proceso-seleccion-orchestrator, red-y-referencias, simulador-entrevista, validar-liquidacion-co."
 params:
   topic:

@@ -1,5 +1,6 @@
 ---
 name: testing-qa
+version: 1.0.0
 description: "Router for software testing strategy and execution: pick one topic — bdd-full-spectrum, cross-browser-testing, e2e-testing, performance-testing, test-strategy, or unit-testing — and run its playbook."
 params:
   topic:

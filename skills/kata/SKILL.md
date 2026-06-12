@@ -1,5 +1,6 @@
 ---
 name: kata
+version: 1.0.0
 description: "Agentic engineering katas: proven prompt/loop/tooling patterns from JM Labs. Topics: adaptive-investigation, builtin-tool-selection, confidence-stratified-sampling, context-dilution-mitigation, critical-self-correction, custom-commands-skills, defensive-structured-extraction, deterministic-agent-loop, false-positive-criteria, fewshot-edge-calibration, headless-code-review, hierarchical-claude-memory, hub-and-spoke-isolation, human-handoff-protocol, independent-reviewer-multipass, mcp-server-configuration, mcp-structured-errors, message-batch-processing, multiagent-error-propagation, multipass-prompt-chaining, path-conditional-rules, persistent-scratchpad, plan-mode-exploration, posttooluse-normalization, prefix-caching, pretooluse-guardrails, provenance-preservation, session-resume-fork, tool-description-quality, validation-retry-feedback."
 params:
   topic:

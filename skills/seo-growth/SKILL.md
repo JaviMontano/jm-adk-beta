@@ -1,5 +1,6 @@
 ---
 name: seo-growth
+version: 1.0.0
 description: "SEO and conversion growth router: technical SEO, content SEO, landing pages, funnels, CRO, trust patterns. Topics: conversion-optimization, funnel-design, indexability-validator, landing-page-builder, landing-pages, seo-architecture, seo-content, social-proof."
 params:
   topic:

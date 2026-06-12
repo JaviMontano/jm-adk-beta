@@ -1,5 +1,6 @@
 ---
 name: firebase
+version: 1.0.0
 description: "Firebase platform router: auth, hosting, functions, firestore-adjacent setup, emulators, deploy, cost. Topics: architecture, auth, cloud-functions, cost-optimization, deployment, emulator-setup, extensions, firestore-modeling, firestore-queries, firestore-security-rules, functions, hosting, scheduled-functions, setup, storage."
 params:
   topic:

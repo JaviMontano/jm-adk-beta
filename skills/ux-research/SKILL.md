@@ -1,5 +1,6 @@
 ---
 name: ux-research
+version: 1.0.0
 description: "User research and validation router: route to interviews, surveys, usability testing, or prototyping. Topics: prototyping, survey-design, user-research, user-testing."
 params:
   topic:

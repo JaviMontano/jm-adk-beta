@@ -1,5 +1,6 @@
 ---
 name: data-platform
+version: 1.0.0
 description: "Data engineering lifecycle: pipelines, quality, validation, migration, export, flow architecture. Topics: data-engineering, data-export, data-flow-architecture, data-migration, data-quality, data-validation, etl-patterns, schema-evolution."
 params:
   topic:

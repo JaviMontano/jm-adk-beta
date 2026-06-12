@@ -1,5 +1,6 @@
 ---
 name: google-workspace
+version: 1.0.0
 description: "Router for Google APIs/Workspace work — pick one topic and load its playbook: Sheets, Docs, Slides, Drive, Calendar, Maps, Analytics/GA4, or multi-service API integration (auth/scope/quota/retry). Topics: analytics-implementation, apis, google-analytics, google-apis-integration, google-calendar-mcp, google-docs-mcp, google-drive-mcp, google-maps-integration, google-sheets-mcp, google-slides-mcp."
 params:
   topic:

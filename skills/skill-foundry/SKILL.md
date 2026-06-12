@@ -1,5 +1,6 @@
 ---
 name: skill-foundry
+version: 1.0.0
 description: "Router for building/certifying agentic assets — skills, agents, commands, prompts, hooks, MCP servers, workflows. Topics: agent-creator, assembly-skill, auto-prompt-matching, benchmark-skill, certify-skill, design-skill, hook-creator, mcp-creator, meta-skill-creator, meta-skill-indexer, prompt-creator, prompt-forge, skill-search, workflow-creator, workflow-forge, x-ray-skill."
 params:
   topic:

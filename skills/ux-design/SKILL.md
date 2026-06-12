@@ -1,5 +1,6 @@
 ---
 name: ux-design
+version: 1.0.0
 description: "UI/UX design patterns: design systems, interaction and motion, onboarding, microcopy, and component-level UX (forms, tables, search, notifications). Topics: component-designer, dashboard-design, design-critique, design-system, empty-states, error-messaging, first-use-onboarding, form-ux-advanced, iconography, micro-interactions, microcopy-writing, mobile-patterns, motion-design, notification-ux, onboarding-ux, search-ux, table-ux, typography-advanced."
 params:
   topic:

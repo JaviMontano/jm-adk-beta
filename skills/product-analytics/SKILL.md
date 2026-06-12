@@ -1,5 +1,6 @@
 ---
 name: product-analytics
+version: 1.0.0
 description: "Product and business analytics router: event instrumentation, KPIs, A/B tests, cohorts, funnels, real-time pipelines, and data visualization. Topics: ab-testing, analytics-events, cohort-analysis, data-visualization, funnel-analytics, kpi-framework, metrics-instrumentation, real-time-analytics."
 params:
   topic:

@@ -1,5 +1,6 @@
 ---
 name: ai-architecture
+version: 1.0.0
 description: "AI/LLM system architecture: software arch, pipelines, conops, design patterns, audit, implementation. Topics: ai-conops, ai-design-patterns, ai-pipeline-architecture, ai-software-architecture, audit, chatbot-design, embedding-strategy, fine-tuning-prep, implementation, prompt-engineering, rag-patterns, structured-output, voice-interface."
 params:
   topic:

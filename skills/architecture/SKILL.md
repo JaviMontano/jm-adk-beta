@@ -1,5 +1,6 @@
 ---
 name: architecture
+version: 1.0.0
 description: "Software/system architecture router: API design, DDD, events, realtime, caching, performance, migrations, structured trade-off analysis. Topics: api-design, caching-strategy, domain-driven-design, event-architecture, migration-planning, performance-architecture, realtime-architecture, system-architecture, trade-off-analysis."
 params:
   topic:

@@ -1,5 +1,6 @@
 ---
 name: accessibility
+version: 1.0.0
 description: "Accessibility router: WCAG audit, testing, accessible design, inclusive writing. Routes topic→playbook. Topics: audit, design, testing, writing."
 params:
   topic:

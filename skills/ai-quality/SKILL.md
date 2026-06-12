@@ -1,5 +1,6 @@
 ---
 name: ai-quality
+version: 1.0.0
 description: "AI quality: testing strategy, assisted testing, code review, safety, content detection, docs, workflow automation. Topics: ai-assisted-testing, ai-code-review, ai-content-detection, ai-documentation, ai-safety, ai-testing-strategy, ai-workflow-automation, code-review, llm-evaluation."
 params:
   topic:
