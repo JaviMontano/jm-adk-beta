@@ -12,6 +12,12 @@
       "type": "text/markdown",
       "purpose": "Operational pre-emit checklist mirroring the rubric; walked before any verdict ships.",
       "used_by": ["templates/output.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/constitution-v7-principles.json",
+      "type": "application/json",
+      "purpose": "Canonical 11-principle map (v7.0.0) + G0-G3 gate impact + evidence tags, derived from references/ontology/constitution-v7.0.0.md. Deterministic source for compliance-matrix rows.",
+      "used_by": ["references/constitution-compliance.md"]
     }
   ]
 }
