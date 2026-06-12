@@ -126,7 +126,7 @@
     },
     {
       "id": "brand-output",
-      "desc": "Branded output generation: HTML, DOCX, XLSX, folios, templates (Sofka DS tokens in…",
+      "desc": "Branded output generation: HTML, DOCX, XLSX, folios, templates (MetodologIA DS tokens in…",
       "tier": "router",
       "params": {
         "topic": [

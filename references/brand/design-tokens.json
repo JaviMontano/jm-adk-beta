@@ -3,23 +3,25 @@
   "version": "2.0.0",
   "aesthetic": "Neo-Swiss Clean and Soft Explainer (Corporate Clean and Premium)",
   "description": "Ilustración vectorial flat y vibrante con grid suizo, mucho espacio en blanco, composición por columnas, figuras humanas sin rostro, formas geométricas suaves, elementos UI (chips, checklists, timers). Sombras suaves y micro-gradientes discretos. Legibilidad alta: texto grande, alto contraste, nunca sobre fondos ruidosos.",
+  "_source": "Canonical MetodologIA brandbook (live site metodologia_site/style.css + metodologia_website). Adopted 2026-06-12.",
   "palette": {
-    "navy": "#122562",
+    "blueDark": "#0A122A",
+    "blueLight": "#1E3A5F",
     "gold": "#FFD700",
-    "cyan": "#137DC5",
-    "dark": "#1F2833",
-    "lavender": "#BBA0CC",
-    "gray": "#808080",
-    "surface": "rgba(18, 37, 98, 0.95)",
+    "cyan": "#00FFFF",
+    "gray": "#B0C4DE",
+    "white": "#FFFFFF",
+    "surface": "rgba(10, 18, 42, 0.95)",
     "surfaceAlt": "#0F172A",
     "goldDark": "#E5A100",
     "goldLight": "#FFF176",
     "text": "#FFFFFF",
     "textMuted": "#94A3B8",
     "border": "rgba(255, 255, 255, 0.05)",
-    "borderHover": "rgba(255, 215, 0, 0.3)"
+    "borderHover": "rgba(255, 215, 0, 0.3)",
+    "_chartOnly": { "note": "data-viz accents only — NEVER success/status signals", "chart4Green": "#10B981" }
   },
-  "paletteExclusive": ["#122562", "#FFD700", "#137DC5", "#1F2833", "#BBA0CC", "#808080"],
+  "paletteExclusive": ["#0A122A", "#1E3A5F", "#FFD700", "#00FFFF", "#B0C4DE", "#FFFFFF"],
   "typography": {
     "heading": {
       "family": "Poppins, sans-serif",
@@ -28,10 +30,11 @@
       "import": "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap"
     },
     "body": {
-      "family": "Trebuchet MS, sans-serif",
+      "family": "Inter, sans-serif",
       "role": "Cuerpo de texto, párrafos, descripciones",
-      "weights": [400, 700],
-      "fallback": "Montserrat, sans-serif"
+      "weights": [400, 500, 600, 700],
+      "import": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+      "fallback": "system-ui, sans-serif"
     },
     "footnote": {
       "family": "Futura, sans-serif",
@@ -79,7 +82,7 @@
     "contrast": "Alto siempre. Nunca texto sobre fondos ruidosos.",
     "textSize": "Grande por defecto. Legibilidad es prioridad.",
     "backgrounds": "Limpios. Sin texturas complejas bajo texto.",
-    "palette": "Exclusiva: solo los 6 colores definidos + derivados.",
-    "typography": "Poppins titulares, Trebuchet cuerpo, Futura notas, JetBrains código. Sin excepciones."
+    "palette": "Exclusiva: solo los 6 colores del brandbook + derivados. Verde (#10B981) solo data-viz, nunca éxito/estado.",
+    "typography": "Poppins titulares, Inter cuerpo, Futura notas, JetBrains código. Sin excepciones."
   }
 }
