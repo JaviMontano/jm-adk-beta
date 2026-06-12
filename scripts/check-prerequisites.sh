@@ -15,7 +15,7 @@ done
 declare -a REQUIRED
 case "$PHASE" in
   p0) REQUIRED=(catalog/coverage-matrix.csv migrate/build-refs.py) ;;
-  p1) REQUIRED=(harness/manifest.json harness/manifest.schema.json catalog/skills.json runtime/core.md scripts/build-indexes.py hooks/hooks.json references/ontology/constitution-v6.0.0.md references/roles/lead.md) ;;
+  p1) REQUIRED=(harness/manifest.json harness/manifest.schema.json catalog/skills.json runtime/core.md scripts/build-indexes.py hooks/hooks.json references/ontology/constitution-v7.0.0.md references/roles/lead.md) ;;
   p2) REQUIRED=(skills/kata/SKILL.md catalog/skills.json) ;;
   p3) REQUIRED=(catalog/consolidation-map.yaml skills/iikit/SKILL.md skills/firebase/SKILL.md skills/google-workspace/SKILL.md) ;;
   p4) REQUIRED=(CLAUDE.md AGENTS.md GEMINI.md SKILLS.md .agent/skills_index.json scripts/gen_mcp.py) ;;

@@ -9,11 +9,14 @@ TODAY=$(date +%Y-%m-%d)
 
 # ── System integrity (existence checks only — fast) ──
 
-P="false"; C="false"; I="false"; H="false"
+P="false"; C="false"; I="false"; H="false"; PF="false"
 [ -f "$PROJECT_ROOT/PRISTINO.md" ] && P="true"
-[ -f "$PROJECT_ROOT/references/ontology/constitution-v6.0.0.md" ] && C="true"
+[ -f "$PROJECT_ROOT/references/ontology/constitution-v7.0.0.md" ] && C="true"
 [ -f "$PROJECT_ROOT/PRISTINO-INDEX.md" ] && I="true"
 [ -f "$PROJECT_ROOT/hooks/hooks.json" ] && H="true"
+# Active profile (domain/brand/commercial standards); default metodologia
+ACTIVE_PROFILE="${JMADK_PROFILE:-profiles/metodologia.md}"
+[ -f "$PROJECT_ROOT/$ACTIVE_PROFILE" ] && PF="true"
 
 SK=$(find "$PROJECT_ROOT/skills" -mindepth 2 -maxdepth 2 -name "SKILL.md" 2>/dev/null | wc -l | tr -d ' ')
 AG=$(find "$PROJECT_ROOT/agents" -maxdepth 1 -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
@@ -24,6 +27,7 @@ DEGRADED=""
 [ "$P" = "false" ] && DEGRADED="${DEGRADED}PRISTINO "
 [ "$C" = "false" ] && DEGRADED="${DEGRADED}Constitution "
 [ "$I" = "false" ] && DEGRADED="${DEGRADED}Index "
+[ "$PF" = "false" ] && DEGRADED="${DEGRADED}Profile "
 
 # ── Workspace state ──
 
@@ -68,7 +72,8 @@ AD=$(find "$PROJECT_ROOT/.specify/adr" -name "*.md" 2>/dev/null | wc -l | tr -d 
 # ── Output (model-parseable) ──
 
 echo "VERSION: 5.2.0"
-echo "SYSTEM: PRISTINO=$P CONSTITUTION=$C INDEX=$I HOOKS=$H"
+echo "SYSTEM: PRISTINO=$P CONSTITUTION=$C INDEX=$I HOOKS=$H PROFILE=$PF"
+echo "PROFILE: ${ACTIVE_PROFILE} (override via JMADK_PROFILE)"
 echo "COMPONENTS: $SK skills, $AG agents, $CM commands, $PR prompts"
 echo "GOVERNANCE: $PL plans, $AD ADRs"
 [ -n "$DEGRADED" ] && echo "DEGRADED: $DEGRADED"

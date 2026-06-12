@@ -77,6 +77,15 @@ def build_adapter(runtime: str, manifest: dict, skills: list[dict]) -> str:
     out = core
     if delta:
         out += "\n" + delta
+    active_profile = manifest["contract"].get("activeProfile")
+    if active_profile:
+        profile_name = active_profile.split("/")[-1].replace(".md", "")
+        out += (
+            f"\n## Active profile\n\n"
+            f"This harness runs under the **{profile_name}** profile — its deliverable-quality, "
+            f"brand, i18n, and commercial standards apply. Load `{active_profile}` on demand; "
+            f"override with the `JMADK_PROFILE` env var. [CONFIG]\n"
+        )
     index_mode = manifest["outputs"][runtime].get("index", "")
     if index_mode == "inline":
         out += "\n## Skills\n\n" + "\n".join(tier0_lines(skills)) + "\n"

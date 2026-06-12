@@ -1,8 +1,8 @@
 <!-- distilled from alfa skills/constitution-compliance -->
-<!-- Validates outputs, plans, PRs, reports, or workflows against JM-ADK Constitution v6.0.0 using an 18-principle matrix, G0-G3 gate impact, evidence tags, severity, remediation, and fail-closed missing-evidence handling. Use when the user asks for constitution compliance, constitutional audit, Pristino governance validation, pre-delivery compliance, or whether an artifact violates JM-ADK principles. -->
+<!-- Validates outputs, plans, PRs, reports, or workflows against JM-ADK Constitution v7.0.0 using an 18-principle matrix, G0-G3 gate impact, evidence tags, severity, remediation, and fail-closed missing-evidence handling. Use when the user asks for constitution compliance, constitutional audit, Pristino governance validation, pre-delivery compliance, or whether an artifact violates JM-ADK principles. -->
 # Constitution Compliance
 
-Validate an artifact against JM-ADK Constitution v6.0.0. A valid compliance
+Validate an artifact against JM-ADK Constitution v7.0.0. A valid compliance
 report covers all 18 principles, maps findings to G0-G3 gates, classifies
 severity, requires remediation for every failure, and treats missing evidence as
 `not_verified` rather than a pass. [EXPLICIT]
@@ -18,11 +18,11 @@ must trace to them, not to model recall. [EXPLICIT]
 
 | Path | Use | Load |
 |---|---|---|
-| `assets/constitution-v6-principles.json` | Canonical 18-principle map + G0-G3 gates, derived from `references/ontology/constitution-v6.0.0.md` | Always |
+| `assets/constitution-v6-principles.json` | Canonical 18-principle map + G0-G3 gates, derived from `references/ontology/constitution-v7.0.0.md` | Always |
 | `assets/compliance-report-contract.json` | Required sections, status enum, evidence tags, blocked phrases | Always |
 | `assets/severity-policy.json` | P0-P3 severity mapping and gate-impact rules | Always |
 | `assets/activation-policy.json` | Activation, false-positive, version-drift, missing-evidence rules | When deciding to activate or to suppress a finding |
-| `references/ontology/constitution-v6.0.0.md` | Canonical v6.0.0 text + v5.2.0 crosswalk | When verifying source text or version drift |
+| `references/ontology/constitution-v7.0.0.md` | Canonical v6.0.0 text + v5.2.0 crosswalk | When verifying source text or version drift |
 | `scripts/validate_constitution_report.py` | Offline JSON report validator | When a JSON report exists |
 | `scripts/check.sh` | Positive + negative fixture check | When local scripts can run |
 

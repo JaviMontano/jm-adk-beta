@@ -16,11 +16,18 @@
   },
   "contract": {
     "core": "runtime/core.md",
+    "constitution": "references/ontology/constitution-v7.0.0.md",
     "deltas": {
       "claude-code": "runtime/delta-claude.md",
       "antigravity": "runtime/delta-antigravity.md",
       "codex": "runtime/delta-codex.md"
-    }
+    },
+    "activeProfile": "profiles/metodologia.md",
+    "profiles": [
+      "profiles/metodologia.md",
+      "profiles/vibe-coder.md",
+      "profiles/knowledge-worker.md"
+    ]
   },
   "outputs": {
     "claude-code": {

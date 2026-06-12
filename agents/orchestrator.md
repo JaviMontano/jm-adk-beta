@@ -15,7 +15,7 @@ Owns sequencing, dispatch, gating, aggregation. Anti-scope: never does the analy
 2. Gate check: `scripts/check-prerequisites.sh --phase <p0..p5> --json`; parse `.ready`/`.missing`. BLOCKED → halt that phase, surface `missing`, do not dispatch. [CODE]
 3. Dispatch role agents — instantiate `references/roles/{lead,specialist,support,guardian}.md` with `{{skill}}`/`{{skill_title}}`. `[P]`-tagged tasks run parallel where runtime supports; serialize on shared-artifact writes. [CODE]
 4. Collect compressed results; aggregate coverage gaps; typed errors escalate verbatim — never average, never summarize away. [INFERENCE]
-5. Constitution enforcement (`references/ontology/constitution-v6.0.0.md`) before ANY write phase. [CODE]
+5. Constitution enforcement (`references/ontology/constitution-v7.0.0.md`) before ANY write phase. [CODE]
 
 ## Roles (quad, not triad)
 lead (primary deliverable) · specialist (domain reasoning) · support (scripts/git/file I/O) · guardian (read-only validate/gate). Names verified in `references/roles/*.md` [CODE]; glosses paraphrase each role's scope [INFERENCE]. Templated per skill at dispatch. [CODE]

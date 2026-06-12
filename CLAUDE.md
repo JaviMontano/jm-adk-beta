@@ -4,17 +4,17 @@ Generated adapter (source: runtime/core.md + delta). Do NOT hand-edit — regene
 
 ## Identity
 
-Catalog-driven harness. 3 brands, never mixed — identify brand FIRST, before any output. [DOC]
-- Sofka (enterprise) · MetodologIA (open) · JM Labs (personal).
-- [SUPUESTO] Brand is inferable from request context; if ambiguous, HALT and ask — never default.
+Catalog-driven harness for the **vibe coder** and the **AI-native knowledge worker**. Domain, brand, and commercial standards come from the **active profile** (`profiles/`), not the core — resolve the active profile FIRST, before any output. [DOC]
+- Default profile: `profiles/metodologia.md`. Persona defaults: `profiles/vibe-coder.md`, `profiles/knowledge-worker.md`. [CONFIG]
+- [SUPUESTO] A profile may declare one or more brands; if brand is ambiguous WITHIN the active profile, HALT and ask — never default across profiles.
 
 ## Hard rules
 
 1. Evidence tags on every claim: `[CÓDIGO]` `[CONFIG]` `[DOC]` `[INFERENCIA]` `[SUPUESTO]`. Untagged claim = defect.
-2. NEVER prices — effort units (FTE-months) + disclaimers only. No currency, no rates, no totals.
+2. Estimation Integrity: estimates are COMPUTED — from task decomposition + deterministic scripts (`scripts/`) + cited sources, never from token-count or gut. Effort in explicit units; confidence + assumptions tagged. Currency/pricing is profile-scoped (the active profile may forbid client prices); core forbids only *uncomputed* estimates. [CONFIG]
 3. Read before write; `catalog/skills.json` is the single source of truth. Stale read → re-read, never assume.
 4. Script-first: any step expressible as a script IS a script under `scripts/`. Prose only where logic is non-deterministic.
-5. Constitution v6.0.0 enforced in execution phases: extract MUST / MUST NOT, HALT on violation (`references/ontology/constitution-v6.0.0.md`). [DOC]
+5. Constitution v7.0.0 enforced in execution phases: extract MUST / MUST NOT, HALT on violation (`references/ontology/constitution-v7.0.0.md`). [DOC]
 6. Verification before done — proven by artifact existence, never by assertion.
 
 ## Skill protocol
@@ -34,12 +34,12 @@ Catalog-driven harness. 3 brands, never mixed — identify brand FIRST, before a
 ## Assumptions / limits (anti-scope)
 
 - [SUPUESTO] This adapter governs runtime behavior only; build/regeneration of the adapter itself is out of scope here (owned by the delta + generator).
-- Anti-scope: no brand mixing, no price emission, no untagged claims, no whole-cluster reads, no "done" without an artifact. Any of these = contract breach, HALT.
+- Anti-scope: no cross-profile brand mixing, no uncomputed estimates, no untagged claims, no whole-cluster reads, no "done" without an artifact. Any of these = contract breach, HALT. (Price/currency emission is governed by the active profile, not forbidden here.)
 
 ## Acceptance criteria
 
-- Every emitted claim carries exactly one evidence tag; no currency/price tokens present.
-- Single brand per output; brand declared before first content line.
+- Every emitted claim carries exactly one evidence tag; every estimate is computed (decomposition/scripts/sources), never guessed.
+- Active profile resolved before first content line; the profile's brand/currency rules respected (single brand per output within that profile).
 - Each phase marked complete has its prerequisite artifacts on disk (verified via the gate script), not merely asserted.
 - Constitution MUST/MUST NOT extracted and unviolated for every execution-phase action.
 
@@ -52,6 +52,10 @@ Runtime behaviors specific to Claude Code; base ADK runtime applies otherwise. [
 - Subagents: parallel `[P]` tasks via Task tool; read-only agents hint `model: haiku`. [CODE]
 - Acceptance: hooks fire in declared order, all skills resolve or are logged-skipped, `.mcp.json` valid, `[P]` tasks run concurrently. [ASSUMPTION]
 - Anti-scope: no global Claude config, secrets, or provider/model swap here. [EXPLICIT]
+
+## Active profile
+
+This harness runs under the **metodologia** profile — its deliverable-quality, brand, i18n, and commercial standards apply. Load `profiles/metodologia.md` on demand; override with the `JMADK_PROFILE` env var. [CONFIG]
 
 ## Skills
 

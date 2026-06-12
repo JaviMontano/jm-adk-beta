@@ -151,8 +151,8 @@ next threshold `[INFERENCE]`.
 ### Context Budget by Tier
 
 ```
-Heavy:  Load PRISTINO.md + constitution-v6.0.0.md + PRISTINO-INDEX.md + full history
-Medium: Load PRISTINO.md + constitution-v6.0.0.md + relevant skills only
+Heavy:  Load PRISTINO.md + constitution-v7.0.0.md + PRISTINO-INDEX.md + full history
+Medium: Load PRISTINO.md + constitution-v7.0.0.md + relevant skills only
 Light:  Load PRISTINO.md summary + active skill only
 ```
 
