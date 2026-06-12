@@ -42,6 +42,7 @@ Any sales/bizdev deliverable: cold/warm outreach, account dossiers, prospect/lea
 - Script-first: prefer a repo script over ad-hoc steps where one exists. [DOC]
 - Single-brand: identify the brand first; never mix brands in one output. [DOC]
 - Quality gates: constitution v6.0.0 (enforcement) + evidence tags. [CONFIG]
+- Routing, scoring, and gate aids live in `assets/` (`routing-matrix.json`, `quality-rubric.json`, `preflight-checklist.md`). [CONFIG]
 
 ## Acceptance criteria
 - Exactly one playbook loaded; `topic` ∈ enum; cluster never bulk-loaded. [DOC]

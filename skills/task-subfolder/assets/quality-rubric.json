@@ -1,0 +1,61 @@
+{
+  "skill": "task-subfolder",
+  "scale": "0-3 per dimension (0=absent, 1=weak, 2=adequate, 3=exemplary)",
+  "pass_threshold": "every dimension >= 2 AND no hard-gate failure",
+  "dimensions": [
+    {
+      "id": "completeness",
+      "label": "Three artifacts present and well-formed",
+      "anchors": {
+        "0": "one or more of CLAUDE.md/task.md/log.md missing",
+        "2": "all three present and parse",
+        "3": "all three present, internally consistent, cross-linked"
+      }
+    },
+    {
+      "id": "identity_integrity",
+      "label": "T-NNN unique, slug valid, no renumbering",
+      "anchors": {
+        "0": "id collision or renamed existing id",
+        "2": "unique id, valid slug",
+        "3": "unique id, slug per naming-and-slugging, resume handled correctly"
+      }
+    },
+    {
+      "id": "idempotency",
+      "label": "Missing-only respected; --force gated",
+      "anchors": {
+        "0": "clobbered a present file without --force",
+        "2": "missing-only honored",
+        "3": "missing-only honored, forced overwrites diffed and reported"
+      }
+    },
+    {
+      "id": "journal_discipline",
+      "label": "log.md append-only, one entry per run",
+      "anchors": {
+        "0": "rewrote or reordered prior entries",
+        "2": "single append entry, correct date/session",
+        "3": "append-only, ordering consistent with CLAUDE.md declaration"
+      }
+    },
+    {
+      "id": "evidence_tagging",
+      "label": "Jarvis tags correct, zero Alfa leakage",
+      "anchors": {
+        "0": "Alfa [...] tags inside artifacts or untagged claims",
+        "2": "non-obvious lines tagged with Jarvis family",
+        "3": "precise tag choice (POR_CONFIRMAR/SUPUESTO paired with next steps)"
+      }
+    },
+    {
+      "id": "governance",
+      "label": "No prices, single brand, no green-as-success",
+      "anchors": {
+        "0": "price emitted, brands mixed, or failing gate shown as pass",
+        "2": "clean on all governance rules",
+        "3": "clean plus explicit refusal of any skip-validation request"
+      }
+    }
+  ]
+}

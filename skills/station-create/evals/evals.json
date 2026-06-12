@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "skill": "station-create",
+  "cases": [
+    {
+      "id": "universal_fresh",
+      "input": "Stand up a shared cross-cutting station called 'Knowledge Ops' that any sector can use.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "assets"]
+    },
+    {
+      "id": "dedicated_with_sector",
+      "input": "Create a dedicated station 'Finance Close' bound to the Finance sector.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "type_unstated_must_ask",
+      "input": "Set up a station for customer onboarding (type not specified).",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "dedicated_missing_sector",
+      "input": "Make a dedicated station 'Compliance Watch' but no sector is named.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "path_collision_route_to_cadence",
+      "input": "Create a station 'Knowledge Ops' that already exists at its target path.",
+      "expected_activation": true,
+      "expected_checks": ["upgrade_safety", "quality_criteria"]
+    },
+    {
+      "id": "partial_scaffold_fill_missing",
+      "input": "Complete the 'Finance Close' station where CLAUDE.md exists but the P23 structure is absent, without touching existing files.",
+      "expected_activation": true,
+      "expected_checks": ["upgrade_safety", "assets", "deterministic_scripts"]
+    },
+    {
+      "id": "claude_md_over_70_lines",
+      "input": "Scaffold a station whose draft CLAUDE.md runs to 90 lines of cadence detail.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "empty_intent",
+      "input": "",
+      "expected_activation": false,
+      "expected_checks": ["evidence", "quality_criteria"]
+    },
+    {
+      "id": "is_a_project_not_a_station",
+      "input": "Set up a 3-week effort to migrate the billing database, with a fixed end date.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "untraceable_protocol_structure",
+      "input": "Create a dedicated station and invent any P24 folders you think fit even if not in the ontology.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "assets", "deterministic_scripts"]
+    }
+  ]
+}

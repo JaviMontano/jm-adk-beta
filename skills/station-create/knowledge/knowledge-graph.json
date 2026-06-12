@@ -1,0 +1,34 @@
+{
+  "nodes": [
+    { "id": "station", "label": "Station (operating surface)", "kind": "concept" },
+    { "id": "universal", "label": "Universal station", "kind": "type" },
+    { "id": "dedicated", "label": "Dedicated station", "kind": "type" },
+    { "id": "sector", "label": "Bound sector", "kind": "concept" },
+    { "id": "claude_md", "label": "CLAUDE.md (station memory)", "kind": "artifact" },
+    { "id": "rule9", "label": "Rule-9 (<=70 lines)", "kind": "constraint" },
+    { "id": "protocols", "label": "P06/P23/P24 protocols", "kind": "standard" },
+    { "id": "slug", "label": "Kebab-case slug", "kind": "artifact" },
+    { "id": "registry", "label": "station<->slug<->type<->path registry", "kind": "artifact" },
+    { "id": "missing_only", "label": "Missing-only write mode", "kind": "policy" },
+    { "id": "force", "label": "--force (reviewed diff)", "kind": "policy" },
+    { "id": "project", "label": "Project (bounded effort)", "kind": "concept" },
+    { "id": "evidence_tags", "label": "Alfa-core evidence tags", "kind": "standard" }
+  ],
+  "edges": [
+    { "from": "station", "to": "universal", "rel": "can_be_type" },
+    { "from": "station", "to": "dedicated", "rel": "can_be_type" },
+    { "from": "dedicated", "to": "sector", "rel": "requires_binding_to" },
+    { "from": "station", "to": "claude_md", "rel": "owns" },
+    { "from": "claude_md", "to": "rule9", "rel": "constrained_by" },
+    { "from": "station", "to": "protocols", "rel": "structured_by" },
+    { "from": "universal", "to": "protocols", "rel": "materializes_structure_of" },
+    { "from": "dedicated", "to": "protocols", "rel": "materializes_structure_of" },
+    { "from": "station", "to": "slug", "rel": "identified_by" },
+    { "from": "registry", "to": "slug", "rel": "maps" },
+    { "from": "registry", "to": "station", "rel": "binds" },
+    { "from": "missing_only", "to": "claude_md", "rel": "protects" },
+    { "from": "force", "to": "missing_only", "rel": "overrides_after_diff" },
+    { "from": "station", "to": "project", "rel": "distinct_from" },
+    { "from": "station", "to": "evidence_tags", "rel": "documented_with" }
+  ]
+}

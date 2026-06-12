@@ -1,0 +1,44 @@
+{
+  "skill": "ux-design",
+  "purpose": "Scoring rubric the guardian applies before a ux-design deliverable is marked done.",
+  "scale": { "0": "absent", "1": "partial", "2": "met" },
+  "dimensions": [
+    {
+      "id": "single_playbook",
+      "criterion": "Exactly one routes: playbook was Read; no second playbook or cluster skim.",
+      "weight": 3,
+      "fail_if_zero": true
+    },
+    {
+      "id": "shape_match",
+      "criterion": "Output follows the routed playbook's documented deliverable shape.",
+      "weight": 2,
+      "fail_if_zero": true
+    },
+    {
+      "id": "evidence_tags",
+      "criterion": "Every non-obvious claim carries an Alfa tag; heuristic Blockers stay [SUPUESTO] until tested.",
+      "weight": 2,
+      "fail_if_zero": true
+    },
+    {
+      "id": "color_contrast",
+      "criterion": "Success = yellow #FFD700 (never green); no hex literals outside :root; WCAG AA 4.5:1 body / 3:1 large.",
+      "weight": 3,
+      "fail_if_zero": true
+    },
+    {
+      "id": "critique_integrity",
+      "criterion": "For critiques: strengths named, issues severity-sorted, observation -> impact -> suggestion, each tied to user goal.",
+      "weight": 2,
+      "fail_if_zero": false
+    },
+    {
+      "id": "governance",
+      "criterion": "No green-as-success, no invented metrics or prices, no client PII, single brand.",
+      "weight": 2,
+      "fail_if_zero": true
+    }
+  ],
+  "pass_rule": "PASS only when no fail_if_zero dimension scores 0 and total >= 80% of max weighted score."
+}

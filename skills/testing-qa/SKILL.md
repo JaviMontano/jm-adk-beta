@@ -48,6 +48,7 @@ Router skill. Resolve `topic`, then Read EXACTLY ONE playbook from `routes:`. [D
 ## Acceptance criteria
 - Exactly one playbook Read; `topic` set; `depth` respected. [DOC]
 - Validate step run before "done"; no green-as-success without evidence. [DOC]
+- Gate the deliverable with `assets/` (routing checklist + quality rubric). [DOC]
 
 ## Anti-patterns
 - Reading 2+ playbooks "to compare", or summarizing a topic from memory instead of

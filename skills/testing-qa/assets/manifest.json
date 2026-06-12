@@ -1,0 +1,17 @@
+{
+  "skill": "testing-qa",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Weighted gate rubric (routing, scope, spine, evidence, governance) with fail conditions and pass|fail|not-verified vocabulary, scored by the guardian.",
+      "used_by": ["agents/guardian.md", "templates/output.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "text/markdown",
+      "purpose": "Fast routing-and-gate checklist run before declaring a deliverable done; mirrors the SKILL.md spine.",
+      "used_by": ["SKILL.md", "prompts/primary.md"]
+    }
+  ]
+}

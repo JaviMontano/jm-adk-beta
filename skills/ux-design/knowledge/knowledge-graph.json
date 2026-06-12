@@ -1,0 +1,40 @@
+{
+  "nodes": [
+    { "id": "router", "label": "ux-design router (topic + depth)", "kind": "mechanism" },
+    { "id": "topic", "label": "topic enum (18 playbooks)", "kind": "concept" },
+    { "id": "playbook", "label": "routed references/*.md playbook", "kind": "artifact" },
+    { "id": "spine", "label": "Discover -> Analyze -> Execute -> Validate", "kind": "process" },
+    { "id": "critique", "label": "design-critique", "kind": "topic" },
+    { "id": "heuristics", "label": "Nielsen 10 heuristics", "kind": "standard" },
+    { "id": "severity", "label": "severity rubric (Blocker/Major/Minor/Nit)", "kind": "standard" },
+    { "id": "framing", "label": "observation -> impact -> suggestion", "kind": "method" },
+    { "id": "design-system", "label": "design-system", "kind": "topic" },
+    { "id": "tokens", "label": "brand/semantic/chart tokens", "kind": "concept" },
+    { "id": "success-yellow", "label": "success = yellow #FFD700 (not green)", "kind": "rule" },
+    { "id": "component", "label": "component-designer", "kind": "topic" },
+    { "id": "atomic", "label": "atomic design (atoms/molecules/organisms)", "kind": "concept" },
+    { "id": "a11y", "label": "WCAG AA accessibility baseline", "kind": "standard" },
+    { "id": "gate", "label": "validation gate (guardian)", "kind": "mechanism" },
+    { "id": "evidence", "label": "Alfa evidence tags", "kind": "standard" }
+  ],
+  "edges": [
+    { "from": "router", "to": "topic", "rel": "resolves" },
+    { "from": "topic", "to": "playbook", "rel": "selects-one" },
+    { "from": "playbook", "to": "spine", "rel": "executed-via" },
+    { "from": "router", "to": "critique", "rel": "may-route-to" },
+    { "from": "router", "to": "design-system", "rel": "may-route-to" },
+    { "from": "router", "to": "component", "rel": "may-route-to" },
+    { "from": "critique", "to": "heuristics", "rel": "applies" },
+    { "from": "critique", "to": "severity", "rel": "rates-with" },
+    { "from": "critique", "to": "framing", "rel": "frames-with" },
+    { "from": "design-system", "to": "tokens", "rel": "defines" },
+    { "from": "tokens", "to": "success-yellow", "rel": "enforces" },
+    { "from": "component", "to": "atomic", "rel": "structured-by" },
+    { "from": "component", "to": "a11y", "rel": "builds-in" },
+    { "from": "design-system", "to": "a11y", "rel": "requires" },
+    { "from": "spine", "to": "gate", "rel": "ends-at" },
+    { "from": "gate", "to": "evidence", "rel": "checks" },
+    { "from": "gate", "to": "success-yellow", "rel": "checks" },
+    { "from": "gate", "to": "a11y", "rel": "checks" }
+  ]
+}

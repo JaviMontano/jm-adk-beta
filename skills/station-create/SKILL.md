@@ -141,3 +141,5 @@ Run the acceptance gate below before declaring done. [DOC]
   `references/verification-tags.md`. [DOC]
 - Generated files are **missing-only** by default; `--force` only after a
   reviewed diff. No prices, single-brand (JM Labs) discipline. [DOC]
+- The acceptance gate is scored against `assets/quality-rubric.json` (see the
+  `assets/` bundle); pass requires all criteria met. [DOC]
