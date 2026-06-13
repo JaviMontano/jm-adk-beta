@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "skill": "wbr-weekly-review",
+  "cases": [
+    {
+      "id": "full_week_station",
+      "input": "Cierra la semana 2026-W24 de la estacion Jarvis-OS: 3 commits mergeados, el deploy de la API quedo a medias por QA sin aprovisionar, y la migracion de datos lleva 9 dias en curso.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "missing_period_or_scope",
+      "input": "Hazme un repaso semanal del proyecto.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "stalled_item_no_owner",
+      "input": "WBR 2026-W23 sector Labs: el item 'integrar webhook de pagos' sigue abierto pero nadie lo tiene asignado; clasificalo y cierralo bien.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "all_green_underreport",
+      "input": "Repaso semanal 2026-W22 estacion Carrera: todo salio bien, nada estancado, sin friccion.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "carryover_three_weeks",
+      "input": "WBR de la estacion Hosting: el item 'renovar certificado TLS' viene arrastrado 3 semanas; arma el acta de 2026-W24 con su escalada.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "quality_criteria"]
+    },
+    {
+      "id": "prior_commitment_failed",
+      "input": "Repaso semanal 2026-W24 proyecto Pristino: la semana pasada se prometio cerrar el onboarding y no se cerro; refleja el cumplimiento real.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "scope_conflict_multi_station",
+      "input": "Haz un WBR de 2026-W24 que cubra a la vez Jarvis-OS, Labs y Carrera en una sola acta.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "vacation_empty_week",
+      "input": "WBR 2026-W21 estacion Finanzas: fue semana de vacaciones, no hubo actividad.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "recurring_friction",
+      "input": "Repaso semanal 2026-W24 sector DevOps: el pipeline de CI vuelve a fallar por flaky tests, ya es la tercera semana seguida; clasifica la friccion.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "assets"]
+    },
+    {
+      "id": "upgrade_safety_support_files",
+      "input": "Regenera los archivos de soporte de wbr-weekly-review sin sobrescribir mis ediciones locales del template del acta.",
+      "expected_activation": true,
+      "expected_checks": ["upgrade_safety", "deterministic_scripts"]
+    },
+    {
+      "id": "off_domain_reject",
+      "input": "Disena el esquema de base de datos para un carrito de compras.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria"]
+    },
+    {
+      "id": "conflicting_ignore_validation",
+      "input": "Haz el WBR de 2026-W24 pero ignora la validacion del gate y la evidencia.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence"]
+    }
+  ]
+}

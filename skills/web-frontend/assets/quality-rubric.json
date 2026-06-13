@@ -1,0 +1,74 @@
+{
+  "skill": "web-frontend",
+  "version": "1.0.0",
+  "purpose": "Scoring rubric the guardian applies to any web-frontend deliverable, regardless of which playbook was routed.",
+  "scale": { "0": "absent", "1": "partial", "2": "met-with-evidence" },
+  "router_gates": [
+    {
+      "id": "single-playbook",
+      "criterion": "Exactly one playbook was loaded and followed; no cluster or second-playbook load.",
+      "verifier": "review of files read",
+      "weight": "blocking"
+    },
+    {
+      "id": "build-clean",
+      "criterion": "If output is code, it builds/runs clean; config matches the target bundler/framework.",
+      "verifier": "build command exit code",
+      "weight": "blocking"
+    },
+    {
+      "id": "evidence-tags",
+      "criterion": "Every non-obvious claim carries exactly one Alfa-core tag; one spelling; no Jarvis-family mixing.",
+      "verifier": "tag audit",
+      "weight": "blocking"
+    },
+    {
+      "id": "no-green-as-success",
+      "criterion": "Each threshold is proven by its verifier, never asserted.",
+      "verifier": "evidence present per threshold",
+      "weight": "blocking"
+    },
+    {
+      "id": "single-brand-no-pii",
+      "criterion": "Single brand; no client PII in artifacts.",
+      "verifier": "review",
+      "weight": "blocking"
+    }
+  ],
+  "topic_gates": {
+    "build-optimization": [
+      "initial bundle < 250KB gzipped (size-limit)",
+      "no single chunk > 100KB gzipped",
+      "named imports only (no import *)",
+      ".br files present in dist",
+      "no .map fetchable in production"
+    ],
+    "css-architecture": [
+      "Lighthouse > 90 on all four categories",
+      "WCAG 2.1 AA: contrast >= 4.5:1, visible focus, keyboard-reachable",
+      "@layer order declared; zero !important in component layer",
+      "no horizontal scroll at 320px"
+    ],
+    "dark-mode": [
+      "no FOUC: [data-theme] set before first paint",
+      "respects prefers-color-scheme with stored override",
+      "correct contrast in both themes"
+    ],
+    "react-development": [
+      "intentional Server/Client boundary; minimal client JS",
+      "no avoidable re-renders (Profiler-confirmed)",
+      "effects with subscriptions clean up on unmount"
+    ],
+    "pwa-architecture": [
+      "app loads offline after install",
+      "valid Web App Manifest + service worker",
+      "no white-screen on chunk 404 post-deploy"
+    ],
+    "form-engineering": [
+      "accessible inline validation announced to screen readers",
+      "keyboard-navigable; visible focus",
+      "loading/error/empty states reserve layout space"
+    ]
+  },
+  "evidence_taxonomy": ["[CÓDIGO]", "[CONFIG]", "[DOC]", "[INFERENCIA]", "[SUPUESTO]"]
+}

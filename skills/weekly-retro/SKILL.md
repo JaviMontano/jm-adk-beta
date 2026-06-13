@@ -70,7 +70,8 @@ Corre el gate de abajo antes de cerrar. [DOC]
 ## Validation gate (acceptance criteria)
 
 Cierra solo si TODO se cumple — mapea a los checks de `evals.json`
-(`evidence`, `quality_criteria`, `upgrade_safety`): [CONFIG]
+(`evidence`, `quality_criteria`, `upgrade_safety`). El guardian verifica contra
+`assets/quality-rubric.json` y `assets/checklist.md` (ver `assets/README.md`): [CONFIG]
 
 - [ ] **evidence**: cada item de Ayudo/Friccion lleva exactamente un tag del set
   Jarvis OS; ningun `{WEB}` sin cita; todo `{SUPUESTO}`/`{POR_CONFIRMAR}` con

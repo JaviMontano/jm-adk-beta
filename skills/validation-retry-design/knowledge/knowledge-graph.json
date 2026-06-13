@@ -1,0 +1,29 @@
+{
+  "nodes": [
+    { "id": "validator", "label": "Actionable validator {ok,code,message,path,recoverable}", "kind": "component" },
+    { "id": "recoverability", "label": "Recoverable vs not-recoverable classification", "kind": "decision" },
+    { "id": "informed_feedback", "label": "Informed retry feedback (error + prev output + fix-only)", "kind": "component" },
+    { "id": "retry_budget", "label": "Bounded retry budget (1<=max_retries<=3)", "kind": "constraint" },
+    { "id": "error_chain", "label": "Accumulated error chain", "kind": "artifact" },
+    { "id": "systematic_detection", "label": "Systematic repeat-error detection (>=2 identical)", "kind": "decision" },
+    { "id": "escalation_packet", "label": "Escalation packet {reason,error_chain,last_output}", "kind": "artifact" },
+    { "id": "ok_terminal", "label": "OK terminal state {status:ok,output,attempts}", "kind": "state" },
+    { "id": "blind_retry", "label": "Blind retry of original prompt", "kind": "anti-pattern" },
+    { "id": "silent_failure", "label": "Returning last failed output as success", "kind": "anti-pattern" },
+    { "id": "determinism", "label": "Offline deterministic validation", "kind": "constraint" }
+  ],
+  "edges": [
+    { "from": "validator", "to": "recoverability", "rel": "produces" },
+    { "from": "recoverability", "to": "informed_feedback", "rel": "recoverable_triggers" },
+    { "from": "recoverability", "to": "escalation_packet", "rel": "not_recoverable_escalates" },
+    { "from": "validator", "to": "informed_feedback", "rel": "error_fuels" },
+    { "from": "informed_feedback", "to": "blind_retry", "rel": "prevents" },
+    { "from": "retry_budget", "to": "error_chain", "rel": "accumulates" },
+    { "from": "error_chain", "to": "systematic_detection", "rel": "feeds" },
+    { "from": "systematic_detection", "to": "escalation_packet", "rel": "breaks_into" },
+    { "from": "retry_budget", "to": "escalation_packet", "rel": "exhaustion_yields" },
+    { "from": "validator", "to": "ok_terminal", "rel": "pass_yields" },
+    { "from": "escalation_packet", "to": "silent_failure", "rel": "prevents" },
+    { "from": "determinism", "to": "validator", "rel": "constrains" }
+  ]
+}

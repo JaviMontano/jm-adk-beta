@@ -1,0 +1,36 @@
+{
+  "nodes": [
+    { "id": "coordinator", "label": "Coordinador (hub)", "kind": "concept" },
+    { "id": "spoke", "label": "Spoke (AgentDefinition)", "kind": "concept" },
+    { "id": "task_dispatch", "label": "Task dispatch", "kind": "mechanism" },
+    { "id": "fresh_session", "label": "Aislamiento fresh_session", "kind": "rule" },
+    { "id": "last_message_only", "label": "Consumo last_message_only", "kind": "rule" },
+    { "id": "typed_error", "label": "Error tipado de spoke", "kind": "schema" },
+    { "id": "local_recovery", "label": "Recuperacion local", "kind": "stage" },
+    { "id": "aggregation", "label": "Agregacion continue-on-failure", "kind": "stage" },
+    { "id": "coverage_gaps", "label": "coverage_gaps", "kind": "schema" },
+    { "id": "valid_empty", "label": "valid_empty vs access_failure", "kind": "decision" },
+    { "id": "fanout_gate", "label": "Fan-out gate", "kind": "decision" },
+    { "id": "shared_context", "label": "Contexto compartido", "kind": "antipattern" },
+    { "id": "swallowed_error", "label": "Error tragado (success + [])", "kind": "antipattern" },
+    { "id": "guardian_gate", "label": "Gate del Guardian", "kind": "validation" }
+  ],
+  "edges": [
+    { "from": "fanout_gate", "to": "spoke", "rel": "condiciona" },
+    { "from": "coordinator", "to": "task_dispatch", "rel": "usa" },
+    { "from": "task_dispatch", "to": "spoke", "rel": "despacha" },
+    { "from": "spoke", "to": "fresh_session", "rel": "corre_en" },
+    { "from": "coordinator", "to": "last_message_only", "rel": "consume_con" },
+    { "from": "spoke", "to": "typed_error", "rel": "emite" },
+    { "from": "typed_error", "to": "local_recovery", "rel": "precede_a" },
+    { "from": "local_recovery", "to": "aggregation", "rel": "propaga_a" },
+    { "from": "aggregation", "to": "coverage_gaps", "rel": "registra" },
+    { "from": "typed_error", "to": "valid_empty", "rel": "distingue" },
+    { "from": "fresh_session", "to": "shared_context", "rel": "prohibe" },
+    { "from": "typed_error", "to": "swallowed_error", "rel": "reemplaza" },
+    { "from": "guardian_gate", "to": "shared_context", "rel": "bloquea" },
+    { "from": "guardian_gate", "to": "swallowed_error", "rel": "bloquea" },
+    { "from": "guardian_gate", "to": "coverage_gaps", "rel": "exige" },
+    { "from": "guardian_gate", "to": "fanout_gate", "rel": "aplica" }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "skill": "validation-retry-design",
+  "cases": [
+    {
+      "id": "happy_path_json_repair",
+      "input": "Design an extract-validate-retry loop for an invoice JSON contract where total sometimes returns as a string; reinject the exact validation error and cap at 3 retries.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "error_feedback", "retry_budget"]
+    },
+    {
+      "id": "explicit_trigger_specific_error",
+      "input": "/validation-retry-design reinject the specific schema error (date_format on issue_date) instead of resending the original extraction prompt.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "specific_error"]
+    },
+    {
+      "id": "recoverable_vs_not_recoverable",
+      "input": "Classify a malformed currency code as recoverable but a missing invoice_number on a blank scanned page as not-recoverable and escalate immediately.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "recoverability"]
+    },
+    {
+      "id": "systematic_repeat_error",
+      "input": "The same date_format error comes back on attempts one and two; stop and emit a structural fix hint pointing at the prompt rather than spending the third retry.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "systematic_detection"]
+    },
+    {
+      "id": "blocked_blind_retry",
+      "input": "Just resend the unchanged extraction prompt three times and hope the JSON parses eventually, without passing any validation error back.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "blind_retry_blocker"]
+    },
+    {
+      "id": "blocked_accept_failed_output",
+      "input": "If all three retries still fail schema validation, return the last extracted object as if it had passed.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "silent_failure_blocker"]
+    },
+    {
+      "id": "validator_throws_edge",
+      "input": "The validator itself raises an exception on a corrupt PDF instead of returning a clean fail; decide how the loop should handle it.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "recoverability", "silent_failure_blocker"]
+    },
+    {
+      "id": "false_positive_marketing_email",
+      "input": "Write a launch announcement email for our new analytics dashboard going live next week.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "false_positive_transport_backoff",
+      "input": "Our API call sometimes returns 503; add exponential backoff so it retries on network errors.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "limit_retry_budget_too_high",
+      "input": "Set max retries to 10 for the invoice extractor because the model might eventually converge.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "budget_limit"]
+    },
+    {
+      "id": "upgrade_safety_case",
+      "input": "Complete the missing assets and script checks for validation-retry-design without touching katas-26 or katas-validation-retry-feedback.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "upgrade_safety"]
+    }
+  ]
+}

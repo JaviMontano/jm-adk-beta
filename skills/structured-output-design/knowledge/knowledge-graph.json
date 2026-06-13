@@ -1,0 +1,34 @@
+{
+  "nodes": [
+    { "id": "data_contract", "label": "Contrato de datos", "kind": "concept" },
+    { "id": "input_schema", "label": "input_schema defensivo", "kind": "artifact" },
+    { "id": "required_real", "label": "required por presencia real", "kind": "rule" },
+    { "id": "nullable_union", "label": "Unión nullable para opcionales", "kind": "rule" },
+    { "id": "enum_escape", "label": "Enum con válvula de escape (other + *_details)", "kind": "rule" },
+    { "id": "closed_object", "label": "additionalProperties=false", "kind": "rule" },
+    { "id": "forced_tool_choice", "label": "tool_choice forzado", "kind": "config" },
+    { "id": "auto_tool_choice", "label": "tool_choice=auto", "kind": "config" },
+    { "id": "tool_use_input", "label": "Parseo desde tool_use.input", "kind": "process" },
+    { "id": "validation_gate", "label": "Gate de validación contra schema", "kind": "process" },
+    { "id": "retry_escalation", "label": "Retry / escalada", "kind": "process" },
+    { "id": "false_default", "label": "Default falso ('', 0, N/A)", "kind": "antipattern" },
+    { "id": "prose_parse", "label": "json.loads sobre prosa + regex", "kind": "antipattern" },
+    { "id": "max_tokens_trunc", "label": "stop_reason=max_tokens truncado", "kind": "edge_case" }
+  ],
+  "edges": [
+    { "from": "data_contract", "to": "input_schema", "rel": "se_materializa_en" },
+    { "from": "input_schema", "to": "required_real", "rel": "aplica" },
+    { "from": "input_schema", "to": "nullable_union", "rel": "aplica" },
+    { "from": "input_schema", "to": "enum_escape", "rel": "aplica" },
+    { "from": "input_schema", "to": "closed_object", "rel": "aplica" },
+    { "from": "nullable_union", "to": "false_default", "rel": "reemplaza" },
+    { "from": "forced_tool_choice", "to": "input_schema", "rel": "emite" },
+    { "from": "auto_tool_choice", "to": "forced_tool_choice", "rel": "alternativa_cuando_hay_decision" },
+    { "from": "tool_use_input", "to": "input_schema", "rel": "parsea_segun" },
+    { "from": "tool_use_input", "to": "prose_parse", "rel": "reemplaza" },
+    { "from": "validation_gate", "to": "tool_use_input", "rel": "valida_la_salida_de" },
+    { "from": "validation_gate", "to": "retry_escalation", "rel": "enruta_fallos_a" },
+    { "from": "max_tokens_trunc", "to": "retry_escalation", "rel": "dispara" },
+    { "from": "enum_escape", "to": "data_contract", "rel": "preserva_señal_de" }
+  ]
+}

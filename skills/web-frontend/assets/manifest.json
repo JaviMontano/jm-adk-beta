@@ -1,0 +1,17 @@
+{
+  "skill": "web-frontend",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Scoring rubric of blocking router gates plus per-topic gates (build budgets, WCAG 2.1 AA, FOUC, Profiler, PWA offline) used to validate any frontend deliverable.",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    },
+    {
+      "path": "assets/routing-checklist.md",
+      "type": "text/markdown",
+      "purpose": "Top-to-bottom checklist for resolving one topic, loading one playbook, executing the spine, and clearing the validation gate.",
+      "used_by": ["README.md"]
+    }
+  ]
+}

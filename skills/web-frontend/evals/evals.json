@@ -1,0 +1,114 @@
+{
+  "cases": [
+    {
+      "id": "route-build-opt",
+      "input": "Our Vite SPA initial bundle is 410KB gzipped and the Firestore SDK is in the main chunk. Tune the build so the dashboard route lazy-loads and vendor chunks are cache-stable.",
+      "expected_checks": [
+        "routes_to:build-optimization",
+        "loads_single_playbook",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-css-vs-component",
+      "input": "We keep fighting CSS specificity and using !important across our Tailwind app. Set up a layering strategy so component styles stop overriding each other.",
+      "expected_checks": [
+        "routes_to:css-architecture",
+        "disambiguates_css_vs_component",
+        "quality_criteria",
+        "evidence_tags"
+      ]
+    },
+    {
+      "id": "route-react-rerender",
+      "input": "Typing in the search box re-renders the whole product table on every keystroke in our React 19 App Router app. Fix the re-render path without a state library if avoidable.",
+      "expected_checks": [
+        "routes_to:react-development",
+        "confirms_stack_before_rsc",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-dark-mode-fouc",
+      "input": "Switching to dark mode flashes the light theme on every page load before the toggle applies. Make the theme apply before first paint and respect the OS preference.",
+      "expected_checks": [
+        "routes_to:dark-mode",
+        "treats_dark_mode_standalone",
+        "quality_criteria",
+        "assets"
+      ]
+    },
+    {
+      "id": "route-i18n-vs-l10n",
+      "input": "We need to wire runtime locale switching with ICU message formatting and per-locale bundle splitting in our Next.js app.",
+      "expected_checks": [
+        "routes_to:internationalization",
+        "disambiguates_i18n_vs_localization",
+        "quality_criteria",
+        "evidence_tags"
+      ]
+    },
+    {
+      "id": "route-pwa-offline",
+      "input": "Add a service worker and Web App Manifest so the field-report app loads offline after install and queues submissions until reconnect.",
+      "expected_checks": [
+        "routes_to:pwa-architecture",
+        "loads_single_playbook",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-form-a11y",
+      "input": "Our multi-step checkout form has no inline validation and screen readers don't announce errors. Make validation accessible and keyboard-navigable.",
+      "expected_checks": [
+        "routes_to:form-engineering",
+        "wcag_aa_gate",
+        "quality_criteria",
+        "assets"
+      ]
+    },
+    {
+      "id": "route-archetype-admin",
+      "input": "Stand up a data-dense admin dashboard shell with filterable tables and per-section loading states for an internal ops tool.",
+      "expected_checks": [
+        "routes_to:admin-dashboards",
+        "loads_single_playbook",
+        "quality_criteria",
+        "evidence_tags"
+      ]
+    },
+    {
+      "id": "guard-no-cluster-load",
+      "input": "Refactor our component tree and also retheme it and also shrink the bundle — do all three at once.",
+      "expected_checks": [
+        "asks_one_question_or_picks_dominant_topic",
+        "refuses_multi_playbook_load",
+        "quality_criteria",
+        "assets"
+      ]
+    },
+    {
+      "id": "guard-out-of-scope",
+      "input": "Design our brand color palette and write the Firestore security rules for the app.",
+      "expected_checks": [
+        "names_boundary_and_hands_off",
+        "no_backend_or_design_only_work",
+        "quality_criteria",
+        "evidence_tags"
+      ]
+    },
+    {
+      "id": "guard-green-not-asserted",
+      "input": "You optimized our Webpack chunks; confirm the build actually meets the size budget before calling it done.",
+      "expected_checks": [
+        "no_green_as_success",
+        "deterministic_scripts",
+        "assets",
+        "quality_criteria"
+      ]
+    }
+  ]
+}

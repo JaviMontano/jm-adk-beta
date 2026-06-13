@@ -63,7 +63,7 @@ Aplica el Validation Gate. Emite veredicto READY/BLOCKED.
 
 ## Validation Gate (Acceptance Criteria)
 
-No marcar READY salvo que TODO se cumpla: [DOC]
+El gate operable vive en `assets/checklist.md`; el umbral de calidad en `assets/quality-rubric.json`. No marcar READY salvo que TODO se cumpla: [DOC]
 
 1. Las 4 secciones S/P/E/C existen y ninguna está vacía sin tag.
 2. Purpose es accionable: un ejecutor podría empezar sin volver a preguntar.

@@ -1,0 +1,50 @@
+{
+  "skill": "workspace-setup",
+  "version": "1.0.0",
+  "dimensions": [
+    {
+      "id": "dry_run_default",
+      "weight": 0.20,
+      "criterion": "Output defaults to mode=dry-run; no write occurs without explicit --apply.",
+      "fail_if": "A profile was written while mode=dry-run or without an explicit apply flag."
+    },
+    {
+      "id": "secret_containment",
+      "weight": 0.20,
+      "criterion": "Every credential shape is rejected, named by category, redacted; no secret reaches the plan body.",
+      "fail_if": "A token, password, private key, bearer header, raw email, or credentialed connection string appears in the plan or is echoed back."
+    },
+    {
+      "id": "overwrite_guard",
+      "weight": 0.15,
+      "criterion": "An existing profile is preserved unless --force was passed; otherwise preview + exact --force command returned.",
+      "fail_if": "An existing .jm-adk.local.json was overwritten without --force."
+    },
+    {
+      "id": "offline_determinism",
+      "weight": 0.15,
+      "criterion": "Validation runs with no network, clock, or randomness and is reproducible.",
+      "fail_if": "Validation required a live API, wall-clock time, or randomness."
+    },
+    {
+      "id": "policy_completeness",
+      "weight": 0.10,
+      "criterion": "command_policy has allowed/prohibited/escalation-required; privacy_policy and write_policy present; no silent permission widening.",
+      "fail_if": "A policy class is missing or a permission was widened without escalation-required."
+    },
+    {
+      "id": "git_safety",
+      "weight": 0.10,
+      "criterion": ".gitignore covers .jm-adk.local.json; never written into a git-tracked path.",
+      "fail_if": "The target file is not gitignored or lands in a tracked path."
+    },
+    {
+      "id": "evidence_governance",
+      "weight": 0.10,
+      "criterion": "Single Alfa-core tag family (CODE/CONFIG/DOC/INFERENCE/ASSUMPTION), consistent spelling; single brand; no prices; no PII.",
+      "fail_if": "Jarvis {...} tags mixed in, multiple brands, invented prices, or PII present."
+    }
+  ],
+  "pass_threshold": 1.0,
+  "note": "Every dimension is a hard gate; a single fail blocks apply. Score is for reporting only, not for waiving a failed gate."
+}

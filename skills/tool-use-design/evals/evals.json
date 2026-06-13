@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "skill": "tool-use-design",
+  "cases": [
+    {
+      "id": "happy_path_search_read_edit",
+      "input": "Design search_code, read_file, and edit_file descriptions as routing contracts with reciprocal boundaries and a Grep then Read then Edit repo strategy.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "routing_contracts", "repo_strategy"]
+    },
+    {
+      "id": "overload_analyze_process",
+      "input": "Two tools named analyze and process both claim to handle files; redesign them so a planner never confuses which to call.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "overload_split"]
+    },
+    {
+      "id": "edit_anchor_not_unique",
+      "input": "My edit_file tool fails intermittently because old_string matches three places in the file; document the failure mode and the fallback.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "edit_safety"]
+    },
+    {
+      "id": "read_all_window_saturation",
+      "input": "The agent globs every path and reads the entire repo into context before deciding where to edit, and reasoning degrades.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "read_all_blocker"]
+    },
+    {
+      "id": "generic_verb_rejected",
+      "input": "Someone wrote a tool description that just says Analyzes content with no input format or boundary; decide whether to accept it.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "generic_description_blocker"]
+    },
+    {
+      "id": "one_way_boundary_defect",
+      "input": "search_code says use read_file to read a file, but read_file never mentions search_code; fix the boundary.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "boundary_required"]
+    },
+    {
+      "id": "three_tools_overlap_axis",
+      "input": "Five tools all overlap on locate, fetch, and mutate; pairwise prose is not scaling, redefine the responsibility axis.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "overload_split", "routing_contracts"]
+    },
+    {
+      "id": "false_positive_client_email",
+      "input": "Redacta un correo de seguimiento al cliente sobre el cronograma del proyecto.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "false_positive_single_shell_command",
+      "input": "Run date in the terminal and tell me the current time.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "determinism_flags_audit",
+      "input": "Verify a finished routing-contract report sets offline, network_required, and deterministic flags before it is allowed to close.",
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "repo_strategy"]
+    }
+  ]
+}

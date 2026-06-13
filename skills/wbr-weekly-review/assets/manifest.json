@@ -1,0 +1,17 @@
+{
+  "skill": "wbr-weekly-review",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Rubrica de calidad por dimension (fail/partial/pass) para evaluar un acta WBR contra el gate.",
+      "used_by": ["SKILL.md", "agents/guardian.md", "prompts/meta.md"]
+    },
+    {
+      "path": "assets/gate-checklist.md",
+      "type": "text/markdown",
+      "purpose": "Checklist operativo que el guardian recorre antes de declarar el acta hecha.",
+      "used_by": ["agents/guardian.md", "README.md"]
+    }
+  ]
+}

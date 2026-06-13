@@ -1,0 +1,56 @@
+{
+  "skill": "tool-use-design",
+  "rubric": "routing-contract-quality",
+  "scale": ["fail", "weak", "pass"],
+  "criteria": [
+    {
+      "id": "contract_completeness",
+      "question": "Does every description declare purpose, input format, output shape, and 1-2 examples?",
+      "fail": "Missing input format or examples (generic verb).",
+      "pass": "All four present per tool.",
+      "evidence_tag": "DOC"
+    },
+    {
+      "id": "reciprocal_boundary",
+      "question": "Do competing tools delegate bidirectionally?",
+      "fail": "X points to Y but Y does not point back to X.",
+      "pass": "Every competing pair cross-links both ways.",
+      "evidence_tag": "DOC"
+    },
+    {
+      "id": "overload_resolution",
+      "question": "Is each >1-responsibility tool resolved as rename_split?",
+      "fail": "Overload hidden in a longer paragraph.",
+      "pass": "Split into named tools with reciprocal boundaries.",
+      "evidence_tag": "INFERENCIA"
+    },
+    {
+      "id": "repo_strategy",
+      "question": "Is the sequence grep, read, edit with read-all blocked?",
+      "fail": "glob_all_then_read_all or read_all_upfront is true.",
+      "pass": "Sequence exact and both blockers false.",
+      "evidence_tag": "DOC"
+    },
+    {
+      "id": "edit_safety",
+      "question": "Is unique_anchor_required true with a read_write_full_rewrite fallback?",
+      "fail": "Ambiguous anchor treated as safe; no fallback.",
+      "pass": "Uniqueness required and fallback documented.",
+      "evidence_tag": "CODIGO"
+    },
+    {
+      "id": "determinism",
+      "question": "Are offline, network_required, and deterministic flags set correctly?",
+      "fail": "Any flag missing or non-deterministic.",
+      "pass": "offline=true, network_required=false, deterministic=true.",
+      "evidence_tag": "DOC"
+    },
+    {
+      "id": "evidence_discipline",
+      "question": "Is every claim tagged with a single Alfa-core family?",
+      "fail": "Mixed tag families in one output.",
+      "pass": "One family throughout.",
+      "evidence_tag": "CONFIG"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "skill": "weekly-retro",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Cinco dimensiones ponderadas (evidence, three_axes, promotion_threshold, quality_criteria, upgrade_safety) con pass_when y el vocabulario pass/conditional/fail/not-verified; conduce el veredicto del guardian y el bloque de validacion del template.",
+      "used_by": ["agents/guardian.md", "templates/output.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "text/markdown",
+      "purpose": "Checklist del gate de aceptacion espejo de SKILL.md, agrupado por evidence/quality_criteria/upgrade_safety; bloquea el 'hecho' hasta marcar cada casilla.",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    }
+  ]
+}

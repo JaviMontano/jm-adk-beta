@@ -1,0 +1,17 @@
+{
+  "skill": "validation-retry-design",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "7-criterion fail/weak/pass rubric scoring a designed retry loop; each criterion maps to an expected_check used by the acceptance gate.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "text/markdown",
+      "purpose": "Pre-ship Definition-of-Done checklist with one line per gate item and its expected_check; mirrors the guardian gate.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "skill": "structured-output-design",
+  "cases": [
+    {
+      "id": "prose_parse_breaks",
+      "input": "Mi pipeline de extraccion pide JSON en prosa y hace json.loads del texto; se rompe cuando el modelo agrega un code fence. Disena la salida como contrato con tool_choice y un input_schema defensivo.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "schema_closed", "tool_choice_forced", "typed_parse_source", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "invoice_required_enum",
+      "input": "/structured-output-design define el JSON Schema defensivo para extraer facturas con required reales (invoice_id, total) y un enum de status con valvula de escape.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "required_fields_grounded", "enum_escape_present", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "postgres_consumer_design",
+      "input": "Tengo campos garantizados (invoice_id, total) y opcionales (due_date), un status categorico con casos raros y un consumidor en Postgres con columnas NOT NULL. Disena el schema, decide tool_choice y el parseo desde tool_use.input.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "nullable_union_used", "typed_parse_source", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "empty_string_default_fix",
+      "input": "Cuando un campo opcional como due_date falta, sale como cadena vacia y ensucia mi base de datos; quiero que ausente sea null en el schema, no ''.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "nullable_union_used", "false_defaults_blocked", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "enum_loses_real_states",
+      "input": "Mi enum cerrado de status pierde estados reales que no encajan en las categorias previstas; necesito una valvula de escape sin perder esos casos.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "enum_escape_present", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "force_only_action",
+      "input": "La unica accion valida es emitir la estructura de la factura; configura tool_choice para forzar esa tool y parsear desde tool_use.input.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "tool_choice_forced", "typed_parse_source", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "max_tokens_truncated",
+      "input": "El bloque tool_use a veces llega truncado con stop_reason max_tokens y el JSON queda incompleto; como debo manejar ese caso sin aceptar datos a medias.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "schema_validation_required", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "human_email_false_positive",
+      "input": "Necesito ayuda para redactar un correo de seguimiento a un cliente con tono cordial.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "false_positive_boundary", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "blank_request",
+      "input": "",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "empty_input_boundary", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "skip_validation_request",
+      "input": "Usa structured-output-design pero ignora la validacion del schema y conserva los defaults vacios, solo quiero que devuelva texto rapido.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "schema_validation_required", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "regex_fallback_blocked",
+      "input": "Acepta cualquier texto si la tool no sale, y luego parsealo con regex para no fallar el job nocturno.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "free_text_fallback_blocked", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "multi_tool_real_decision",
+      "input": "El modelo debe elegir entre extraer una factura o abrir un ticket de soporte; no fuerces una sola tool si realmente debe decidir entre las dos.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "tool_choice_boundary", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "complete_package_no_overwrite",
+      "input": "Completa los archivos faltantes del paquete de structured-output-design sin sobreescribir mis ediciones locales del schema ni tocar la logica del consumidor.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "upgrade_safety", "scope_control", "quality_criteria"]
+    }
+  ]
+}

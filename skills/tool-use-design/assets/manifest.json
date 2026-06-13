@@ -1,0 +1,17 @@
+{
+  "skill": "tool-use-design",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Scoreable fail/pass rubric for the routing-contract acceptance gate (contracts, reciprocal boundary, overload split, repo strategy, Edit safety, determinism, evidence discipline).",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "checklist",
+      "purpose": "Pre-close checklist mapping each gate criterion to its Alfa-core evidence tag.",
+      "used_by": ["SKILL.md", "README.md"]
+    }
+  ]
+}

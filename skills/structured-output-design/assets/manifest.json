@@ -1,0 +1,11 @@
+{
+  "skill": "structured-output-design",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json/rubric",
+      "purpose": "Gate de aceptación del contrato de salida: diez criterios pass/fail (required aterrizados, unión nullable, sin defaults falsos, objeto cerrado, válvula de escape de enum, tool_choice proporcional, parseo tipado, validación obligatoria, sin fallback de texto libre, upgrade safety) con evidence_tag y fail_if.",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    }
+  ]
+}

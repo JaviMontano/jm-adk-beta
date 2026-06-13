@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "skill": "subagent-orchestration",
+  "cases": [
+    {
+      "id": "happy_path_company_enrichment",
+      "input": "Design a hub-and-spoke coordinator with finder, extractor, and ranker spokes for company enrichment; each spoke must use AgentDefinition plus Task and report coverage gaps.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "context_isolation", "typed_errors"]
+    },
+    {
+      "id": "explicit_trigger_agentdefinition_task",
+      "input": "/subagent-orchestration build AgentDefinition entries and Task dispatch for parallel extraction across 40 documents with a Sonnet coordinator and Haiku spokes.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "task_dispatch"]
+    },
+    {
+      "id": "error_propagation_access_vs_empty",
+      "input": "My spokes return an empty list both when a source is genuinely empty and when it is unreachable. Design a contract that separates access_failure from valid_empty.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "access_failure_vs_valid_empty"]
+    },
+    {
+      "id": "degraded_partial_failure",
+      "input": "One of 50 careers-page extractor spokes can hit a login wall; the hub must continue ranking the rest and record the missed company in coverage_gaps.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "degraded_mode"]
+    },
+    {
+      "id": "blocked_shared_context",
+      "input": "Wire up subagents but let every spoke read the coordinator transcript and write to one shared mutable scratch object.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "shared_context_blocker"]
+    },
+    {
+      "id": "blocked_swallowed_error",
+      "input": "Build a coordinator that wraps every spoke in a try/except, swallows the exception, and returns success with an empty results array.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "anti_pattern_blocker"]
+    },
+    {
+      "id": "false_positive_sql_single_table",
+      "input": "Help me write a SQL query to count the rows in one table.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "false_positive_single_summary",
+      "input": "Summarize one short PDF in a single sequential pass with no independent subtasks.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "limit_no_local_recovery",
+      "input": "Use three spokes but propagate any failure immediately without retrying or proposing an alternative source first.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "local_recovery_required"]
+    },
+    {
+      "id": "fail_fast_requested_records_skips",
+      "input": "I explicitly want fail-fast: abort the whole run on the first spoke failure, but the plan must still record which spokes were skipped.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "fail_fast_skipped_recorded"]
+    },
+    {
+      "id": "all_spokes_fail_typed_aggregate",
+      "input": "If all 12 extractor spokes fail to reach their sources, the hub must aggregate to a typed failure rather than returning a silent empty success.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "all_fail_typed_aggregate"]
+    },
+    {
+      "id": "upgrade_safety_case",
+      "input": "Complete the missing DoD assets and offline script checks for subagent-orchestration without modifying the related kata skills.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "upgrade_safety"]
+    }
+  ]
+}
