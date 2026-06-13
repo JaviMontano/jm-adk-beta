@@ -881,8 +881,7 @@
     {
       "id": "station-create",
       "desc": "Scaffold a Jarvis OS station (universal or dedicated) with its own CLAUDE.md and…",
-      "tier": "standalone",
-      "evals": true
+      "tier": "standalone"
     },
     {
       "id": "structured-output-design",
@@ -899,8 +898,7 @@
     {
       "id": "task-subfolder",
       "desc": "Crea/retoma una sub-tarea T-NNN multi-sesion con CLAUDE.md, task.md y log.md (P33)…",
-      "tier": "standalone",
-      "evals": true
+      "tier": "standalone"
     },
     {
       "id": "testing-qa",
