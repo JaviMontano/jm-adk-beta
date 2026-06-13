@@ -48,7 +48,7 @@ not synonyms:
 - [bdd-full-spectrum](references/bdd-full-spectrum.md)
 - [cross-browser-testing](references/cross-browser-testing.md)
 - [performance-testing](references/performance-testing.md)
-- [verification-tags](references/verification-tags.md) — evidence-tag convention
+- [verification-tags](../../references/verification-tags.md) — evidence-tag convention
 
 ## Gates
 Constitution v6.0.0 enforcement, evidence tags (Alfa core set, EN spelling),

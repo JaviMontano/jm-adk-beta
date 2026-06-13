@@ -12,7 +12,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SERVER = "workspace-mcp"
+SERVER = "google-workspace"
 EXPECTED_SERVICES = ["gmail", "drive", "calendar", "docs", "sheets", "slides"]
 MATRIX = "docs/runtime-tool-access-matrix.md"
 MATRIX_RUNTIMES = [

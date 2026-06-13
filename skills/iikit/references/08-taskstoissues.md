@@ -23,7 +23,7 @@ You **MUST** consider the user input before proceeding (if not empty). Treat fre
    Windows: `pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/check-prerequisites.ps1 -Phase 08 -Json`
 
 2. Parse JSON for `FEATURE_DIR` and `AVAILABLE_DOCS`. Extract path to **tasks.md**.
-3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in [conversation-guide.md](../iikit-core/references/conversation-guide.md). After user selects, run:
+3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in `conversation-guide.md`. After user selects, run:
    ```bash
    bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/set-active-feature.sh --json <selection>
    ```
@@ -55,7 +55,7 @@ Apply any `$ARGUMENTS` scope filter here. If filtering yields zero tasks, STOP a
 
 **Title format**: `[FeatureID/TaskID] [Story] Description` — feature-id extracted from `FEATURE_DIR` (e.g. `001-user-auth`).
 
-**Body**: use template from [issue-body-template.md](references/issue-body-template.md). **Labels** (create if needed): `iikit`, `phase-N`, `us-N`, `parallel`.
+**Body**: use template from `issue-body-template.md`. **Labels** (create if needed): `iikit`, `phase-N`, `us-N`, `parallel`.
 
 **Idempotency** [EXPLICIT]: re-running this phase must not duplicate issues. Before creating, query existing open+closed issues for the `[FeatureID/TaskID]` title prefix (e.g. `gh issue list --search "[001-user-auth/T012] in:title" --state all`). If a match exists, reuse its number and skip creation — record it as "existing" in the report.
 
