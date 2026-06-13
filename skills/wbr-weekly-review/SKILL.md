@@ -46,6 +46,8 @@ Acta WBR en Markdown, escaneable, con estas secciones:
 
 Toda afirmacion no obvia lleva una tag de la familia Jarvis (`{...}`); ver `references/verification-tags.md`. No mezclar familias. {DOC}
 
+Para puntuar el acta contra el gate, usar la rubrica y el checklist en `assets/` (ver `assets/README.md`). {CONFIG}
+
 ## Procedure
 
 1. **Recolectar** — leer compromisos previos + senales de la semana; si falta periodo/alcance, parar y preguntar.

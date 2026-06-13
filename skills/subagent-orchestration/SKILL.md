@@ -58,6 +58,7 @@ Validate every plan with `scripts/validate_orchestration_plan.py` against `asset
 ## Output Rules
 
 - Reference `assets/isolation-policy.json`, `assets/error-propagation-policy.json`, `assets/aggregation-policy.json`, `assets/anti-pattern-policy.json`. [CONFIG]
+- Gate the plan with the certification bundle `assets/quality-rubric.json` (mirrored by `assets/checklist.md`); see `assets/README.md`. [CONFIG]
 - State whether fan-out is justified; never force subagents onto one sequential task. [DOC]
 - Never return success with an empty result for an access failure. [DOC]
 - Never let one spoke failure abort unrelated spokes unless the user explicitly requires fail-fast. [DOC]

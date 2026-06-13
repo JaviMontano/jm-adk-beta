@@ -60,6 +60,7 @@ Discover → Analyze → Execute → Validate. [DOC]
 - Every non-obvious claim carries one Alfa-core tag ([CÓDIGO]/[CONFIG]/[DOC]/[INFERENCIA]/[SUPUESTO]),
   one spelling, no mixing with the Jarvis family. See `references/verification-tags.md`. [DOC]
 - Constitution v6.0.0 gates honored; script-first rule respected (prefer a script over ad-hoc steps). [DOC]
+- Score the result against `assets/quality-rubric.json` (blocking router gates + the routed topic's gates); see `assets/README.md`. [DOC]
 
 ## Anti-patterns
 - Loading multiple playbooks "to be safe" — defeats the router; costs context, dilutes focus. [INFERENCIA]

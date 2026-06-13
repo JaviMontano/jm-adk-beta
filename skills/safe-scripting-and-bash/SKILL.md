@@ -71,6 +71,7 @@ runbook family — stop and ask; never auto-fill the destructive default. [INFER
 - `assets/destructive-command-policy.json` — block unsafe shell patterns unless approved and isolated. [CONFIG]
 - `assets/portability-policy.json` — portability, quoting, repo-root detection, tempdir rules. [CONFIG]
 - `assets/validation-policy.json` — require syntax checks and deterministic smoke tests. [CONFIG]
+- `assets/quality-rubric.json` — blocking safety checks and the bound-verdict rule; see `assets/README.md`. [CONFIG]
 
 ## Offline Validation (acceptance gate)
 

@@ -1,0 +1,24 @@
+{
+  "skill": "runtime-routing",
+  "description": "Allowed runtime ids and their permission levels. Lower rank = lower blast radius. The router picks the lowest rank among evidence-backed survivors.",
+  "permission_levels": [
+    { "level": "local", "rank": 0, "note": "CLI + Markdown, repo-local, no remote surface" },
+    { "level": "repo-cli", "rank": 1, "note": "repo-local agentic CLI, auditable file/git flow" },
+    { "level": "ide", "rank": 2, "note": "IDE-bound rules + workspace state" },
+    { "level": "hosted-agentic", "rank": 3, "note": "hooks, MCP, sub-agents, skill routing" },
+    { "level": "remote-model", "rank": 4, "note": "remote model call, highest secret-exposure risk" }
+  ],
+  "runtimes": [
+    { "id": "local", "permission_level": "local", "tie_break_preferred": true },
+    { "id": "codex", "permission_level": "repo-cli" },
+    { "id": "vscode", "permission_level": "ide", "requires_evidence": [".agent/"] },
+    { "id": "antigravity", "permission_level": "ide", "requires_evidence": [".agent/"] },
+    { "id": "claude", "permission_level": "hosted-agentic" },
+    { "id": "gemini", "permission_level": "remote-model" }
+  ],
+  "rules": [
+    "A recommended runtime MUST appear in this catalog.",
+    "A recommended runtime MUST NOT exceed the permission level the task requires.",
+    "Ties resolve toward the runtime with tie_break_preferred=true (local + Markdown)."
+  ]
+}

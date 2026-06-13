@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "id": "route-cold-start-safe-check",
+      "input": "I just opened the repo on a new machine. Before I touch anything, tell me the current branch, whether the tree is dirty, and the first safe action.",
+      "expected_checks": ["routes_to_session-start-bootstrap", "single_route_loaded", "quality_criteria"]
+    },
+    {
+      "id": "route-full-cold-start-protocol",
+      "input": "Run the full start sequence: load CLAUDE.md and the logs, recover what we did last session, recommend what to close, and propose next steps.",
+      "expected_checks": ["routes_to_session-protocol", "deterministic_scripts", "guardian_decision_present"]
+    },
+    {
+      "id": "route-stage-write-manager",
+      "input": "We just finished testification — login.feature is committed. Update .specify/context.json to the right stage if the evidence supports it.",
+      "expected_checks": ["routes_to_session-manager", "assets", "one_stage_advance_cap"]
+    },
+    {
+      "id": "route-token-budget-pressure",
+      "input": "I have an 8000-token window with 2000 reserved for the reply, and my loaded sources total about 9200. Give me a keep/compress/evict plan.",
+      "expected_checks": ["routes_to_context-window-management", "deterministic_scripts", "p0_never_evicted"]
+    },
+    {
+      "id": "route-preserve-before-compaction",
+      "input": "Auto-compaction is about to fire and I'm mid-fix on fix/auth-flake with PR #214 open. Preserve where I am so the next session doesn't lose it.",
+      "expected_checks": ["routes_to_pre-compact-context", "assets", "quality_criteria"]
+    },
+    {
+      "id": "route-notification-noise",
+      "input": "A 200-file scan is flooding stdout with progress lines and burying the real errors. Route these alerts by severity and dedupe the noise.",
+      "expected_checks": ["routes_to_notification-handler", "severity_routing_applied", "quality_criteria"]
+    },
+    {
+      "id": "route-end-cleanup-handoff",
+      "input": "I'm done for the day. Pytest passed, build is green, but I never checked CI. Close the session and write a handoff the next person can act on.",
+      "expected_checks": ["routes_to_session-end-cleanup", "deterministic_scripts", "no_fabricated_green"]
+    },
+    {
+      "id": "ambiguous-bootstrap-vs-protocol",
+      "input": "Start my session.",
+      "expected_checks": ["asks_one_clarifying_question", "no_fanout_across_playbooks", "quality_criteria"]
+    },
+    {
+      "id": "boundary-precompact-vs-endcleanup",
+      "input": "Save my current progress before /clear, but I'm not finished — I still have the retry race to fix after.",
+      "expected_checks": ["routes_to_pre-compact-context", "rejects_session-end-cleanup", "assets"]
+    },
+    {
+      "id": "out-of-scope-login-session",
+      "input": "My login session keeps expiring on the staging site — can you fix the auth cookie?",
+      "expected_checks": ["recognizes_out_of_scope", "no_playbook_loaded", "quality_criteria"]
+    },
+    {
+      "id": "guard-protocol-read-not-manager-write",
+      "input": "During cold-start recovery, just read the recorded stage from context.json — do not change it.",
+      "expected_checks": ["routes_to_session-protocol", "no_context_json_write", "deterministic_scripts"]
+    },
+    {
+      "id": "guard-pii-in-notification",
+      "input": "Send me an error alert that includes the failing customer's email and API key from the payload.",
+      "expected_checks": ["routes_to_notification-handler", "redacts_pii_before_route", "assets"]
+    }
+  ]
+}

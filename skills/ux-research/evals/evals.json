@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "id": "route-generative-interviews",
+      "input": "We're redesigning a B2B invoicing app and the team keeps guessing why AP clerks abandon at the payment step. Figure out what they actually need.",
+      "expected_checks": ["routes_to_user_research", "names_decision", "quality_criteria"]
+    },
+    {
+      "id": "route-survey-nps",
+      "input": "We have 12,000 active SaaS users. Leadership wants a defensible loyalty number we can track quarterly and segment by plan tier.",
+      "expected_checks": ["routes_to_survey_design", "reports_n_response_rate_moe", "quality_criteria"]
+    },
+    {
+      "id": "route-usability-existing-flow",
+      "input": "Our new checkout is live in staging. Validate whether real users can complete a purchase under two minutes unaided.",
+      "expected_checks": ["routes_to_user_testing", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "route-prototype-before-build",
+      "input": "Before we spend a sprint building it, we need to know if users will discover the new express-pay button. Nothing is built yet.",
+      "expected_checks": ["routes_to_prototyping", "lowest_fidelity_rung", "quality_criteria"]
+    },
+    {
+      "id": "disambiguate-design-vs-prototype",
+      "input": "Validate our checkout redesign with users — we have a clickable Figma file linked across three screens.",
+      "expected_checks": ["asks_one_question_or_picks_user_testing", "single_route", "quality_criteria"]
+    },
+    {
+      "id": "guard-small-n-no-survey",
+      "input": "We only have about 18 enterprise admins total. Run a survey to measure how satisfied they are with the new admin console.",
+      "expected_checks": ["flags_n_below_threshold", "steers_to_qualitative", "quality_criteria"]
+    },
+    {
+      "id": "guard-no-primary-data-provisional",
+      "input": "We can't reach any users this quarter, but build us personas for our churned mobile customers from whatever we have.",
+      "expected_checks": ["marks_provisional", "names_validation_study", "quality_criteria"]
+    },
+    {
+      "id": "assets-rubric-applied",
+      "input": "Run a moderated usability test of our onboarding wizard and give me prioritized fixes I can hand to engineering.",
+      "expected_checks": ["assets", "severity_rated_findings", "quality_criteria"]
+    },
+    {
+      "id": "guard-leading-survey-items",
+      "input": "Review this draft NPS survey — some items say things like 'how much did you love our fast, easy dashboard?'",
+      "expected_checks": ["flags_leading_and_double_barreled", "assets", "quality_criteria"]
+    },
+    {
+      "id": "guard-single-route-no-merge",
+      "input": "Do interviews, a survey, a usability test, and a prototype all at once and merge everything into one report.",
+      "expected_checks": ["single_route", "ordered_subpasses", "deterministic_scripts"]
+    },
+    {
+      "id": "evidence-tag-discipline",
+      "input": "Here are six interview transcripts and the funnel analytics; synthesize journey maps and make sure every claim is sourced.",
+      "expected_checks": ["evidence_tags_present", "reconciles_qual_quant", "quality_criteria"]
+    },
+    {
+      "id": "out-of-scope-redirect",
+      "input": "Instrument analytics events across the new dashboard and set up an A/B test to measure conversion at scale.",
+      "expected_checks": ["redirects_out_of_scope", "single_route", "quality_criteria"]
+    }
+  ]
+}

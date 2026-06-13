@@ -67,7 +67,9 @@ Disambiguation (common collisions): [INFERENCIA]
 Done only when: exactly one playbook was Read; output follows that playbook's
 shape; every non-obvious claim carries a verification tag (Alfa core set); no
 `{VACIO_CRITICO}` unresolved. [EXPLICIT] Quality gates: constitution v6.0.0
-(enforcement), evidence tags, script-first rule. [CONFIG]
+(enforcement), evidence tags, script-first rule. [CONFIG] Run-time machinery in
+`assets/` — `assets/routing-checklist.md` (routing gate) and
+`assets/quality-rubric.json` (guardian scoring). [CONFIG]
 
 ## Anti-patterns
 

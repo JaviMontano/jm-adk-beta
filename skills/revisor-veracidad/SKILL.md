@@ -94,6 +94,10 @@ Plan: `{POR_CONFIRMAR}` -> correr `scripts/check.sh` o un benchmark contra el en
 
 Chequeos deterministas en `scripts/`: `scripts/check.sh` valida los fixtures bajo `scripts/fixtures/`. Contrato en `scripts/README.md`. [CONFIG]
 
+## Assets
+
+Rubrica de calidad y checklist del gate en `assets/` (ver `assets/README.md` y `assets/manifest.json`); el guardian los aplica antes de entregar. [CONFIG]
+
 ## Related skills
 
 - `input-analysis` — antes, para entender el encargo.

@@ -1,0 +1,21 @@
+{
+  "skill": "sales-bizdev",
+  "purpose": "Deterministic deliverable-type to topic mapping used by the router to avoid channel-confusion and double-loading.",
+  "rules": [
+    { "signal": "user wants a list of accounts to target", "deliverable_type": "list", "topic": "client-prospecting" },
+    { "signal": "user wants inbound signups scored / a capture funnel built", "deliverable_type": "scoring+handoff", "topic": "lead-generation" },
+    { "signal": "user wants a deep brief on one named company before a meeting", "deliverable_type": "brief", "topic": "client-dossier" },
+    { "signal": "user wants the messages / sequence to reach contacts", "deliverable_type": "sequence", "topic": "b2b-outreach" },
+    { "signal": "user wants a C-level decision narrative + business case", "deliverable_type": "decision-narrative", "topic": "executive-pitch" },
+    { "signal": "user wants an RFP/discovery turned into a win-shaped document", "deliverable_type": "proposal-document", "topic": "proposal-writing" },
+    { "signal": "user wants a one-pager / battle card / ROI calc / positioning", "deliverable_type": "collateral-asset", "topic": "sales-collateral" }
+  ],
+  "tie_breaks": [
+    "list of accounts -> client-prospecting",
+    "scored/qualified pipeline -> lead-generation",
+    "one-account deep brief -> client-dossier",
+    "per-contact message -> b2b-outreach"
+  ],
+  "channel_strip_rule": "If the request names a channel (LinkedIn, email, deck, call), ignore the channel and classify by the artifact the user is asking to produce.",
+  "fallback": "On a genuine tie or no fit, ask exactly one disambiguating question; never load two playbooks."
+}

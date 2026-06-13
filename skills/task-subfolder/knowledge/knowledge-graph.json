@@ -1,0 +1,36 @@
+{
+  "nodes": [
+    { "id": "p33", "label": "P33 convention", "kind": "standard" },
+    { "id": "tnnn", "label": "T-NNN sub-task folder", "kind": "artifact" },
+    { "id": "claude_md", "label": "CLAUDE.md (local contract)", "kind": "artifact" },
+    { "id": "task_md", "label": "task.md (goal + acceptance)", "kind": "artifact" },
+    { "id": "log_md", "label": "log.md (append-only journal)", "kind": "artifact" },
+    { "id": "slug", "label": "slug (naming-and-slugging)", "kind": "concept" },
+    { "id": "missing_only", "label": "missing-only idempotency", "kind": "rule" },
+    { "id": "force", "label": "--force overwrite gate", "kind": "rule" },
+    { "id": "append_only", "label": "append-only discipline", "kind": "rule" },
+    { "id": "jarvis_tags", "label": "Jarvis OS tag family", "kind": "taxonomy" },
+    { "id": "gate", "label": "validation gate", "kind": "process" },
+    { "id": "resume", "label": "create-vs-resume decision", "kind": "process" },
+    { "id": "parent_memory", "label": "parent memory / Golden Reference", "kind": "concept" }
+  ],
+  "edges": [
+    { "from": "tnnn", "to": "p33", "rel": "conforms_to" },
+    { "from": "tnnn", "to": "claude_md", "rel": "contains" },
+    { "from": "tnnn", "to": "task_md", "rel": "contains" },
+    { "from": "tnnn", "to": "log_md", "rel": "contains" },
+    { "from": "tnnn", "to": "slug", "rel": "named_by" },
+    { "from": "claude_md", "to": "missing_only", "rel": "governed_by" },
+    { "from": "task_md", "to": "missing_only", "rel": "governed_by" },
+    { "from": "log_md", "to": "append_only", "rel": "governed_by" },
+    { "from": "missing_only", "to": "force", "rel": "overridden_by" },
+    { "from": "claude_md", "to": "jarvis_tags", "rel": "tagged_with" },
+    { "from": "task_md", "to": "jarvis_tags", "rel": "tagged_with" },
+    { "from": "log_md", "to": "jarvis_tags", "rel": "tagged_with" },
+    { "from": "claude_md", "to": "parent_memory", "rel": "links_to" },
+    { "from": "resume", "to": "log_md", "rel": "appends_to" },
+    { "from": "gate", "to": "tnnn", "rel": "validates" },
+    { "from": "gate", "to": "append_only", "rel": "enforces" },
+    { "from": "gate", "to": "jarvis_tags", "rel": "enforces" }
+  ]
+}

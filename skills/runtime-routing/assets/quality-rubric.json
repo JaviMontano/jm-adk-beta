@@ -1,0 +1,43 @@
+{
+  "skill": "runtime-routing",
+  "scale": ["fail", "pass"],
+  "criteria": [
+    {
+      "id": "evidence_grounding",
+      "weight": 0.3,
+      "statement": "Every 'supported' capability cites a promoting evidence id (repo file, executed check, runtime metadata, or user config); no fabricated ids.",
+      "fail_if": "A supported row has no evidence id, or cites a path/check that does not exist."
+    },
+    {
+      "id": "lowest_permission",
+      "weight": 0.25,
+      "statement": "The recommended runtime is the lowest-permission survivor whose required capabilities are all supported; ties break toward local + Markdown.",
+      "fail_if": "A higher-permission or remote runtime is chosen while a lower-permission evidence-backed one exists."
+    },
+    {
+      "id": "validation_limits_visible",
+      "weight": 0.15,
+      "statement": "Every unverified capability is labeled 'validation pending'; no limit is hidden.",
+      "fail_if": "A needed-but-unproven capability is presented as supported, or its limit is omitted."
+    },
+    {
+      "id": "fallback_present",
+      "weight": 0.15,
+      "statement": "A local-first fallback exists with Markdown-first instructions, repo-local scripts, and a no-gh-auth path.",
+      "fail_if": "The fallback is missing, or it lacks the no-auth path."
+    },
+    {
+      "id": "secret_boundary",
+      "weight": 0.1,
+      "statement": "Local files, workspace state, and secrets stay local; no remote escalation for a local-doable task.",
+      "fail_if": "Secrets/workspace state cross the local boundary, or a remote runtime is used for local work."
+    },
+    {
+      "id": "guardian_gate_clean",
+      "weight": 0.05,
+      "statement": "Guardian does not pass while any referenced validation failed or a Dato requerido is open.",
+      "fail_if": "Guardian green-lights past a failed validation or an open required input."
+    }
+  ],
+  "done_rule": "Deliverable is done only when every criterion is 'pass' and the offline gate is clean."
+}

@@ -1,0 +1,37 @@
+{
+  "skill": "weekly-retro",
+  "status_vocabulary": ["pass", "conditional", "fail", "not-verified"],
+  "verdict_rule": "Solo 'pass' habilita declarar la retro cerrada. Cualquier dimension en 'fail' fuerza veredicto global 'fail'. Una promocion P12 pendiente de confirmacion mantiene el veredicto en 'conditional'.",
+  "dimensions": [
+    {
+      "id": "evidence",
+      "label": "Evidencia tagueada",
+      "weight": 0.30,
+      "pass_when": "Cada item de Ayudo/Friccion lleva exactamente un tag Jarvis {...}; ningun {WEB} sin cita; todo {SUPUESTO}/{POR_CONFIRMAR} con paso de verificacion; sin familia Alfa [...]."
+    },
+    {
+      "id": "three_axes",
+      "label": "Tres ejes presentes",
+      "weight": 0.15,
+      "pass_when": "Ayudo, Friccion y Regla candidata presentes; un eje vacio solo con justificacion explicita ('sin patron nuevo')."
+    },
+    {
+      "id": "promotion_threshold",
+      "label": "Umbral de promocion P12",
+      "weight": 0.20,
+      "pass_when": "Toda regla promovida cumple friccion vista >=2 veces (o acierto a volver default), redactada en imperativo de una linea con destino nombrado. Friccion de 1 ocurrencia queda como observacion."
+    },
+    {
+      "id": "quality_criteria",
+      "label": "Acciones y justificacion",
+      "weight": 0.15,
+      "pass_when": "Hay >=1 accion concreta para la proxima semana con primer paso; si no hubo regla, una linea justifica por que."
+    },
+    {
+      "id": "upgrade_safety",
+      "label": "Seguridad de promocion",
+      "weight": 0.20,
+      "pass_when": "Ninguna promocion escribio memoria sin diff mostrado + confirmacion explicita; persistencia aditiva; historico y ediciones locales intactos; sin --force; marca unica."
+    }
+  ]
+}

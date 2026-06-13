@@ -47,6 +47,7 @@ single pass. Spine: Discover → Analyze → Execute → Validate. [DOC]
 - Output respects constitution v6.0.0 + script-first rule. [CONFIG]
 - Every non-obvious claim carries one Alfa-core tag (references/verification-tags.md). [DOC]
 - Each `[SUPUESTO]` is paired with a verification step. [DOC]
+- Score against `assets/quality-rubric.json` (universal + route criteria). [CONFIG]
 
 ## Anti-patterns
 Loading >1 route; inventing a topic outside the enum; skipping tags; emitting

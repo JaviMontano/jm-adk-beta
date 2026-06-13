@@ -1,0 +1,36 @@
+{
+  "nodes": [
+    { "id": "session_context", "label": "SessionContext", "kind": "artifact" },
+    { "id": "tool_result", "label": "ToolResult (source+mtime+hash)", "kind": "artifact" },
+    { "id": "world_invariant", "label": "World Invariant (HEAD, lockfile, schema)", "kind": "concept" },
+    { "id": "staleness", "label": "Staleness", "kind": "concept" },
+    { "id": "criticality", "label": "Criticality", "kind": "concept" },
+    { "id": "decision_matrix", "label": "Decision Matrix", "kind": "process" },
+    { "id": "resume", "label": "Resume", "kind": "transition" },
+    { "id": "fork", "label": "Fork", "kind": "transition" },
+    { "id": "fresh", "label": "Fresh", "kind": "transition" },
+    { "id": "typed_summary", "label": "TypedSummary", "kind": "artifact" },
+    { "id": "fork_isolation", "label": "Fork Isolation", "kind": "constraint" },
+    { "id": "gate", "label": "Acceptance Gate (check.sh)", "kind": "gate" },
+    { "id": "verified_fact", "label": "VerifiedFact (with source)", "kind": "artifact" }
+  ],
+  "edges": [
+    { "from": "session_context", "to": "tool_result", "rel": "contains" },
+    { "from": "session_context", "to": "world_invariant", "rel": "snapshots" },
+    { "from": "tool_result", "to": "staleness", "rel": "evaluated_for" },
+    { "from": "world_invariant", "to": "staleness", "rel": "evaluated_for" },
+    { "from": "staleness", "to": "criticality", "rel": "classified_by" },
+    { "from": "staleness", "to": "decision_matrix", "rel": "feeds" },
+    { "from": "criticality", "to": "fresh", "rel": "critical_forces" },
+    { "from": "decision_matrix", "to": "resume", "rel": "may_emit" },
+    { "from": "decision_matrix", "to": "fork", "rel": "may_emit" },
+    { "from": "decision_matrix", "to": "fresh", "rel": "may_emit" },
+    { "from": "fresh", "to": "typed_summary", "rel": "requires" },
+    { "from": "fork", "to": "fork_isolation", "rel": "requires" },
+    { "from": "typed_summary", "to": "verified_fact", "rel": "contains" },
+    { "from": "typed_summary", "to": "staleness", "rel": "drops" },
+    { "from": "resume", "to": "gate", "rel": "validated_by" },
+    { "from": "fork", "to": "gate", "rel": "validated_by" },
+    { "from": "fresh", "to": "gate", "rel": "validated_by" }
+  ]
+}

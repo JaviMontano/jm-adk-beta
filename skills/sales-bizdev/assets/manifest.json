@@ -1,0 +1,23 @@
+{
+  "skill": "sales-bizdev",
+  "assets": [
+    {
+      "path": "assets/routing-matrix.json",
+      "type": "json",
+      "purpose": "Deterministic deliverable-type to topic mapping, tie-breaks, and channel-strip rule the router uses to load exactly one playbook.",
+      "used_by": ["SKILL.md", "README.md"]
+    },
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json",
+      "purpose": "Scored gate dimensions (blocking and advisory) the guardian applies before a deliverable ships.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/preflight-checklist.md",
+      "type": "markdown",
+      "purpose": "Human-readable pre-flight checklist mirroring the guardian gate and per-playbook Validation Gates.",
+      "used_by": ["SKILL.md"]
+    }
+  ]
+}

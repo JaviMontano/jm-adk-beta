@@ -1,0 +1,17 @@
+{
+  "skill": "security",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json/rubric",
+      "purpose": "Gate criteria (single-route, evidence tags, severity-by-context, determinism, remediation pairing, no-green-as-success, read-only) a security deliverable must satisfy before shipping.",
+      "used_by": ["SKILL.md", "agents/guardian.md", "templates/output.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "markdown/checklist",
+      "purpose": "Deterministic pre-ship checklist the guardian walks for any route, covering routing, evidence, findings, verification, and discipline.",
+      "used_by": ["agents/guardian.md", "prompts/meta.md"]
+    }
+  ]
+}

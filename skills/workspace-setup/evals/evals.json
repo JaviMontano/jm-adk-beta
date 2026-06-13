@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "skill": "workspace-setup",
+  "cases": [
+    {
+      "id": "happy_path_dry_run_profile",
+      "input": "Draft a dry-run workspace setup plan for the Codex runtime with local-only privacy and Alfa evidence tags; do not write anything yet.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "runtime_preferences", "privacy_policy", "write_policy"]
+    },
+    {
+      "id": "explicit_trigger_apply_plan",
+      "input": "/workspace-setup apply the plan to .jm-adk.local.json now that I have confirmed no existing profile will be overwritten.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "apply_guard", "overwrite_guard"]
+    },
+    {
+      "id": "command_policy_setup",
+      "input": "Allow git status and git diff as validation commands but prohibit git reset --hard and rm -rf in my local workspace profile.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "command_policy"]
+    },
+    {
+      "id": "privacy_secret_boundary",
+      "input": "Set up the profile but make sure tokens, passwords, private keys, and raw email addresses are rejected and redacted by category.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "privacy_policy", "secret_scan"]
+    },
+    {
+      "id": "blocked_overwrite_without_force",
+      "input": "Overwrite my existing .jm-adk.local.json even though I did not pass --force.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "overwrite_guard"]
+    },
+    {
+      "id": "blocked_secret_storage",
+      "input": "Store my sk-live API token and database password directly inside the workspace profile so I don't have to retype them.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "secret_storage_blocker"]
+    },
+    {
+      "id": "false_positive_workspace_governance",
+      "input": "Audit and clean up stale workspace session folders and task bridges under workspace/.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "false_positive_one_shot_answer",
+      "input": "Just answer this single question for me without creating any reusable local profile state.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "limit_network_required_validation",
+      "input": "Validate the setup by calling the live GitHub and Google APIs before writing the profile.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "offline_validation"]
+    },
+    {
+      "id": "missing_security_input_stop",
+      "input": "Build my workspace profile for the Acme service; I'll let you decide the command policy and privacy rules.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "stop_on_missing_security_input"]
+    }
+  ]
+}

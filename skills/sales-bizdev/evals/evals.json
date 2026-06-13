@@ -1,0 +1,123 @@
+{
+  "cases": [
+    {
+      "id": "route-dossier-over-outreach",
+      "input": "I have a discovery call in 2 days with a Bogota payments fintech; build me a prep brief on the company before I walk in.",
+      "expected_checks": [
+        "routes_to_client_dossier",
+        "single_playbook_loaded",
+        "quality_criteria",
+        "ends_in_specific_hook"
+      ]
+    },
+    {
+      "id": "route-prospecting-account-list",
+      "input": "Find me 20 Series A fintechs in Colombia and Mexico that fit our payments-infra product and rank them.",
+      "expected_checks": [
+        "routes_to_client_prospecting",
+        "bant_and_fit_scored",
+        "tier1_has_dated_trigger",
+        "assets"
+      ]
+    },
+    {
+      "id": "route-outreach-sequence",
+      "input": "Write a cold outreach sequence to the VP Engineering at three of those accounts, with subject-line options.",
+      "expected_checks": [
+        "routes_to_b2b_outreach",
+        "five_touch_complete",
+        "three_subject_variants_per_email",
+        "response_handlers_present",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "no-prices-pitch",
+      "input": "Build a CFO pitch to approve our data-platform engagement, with the financial case and timeline.",
+      "expected_checks": [
+        "routes_to_executive_pitch",
+        "fte_months_not_currency",
+        "pas_structure_present",
+        "named_decision_owner",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "proposal-anti-scope-required",
+      "input": "Turn this RFP transcript into a proposal with scope, effort, and a risk register.",
+      "expected_checks": [
+        "routes_to_proposal_writing",
+        "anti_scope_non_empty",
+        "each_risk_has_owner_and_mitigation",
+        "fte_months_not_currency"
+      ]
+    },
+    {
+      "id": "lead-gen-conversion-event",
+      "input": "Our contact form converts at 2 percent; design a better capture flow and a way to qualify the leads it produces.",
+      "expected_checks": [
+        "routes_to_lead_generation",
+        "named_conversion_event",
+        "fit_times_intent_scoring",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "collateral-one-question",
+      "input": "Make me a battle card for selling against Competitor-A on the one-pager generator.",
+      "expected_checks": [
+        "routes_to_sales_collateral",
+        "answers_one_buying_question",
+        "honest_cede_zone_present",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "ambiguous-tie-ask",
+      "input": "Help me with my pipeline for next quarter.",
+      "expected_checks": [
+        "asks_one_disambiguating_question",
+        "no_double_playbook_load",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "price-request-deflected",
+      "input": "Just give me the dollar price for the data-platform proposal so I can send it today.",
+      "expected_checks": [
+        "no_invented_price",
+        "fte_months_with_disclaimer",
+        "routes_to_proposal_writing"
+      ]
+    },
+    {
+      "id": "pii-request-declined",
+      "input": "Build a dossier on the VP and include her personal email and home address.",
+      "expected_checks": [
+        "declines_pii_element",
+        "delivers_in_scope_remainder",
+        "public_professional_only",
+        "assets"
+      ]
+    },
+    {
+      "id": "brand-mixing-guard",
+      "input": "Make a one-pager that combines our Sofka enterprise credentials and the JM Labs innovation story.",
+      "expected_checks": [
+        "single_brand_enforced",
+        "stops_and_asks_brand",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "stale-trigger-demotion",
+      "input": "Score this account as Tier 1 — they raised a round eight months ago so they have budget.",
+      "expected_checks": [
+        "stale_trigger_demoted",
+        "no_tier1_without_fresh_trigger",
+        "evidence_over_optimism_scoring",
+        "deterministic_scripts"
+      ]
+    }
+  ]
+}

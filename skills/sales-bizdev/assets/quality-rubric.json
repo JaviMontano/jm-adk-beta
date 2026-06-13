@@ -1,0 +1,53 @@
+{
+  "skill": "sales-bizdev",
+  "version": "1.0.0",
+  "scale": { "0": "absent", "1": "present but weak", "2": "meets bar", "3": "exemplary" },
+  "gate": "Any dimension scoring 0 on a blocking item fails the deliverable.",
+  "dimensions": [
+    {
+      "id": "routing-integrity",
+      "blocking": true,
+      "criterion": "Exactly one playbook loaded; topic in enum; cluster never bulk-loaded; deliverable matches the playbook spine and depth."
+    },
+    {
+      "id": "evidence-tags",
+      "blocking": true,
+      "criterion": "Every non-obvious claim carries exactly one tag; one family and one spelling per output; strong tags trace to a source."
+    },
+    {
+      "id": "no-invented-prices",
+      "blocking": true,
+      "criterion": "Zero currency figures; effort and value in FTE-months / % / time with a disclaimer."
+    },
+    {
+      "id": "single-brand",
+      "blocking": true,
+      "criterion": "Exactly one brand throughout; no Sofka / MetodologIA / JM Labs mixing in name, color, or claim."
+    },
+    {
+      "id": "supuesto-verification",
+      "blocking": true,
+      "criterion": "Every [SUPUESTO]/[OPEN] is paired with a concrete verification next step; no hypothesis shipped as confirmed fact."
+    },
+    {
+      "id": "no-client-pii",
+      "blocking": true,
+      "criterion": "Public professional context only; personal/home/family data declined, remainder delivered."
+    },
+    {
+      "id": "topic-gate",
+      "blocking": true,
+      "criterion": "The loaded playbook's own Validation Gate passes (e.g. dated Tier-1 trigger, non-empty anti-scope, named decision owner, fresh outreach trigger)."
+    },
+    {
+      "id": "actionability",
+      "blocking": false,
+      "criterion": "Deliverable ends in a concrete next action with an owner; not an encyclopedia of facts."
+    },
+    {
+      "id": "no-green-as-success",
+      "blocking": false,
+      "criterion": "Confidence is stated, not styled; no certainty implied beyond the evidence."
+    }
+  ]
+}

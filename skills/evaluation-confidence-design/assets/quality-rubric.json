@@ -1,0 +1,67 @@
+{
+  "skill": "evaluation-confidence-design",
+  "version": "1.1.0",
+  "scoring": "Each criterion is pass/fail. The bundle is LISTA only if every blocking criterion passes.",
+  "criteria": [
+    {
+      "id": "calibrated_not_raw",
+      "blocking": true,
+      "statement": "The accept/reject threshold is applied on CALIBRATED confidence fitted against the labeled set, never on raw_confidence.",
+      "fail_signal": "Cut on raw_confidence; threshold compared across model versions."
+    },
+    {
+      "id": "stratified_sampling",
+      "blocking": true,
+      "statement": "Sampling is stratified by document_type with a minimum per stratum; rare strata remain visible in the metric.",
+      "fail_signal": "Single global random sample; rare strata diluted out."
+    },
+    {
+      "id": "categorical_criteria",
+      "blocking": true,
+      "statement": "Each category has a categorical criterion with +/- examples per severity level.",
+      "fail_signal": "Vague guidance such as 'be conservative' with no +/- examples."
+    },
+    {
+      "id": "fp_per_category",
+      "blocking": true,
+      "statement": "False-positive rate is reported per category, not only as an aggregate accuracy.",
+      "fail_signal": "Single aggregate accuracy presented as primary metric."
+    },
+    {
+      "id": "temporal_disable",
+      "blocking": true,
+      "statement": "A temporal disable exists for high-FP categories instead of raising the global threshold.",
+      "fail_signal": "Global threshold raised to mask one noisy category."
+    },
+    {
+      "id": "no_false_green",
+      "blocking": true,
+      "statement": "A suspended category is listed as 'suspended' (not 0% FP) and a non-calibrated stratum is not counted as a valid metric.",
+      "fail_signal": "Disabled category shown as healthy; empty accepted bucket shown as perfect precision."
+    },
+    {
+      "id": "monotonic_map",
+      "blocking": true,
+      "statement": "The calibration map is non-empty and monotonic before being applied.",
+      "fail_signal": "Non-monotonic or empty map applied."
+    },
+    {
+      "id": "ground_truth_present",
+      "blocking": true,
+      "statement": "Thresholds are set only when a human labeled set exists; otherwise the flow stops and requests it.",
+      "fail_signal": "Thresholds invented without a labeled set."
+    },
+    {
+      "id": "evidence_tags",
+      "blocking": false,
+      "statement": "Every claim carries an evidence tag ([DOC] [CODIGO] [CONFIG] [INFERENCIA] [SUPUESTO]).",
+      "fail_signal": "Unlabeled claims."
+    },
+    {
+      "id": "anti_scope_respected",
+      "blocking": false,
+      "statement": "No model training, no raw-document labeling, no producer-prompt tuning.",
+      "fail_signal": "Skill drifts into training or labeling."
+    }
+  ]
+}

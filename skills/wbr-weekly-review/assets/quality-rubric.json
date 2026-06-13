@@ -1,0 +1,46 @@
+{
+  "skill": "wbr-weekly-review",
+  "scale": ["fail", "partial", "pass"],
+  "dimensions": [
+    {
+      "id": "structure",
+      "label": "Estructura completa",
+      "pass": "Encabezado con periodo ISO + alcance + fecha de corte y las 6 secciones presentes."
+    },
+    {
+      "id": "stalled_actionable",
+      "label": "Estancado accionable",
+      "pass": "Cada estancado tiene dueno y proximo paso fechado; sin 'se revisara'."
+    },
+    {
+      "id": "honest_completion",
+      "label": "Cumplimiento honesto",
+      "pass": "Cada compromiso previo marcado cumplido/parcial/no-cumplido; fallidos no omitidos."
+    },
+    {
+      "id": "friction_classified",
+      "label": "Friccion clasificada",
+      "pass": "Cada friccion recurrente vs puntual; recurrentes (>=2 semanas) escalan a accion."
+    },
+    {
+      "id": "commitments_bounded",
+      "label": "Compromisos acotados",
+      "pass": "<=5 compromisos, cada uno con criterio de hecho y derivado de estancado+friccion."
+    },
+    {
+      "id": "carryover_escalated",
+      "label": "Arrastres escalados",
+      "pass": "Arrastres >=3 semanas marcados {POR_CONFIRMAR} y escalados a bloqueo."
+    },
+    {
+      "id": "evidence_bound",
+      "label": "Evidencia ligada",
+      "pass": "Cada avance con {DOC}/{ADJUNTO} con traza; nada verde sin evidencia."
+    },
+    {
+      "id": "single_tag_family",
+      "label": "Una sola familia de tags",
+      "pass": "Solo Jarvis {...}; ningun [...] en el documento."
+    }
+  ]
+}

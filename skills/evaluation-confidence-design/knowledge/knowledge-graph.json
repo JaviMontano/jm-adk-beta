@@ -1,0 +1,31 @@
+{
+  "nodes": [
+    { "id": "labeled_set", "label": "Labeled set (ground truth)", "kind": "input" },
+    { "id": "raw_confidence", "label": "Raw confidence", "kind": "input" },
+    { "id": "calibration_map", "label": "Calibration map", "kind": "artifact" },
+    { "id": "calibrated_confidence", "label": "Calibrated confidence", "kind": "concept" },
+    { "id": "threshold", "label": "Calibrated threshold", "kind": "decision" },
+    { "id": "stratified_sampling", "label": "Stratified sampling by document_type", "kind": "method" },
+    { "id": "categorical_criteria", "label": "Categorical criteria +/- by severity", "kind": "method" },
+    { "id": "fp_rate_per_category", "label": "FP rate per category", "kind": "metric" },
+    { "id": "disabled_categories", "label": "Temporal disable", "kind": "control" },
+    { "id": "disaggregated_report", "label": "Disaggregated report", "kind": "output" },
+    { "id": "qa_gate", "label": "QA validation gate", "kind": "gate" },
+    { "id": "model_drift", "label": "Model version drift", "kind": "risk" }
+  ],
+  "edges": [
+    { "from": "labeled_set", "to": "calibration_map", "rel": "fits" },
+    { "from": "raw_confidence", "to": "calibration_map", "rel": "input_to" },
+    { "from": "calibration_map", "to": "calibrated_confidence", "rel": "produces" },
+    { "from": "calibrated_confidence", "to": "threshold", "rel": "cut_on" },
+    { "from": "labeled_set", "to": "stratified_sampling", "rel": "partitioned_by" },
+    { "from": "stratified_sampling", "to": "disaggregated_report", "rel": "feeds" },
+    { "from": "categorical_criteria", "to": "fp_rate_per_category", "rel": "scored_by" },
+    { "from": "fp_rate_per_category", "to": "disabled_categories", "rel": "triggers" },
+    { "from": "fp_rate_per_category", "to": "disaggregated_report", "rel": "reported_in" },
+    { "from": "disabled_categories", "to": "disaggregated_report", "rel": "listed_in" },
+    { "from": "threshold", "to": "disaggregated_report", "rel": "applied_in" },
+    { "from": "disaggregated_report", "to": "qa_gate", "rel": "validated_by" },
+    { "from": "model_drift", "to": "calibration_map", "rel": "invalidates" }
+  ]
+}

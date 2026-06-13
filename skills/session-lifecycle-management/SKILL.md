@@ -116,6 +116,8 @@ Otros anti-patrones: marcar `stale` solo por `mtime` sin verificar hash; forks q
 
 ## Gate de aceptación (antes de "done")
 
+> Apóyate en `assets/` (rúbrica `assets/quality-rubric.json` y `assets/checklist.md`) para puntuar el reporte antes del done. [CONFIG]
+
 1. El reporte JSON pasa `scripts/check.sh` sin errores. [CONFIG]
 2. La transición es una de `resume | fork | fresh` y su razón referencia evidencia concreta (qué stale, qué invariante cambió). [CODE]
 3. Si es `fresh`: existe `TypedSummary` y `stale_dropped` no está vacío cuando hubo staleness. [CODE]

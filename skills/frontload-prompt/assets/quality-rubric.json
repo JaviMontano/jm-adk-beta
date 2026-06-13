@@ -1,0 +1,38 @@
+{
+  "skill": "frontload-prompt",
+  "purpose": "Rubrica de calidad para puntuar un bloque SPEC antes del veredicto READY.",
+  "scale": { "0": "ausente", "1": "presente con defecto", "2": "correcto" },
+  "criteria": [
+    {
+      "id": "spec_completeness",
+      "label": "Completitud SPEC",
+      "description": "Las 4 secciones S/P/E/C existen y ninguna queda vacia sin tag.",
+      "weight": 0.25
+    },
+    {
+      "id": "purpose_actionable",
+      "label": "Purpose accionable",
+      "description": "Purpose en una frase que permite arrancar sin re-preguntar; si no es inferible se marca {VACIO_CRITICO}.",
+      "weight": 0.25
+    },
+    {
+      "id": "tag_discipline",
+      "label": "Disciplina de tags",
+      "description": "Un tag Jarvis OS por afirmacion, el mas debil ante duda; sin {WEB} sin cita; sin mezcla con familia Alfa.",
+      "weight": 0.2
+    },
+    {
+      "id": "gap_honesty",
+      "label": "Honestidad de huecos",
+      "description": "Vacios criticos no disfrazados; cada {VACIO_CRITICO} con su pregunta de desbloqueo; sin autocompletar mas alla.",
+      "weight": 0.2
+    },
+    {
+      "id": "no_execution",
+      "label": "No-ejecucion",
+      "description": "No se ejecuto la tarea ni se toco ningun archivo del proyecto.",
+      "weight": 0.1
+    }
+  ],
+  "ready_threshold": "Todas las criterios en 2, sin excepcion, y cero {VACIO_CRITICO} pendientes."
+}

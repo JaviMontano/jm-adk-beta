@@ -1,0 +1,63 @@
+{
+  "skill": "testing-qa",
+  "version": "1.0.0",
+  "description": "Gate rubric the guardian scores a testing-qa deliverable against. Status vocabulary: pass | fail | not-verified. Never green-as-success without evidence.",
+  "dimensions": [
+    {
+      "id": "routing",
+      "label": "Routing integrity",
+      "weight": 0.2,
+      "criteria": [
+        "Exactly one topic resolved and one playbook Read (never 2+ to compare)",
+        "Disambiguation rule applied explicitly (bdd-vs-e2e, load-vs-e2e, coverage-default)",
+        "depth (quick|deep) respected"
+      ]
+    },
+    {
+      "id": "scope",
+      "label": "Target and boundary",
+      "weight": 0.15,
+      "criteria": [
+        "Concrete artifact named (repo path, route, URL, or FR/SC spec)",
+        "No hypothetical test run; gap report when no runnable target",
+        "Assertion pushed to the cheapest layer that catches the bug"
+      ]
+    },
+    {
+      "id": "spine",
+      "label": "Discover-Analyze-Execute-Validate",
+      "weight": 0.2,
+      "criteria": [
+        "All four phases present",
+        "Validate step actually run, not skipped",
+        "Thresholds derived from baseline/standard (CrUX p75, >=80% diff), not guessed"
+      ]
+    },
+    {
+      "id": "evidence",
+      "label": "Evidence and script-first",
+      "weight": 0.25,
+      "criteria": [
+        "Every non-obvious claim carries one tag from a single family",
+        "Pass/fail rests on actual command output, not prose",
+        "not-verified used when a script could not run (never upgraded to pass)"
+      ]
+    },
+    {
+      "id": "governance",
+      "label": "Governance",
+      "weight": 0.2,
+      "criteria": [
+        "Green is not asserted as success without evidence",
+        "Flake quarantined with owner+SLA, never retried into green",
+        "No client PII, no invented prices, single brand"
+      ]
+    }
+  ],
+  "fail_conditions": [
+    "Two or more playbooks read",
+    "Completed claim on an unrun Validate step",
+    "Green CI asserted as success with weak/absent assertions or lab-green-field-fail",
+    "Threshold cited without a baseline or standard source"
+  ]
+}

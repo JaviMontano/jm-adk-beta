@@ -1,0 +1,30 @@
+{
+  "nodes": [
+    { "id": "declared", "label": "Valor declarado", "kind": "input" },
+    { "id": "raw_components", "label": "Componentes crudos", "kind": "input" },
+    { "id": "recompute", "label": "Recomputo independiente", "kind": "process" },
+    { "id": "computed", "label": "Valor calculado", "kind": "artifact" },
+    { "id": "epsilon", "label": "Epsilon por tipo de dato", "kind": "policy" },
+    { "id": "delta", "label": "Delta con signo", "kind": "metric" },
+    { "id": "mismatch", "label": "Mismatch flag", "kind": "signal" },
+    { "id": "escalation", "label": "Escalada a humano", "kind": "action" },
+    { "id": "unverifiable", "label": "Agregado huerfano (degradacion)", "kind": "boundary" },
+    { "id": "contract", "label": "Contrato JSON del reporte", "kind": "policy" },
+    { "id": "structural_test", "label": "Test estructural de mismatch", "kind": "gate" },
+    { "id": "silent_fix", "label": "Correccion silenciosa (anti-patron)", "kind": "anti_pattern" }
+  ],
+  "edges": [
+    { "from": "raw_components", "to": "recompute", "rel": "feeds" },
+    { "from": "recompute", "to": "computed", "rel": "produces" },
+    { "from": "declared", "to": "delta", "rel": "operand_of" },
+    { "from": "computed", "to": "delta", "rel": "operand_of" },
+    { "from": "epsilon", "to": "mismatch", "rel": "thresholds" },
+    { "from": "delta", "to": "mismatch", "rel": "evaluated_by" },
+    { "from": "mismatch", "to": "escalation", "rel": "triggers" },
+    { "from": "declared", "to": "unverifiable", "rel": "degrades_to_when_no_components" },
+    { "from": "mismatch", "to": "contract", "rel": "must_conform" },
+    { "from": "structural_test", "to": "mismatch", "rel": "asserts" },
+    { "from": "silent_fix", "to": "declared", "rel": "must_not_overwrite" },
+    { "from": "escalation", "to": "silent_fix", "rel": "prevents" }
+  ]
+}

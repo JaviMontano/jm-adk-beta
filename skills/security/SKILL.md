@@ -47,6 +47,7 @@ HTTP headers, CORS, rate limiting, a security audit, or security testing. [DOC]
 
 Spine: Discover → Analyze → Execute → Validate.
 Quality gates: constitution v6.0.0 (enforcement), evidence tags, script-first rule. [CONFIG]
+Gate criteria live in `assets/` (`assets/quality-rubric.json`, `assets/checklist.md`). [CONFIG]
 
 ## Topic disambiguation (edge cases)
 - Cross-origin policy → `cors-configuration`; CSP/HSTS/X-Frame → `http-headers`. [ASSUMPTION]

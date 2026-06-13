@@ -1,0 +1,64 @@
+{
+  "skill": "self-correction-loops",
+  "version": "1.0.0",
+  "description": "Rubrica de calidad y gates de aceptacion del bucle de verificacion cruzada declarado-vs-calculado.",
+  "criteria": [
+    {
+      "id": "independent_recompute",
+      "label": "Recomputo independiente",
+      "rule": "computed se deriva de componentes crudos, no del agregado declarado",
+      "fail_if": "computed == declared por construccion (check no-op, ANTI 2)",
+      "evidence": "CODE"
+    },
+    {
+      "id": "epsilon_justified",
+      "label": "Epsilon justificado por tipo de dato",
+      "rule": "entero=0, moneda=0.005, float=1e-6, cada uno con nota de justificacion",
+      "fail_if": "epsilon de moneda aplicado a entero o epsilon sin justificacion (ANTI 3)",
+      "evidence": "CONFIG"
+    },
+    {
+      "id": "strict_comparator",
+      "label": "Comparador estricto",
+      "rule": "mismatch = abs(declared - computed) > epsilon",
+      "fail_if": "uso de >= que marca delta == epsilon como mismatch",
+      "evidence": "INFERENCIA"
+    },
+    {
+      "id": "signed_delta",
+      "label": "Delta con signo en el registro",
+      "rule": "delta = declared - computed conserva el signo para auditoria",
+      "fail_if": "abs() aplicado al delta registrado",
+      "evidence": "INFERENCIA"
+    },
+    {
+      "id": "no_silent_fix",
+      "label": "Sin correccion silenciosa",
+      "rule": "ante mismatch el campo declarado permanece intacto y se anade action=escalate_to_human",
+      "fail_if": "el campo declarado fue sobreescrito (ANTI 1)",
+      "evidence": "CODE"
+    },
+    {
+      "id": "both_values_visible",
+      "label": "Declared y computed visibles",
+      "rule": "el registro de un mismatch muestra ambos valores",
+      "fail_if": "el reporte oculta declared o computed",
+      "evidence": "CONFIG"
+    },
+    {
+      "id": "unverifiable_degraded",
+      "label": "Huerfanos degradados",
+      "rule": "agregado sin componentes -> marcado unverifiable y derivado a humano",
+      "fail_if": "se fabrica un calculado para un agregado huerfano",
+      "evidence": "INFERENCIA"
+    },
+    {
+      "id": "structural_test_present",
+      "label": "Test estructural de mismatch",
+      "rule": "un caso con mismatch inyectado produce el flag, nunca total=computed silencioso",
+      "fail_if": "no existe el caso estructural o produce total=computed",
+      "evidence": "CODE"
+    }
+  ],
+  "gate": "PASA solo si los 8 criterios estan en verde con evidencia explicita por invariante"
+}

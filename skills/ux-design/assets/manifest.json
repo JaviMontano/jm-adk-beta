@@ -1,0 +1,17 @@
+{
+  "skill": "ux-design",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Weighted scoring rubric the guardian agent applies at the validation gate (single-playbook discipline, color/contrast rule, evidence tags, critique integrity).",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    },
+    {
+      "path": "assets/routing-checklist.md",
+      "type": "checklist",
+      "purpose": "Step-by-step routing and execution checklist (resolve topic -> one playbook -> discover -> execute -> deterministic checks -> gate) used by the lead agent and the primary prompt.",
+      "used_by": ["agents/lead.md", "prompts/primary.md", "SKILL.md"]
+    }
+  ]
+}

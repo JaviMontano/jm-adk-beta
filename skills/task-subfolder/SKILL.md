@@ -66,6 +66,7 @@ Operator-facing → use the **Jarvis OS** tag family ({MEMORIA}, {EXTRAIDO_HILO}
   or bottom — pick one and state it in `CLAUDE.md`; never reorder later. [SUPUESTO]
 
 ### 4 · Validate (gate — all must hold before "done")
+Run the deterministic gate in `assets/` (`assets/dod-checklist.md` + `assets/quality-rubric.json`). [DOC]
 - [ ] Three files exist and parse as Markdown. [DOC]
 - [ ] `T-NNN` id is unique in the parent dir (no collision). [DOC]
 - [ ] `task.md` has ≥1 acceptance-criteria checkbox.
