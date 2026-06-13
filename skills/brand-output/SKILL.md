@@ -1,10 +1,10 @@
 ---
 name: brand-output
 version: 1.0.0
-description: "Branded output generation: HTML, DOCX, XLSX, folios, templates (MetodologIA DS tokens in references/brand). Topics: brand-docx, brand-html, brand-xlsx, branded-html-output, folio-generator, html-brand, presentation-design, xlsx-template-creator."
+description: "Branded output generation: HTML/CSS/JS, DOCX, XLSX, PDF, vector art, folios, templates (MetodologIA DS tokens in references/brand). Topics: brand-art, brand-docx, brand-html, brand-pdf, brand-xlsx, branded-html-output, folio-generator, html-brand, presentation-design, xlsx-template-creator."
 params:
   topic:
-    enum: [brand-docx, brand-html, brand-xlsx, branded-html-output, folio-generator, html-brand, presentation-design, xlsx-template-creator]
+    enum: [brand-art, brand-docx, brand-html, brand-pdf, brand-xlsx, branded-html-output, folio-generator, html-brand, presentation-design, xlsx-template-creator]
     required: true
     infer: from user request; ask only if ambiguous
   depth:

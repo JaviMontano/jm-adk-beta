@@ -126,12 +126,14 @@
     },
     {
       "id": "brand-output",
-      "desc": "Branded output generation: HTML, DOCX, XLSX, folios, templates (MetodologIA DS tokens in…",
+      "desc": "Branded output generation: HTML/CSS/JS, DOCX, XLSX, PDF, vector art, folios, templates…",
       "tier": "router",
       "params": {
         "topic": [
+          "brand-art",
           "brand-docx",
           "brand-html",
+          "brand-pdf",
           "brand-xlsx",
           "branded-html-output",
           "folio-generator",

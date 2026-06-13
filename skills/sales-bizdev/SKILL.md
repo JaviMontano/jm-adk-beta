@@ -35,7 +35,7 @@ Any sales/bizdev deliverable: cold/warm outreach, account dossiers, prospect/lea
 
 ## Inputs / Outputs
 - **In:** `topic`, `depth`, plus the request's account/ICP/context. Missing target account or ICP for prospecting/dossier work is `[SUPUESTO]` — fill or ask, don't fabricate. [INFERENCIA]
-- **Out:** the deliverable defined by the chosen playbook, evidence-tagged. No prices — FTE-months + disclaimer only. [DOC]
+- **Out:** the deliverable defined by the chosen playbook, evidence-tagged. Estimates follow Constitution P8 (computed from decomposition + sources, never guessed). Under a commercial profile that forbids client-facing prices (e.g. MetodologIA), express effort in units (FTE-months) + disclaimer, never an unauthorized quote; a profile that permits pricing may state figures. [DOC]
 
 ## Guardrails (Alfa core tags only — kit-facing)
 - Tag non-obvious claims with `[CÓDIGO]`/`[CONFIG]`/`[DOC]`/`[INFERENCIA]`/`[SUPUESTO]`; one tag, one spelling, one family per output. See `references/verification-tags.md`. [DOC]
