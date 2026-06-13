@@ -40,7 +40,7 @@
     },
     {
       "id": "brand_mix_guard",
-      "input": "Seed MEMORY.md at /Users/jm/jarvis-os with both Sofka and JM Labs as active brands.",
+      "input": "Seed MEMORY.md at /Users/jm/jarvis-os with MetodologIA as active brands.",
       "expected_activation": false,
       "expected_checks": ["quality_criteria", "evidence"]
     },

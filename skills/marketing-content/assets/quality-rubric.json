@@ -24,7 +24,7 @@
       "id": "governance",
       "weight": 0.15,
       "pass_if": "No invented prices/ROI; no unsourced superlatives; single-brand; no PII.",
-      "fail_examples": ["'leading platform' with no source", "mixes MetodologIA and Sofka in one asset"]
+      "fail_examples": ["'leading platform' with no source", "uses an off-brand color in one asset"]
     },
     {
       "id": "open_item_disclosure",

@@ -26,7 +26,7 @@ Run the resolved playbook's own Quality/Acceptance Criteria. Examples:
 - [ ] Evidence tag on every claim ([EXPLICIT]/[DOC]/[INFERENCIA]/[SUPUESTO]). [DOC]
 - [ ] No invented prices, ROI, or projections. [DOC]
 - [ ] No unsourced superlatives ("best", "leading", "revolutionary"). [DOC]
-- [ ] Single brand — no MetodologIA/Sofka/JM Labs mixing. [DOC]
+- [ ] Single brand — no off-brand elements. [DOC]
 - [ ] No client PII; unapproved quotes held as `[NEEDS APPROVAL]`. [DOC]
 - [ ] Unresolved `[SUPUESTO]` items either verified or explicitly disclosed. [DOC]
 

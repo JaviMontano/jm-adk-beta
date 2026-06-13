@@ -12,7 +12,7 @@ Four event sub-domains: webinar design, conference strategy, speaking proposals,
 
 - IN: agenda/flow design, audience targeting, CFP/abstract drafting, registration & nurture copy, post-event follow-up sequences. [EXPLICIT]
 - OUT: paid-ad buying, venue/AV logistics, live production ops, CRM/marketing-automation config, attendee PII handling. Redirect or escalate. [EXPLICIT]
-- Single-brand per output — never mix MetodologIA / Sofka / JM Labs in one asset. [EXPLICIT]
+- Single-brand per output — never introduce an off-brand element. [EXPLICIT]
 
 ## Procedure
 

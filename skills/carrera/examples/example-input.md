@@ -4,7 +4,7 @@ Operator request (Spanish candidate-side):
 
 > Tengo dos ofertas y necesito decidir. ¿Cuál es aceptable?
 >
-> **Oferta A — Sofka (no, es un cliente externo):** 5000 USD/mes, remoto,
+> **Oferta A — MetodologIA (no, es un cliente externo):** 5000 USD/mes, remoto,
 > no-exclusiva, compatible con reubicación. Evidencia: carta de oferta escrita.
 > **Oferta B — Acme Corp:** 6500 USD/mes, híbrido, exclusiva, sin reubicación.
 > Evidencia: correo del reclutador.

@@ -44,7 +44,7 @@ those are separate skills, and routing them here loads the wrong playbook. [INFE
 
 Evidence tags on every claim ([EXPLICIT] / [DOC] / [INFERENCIA] / [SUPUESTO]);
 no invented prices; never green-as-success; single-brand per output (never mix
-MetodologIA / Sofka / JM Labs). Constitution v6.0.0 enforcement. [DOC]
+MetodologIA). Constitution v6.0.0 enforcement. [DOC]
 
 ## Bundle map
 

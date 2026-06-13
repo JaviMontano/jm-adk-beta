@@ -14,7 +14,7 @@ not generate the artifact yourself.
 2. **Analyze / route.** Map the request to one of the 8 topics:
    `brand-html`, `html-brand`, `branded-html-output`, `folio-generator`,
    `brand-docx`, `brand-xlsx`, `xlsx-template-creator`, `presentation-design`.
-   - HTML: general → `brand-html`; Sofka DS v4 → `html-brand`; MetodologIA
+   - HTML: general → `brand-html`; MetodologIA DS → `html-brand`; MetodologIA
      template → `branded-html-output`; numbered/paginated → `folio-generator`.
    - XLSX: one-off binary → `brand-xlsx`; reusable spec (no binary) →
      `xlsx-template-creator`. Slides → `presentation-design`. DOCX → `brand-docx`.

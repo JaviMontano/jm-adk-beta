@@ -22,7 +22,7 @@ The blocking quality gate. No sales-bizdev deliverable ships until the guardian 
 ### Cross-cutting governance (every output)
 - **Evidence tags:** every non-obvious claim carries exactly one tag; one family, one spelling per output; tags trace to a source (spot-check 3 random `[DOC]`/`[EXPLICIT]` claims).
 - **No invented prices:** zero currency figures; FTE-months + disclaimer only.
-- **Single brand:** no Sofka / MetodologIA / JM Labs mixing.
+- **Single brand:** no off-brand elements.
 - **No green-as-success:** confidence is stated, not styled.
 - **No client PII:** public professional context only.
 - **Every `[SUPUESTO]`/`[OPEN]` pairs with a concrete verification next step.**

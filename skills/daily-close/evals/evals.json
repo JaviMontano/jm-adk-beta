@@ -58,7 +58,7 @@
     },
     {
       "id": "cross_brand_request",
-      "input": "Funde el cierre de Sofka y el de JM Labs en una sola bitacora.",
+      "input": "Funde el cierre de MetodologIA y el de JM Labs en una sola bitacora.",
       "expected_activation": false,
       "expected_checks": ["quality_criteria", "evidence"]
     },

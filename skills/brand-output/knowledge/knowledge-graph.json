@@ -4,7 +4,7 @@
     { "id": "topic", "label": "topic (8 enums)", "kind": "param" },
     { "id": "depth", "label": "depth (quick/deep)", "kind": "param" },
     { "id": "brand_html", "label": "brand-html", "kind": "playbook" },
-    { "id": "html_brand", "label": "html-brand (Sofka DS v4)", "kind": "playbook" },
+    { "id": "html_brand", "label": "html-brand (MetodologIA DS)", "kind": "playbook" },
     { "id": "branded_html_output", "label": "branded-html-output (MetodologIA)", "kind": "playbook" },
     { "id": "folio_generator", "label": "folio-generator", "kind": "playbook" },
     { "id": "brand_docx", "label": "brand-docx", "kind": "playbook" },

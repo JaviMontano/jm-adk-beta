@@ -36,7 +36,7 @@ Every non-obvious claim carries exactly one tag, one spelling, one family per ou
 ## Hard rules
 
 - **No prices.** Effort in FTE-months + disclaimer; route a price request to a human.
-- **Single brand.** Identify the brand first; never mix Sofka / MetodologIA / JM Labs in one output.
+- **Single brand.** Identify the brand first; never introduce an off-brand element.
 - **Every `[SUPUESTO]` pairs with a verify step.** No hypothesis presented as confirmed fact.
 - **No client PII** beyond public professional context.
 

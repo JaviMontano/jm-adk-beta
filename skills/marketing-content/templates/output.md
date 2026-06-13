@@ -5,7 +5,7 @@
 - **Resolved topic:** <one of the 8 enum values> [INFERENCIA]
 - **Runner-up considered / rejected:** <topic + one-line reason, or "none"> [INFERENCIA]
 - **Depth:** quick | deep [CONFIG]
-- **Brand (single):** MetodologIA | Sofka | JM Labs [EXPLICIT]
+- **Brand (single):** MetodologIA [EXPLICIT]
 - **Playbook loaded:** references/<topic>.md (exactly one) [CONFIG]
 
 ## 2. Discover (inputs gathered)

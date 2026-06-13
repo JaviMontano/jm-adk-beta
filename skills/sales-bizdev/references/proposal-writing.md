@@ -37,7 +37,7 @@ Turn an RFP/discovery into a win-shaped proposal: problem reframe, scope + anti-
 - [ ] Effort expressed in FTE-months with confidence band, zero currency figures [EXPLICIT]
 - [ ] Each risk has a named owner and a concrete mitigation [EXPLICIT]
 - [ ] Exactly one recommended option; alternatives carry trade-offs [EXPLICIT]
-- [ ] Single brand throughout — no Sofka/MetodologIA/JM Labs mixing [EXPLICIT]
+- [ ] Single brand throughout — no off-brand elements [EXPLICIT]
 
 ## Worked Example (condensed)
 > Problem: "Manual invoice matching costs ~3 FTE and delays close by 5 days [SUPUESTO — confirm in discovery]."

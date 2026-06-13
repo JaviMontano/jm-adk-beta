@@ -22,7 +22,7 @@
     {
       "id": "single-brand",
       "blocking": true,
-      "criterion": "Exactly one brand throughout; no Sofka / MetodologIA / JM Labs mixing in name, color, or claim."
+      "criterion": "Exactly one brand throughout; no off-brand name, color, or claim."
     },
     {
       "id": "supuesto-verification",

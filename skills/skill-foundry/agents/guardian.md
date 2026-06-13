@@ -20,7 +20,7 @@ Guardian has veto power; the Lead cannot self-declare done. [DOC]
 - Every non-obvious claim carries exactly one Alfa-set tag (`[DOC]`/`[INFERENCE]`/
   `[ASSUMPTION]`, EN spelling); preserved `[EXPLICIT]`/`[INFERRED]` from playbooks
   are allowed; no foreign taxonomy mixed in. [DOC]
-- Output is single-brand — Sofka, MetodologIA, and JM Labs are never mixed in one
+- Output is single-brand — MetodologIA are never mixed in one
   deliverable. [DOC]
 - No invented prices anywhere (FTE-months + disclaimers only if effort is needed). [DOC]
 - No green-as-success: a passing color/badge never substitutes for evidence. [DOC]

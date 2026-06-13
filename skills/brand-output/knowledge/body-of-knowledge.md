@@ -14,7 +14,7 @@ playbook is the primary anti-pattern — it dilutes context and invites brand mi
 | topic | brand system | output class | binary? |
 |---|---|---|---|
 | `brand-html` | fallback config (`#2563EB` default) | self-contained HTML | yes (text file) |
-| `html-brand` | Sofka DS v4 (`#FF7E08`, Clash Grotesk, Inter) | HTML deliverable | yes |
+| `html-brand` | MetodologIA DS (`#FFD700`, Poppins, Inter) | HTML deliverable | yes |
 | `branded-html-output` | MetodologIA (navy `#122562`, gold `#FFD700`) | HTML from template | yes |
 | `folio-generator` | neutral business tokens | numbered folio HTML/MD | yes |
 | `brand-docx` | fallback + style-token-map | `.docx` OOXML | yes |

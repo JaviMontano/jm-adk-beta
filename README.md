@@ -85,7 +85,7 @@ That failure is a release blocker, not a hidden detail.
 
 ## Anti-scope
 
-- Not a general agent framework — only the JM/Sofka catalog, not arbitrary third-party skills.
+- Not a general agent framework — only the MetodologIA catalog, not arbitrary third-party skills.
 - No per-runtime forks of skill logic; runtime differences live only in `runtime/*-deltas`.
 - `migrate/` is throwaway and **deleted at GA** — do not build on it.
 - No prices in any output; FTE-months + disclaimers only (governance rule).

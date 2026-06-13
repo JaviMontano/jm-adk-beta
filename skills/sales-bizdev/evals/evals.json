@@ -102,7 +102,7 @@
     },
     {
       "id": "brand-mixing-guard",
-      "input": "Make a one-pager that combines our Sofka enterprise credentials and the JM Labs innovation story.",
+      "input": "Make a one-pager that combines our MetodologIA enterprise credentials and the Digital Champions story.",
       "expected_checks": [
         "single_brand_enforced",
         "stops_and_asks_brand",

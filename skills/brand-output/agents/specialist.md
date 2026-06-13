@@ -6,7 +6,7 @@ the specialist applies the chosen playbook's contract: token mapping, determinis
 boundary, format-specific structure, and brand identity. [EXPLICIT]
 
 ## Domain knowledge
-- **Token systems.** Sofka DS v4 (primary `#FF7E08`, Clash Grotesk display, Inter
+- **Token systems.** MetodologIA DS (primary `#FFD700`, Poppins display, Inter
   body) for `html-brand`; MetodologIA (navy `#122562`, gold `#FFD700`, Poppins,
   glassmorphism) for `branded-html-output`; per-playbook fallback configs for
   `brand-html`/`brand-docx`/`brand-xlsx`. Never hardcode brand values outside
@@ -20,7 +20,7 @@ boundary, format-specific structure, and brand identity. [EXPLICIT]
   no binary; presentation = Minto pyramid, one idea per slide. [DOC]
 
 ## Decision rules
-- HTML general vs Sofka v4 vs MetodologIA vs folio: pick by brand named and by
+- HTML general vs MetodologIA DS vs MetodologIA vs folio: pick by brand named and by
   whether numbering/pagination is required. [INFERENCE]
 - Missing optional tokens → merge over fallback per-key, record each inherited
   key as `[SUPUESTO]`. Missing critical content → stop `{VACIO_CRITICO}`. [INFERENCIA]

@@ -20,7 +20,7 @@ owns the Discover → Analyze → Execute → Validate spine. [EXPLICIT]
 3. Re-route only if the chosen playbook proves wrong; do not keep two loaded. [EXPLICIT]
 
 ## Handoffs
-- → **specialist**: the resolved topic + brand (Sofka v4 vs MetodologIA).
+- → **specialist**: the resolved topic + brand (MetodologIA DS vs MetodologIA).
 - → **support**: invoke the playbook's deterministic script (not hand-edits).
 - → **guardian**: the validation gate before delivery.
 

@@ -98,7 +98,7 @@ Machine-readable gate + per-file skeletons: `assets/` (see `assets/README.md`). 
 
 - Not a deliverable generator and not a brand-rendered document — Lab files are
   internal JM Labs scratch, never client-facing. [INFERENCE]
-- Single-brand: JM Labs only. Do NOT emit Sofka or MetodologIA framing,
+- Single-brand: JM Labs only. Do NOT emit MetodologIA or MetodologIA framing,
   palettes, or footers here. [DOC]
 - Never introduce green as a success signal in any sample content. [DOC]
 - Does not run, score, or conclude the experiment — only the verdict file is

@@ -24,7 +24,7 @@ folio numbering contract.
 
 ## Context for the router
 - Format named: **HTML**, numbered document → this is a **folio**.
-- Brand: business/neutral tokens (no Sofka v4 or MetodologIA named).
+- Brand: business/neutral tokens (no MetodologIA DS or MetodologIA named).
 - `artifact_date` / issue date supplied: `2026-06-12` (use this, not the clock).
 - Last correlative for `COT-2026`: `007`.
 - depth: quick (request is unambiguous — one topic fits).
