@@ -1,0 +1,23 @@
+{
+  "skill": "agentic-loop-engineering",
+  "assets": [
+    {
+      "path": "assets/loop-contract.schema.json",
+      "type": "json-schema",
+      "purpose": "Valida el contrato estructurado del loop (control por stop_reason, señales, budget, contrato de tool_result) antes de escribir código.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/loop-policy.json",
+      "type": "config",
+      "purpose": "Política por defecto del loop: señal->acción, budget duro, manejo de handler fallido e instrumentación. Se ajusta por agente.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Los 7 criterios del gate de aceptación, cada uno con fail_if y tag de evidencia, para el guardian.",
+      "used_by": ["agents/guardian.md"]
+    }
+  ]
+}

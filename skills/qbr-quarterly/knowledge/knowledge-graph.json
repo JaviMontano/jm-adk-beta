@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    { "id": "qbr-quarterly", "label": "Cadencia P13 de cierre trimestral", "kind": "skill" },
+    { "id": "discover", "label": "Discover (localizar baseline + evidencia)", "kind": "phase" },
+    { "id": "audit", "label": "Audit (mirar atras)", "kind": "phase" },
+    { "id": "learn", "label": "Learn (lecciones a causa raiz)", "kind": "phase" },
+    { "id": "plan", "label": "Plan (mirar adelante)", "kind": "phase" },
+    { "id": "validate", "label": "Validate (Acceptance Gate)", "kind": "phase" },
+    { "id": "baseline", "label": "Baseline de OKRs del Q cerrado", "kind": "input" },
+    { "id": "evidencia", "label": "Evidencia de resultados ligada", "kind": "input" },
+    { "id": "scorecard", "label": "Scorecard del Q cerrado", "kind": "artifact" },
+    { "id": "estado-meta", "label": "Estado de meta (logrado/parcial/fallido)", "kind": "concept" },
+    { "id": "lecciones", "label": "Lecciones a causa raiz", "kind": "artifact" },
+    { "id": "objetivos", "label": "Objetivos del proximo Q (medibles + owner)", "kind": "artifact" },
+    { "id": "riesgos", "label": "Riesgos y dependencias cross-quarter", "kind": "artifact" },
+    { "id": "tags", "label": "Familia de tags Jarvis OS {...}", "kind": "standard" },
+    { "id": "gate", "label": "Acceptance Gate", "kind": "gate" },
+    { "id": "marca-unica", "label": "Disciplina de marca unica", "kind": "constraint" }
+  ],
+  "edges": [
+    { "from": "qbr-quarterly", "to": "discover", "rel": "starts_with" },
+    { "from": "discover", "to": "audit", "rel": "precedes" },
+    { "from": "audit", "to": "learn", "rel": "precedes" },
+    { "from": "learn", "to": "plan", "rel": "precedes" },
+    { "from": "plan", "to": "validate", "rel": "precedes" },
+    { "from": "discover", "to": "baseline", "rel": "reads" },
+    { "from": "discover", "to": "evidencia", "rel": "reads" },
+    { "from": "audit", "to": "scorecard", "rel": "produces" },
+    { "from": "scorecard", "to": "estado-meta", "rel": "contains" },
+    { "from": "estado-meta", "to": "evidencia", "rel": "requires" },
+    { "from": "audit", "to": "lecciones", "rel": "feeds" },
+    { "from": "learn", "to": "lecciones", "rel": "produces" },
+    { "from": "lecciones", "to": "objetivos", "rel": "maps_to" },
+    { "from": "lecciones", "to": "riesgos", "rel": "maps_to" },
+    { "from": "plan", "to": "objetivos", "rel": "produces" },
+    { "from": "plan", "to": "riesgos", "rel": "produces" },
+    { "from": "validate", "to": "gate", "rel": "runs" },
+    { "from": "gate", "to": "estado-meta", "rel": "checks" },
+    { "from": "gate", "to": "objetivos", "rel": "checks" },
+    { "from": "gate", "to": "tags", "rel": "checks" },
+    { "from": "scorecard", "to": "marca-unica", "rel": "constrained_by" }
+  ]
+}

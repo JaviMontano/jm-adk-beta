@@ -1,0 +1,43 @@
+{
+  "skill": "observability",
+  "version": "1.0.0",
+  "description": "Intent-to-topic routing map. Resolve by underlying symptom, not keyword overlap. Load EXACTLY ONE playbook.",
+  "topics": [
+    {
+      "topic": "monitoring-setup",
+      "playbook": "references/monitoring-setup.md",
+      "intent": "first-time metrics, dashboards, SLO/SLI instrumentation",
+      "signals": ["no dashboards", "first SLOs", "golden signals", "what should we measure"],
+      "not": ["paging design (alerting-strategy)", "liveness probes (health-check-automation)"]
+    },
+    {
+      "topic": "alerting-strategy",
+      "playbook": "references/alerting-strategy.md",
+      "intent": "severity, routing/escalation, alert-fatigue control",
+      "signals": ["too many pages", "alert too noisy", "flapping alert", "who gets paged"],
+      "not": ["instrumentation (monitoring-setup)", "live outage (incident-response)"]
+    },
+    {
+      "topic": "health-check-automation",
+      "playbook": "references/health-check-automation.md",
+      "intent": "deterministic liveness/readiness/dependency checks and rollup",
+      "signals": ["is it up", "readiness probe", "dependency status", "validate health report"],
+      "not": ["live probing (out of scope)", "metrics setup (monitoring-setup)"]
+    },
+    {
+      "topic": "log-management",
+      "playbook": "references/log-management.md",
+      "intent": "structured logging, levels, retention, PII, request tracing",
+      "signals": ["can't trace a request", "log retention", "PII in logs", "structured logging"],
+      "not": ["metrics/tracing setup (monitoring-setup)", "paging (alerting-strategy)"]
+    },
+    {
+      "topic": "incident-response",
+      "playbook": "references/incident-response.md",
+      "intent": "live outage lifecycle: classify, mitigate, resolve, postmortem",
+      "signals": ["outage now", "what broke just now", "customers down", "declare incident"],
+      "not": ["paging policy (alerting-strategy)", "monitoring setup (monitoring-setup)"]
+    }
+  ],
+  "ambiguity_rule": "If still ambiguous after one read of the request, ASK. Never auto-fill past a {VACIO_CRITICO}."
+}

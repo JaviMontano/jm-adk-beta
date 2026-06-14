@@ -23,6 +23,8 @@ Use these local assets before producing a certification report. [EXPLICIT]
 The validator reads only explicit local JSON files. It does not call the
 network, current time, model providers, MCP tools, or random sources. [EXPLICIT]
 
+**Asset-missing fallback:** if an asset path above is absent in the target runtime, do not abort. Run the affected check from this document's inline criteria and tag the result `[INFERRED]` to flag that the canonical rubric was unavailable. Only `assets/certification-phases.json` absence forces a degraded run note in the report header. [INFERRED]
+
 ## Difference from x-ray-skill
 
 x-ray-skill produces a diagnostic for exploration ("what's the state of this skill?"). certify-skill produces a verdict for decision-making ("can I ship this?"). The checks overlap, but the output differs:
@@ -51,6 +53,12 @@ skill directory or explicit skill artifact. [EXPLICIT]
 Do not activate for certificate documents, employment certification, legal
 certification, or generic quality review without a skill directory. [EXPLICIT]
 
+**Anti-scope (out of bounds, do not attempt):**
+- Modifying, formatting, or "fixing" the skill under test — certification is read-only. Route edits to `/surgeon-skill`. [EXPLICIT]
+- Behavioral/runtime grading of skill output quality — certification grades structure and instruction logic, not what the skill produces at execution time. Route to the skill-creator eval loop. [EXPLICIT]
+- Certifying a skill from its name or description alone — every verdict requires reading SKILL.md and listing the directory. A verdict without file evidence is invalid. [EXPLICIT]
+- Comparing two different skills — certify grades one skill against the rubric, not against a peer. [EXPLICIT]
+
 ## The Certification Process
 
 Read `references/certification-checklist.md` for the complete checklist with verification methods and the report template. [EXPLICIT]
@@ -73,7 +81,12 @@ If no extractor script is available in the target runtime, parse Markdown code
 spans with a portable Python one-liner or manual file inspection; do not use
 `grep -P`, because not every runtime supports it. [EXPLICIT]
 
-**Abort condition:** If S1 fails (no SKILL.md), report BLOCKED immediately. No further phases.
+**Abort conditions (hard stops, in order):**
+1. S1 fails (no SKILL.md) → report BLOCKED immediately, no further phases. [EXPLICIT]
+2. Frontmatter unparseable (YAML error) → BLOCKED; a skill cannot trigger without valid frontmatter. [EXPLICIT]
+3. S2 fails (SKILL.md > 500 lines) → record FAIL but continue; oversize is a blocker line item, not an abort. [EXPLICIT]
+
+**Decision — why structural failures gate content:** evaluating prose in a skill that cannot load or trigger wastes judgment cycles and produces a verdict the user cannot act on. Trade-off accepted: a structurally-broken skill with excellent content still reports BLOCKED, because no one can run it until structure is fixed. [INFERRED]
 
 Record each check as PASS/FAIL with the command output as evidence. 9 structural checks total — see `references/certification-checklist.md` for full definitions. [EXPLICIT]
 
@@ -164,7 +177,16 @@ Use the Certification Report Template from `references/certification-checklist.m
 | **CONDITIONAL** | Average >= 8 but 1-2 dims at 6, or 1-2 structural failures | "Fix {N} blockers, re-certify. Effort: {estimate}." |
 | **BLOCKED** | Any dim < 6, or 3+ structural failures, or no SKILL.md | "Run `/surgeon-skill {path}`. {N} foundational issues." |
 
-**Certification is deterministic for structural checks and MOAT M-checks, judgment-based for rubric.** If two certifications of the same unchanged skill produce different verdicts, the structural and MOAT results should be identical — only rubric scores may vary by 1 point on subjective dimensions (density, simplicity, value).
+**Formula precedence (apply top-down, first match wins):** evaluate BLOCKED → CONDITIONAL → CERTIFIED → MOAT. A single dim < 6 forces BLOCKED even if the average is 9. The average gate (>= 8) and the floor gate (all dims >= 7) are both required for CERTIFIED — failing either drops to CONDITIONAL. MOAT is never assigned without CERTIFIED first. [EXPLICIT]
+
+**Worked verdicts (acceptance criteria made concrete):**
+- All dims 8, avg 8.0, structural pass, M1-M5 pass → **MOAT**. [EXPLICIT]
+- All dims 7-9, avg 8.2, structural pass, M3 fails (a reference is 12 lines) → **CERTIFIED**, recommend "add depth to references/X.md to reach MOAT." [EXPLICIT]
+- Dims include two 6s, avg 8.1, structural pass → **CONDITIONAL** (avg high but two dims below floor). [EXPLICIT]
+- One dim 5, avg 8.4, structural pass → **BLOCKED** (floor breach overrides average). [EXPLICIT]
+- All dims >= 7, avg 7.9 → **CONDITIONAL**, not CERTIFIED — the average gate is strict; report the 0.1 gap and name the cheapest dimension to lift. [EXPLICIT]
+
+**Certification is deterministic for structural checks and MOAT M-checks, judgment-based for rubric.** If two certifications of the same unchanged skill produce different verdicts, the structural and MOAT results must be identical — only rubric scores may vary by 1 point on subjective dimensions (density, simplicity, value). A verdict flip driven by a structural or M-check difference is a tooling bug, not acceptable variance. [EXPLICIT]
 
 When a JSON report is available, run:
 
@@ -204,6 +226,10 @@ python3 -B skills/certify-skill/scripts/validate_certification_report.py \
 - **Very large skill (10+ files):** Increase Phase 3 sample size. Check 5 paragraphs instead of 3. Check all key terms instead of 5.
 - **Skill that scores exactly on thresholds:** Average 8.0, all dims exactly 7 = CERTIFIED. Average 7.9 = CONDITIONAL (formula is strict). Document the edge clearly.
 - **Single-file skill scoring 10/10:** Valid. A well-crafted single SKILL.md with no need for references/scripts/agents can score perfectly. Don't penalize simplicity.
+- **evals.json present but malformed during MOAT:** M1 fails on parse, not on count. Report "evals.json exists but is invalid JSON" — distinct from "fewer than 5 tests." Certify stays CERTIFIED (Phase 1-4 unaffected); only the MOAT upgrade is blocked. [EXPLICIT]
+- **Path is a symlink or has a trailing slash:** Resolve before listing. `ls -R {path}/` and `ls {path}/SKILL.md` both tolerate a trailing slash; a broken symlink target reports as S1 FAIL → BLOCKED. [INFERRED]
+- **References exist but none are loaded by SKILL.md (orphan files):** Not a structural FAIL, but flag under C5/B9 — orphan reference files are dead weight and lower the density dimension. [EXPLICIT]
+- **Description has exactly 3 triggers but all near-duplicates:** F2 counts distinct intents, not raw quoted strings. Three paraphrases of one trigger score as 1 — FAIL F2 with the note "triggers collapse to a single intent." [INFERRED]
 
 ## Example: Good vs Bad Certification
 
@@ -239,6 +265,8 @@ Before delivering the certification report:
 - [ ] Every FAIL or BLOCKED item has a specific fix with estimated effort
 - [ ] Report follows the template from references/certification-checklist.md
 - [ ] If re-certification: delta from prior run is shown
+- [ ] No blocked phrase from `assets/report-contract.json` appears (e.g. unevidenced "looks good", green-as-pass)
+- [ ] Any check run from inline criteria (asset missing) is tagged [INFERRED] and noted in the header
 
 ## Reference Files
 
@@ -247,4 +275,4 @@ Before delivering the certification report:
 | `references/certification-checklist.md` | Complete checklist: 9 structural checks with commands, 18 content checks with criteria, 5 systemic checks with methods, 10 rubric scoring summaries, certification formula, report template | Always — this IS the certification engine |
 
 ---
-**Author:** Javier Montano | **Last updated:** March 27, 2026
+**Author:** Javier Montano | **Last updated:** June 11, 2026

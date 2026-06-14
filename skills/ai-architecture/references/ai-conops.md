@@ -4,6 +4,10 @@
 
 CONOPS for AI systems defines *what the system does, for whom, and under what conditions* — before architecture begins. Aligned with IEEE 1362-2022, this skill produces the operational concept document that drives all downstream architectural decisions: stakeholder identification, interaction autonomy levels, business value assessment, measurable success metrics, and operational modes with their state transitions. [EXPLICIT]
 
+**Definition of Done (one line):** a CONOPS packet that passes `validate_ai_conops_report.py` (schema `jm-labs.ai-conops.report.v1`), names ≥3 stakeholders with decision rights, fixes exactly one default autonomy level with rationale, covers all three metric pillars with at least one threshold each, and declares ≥4 operational modes (`Startup`, `Executing`, `Degraded`, `Recovery`) with triggers and exit criteria. [INFERENCIA]
+
+**Evidence tags used in this file** (canon: `references/verification-tags.md`): `[EXPLICIT]` = stated in the cited source (Avila & Ahmad 2025; IEEE 1362-2022); `[DOC]` = derived from a referenced document/asset in this skill; `[INFERENCIA]` = reasoned conclusion from source material; `[SUPUESTO]` = working assumption to validate with stakeholders. Do not introduce other tag taxonomies. [DOC]
+
 ## Deterministic DoD Assets
 
 - `assets/conops-report-contract.json` defines the machine-checkable CONOPS packet.
@@ -23,6 +27,17 @@ CONOPS for AI systems defines *what the system does, for whom, and under what co
 1. **Primero el problema, después el modelo.** La tentación de empezar por la tecnología (LLM, RAG, fine-tuning) es fuerte. CONOPS obliga a articular el problema de negocio, los stakeholders afectados, y las métricas de éxito ANTES de seleccionar soluciones. [EXPLICIT]
 2. **El nivel de autonomía es una decisión arquitectónica, no técnica.** Decidir si el sistema opera en Decision Support o Supervised Autonomy afecta la arquitectura completa — interfaces, monitoreo, escalación, compliance. No es un parámetro de configuración. [EXPLICIT]
 3. **Métricas de éxito híbridas o nada.** Un sistema de IA que optimiza accuracy pero ignora fairness, o que maximiza throughput pero destruye user trust, ha fracasado. CONOPS define métricas en tres pilares: Technical Performance, Business Impact, User Experience & Ethics. [EXPLICIT]
+
+### Anti-Patterns (failure modes this skill prevents)
+
+| Anti-pattern | Symptom | CONOPS countermeasure |
+|---|---|---|
+| **Solution-first** | CONOPS opens with "we'll use RAG/fine-tuning" | S1 forces problem statement + quantified impact before any tech naming [INFERENCIA] |
+| **Autonomy drift** | Level chosen implicitly by the model's default behavior | S3 records exactly one default level + rationale; gate rejects un-justified levels [EXPLICIT] |
+| **Accuracy tunnel-vision** | Only Pillar 1 metrics defined; no fairness/privacy | S5 gate requires ≥1 threshold metric in each of three pillars [EXPLICIT] |
+| **Happy-path-only modes** | `Executing` defined, no `Degraded`/`Recovery` | S6 gate mandates degraded + recovery modes with exit criteria [EXPLICIT] |
+| **Untestable success** | "Improve user experience" with no number | S1/S5 require measurable criteria; narrative-only success fails the gate [INFERENCIA] |
+| **Invisible assumptions** | Key risks buried in prose | Assumptions section must be explicit and machine-extractable [EXPLICIT] |
 
 ## Inputs
 
@@ -124,6 +139,8 @@ Selects the appropriate autonomy level for the AI system using the 5-level inter
 
 **Selection factors:** Decision stakes, reversibility, volume, domain maturity, regulatory environment, model confidence, organizational trust.
 
+**Selection heuristic (start conservative, earn autonomy):** irreversible or high-stakes decision → cap at Level 2 until audited; reversible + high volume + proven model → Level 3-4; regulated domain → regulation sets the ceiling regardless of capability (see Edge Cases). Default to the *lowest* level that meets throughput needs; escalate autonomy only with evidence (drift-free history, validated fairness, stakeholder sign-off). [INFERENCIA]
+
 **Architecture implications per level:**
 - Levels 1-2: Explanation UI, confidence scoring, human workflow integration
 - Level 3: Escalation engine, confidence thresholds, SLA queuing
@@ -151,6 +168,15 @@ Evaluates AI use cases using the Business Value Matrix (2x2: Value vs. Effort). 
 3. Value projection (revenue impact, risk reduction, strategic positioning, time to value)
 4. Quadrant placement and investment strategy
 
+**Deterministic quadrant scoring (so placement is reproducible, not opinion):** score Value and Effort each 1-5 (drivers in steps 2-3). Quadrant = HIGH if score ≥ 3, LOW if ≤ 2. This makes S4 consistent with the `value-matrix-policy.json` rule that the gate checks ("quadrant consistent with deterministic value and effort scores"). Ties or borderline 3s must record the deciding driver in prose. [DOC]
+
+| Value | Effort | Quadrant | Strategy |
+|---|---|---|---|
+| ≥3 | ≤2 | Quick Win | Ship via API/pre-trained; capture momentum |
+| ≥3 | ≥3 | Strategic Investment | Phase it; gate each phase on metrics |
+| ≤2 | ≤2 | Low Priority | Managed service, time-box, no custom build |
+| ≤2 | ≥3 | Avoid/Reconsider | Challenge requirement; propose non-AI fix |
+
 **Portfolio balance target:** 60% Quick Wins, 30% Strategic, 10% Experiments, 0% Avoid.
 
 ### S5: Success Metrics Framework
@@ -174,6 +200,18 @@ Defines measurable success across three pillars, aligned with stakeholder concer
 - Fairness (demographic parity, equal opportunity, disparate impact)
 - Transparency (explainability score, audit trail completeness, source citations)
 - Privacy (data minimization, consent compliance, de-identification, deletion rights)
+
+**Threshold vs. objective (worked example — claims-triage assistant):**
+
+| Pillar | Metric | Threshold (must-meet) | Objective (aspirational) | Owner |
+|---|---|---|---|---|
+| Technical | Precision on "auto-approve" class | ≥ 0.97 | 0.99 | Model Validator |
+| Technical | p95 latency | ≤ 800 ms | ≤ 300 ms | SRE |
+| Business | Manual review reduction | ≥ 40% | 65% | Operations Lead |
+| UX/Ethics | Disparate impact ratio (4/5ths rule) | ≥ 0.80 | ≥ 0.90 | Compliance Officer |
+| UX/Ethics | Decisions with audit trail | 100% | 100% | Compliance Officer |
+
+A *threshold* miss blocks promotion (gate fails); an *objective* miss is a backlog item, not a blocker. Every threshold must name a measurement frequency and an owner, else the gate flags it as untestable. [INFERENCIA]
 
 **Key decisions:**
 - Which metrics are thresholds (must-meet) vs. objectives (aspirational)
@@ -227,6 +265,20 @@ Defines the operational states the AI system can inhabit and the transitions bet
 
 ---
 
+## Worked Example: "ClaimSift" (insurance claims-triage assistant)
+
+End-to-end CONOPS skeleton showing the shape of a passing packet. Illustrative, not a real client. [SUPUESTO]
+
+- **S1 Vision:** Cut manual first-pass review of low-complexity claims; baseline = 100% manual, avg 12 min/claim. Scope: auto-route + recommend approve/deny/escalate. NOT in scope: fraud investigation, payout calculation.
+- **S2 Stakeholders (≥3 w/ decision rights):** Operations Lead (owns throughput target, approves rollout), Compliance Officer (owns fairness + audit thresholds, veto on Level), Model Validator (owns precision threshold, gates promotion).
+- **S3 Interaction:** Default **Level 3 (Shared Control)** — AI auto-handles claims with confidence ≥ 0.97, escalates the rest. Rationale: high volume + reversible routing, but regulated → not Level 4 yet. Drift trigger demotes to Level 2.
+- **S4 Value:** Value 4 (large labor reduction), Effort 2 (pre-trained classifier + rules) → **Quick Win**.
+- **S5 Metrics:** thresholds = precision ≥ 0.97, p95 ≤ 800 ms, disparate-impact ≥ 0.80, 100% audit trail (see S5 table). Frequency: precision daily, fairness weekly.
+- **S6 Modes:** `Startup → Executing`; `Executing → Degraded` on precision < 0.97 over 1h window; `Degraded → Recovery` (rollback to prior model); `Executing → Shadow` for the next model. Exit criteria recorded per transition.
+- **Gate result:** passes — 3 stakeholders, exactly one default level + rationale, three pillars with thresholds, four required modes with triggers/exits, assumptions explicit.
+
+---
+
 ## Assumptions
 
 - Business stakeholders are available to articulate problem statements and success criteria
@@ -270,6 +322,12 @@ Different domains within the same system may require different interaction level
 **Regulated Industry (Finance, Healthcare, Government):**
 Compliance requirements may cap the maximum interaction level regardless of technical capability. CONOPS must reference specific regulations constraining autonomy. Explainability and audit requirements become hard constraints, not preferences. [EXPLICIT]
 
+**Non-Stationary Environment (concept/data drift):**
+The operating distribution shifts after deployment (seasonality, adversarial actors, upstream schema changes). CONOPS must define a drift trigger that demotes autonomy (e.g., Level 4 → Level 3) and routes to `Degraded`/`Learning`, plus the drift-detection delay as a Pillar-1 reliability metric. Without this, a "validated" model silently degrades. [INFERENCIA]
+
+**Human-Off-the-Loop Pressure:**
+Stakeholders may push for Level 5 to cut labor cost before the model has a drift-free track record. Counter with the selection heuristic: autonomy is *earned* via evidence, not granted by request. Document the specific evidence (history window, fairness audit, rollback drill) required to advance one level. [SUPUESTO]
+
 ---
 
 ## Manejo de Inputs Ambiguos
@@ -282,9 +340,9 @@ Compliance requirements may cap the maximum interaction level regardless of tech
 
 ---
 
-## Validation Gate
+## Delivery Checklist
 
-Before finalizing delivery, verify:
+Human-readable companion to the machine **Validation Gate** above — verify before handing the output to the user. (The gate is schema-enforced; this checklist catches narrative-quality gaps the validator cannot see.)
 
 *El agente que ejecuta este skill debe verificar cada item antes de entregar el output al usuario.*
 

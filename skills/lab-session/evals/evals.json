@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "skill": "lab-session",
+  "cases": [
+    {
+      "id": "new_session_from_topic",
+      "input": "Start a Lab session on 'local-first sync for the notes app' in ./labs.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "explicit_trigger_with_slug",
+      "input": "/lab-session slug=rag-cache-ttl topic='cache TTL impact on RAG recall'.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "empty_objective_stop_and_ask",
+      "input": "crear-lab",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "partial_scaffold_complete_missing",
+      "input": "The folder labs/edge-fn-cold-start already has notas.md and hipotesis.md — finish the P08 scaffold.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "upgrade_safety"]
+    },
+    {
+      "id": "already_scaffolded_noop",
+      "input": "Scaffold labs/prompt-cache-hit-rate again — all four files already exist.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "upgrade_safety", "quality_criteria"]
+    },
+    {
+      "id": "slug_collision_different_topic",
+      "input": "Make a Lab 'auth' in ./labs, but ./labs/auth already holds a session about OAuth token rotation.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "hypothesis_not_falsifiable",
+      "input": "Lab session 'AI is useful for our team' — capture this as the hypothesis.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "force_regenerate_after_review",
+      "input": "Regenerate decision.md in labs/vector-index-swap with --force after I review the diff.",
+      "expected_activation": true,
+      "expected_checks": ["upgrade_safety", "deterministic_scripts"]
+    },
+    {
+      "id": "non_writable_target",
+      "input": "Create a Lab session under /readonly-mount/labs for 'sandbox egress policy'.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "wrong_brand_deliverable_refusal",
+      "input": "Use lab-session to produce a Sofka client-facing report with brand footer.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "seed_references_tagging",
+      "input": "Lab 'WASM plugin sandbox' with two seed links to prior internal benchmarks.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "quality_criteria"]
+    },
+    {
+      "id": "unrelated_request",
+      "input": "Summarize this quarter's hiring metrics for the board deck.",
+      "expected_activation": false,
+      "expected_checks": ["evidence", "quality_criteria"]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "skill": "session-lifecycle-management",
+  "version": "1.0.0",
+  "dimensions": [
+    {
+      "id": "staleness_rigor",
+      "label": "Rigor de detección de staleness",
+      "weight": 0.25,
+      "pass_when": "Cada tool_result e invariante se compara con doble fuente (mtime filtro + hash/HEAD verdad); mtime sin cambio de hash NO se marca stale.",
+      "fail_signals": ["marcado stale solo por mtime", "hash/HEAD no computado", "fuente no determinista tratada como verified_fact"]
+    },
+    {
+      "id": "decision_correctness",
+      "label": "Corrección de la matriz de decisión",
+      "weight": 0.25,
+      "pass_when": "La transición sigue la matriz: una stale crítica fuerza fresh; válido+continuo da resume; ramificable sin estado compartido da fork.",
+      "fail_signals": ["resume con stale crítica presente", "fork con estado mutable compartido"]
+    },
+    {
+      "id": "typed_summary_integrity",
+      "label": "Integridad del TypedSummary",
+      "weight": 0.2,
+      "pass_when": "stale_dropped no vacío cuando hubo staleness en fresh; ningún verified_fact desde una source en stale_dropped; todo fact lleva source.",
+      "fail_signals": ["transcript crudo como summary", "verified_fact desde fuente droppeada", "stale_dropped vacío con staleness"]
+    },
+    {
+      "id": "fork_isolation",
+      "label": "Aislamiento de forks",
+      "weight": 0.15,
+      "pass_when": "Cada rama declara scratchpad y workspace propios; cero estado mutable compartido; merge-back re-corre staleness.",
+      "fail_signals": ["workspace compartido entre ramas", "merge-back sin re-validación"]
+    },
+    {
+      "id": "traceability_evidence",
+      "label": "Trazabilidad y evidencia",
+      "weight": 0.15,
+      "pass_when": "trigger_reason cita evidencia concreta (qué stale, qué invariante); cada afirmación lleva tag; el gate pasa.",
+      "fail_signals": ["verde sin evidencia", "transición sin razón", "afirmación sin tag de evidencia"]
+    }
+  ],
+  "non_activation_rule": "Sin SessionContext previo, input vacío, o dominio ajeno: NO emitir transición; declarar no-activación.",
+  "gate": "scripts/check.sh debe retornar exit_code=0 antes de done."
+}

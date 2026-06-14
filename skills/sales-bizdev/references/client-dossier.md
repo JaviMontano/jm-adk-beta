@@ -9,6 +9,17 @@
 **Principio Rector:** Prepare like a detective, enter like a consultant. Every fact verified,
 every hypothesis labeled. A dossier is not an encyclopedia — it is a decision support tool.
 
+**Tag convention (this file):** `[EXPLICIT]` = stated in a public source the reader can re-open ·
+`[INFERRED]` = deduced from signals, not directly stated · `[OPEN]` = unconfirmed, needs validation
+before use. One tag per claim; when two could apply, pick the weaker (`[INFERRED]` over `[EXPLICIT]`,
+`[OPEN]` over `[INFERRED]`). Do NOT swap in any other taxonomy — these three are the contract for
+every dossier output. [EXPLICIT]
+
+**Definition of done:** A dossier is complete when it (a) names a target verified as the right entity,
+(b) carries ≥3 pain hypotheses each backed by ≥2 tagged signals, (c) names ≥1 decision-maker with a
+reachable channel, (d) ends in a single specific outreach hook, and (e) passes the Validation Gate.
+A dossier that lists facts but produces no next action has failed its only job. [INFERRED]
+
 ---
 
 ## When to Activate
@@ -28,6 +39,12 @@ every hypothesis labeled. A dossier is not an encyclopedia — it is a decision 
 - User wants a competitive landscape across multiple players (use competitive-intelligence instead)
 - Input is too vague: "research my industry" — no named target present, clarify first
 - User needs legal/financial due diligence for M&A (requires specialized legal tools, not this skill)
+
+**Anti-scope (in-context but explicitly out):** No paid data-broker or people-search lookups (ZoomInfo
+contact pulls, Spokeo, BeenVerified). No scraping behind logins or paywalls. No revenue figure
+presented as fact for a private company. No personal-life, home-address, family, or health data on any
+individual. No bypassing a site's robots.txt or ToS to gather data. If a request needs any of these,
+decline the specific element and deliver the rest. [EXPLICIT]
 
 ---
 
@@ -69,6 +86,26 @@ partnerships last.
 | Flash (30 min) | Fast | Company DNA + 1 contact | Inbound call in <1h |
 | Standard (2h) | Medium | Full S2–S5, 2–3 contacts | Tomorrow's discovery call |
 | Deep (5h+) | Slow | Full + org chart + competitive context | Strategic account, large deal |
+
+**Why these tiers, not a single flow:** Flash exists because a same-hour inbound dies if you spend 2h
+researching; precision loses to timeliness here. Deep exists because on a >$50K account a wrong
+decision-maker or missed competitive context costs more than the extra 3h. Default to Standard — it is
+the only tier that fits the most common case (a discovery call booked 1–3 days out). [INFERRED]
+
+**Source reliability tiers** — weight every signal by how directly the source states it. When two
+sources conflict, the higher tier wins and you note the conflict; never average them. [EXPLICIT]
+
+| Tier | Sources | Tag floor | Trust note |
+|---|---|---|---|
+| A — primary | Company website, SEC/regulatory filings, official press release, GitHub org | `[EXPLICIT]` | Authoritative but can be aspirational marketing |
+| B — verified third-party | Reputable news, funding databases (Crunchbase round data), conference agendas | `[EXPLICIT]` if attributed | Check date; funding DBs lag and miss unannounced rounds |
+| C — aggregated/estimated | LinkedIn headcount, BuiltWith, Glassdoor, G2 | `[INFERRED]` | Directional only; LinkedIn headcount ±15-20%, Glassdoor self-selects unhappy reviewers |
+| D — inferred/derived | Email-pattern guesses, org-chart reconstruction, pain hypotheses | `[OPEN]` | Must be validated before any external use |
+
+**Conflict resolution:** website says 200 employees, LinkedIn shows 340 → report the LinkedIn figure as
+`[est.]` and note the website page may be stale; do not silently pick one. A stale primary source loses
+to a fresh aggregated one only on facts that decay (headcount, stack), never on facts that don't (founding
+year, ownership). [INFERRED]
 
 ---
 
@@ -127,6 +164,10 @@ Tag every claim with `[EXPLICIT]`, `[INFERRED]`, or `[OPEN]`. [EXPLICIT]
 > [OPEN] Revenue figures for private companies are estimates. Flag all inferred revenue
 > with `[est. — not verified]` in every output. Never present as confirmed facts.
 
+**Acceptance criteria (S2):** Founding/ownership and growth-stage fields populated or marked `[OPEN]`;
+every estimated number date-stamped and `[est.]`-tagged; ≥1 tech-stack signal traced to a concrete
+source; recent-moves window limited to last 90 days. [EXPLICIT]
+
 ---
 
 ## S3: Key Contacts Map
@@ -160,6 +201,12 @@ Produce a Contact Card (see template below) for each named person. [EXPLICIT]
 Use Hunter.io pattern matching (if user has access) or validate via email verification tool.
 Label all email patterns as `[INFERRED — not verified]` in output. [EXPLICIT]
 
+Confidence rubric for the pattern: **High** = ≥2 known addresses at the company share the format, or a
+verification tool confirms deliverability. **Medium** = inferred from company size/industry norm above,
+unverified. **Low** = pure guess, no corroboration. Never send cold to a Low-confidence address — it
+risks bounce-rate damage to the sender domain. Prefer LinkedIn or a warm intro when confidence is below
+High. [INFERRED]
+
 **Contact Card Template (produce one per person):**
 ```
 Name:              [Full Name]                          [EXPLICIT]
@@ -183,6 +230,10 @@ Mutual connection: [Name + relationship if applicable]  [EXPLICIT / OPEN]
 
 > [EXPLICIT] Only use publicly available professional information. Do not infer personal
 > details, home addresses, or non-professional social media content.
+
+**Acceptance criteria (S3):** ≥1 Contact Card per the depth tier; every card has a verified title +
+tenure, a best channel, and a likely-priority line; email pattern carries a confidence level; current
+employment confirmed (see EC-7). [EXPLICIT]
 
 ---
 
@@ -215,6 +266,25 @@ Our hook:      [How our offering maps to this specific pain]              [INFER
 Confidence:    High / Medium / Low
 Validation Q:  [The one question to ask on the call to confirm or refute]
 ```
+
+**Worked example (filled):**
+```
+Hypothesis:    Acme likely struggles to orchestrate its growing data pipeline   [INFERRED]
+Evidence:      6 open data-engineer roles, all dbt+Snowflake, none Airflow (LinkedIn jobs)
+               + Series B raised 12mo ago (Crunchbase) → board pressure on data-driven metrics
+Urgency:       Acute NOW — postings went live this quarter; the gap blocks reporting they owe the board
+Our hook:      We install orchestration in <30 days so dbt models run on schedule, not by cron hacks
+Confidence:    Medium  (2 signals, but Airflow absence is an inference, not a stated need)
+Validation Q:  "How are you scheduling and monitoring dbt runs across teams today?"
+```
+
+**Confidence definitions:** **High** = ≥2 Tier A/B signals point the same way and the pain maps to a
+named role's KPI. **Medium** = ≥2 signals but at least one is inferred (Tier C/D). **Low** = single
+signal or first-principles guess (use only in EC-1, no-footprint companies). Rank hypotheses by
+confidence; lead the call with the highest. [INFERRED]
+
+**Acceptance criteria (S4):** 3–5 hypotheses produced; each has ≥2 tagged signals, a validation
+question, and a hook that maps to our offering; none presented as confirmed fact. [EXPLICIT]
 
 **Pain Categories Checklist:**
 - [ ] Revenue growth blocked (can't acquire, expand, or retain customers)
@@ -279,6 +349,10 @@ Example:
 > at your stage usually hit the orchestration wall 60 days after the dbt rollout.
 > We helped [Peer Company] cut pipeline failures by 70% in that window.
 > Worth a 20-minute call to see if the pattern fits?"
+
+**Acceptance criteria (S5):** One entry angle chosen with a stated reason; ≥2 personalization layers
+stacked; a channel sequence; and an opening message naming a trigger event + the specific pain. A
+generic opener ("I'd love to connect") fails this gate. [EXPLICIT]
 
 ---
 
@@ -355,6 +429,41 @@ outreach and entry strategy, not competitive positioning — wrong tool for this
 Action: Prioritize recency (last 12 months) and strategic relevance (what affects this deal).
 Summarize, do not dump. The dossier is a decision tool, not an archive. Cite specific
 sections for the user to read if they want more depth.
+
+**EC-6: Sources contradict each other**
+LinkedIn, website, and a news article give three different headcounts or funding totals.
+Action: Apply source-reliability tiers (S1). Report the higher-tier or fresher figure, tag it
+`[est.]`, and add a one-line note on the conflict so the user is not blindsided on the call. Never
+silently average or pick the flattering number. [EXPLICIT]
+
+**EC-7: Target contact has left the company**
+LinkedIn shows the decision-maker moved on, or the role is now vacant.
+Action: Flag it prominently — outreach to a departed contact wastes the opening. Identify the
+backfill or the next-most-senior person in that function, and note that a vacancy itself is a buying
+signal (new hire = new vendor evaluation cycle). [INFERRED]
+
+**EC-8: User asks you to find a personal email, phone, or home address**
+Request crosses from professional OSINT into private data.
+Action: Decline that element, explain the privacy/scope boundary, and offer the in-scope alternative
+(LinkedIn, work-email pattern, warm intro). Deliver the rest of the dossier normally. [EXPLICIT]
+
+---
+
+## Failure Modes
+
+The ways a dossier goes wrong, and the guardrail that catches each. [INFERRED]
+
+| Failure mode | How it shows up | Guardrail |
+|---|---|---|
+| Wrong entity | Dossier on a homonym company/person | Verify name + domain + one unique attribute (founding year, HQ city) before writing |
+| Confident fabrication | Estimated revenue presented as fact | Every private-co revenue/headcount carries `[est. — not verified]`; no exceptions |
+| Stale data | Acting on a funding round or headcount >6 months old | Date-stamp every signal; refresh dossier if >30 days before a meeting |
+| Encyclopedia, not tool | 5 pages of facts, no hook, no next action | Definition-of-done check: does it end in one specific ask? If not, it failed |
+| Tag laundering | An `[OPEN]` guess written as `[EXPLICIT]` | One tag per claim, pick the weaker; spot-check 3 random `[EXPLICIT]` tags trace to a source |
+| Privacy breach | Personal social, home, family data creeps in | Hard scope: public professional only; decline + explain if asked for more |
+| Generic outreach | "I'd love to connect" with no personalization | Opening message must name ≥2 of: trigger event, specific pain, peer, metric |
+| Over-research | 5h on a same-day inbound | Match depth tier to deadline; Flash when the call is <1h out |
+| Single-source pain | Hypothesis rests on one weak signal | Require ≥2 tagged signals per primary hypothesis before presenting |
 
 ---
 

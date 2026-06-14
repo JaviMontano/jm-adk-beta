@@ -9,6 +9,14 @@ deterministically tied to a brand configuration. The skill may write the
 requested HTML artifact, but validation is read-only and must pass the local
 contract before delivery. [CONFIG]
 
+**Determinism boundary.** Same brand config + same content + same `artifact_date`
+must yield byte-identical HTML. No randomness, no inferred dates, no remote
+fetches at generate time — those break reproducibility and the offline gate. [INFERENCIA]
+
+**Anti-scope.** Not a site builder. One self-contained file per call; no SPA,
+routing, build step, JS framework, server, or multi-page navigation graph. If
+the request needs any of those, say so and stop — do not partially deliver. [CONFIG]
+
 ## Deterministic Resources
 
 - `assets/manifest.json` declares all deterministic assets. [CÓDIGO]
@@ -36,12 +44,16 @@ appropriate document or brand skill. [CONFIG]
 
 ## Inputs
 
-- Page type, content outline, or report sections.
-- Brand config path or inline brand tokens.
-- Optional language and direction (`ltr` or `rtl`).
-- Optional caller-supplied `artifact_date`; do not infer current date.
-- Optional permission for external font links; default is no external
-  dependencies.
+| Input | Required | Default if absent | Failure if malformed |
+|---|---|---|---|
+| Page type / content outline / report sections | yes | — | `{VACIO_CRITICO}`→ no content to render, stop and ask |
+| Brand config path or inline tokens | no | fallback config (see below) | bad JSON → fall back, note `[SUPUESTO]` |
+| Language + direction (`ltr`/`rtl`) | no | `lang="en"`, `dir="ltr"` | unknown dir → default `ltr`, flag it |
+| `artifact_date` (caller-supplied) | no | omit any date entirely | never infer current date — gate rejects |
+| External-font permission | no | disabled (self-contained) | links present without permission → strip, note |
+
+Content is the only hard input. Everything else has a deterministic default so the
+skill never blocks on optional fields. [INFERENCIA]
 
 ## Brand Configuration
 
@@ -52,8 +64,13 @@ Search order:
 3. `references/brand/design-tokens.json` when the current repo brand applies.
 4. `assets/fallback-brand-config.json` when no brand config exists.
 
-Never read `~/.claude/brand-config.json` or hidden user-level files for this
-skill. [CONFIG]
+First match wins; stop searching. Never read `~/.claude/brand-config.json` or
+hidden user-level files for this skill — user-level config would make output
+non-reproducible across machines. [CONFIG]
+
+**Partial config.** Merge supplied tokens over fallback defaults per-key; a
+config missing only `colors.muted` keeps its other values and inherits `#475569`.
+Record each inherited key as `[SUPUESTO]` so the gap is auditable. [INFERENCIA]
 
 Required token groups:
 
@@ -96,35 +113,87 @@ fenced `html` block. The HTML must include:
 
 ## Accessibility And Layout
 
-- Body text contrast must be at least WCAG AA when deterministically checkable.
-- Use semantic headings in order.
-- Avoid ALL CAPS headings.
-- Include responsive constraints for grids/cards.
-- For RTL content, set `dir="rtl"` on `<html>` and use logical CSS properties
-  where possible.
+- Body text contrast must be at least WCAG AA (4.5:1 normal, 3:1 large/bold)
+  when deterministically checkable from the resolved hex tokens. If a token is a
+  named color or unresolved at check time, record a deterministic limitation
+  rather than guessing pass/fail. [CONFIG]
+- Use semantic headings in order; never skip a level (`h1`→`h3` fails). [DOC]
+- Avoid ALL CAPS headings in markup; use `text-transform: uppercase` so screen
+  readers still receive natural casing. [INFERENCIA]
+- Include responsive constraints for grids/cards (`minmax`, `flex-wrap`).
+- For RTL content set `dir="rtl"` on `<html>` and prefer logical properties
+  (`margin-inline-start`, `padding-block`) over physical ones. [CONFIG]
 
-## Validation Gate
+## Worked Example (minimal valid skeleton)
 
-- [ ] Brand config or fallback tokens are explicitly declared.
-- [ ] CSS variables are present and used.
-- [ ] HTML is single-file and self-contained.
-- [ ] SVG favicon link exists and is deterministic.
-- [ ] No remote assets unless explicitly allowed by config.
-- [ ] No base64 images or external JavaScript.
-- [ ] No unresolved placeholders.
-- [ ] Semantic landmarks exist.
-- [ ] Responsive CSS exists.
-- [ ] Contrast gate passes or records a deterministic limitation.
-- [ ] `bash skills/brand-html/scripts/check.sh` passes.
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,...">
+  <style>
+    :root { --brand-primary:#2563EB; --brand-bg:#F8FAFC;
+            --brand-black:#0F172A; --font-body:system-ui; }
+    body { background:var(--brand-bg); color:var(--brand-black);
+           font-family:var(--font-body); }
+    .grid { display:grid; gap:1rem; grid-template-columns:1fr; }
+    @media (min-width:48rem){ .grid{ grid-template-columns:repeat(3,1fr);} }
+  </style>
+</head>
+<body>
+  <header><h1>Title</h1></header>
+  <main><section class="grid">…</section></main>
+  <footer>…</footer>
+</body>
+</html>
+```
+
+Note the favicon `href` uses an inline SVG data URI (allowed) — not a base64
+*image* and not remote. Hex appears only inside `:root`; every consumer uses
+`var(--…)`. This skeleton passes the gate. [INFERENCIA]
+
+## Validation Gate (authoritative checklist)
+
+This is the single source of pass/fail; the Output Contract above states the
+*shape*, this states the *checks*. Run before delivery; never report green by
+default — only when each box is verified. [CONFIG]
+
+- [ ] Brand config or fallback tokens explicitly declared in `:root`.
+- [ ] CSS variables present AND referenced (declared-but-unused is a finding).
+- [ ] Single-file, self-contained; no external CSS/JS/font/image refs unless config allows.
+- [ ] SVG favicon link exists, square, self-contained, not remote, not base64.
+- [ ] No base64 images; no `<script src>` or inline `<script>`.
+- [ ] No unresolved `{{PLACEHOLDER}}` tokens.
+- [ ] Semantic landmarks present (`<header> <main> <footer>`, `<nav>` if nav exists).
+- [ ] At least one `@media` query.
+- [ ] Heading order unbroken; no markup ALL CAPS.
+- [ ] Contrast passes WCAG AA or records a deterministic limitation.
+- [ ] No date/time unless `artifact_date` supplied.
+- [ ] `bash skills/brand-html/scripts/check.sh` passes (validates valid+invalid fixtures offline). [CÓDIGO]
+
+## Failure Modes (detect → response)
+
+| Symptom | Cause | Response |
+|---|---|---|
+| Gate flags remote asset | font link / image URL slipped in | strip it, inline or drop; re-run gate. Never ship remote. |
+| Contrast indeterminate | token is named color or `var()` chain | record limitation `[SUPUESTO]`, advise browser QA — do not assert pass. |
+| Hardcoded hex outside `:root` | literal color in a rule | replace with `var(--…)`; add token to `:root` if new. |
+| `{{X}}` survives in output | unsupplied content field | stop `{VACIO_CRITICO}`; ask for the value, never fabricate. |
+| Request implies SPA/routing/multi-page | out of scope (see Anti-scope) | decline the out-of-scope part, deliver the single-file subset only. |
+| Two valid topics (e.g. html-brand) | ambiguous route | router decides; this playbook assumes brand-html already resolved. [INFERENCIA] |
 
 ## Assumptions & Limits
 
-- This skill creates HTML/CSS only; it does not build SPAs, routing, databases,
-  DOCX, XLSX, PDF, or slide decks. [CONFIG]
-- External fonts are disabled by default because deterministic delivery prefers
-  self-contained artifacts. [CONFIG]
-- Visual QA beyond static validation still requires browser inspection when the
-  user asks for rendered fidelity. [CONFIG]
+- HTML/CSS only — no SPA, routing, database, DOCX, XLSX, PDF, or slides. [CONFIG]
+- External fonts disabled by default; deterministic delivery prefers self-contained
+  artifacts. Enabling them trades reproducibility/offline-safety for typography
+  fidelity — a deliberate, config-gated choice. [CONFIG]
+- Static validation cannot prove rendered fidelity; layout/visual QA still needs
+  browser inspection when the user asks for pixel correctness. [CONFIG]
+- Contrast gate only covers deterministically resolvable token pairs; gradients,
+  overlays, and image-backed text are out of its reach. [INFERENCIA]
 
 ## Usage
 

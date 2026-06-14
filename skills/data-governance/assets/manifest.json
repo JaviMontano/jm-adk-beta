@@ -1,0 +1,17 @@
+{
+  "skill": "data-governance",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "scoring-rubric",
+      "purpose": "Weighted rubric scoring routing fidelity, on-topic output, topic-specific quality criteria, evidence discipline, and governance guardrails; used by the guardian to grade a run.",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "checklist",
+      "purpose": "Pre-flight, execution, and gate checklist enforcing the single-playbook router contract on every invocation.",
+      "used_by": ["agents/lead.md", "README.md"]
+    }
+  ]
+}

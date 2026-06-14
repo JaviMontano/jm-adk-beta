@@ -1,0 +1,49 @@
+{
+  "skill": "agentic-loop-engineering",
+  "purpose": "Rúbrica de calidad del loop de control. Cada criterio se evalúa pass/fail con evidencia; verde-por-defecto está prohibido.",
+  "criteria": [
+    {
+      "id": "control_by_signal",
+      "statement": "El control vive en stop_reason, no en el texto del modelo.",
+      "fail_if": ["if ... in text", "'done' in resp.content[0].text"],
+      "evidence": "[CÓDIGO]"
+    },
+    {
+      "id": "unhandled_strong_fail",
+      "statement": "Toda señal no contemplada hace raise UnhandledStop.",
+      "fail_if": ["else: pass", "halt silencioso para señal desconocida"],
+      "evidence": "[CÓDIGO]"
+    },
+    {
+      "id": "parallel_tool_use",
+      "statement": "Se procesan TODOS los bloques tool_use de cada respuesta.",
+      "fail_if": ["resp.content[0] como único bloque despachado"],
+      "evidence": "[CÓDIGO]"
+    },
+    {
+      "id": "tool_result_contract",
+      "statement": "tool_result se reinyecta como mensaje user con tool_use_id correcto.",
+      "fail_if": ["rol assistant en tool_result", "tool_result sin tool_use_id"],
+      "evidence": "[CÓDIGO]"
+    },
+    {
+      "id": "hard_budget",
+      "statement": "Budget configurable (iteraciones/tokens) que dispara BudgetExceeded.",
+      "fail_if": ["while True sin techo", "budget hardcodeado en el cuerpo"],
+      "evidence": "[CONFIG]"
+    },
+    {
+      "id": "no_swallowed_errors",
+      "statement": "Los fallos son fuertes y observables, no halts silenciosos.",
+      "fail_if": ["except: pass alrededor de un handler", "return '' tras error"],
+      "evidence": "[CÓDIGO]"
+    },
+    {
+      "id": "instrumentation",
+      "statement": "Cada transición del loop queda instrumentada para auditoría.",
+      "fail_if": ["loop sin traza por iteración"],
+      "evidence": "[CÓDIGO]"
+    }
+  ],
+  "verdict_rule": "PASS solo si los 7 criterios pasan con evidencia citada."
+}

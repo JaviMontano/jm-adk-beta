@@ -1,0 +1,17 @@
+{
+  "skill": "google-workspace",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json",
+      "purpose": "Scored acceptance gate (8 criteria) for a routing decision and offline plan.",
+      "used_by": ["prompts/meta.md", "agents/guardian.md", "SKILL.md"]
+    },
+    {
+      "path": "assets/routing-checklist.md",
+      "type": "markdown",
+      "purpose": "Resolve to load to plan to gate checklist run on every invocation.",
+      "used_by": ["prompts/meta.md", "agents/lead.md", "SKILL.md"]
+    }
+  ]
+}

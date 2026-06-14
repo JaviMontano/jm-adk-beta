@@ -44,6 +44,7 @@ MCP tools. [CODE]
 - Use `https://www.googleapis.com/auth/drive.file` for app-created or app-opened spreadsheet mutations when that per-file model is sufficient. [DOC]
 - Escalate to `https://www.googleapis.com/auth/spreadsheets` only when the workflow must edit accessible Sheets beyond the app-created/opened file boundary. [INFERENCE]
 - Do not model scopes at sheet/tab granularity: official Sheets scopes apply to the spreadsheet file and cannot be limited to an individual sheet. [DOC]
+- Decision — prefer `drive.file` over `spreadsheets` for write workflows. Trade-off: `drive.file` keeps the consent surface per-file (less risk, easier verification review) but fails on spreadsheets the app neither created nor opened; choose `spreadsheets` only when cross-file edit access is a stated requirement, not a convenience. [INFERENCE]
 
 ### Step 3: Build Operation Plan
 
@@ -51,6 +52,8 @@ MCP tools. [CODE]
 - Use `spreadsheets.create` for new spreadsheet resources. [DOC]
 - Use `spreadsheets.batchUpdate` for structural changes such as sheets, formatting, protected ranges, dimensions, and data validation. [DOC]
 - Use `spreadsheets.values.get/update/append/batchUpdate` for cell value workflows. [DOC]
+- Pick `update` vs `append` by intent: `update` overwrites a fixed `ValueRange`; `append` finds the next empty row of a table and is the correct choice for log/row-add workflows — using `update` for appends risks clobbering existing rows. [DOC]
+- Set `valueInputOption` deliberately: `RAW` stores the literal string; `USER_ENTERED` parses formulas, dates, and numbers as the UI would. Default to `USER_ENTERED` only when formula/format parsing is intended. [DOC]
 
 ### Step 4: Gate Mutations
 
@@ -77,6 +80,28 @@ MCP tools. [CODE]
 - Writing formulas or ranges without checking formula impact and protected ranges. [INFERENCE]
 - Using individual updates when `spreadsheets.values.batchUpdate` is a clearer bulk write plan. [INFERENCE]
 
+## Worked Example: Append A Row To A Log Sheet
+
+1. Classify intent → mutating (row add); requires read-only discovery first. [CODE]
+2. Read-only discovery: `spreadsheets.values.get` on `Log!A1:E1` to confirm the header shape and column count. [DOC]
+3. Scope: `drive.file` if the app opened/created the sheet; else `spreadsheets`. [INFERENCE]
+4. Plan: `spreadsheets.values.append` with range `Log!A:E`, `valueInputOption=USER_ENTERED`, body `{ "values": [["2026-06-11","ok",...]] }`. [DOC]
+5. Gate: set `human_confirmation.status=confirmed`; compiler emits the plan/checklist, never the live call. [CODE]
+
+## Edge Cases
+
+- Empty or mismatched header row: discovery returns fewer columns than the write body — stop and re-confirm the target range before appending. [INFERENCE]
+- Protected ranges or sheet-level protection: a `batchUpdate`/values write into a protected range returns a permission error even with a valid write scope; check protection during discovery. [DOC]
+- A1 range spanning a non-existent sheet/tab name returns an error, not an auto-created tab; create the sheet via `batchUpdate` `addSheet` first. [DOC]
+- Large reads/writes can hit per-request cell and payload limits; split into `values.batchUpdate` chunks rather than one oversized request. [INFERENCE]
+
+## Failure Modes
+
+- 403 `PERMISSION_DENIED` — scope too narrow (e.g. `readonly` for a write) or file not in the `drive.file` per-file set; widen scope deliberately, do not default to `drive`. [INFERENCE]
+- 400 `INVALID_ARGUMENT` — malformed A1 range, missing `valueInputOption`, or a `ValueRange` whose `range` and `values` shape disagree. [DOC]
+- 429 rate limiting — back off and batch; the offline compiler cannot surface live quota state. [CONFIG]
+- Silent data corruption — `update` used where `append` was intended overwrites existing rows with no error; caught only by the read-only-first discovery gate. [CODE]
+
 ## Related Skills
 
 - `google-drive-mcp` for file search, permissions, upload/export, and per-file access context. [DOC]
@@ -95,3 +120,9 @@ MCP tools. [CODE]
 - Live execution must use the configured `workspace-mcp` server and its currently exposed tool names. [CONFIG]
 - A1 notation is required for values operations in this skill contract. [CODE]
 - Google notes collaborative spreadsheets can alter final state relative to concurrent collaborator changes after `batchUpdate`. [DOC]
+
+### Acceptance Criteria (plan is done when)
+
+- Every Quality Criteria checkbox is satisfiable from the emitted plan alone. [CODE]
+- Each operation names an official REST method, a minimum-viable scope, and (for mutations) a confirmed read-only-first step. [DOC]
+- Anti-scope honored: no `drive`/`drive.readonly` default, no sheet/tab-level scope claim, no live MCP call inside the compiler. [CODE]

@@ -12,6 +12,14 @@ Escenarios donde aplica: Multi-Agent Orchestration, Dev Productivity, Code Gener
 
 Un plan rigido en territorio desconocido garantiza desperdicio: el agente sigue ramas muertas porque "estaba en el plan", no porque la evidencia las sostenga. La investigacion adaptativa prioriza la atencion sobre lo que la realidad muestra, no sobre lo que la hipotesis inicial asumio. Sin presupuesto, ademas, el agente quema contexto leyendo el repo entero antes de tener una sola pregunta enfocada.
 
+## Supuestos y limites (anti-scope)
+
+- **Supone** un repo/dominio inspeccionable con herramientas locales (`glob`, `regex`, lectura de archivo); no cubre dominios solo accesibles por red, UI o ejecucion.
+- **Supone** que el mapeo barato es representativo: nombres, imports y simbolos predicen donde vive la señal. Si el codigo esta ofuscado, generado o sin convencion de nombres, el supuesto cae y hay que priorizar por otra heuristica (p.ej. cobertura de tests o churn de git).
+- **No** es para tareas ya especificadas con plan estable y trivial (ver "Cuando activar"): ahi el ciclo adaptativo añade overhead sin valor.
+- **No** garantiza completitud: con presupuesto duro, cerrar reportando lo no explorado es el resultado correcto, no un fallo.
+- **No** sustituye verificacion: un finding mapeado debe confirmarse en deep-dive antes de tratarse como evidencia.
+
 ## Modelo mental
 
 - **Fase 1 - mapeo barato.** Escanear la topologia con `glob` de nombres y `regex` de imports/simbolos. Sin leer cuerpos completos todavia.
@@ -21,19 +29,38 @@ Un plan rigido en territorio desconocido garantiza desperdicio: el agente sigue 
 - **Presupuesto duro.** Maximo de archivos, queries y minutos; cuando se agota, se reporta lo encontrado y lo pendiente.
 - **Persistir plan y findings en un scratchpad** (ver `katas-scratchpad-pattern`, Kata 18) para que el estado sobreviva al contexto.
 
+Distincion clave **invalida vs refina** (el gate mas confundido):
+
+| Hallazgo | Efecto en la hipotesis | Accion |
+|---|---|---|
+| El parser real es ANTLR, no regex casero | la rama "buscar regex" ya no aplica | **re-plan**: invalida |
+| El regex esta en `lexer.py`, no en `parser.py` | misma hipotesis, otro archivo | append + reordenar plan, **sin** re-plan |
+| El bug no esta donde se creia pero la causa raiz sigue siendo el lexer | hipotesis intacta | deep-dive el siguiente objetivo, **sin** re-plan |
+
 ## Patron correcto
 
 ```python
-topology = scan_repo(globs=['src/**/*.py'])
-budget = Budget(files=50, queries=20)
-plan = prioritize(topology)
+topology = scan_repo(globs=['src/**/*.py'])      # Fase 1: barato, sin leer cuerpos
+budget = Budget(files=50, queries=20, minutes=15)
+plan = prioritize(topology)                        # Fase 2: orden + razon declarada
 while plan and budget.remaining():
-    target = plan.pop()
-    finding = deep_dive(target, budget)
-    scratchpad.append('Hallazgos', finding)
-    if finding.invalidates(plan):
-        plan = re_plan(topology, finding)
+    target = plan.pop()                            # mayor prioridad primero
+    budget.spend(files=1)                          # el presupuesto SIEMPRE decrementa
+    finding = deep_dive(target, budget)            # Fase 3: lectura profunda selectiva
+    scratchpad.append('Hallazgos', finding)        # persistir antes de decidir
+    if finding.invalidates_hypothesis:             # gate estricto, no "refina"
+        plan = re_plan(topology, finding)          # re-prioriza sobre la MISMA topologia
+# salida deterministica aun si el budget se agota antes de vaciar el plan:
+scratchpad.append('Pendientes', plan)              # lo no explorado es parte del reporte
+report = emit_report(scratchpad, budget)           # cumple el contrato JSON
 ```
+
+Edge cases que el loop debe manejar explicitamente:
+
+- **Budget agotado con plan no vacio**: cerrar y reportar `plan` restante como pendiente; nunca silenciar.
+- **Topologia vacia** (glob sin matches): no hay nada que priorizar; reportar dominio fuera de alcance del mapeo y pedir otra heuristica, no leer todo.
+- **Re-plan en cascada**: si cada finding invalida, se esta re-mapeando mal; cap de re-plans (p.ej. 3) y luego degradar a reporte de incertidumbre.
+- **deep_dive que excede budget a mitad**: abortar ese target, registrar parcial, no entrar al siguiente.
 
 ## Anti-patron
 
@@ -49,13 +76,16 @@ read_all_files()
 # o re_plan() en cada turno por reflejo, no por invalidacion
 ```
 
-## Argumento de certificacion
+## Argumento de certificacion (criterios de aceptacion)
 
-- Definir un presupuesto de exploracion explicito (archivos / queries / minutos).
-- Enunciar el criterio de re-planificacion: que dispara un re-plan (un hallazgo que invalida la hipotesis) y que NO lo dispara (un hallazgo que solo la refina).
-- Conectar con Kata 4 (subagentes para deep-dive paralelo) y Kata 18 (scratchpad como memoria persistente del plan y los findings).
-- Emitir un reporte compatible con `assets/adaptive-investigation-report-contract.json`.
-- Validar reportes criticos con `scripts/check.sh` o `scripts/validate_adaptive_investigation_report.py` antes de cerrar.
+Cada item es verificable contra el reporte o el scratchpad; sin evidencia, no certifica.
+
+- Presupuesto explicito declarado **antes** del mapeo (archivos / queries / minutos) y uso registrado <= limite en todos los ejes.
+- Criterio de re-plan enunciado y aplicado: re-plan SOLO con `invalidates_hypothesis=true`; ningun re-plan disparado por un refinamiento (auditable en el log de decisiones).
+- Las tres fases son distinguibles en el rastro: mapeo barato precede a cualquier lectura de cuerpo completo (cero `read` antes del primer `glob`/`regex`).
+- Conexion con Kata 4 (subagentes para deep-dive paralelo) y Kata 18 (scratchpad como memoria persistente del plan y los findings) presente cuando aplica.
+- Reporte compatible con `assets/adaptive-investigation-report-contract.json`, incluyendo seccion de pendientes si el budget se agoto.
+- Reportes criticos validados con `scripts/check.sh` o `scripts/validate_adaptive_investigation_report.py` antes de cerrar; salida no-cero bloquea el cierre.
 
 ## Contrato deterministico
 
@@ -71,6 +101,14 @@ Cuando exista un reporte JSON de cierre, validarlo con:
 ```bash
 bash skills/katas-adaptive-investigation/scripts/check.sh
 ```
+
+## Modos de fallo (y deteccion)
+
+- **Re-plan reflejo**: re_plan en cada turno. Sintoma: el plan rota sin que ningun finding marque `invalidates_hypothesis`. Causa: confundir refinar con invalidar. Detector: el gate `replan-gate-policy.json` debe rechazar.
+- **Budget de mentira**: se declara presupuesto pero `deep_dive` lee sin decrementar. Sintoma: uso > limite o sin telemetria. Detector: `exploration-budget-policy.json` exige uso <= limite.
+- **Mapeo caro disfrazado de barato**: leer cuerpos completos en Fase 1. Sintoma: `read` antes del primer plan. Mata el ahorro de contexto que justifica la kata.
+- **Cierre optimista**: marcar completo ignorando pendientes tras agotar budget. Un cierre honesto reporta lo no explorado; verde no es exito.
+- **Scratchpad de monologo**: volcar dudas/hipotesis sin confirmar en vez de conclusiones. Contamina el handoff (ver Kata 18).
 
 ## Cuando activar
 

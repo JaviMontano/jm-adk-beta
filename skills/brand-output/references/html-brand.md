@@ -10,11 +10,9 @@ Generate beautiful, accessible, on-brand HTML deliverables following the Sofka D
 
 ### Filosofía de Brand HTML
 
-1. **Brand = Confianza visual.** Cada elemento del Design System existe para transmitir profesionalismo y consistencia. Romper un token de marca es romper la promesa visual al cliente. [EXPLICIT]
-
-2. **Self-contained = Portabilidad garantizada.** Un archivo HTML que depende de recursos externos es un deliverable frágil. La autonomía del archivo es un requisito funcional, no una preferencia técnica. [EXPLICIT]
-
-3. **Accesibilidad = Alcance real.** WCAG AA no es compliance — es la garantía de que el 100% de los stakeholders pueden consumir el entregable sin barreras. Un documento bonito que no se puede leer tiene impacto cero. [EXPLICIT]
+1. **Brand = Confianza visual.** Romper un token de marca rompe la promesa visual al cliente. [EXPLICIT]
+2. **Self-contained = Portabilidad.** La autonomía del archivo es requisito funcional, no preferencia técnica. [EXPLICIT]
+3. **Accesibilidad = Alcance.** WCAG AA garantiza que el 100% de stakeholders consume el entregable sin barreras; un documento ilegible tiene impacto cero. [EXPLICIT]
 
 ---
 
@@ -132,6 +130,18 @@ Every Sofka HTML deliverable follows this skeleton:
 </html>
 ```
 
+## Acceptance Criteria
+
+A deliverable is DONE only when all of these hold (measurable, not subjective): [EXPLICIT]
+
+- `validate_html.sh` exits 0 — zero structural, font, token, or accessibility errors
+- File size ≤ 500 KB measured on disk (not gzipped) [EXPLICIT]
+- Every `<section>` has a unique `id` AND a matching TOC `<a href="#id">` (1:1, no orphans either direction)
+- Zero hardcoded hex outside the token block — grep `style=` for `#` and confirm only `var(--sofka-*)` references remain
+- Contrast verified: body text ≥ 4.5:1, large text (≥24px or ≥19px bold) ≥ 3:1, against actual rendered backgrounds [EXPLICIT]
+- No literal placeholder strings remain (`{`, `TODO`, `Lorem`, `XXX`, `...` inside content)
+- Opens correctly offline with network disabled — only font `<link>` requests may 404 gracefully
+
 ## Color Rules
 
 Design System v4 uses yellow for success states because it maintains brand coherence with the warm Sofka palette — green introduces a cold tone that clashes. [EXPLICIT]
@@ -186,10 +196,9 @@ See `references/design-tokens.md` for the complete CSS variable system. [EXPLICI
 6. Wire footer with status badges
 
 ### Phase 3: Quality Gate
-1. Read top to bottom: any placeholder text remaining?
-2. Visual consistency: all sections follow numbered pattern?
-3. Color audit: only brand + semantic colors?
-4. Run `validate_html.sh` — target 0 errors
+1. Run `validate_html.sh` — target 0 errors
+2. Eyeball-render in a browser (validator checks structure, not visual layout) [EXPLICIT]
+3. Walk the **Acceptance Criteria** checklist above — every item must pass before delivery
 
 ## Anti-Patterns
 
@@ -237,6 +246,19 @@ See `references/design-tokens.md` for the complete CSS variable system. [EXPLICI
 | Dark mode only output | Use `--sofka-black` as base bg, ensure all text meets contrast on dark |
 | Print-optimized version | Add `@media print` rules: hide TOC, linearize grid, force white bg |
 
+## Failure Modes
+
+Runtime breakages and how to recover (distinct from input edge cases above): [EXPLICIT]
+
+| Failure | Symptom | Root Cause | Recovery |
+|---------|---------|-----------|----------|
+| Fonts never load | Body renders in serif fallback | Clash Grotesk `<link>` blocked/offline | Ship `font-family` stack with `system-ui` fallback; never block render on web fonts |
+| File exceeds 500 KB | Slow first paint, validator fails | Base64 images embedded | Strip base64, swap to relative/CDN paths; re-run validator [EXPLICIT] |
+| TOC links dead | Click scrolls nowhere | Section `id` renamed but TOC not updated | Regenerate TOC from section IDs as the single source of truth |
+| Modal opens but won't close | Stuck overlay, page unscrollable | JS not wired or duplicate IDs | Verify one listener per modal; ensure unique IDs; test ESC + backdrop click |
+| Contrast fails on dark sections | Text invisible on `--sofka-black` | Token chosen for light bg reused on dark | Recompute contrast per background; use light token variant on dark |
+| Validator passes, looks broken | Visually wrong despite 0 errors | Validator checks structure, not visual layout | Always eyeball-render before delivery; validator is necessary not sufficient [EXPLICIT] |
+
 ## Example: Good vs Bad
 
 **Good hero section:**
@@ -259,6 +281,20 @@ See `references/design-tokens.md` for the complete CSS variable system. [EXPLICI
 ```
 
 Differences: hardcoded hex instead of CSS variables, green instead of orange accent, Arial instead of Clash Grotesk, ALL CAPS title, no underscore in wordmark, 6 KPIs exceeds 4-max limit, gray border instead of orange. [EXPLICIT]
+
+**Worked example — numbered content section (the brand identity pattern):**
+```html
+<section class="section" id="section-2">
+  <div class="section-header">
+    <div class="section-number">02</div>
+    <div><h2>Estado Actual</h2></div>
+  </div>
+  <div class="callout" style="border-left: 4px solid var(--sofka-positive);">
+    <strong>Hallazgo:</strong> 92% de uptime sostenido el último trimestre.
+  </div>
+</section>
+```
+Why it passes: unique `id` matching its TOC link, zero-padded `02` number, yellow (`--sofka-positive`) not green for the success callout, no hardcoded hex. [EXPLICIT]
 
 ## Validation Gate
 
@@ -332,7 +368,7 @@ Default output is self-contained HTML. This skill always produces HTML — it is
 
 ---
 
-**Design System:** v4 | **Last Updated:** 2026-03-12
+**Design System:** v4 | **Last Updated:** 2026-06-11
 
 ---
-**Author:** Javier Montaño | **Last updated:** 2026-03-12
+**Author:** Javier Montaño | **Last updated:** 2026-06-11

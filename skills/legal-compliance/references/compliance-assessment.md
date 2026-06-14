@@ -49,30 +49,72 @@ The user provides a project or system name as `$ARGUMENTS`. Parse `$1` as the **
 7. **Design roadmap** — Build phased remediation plan with quick wins (0-30 days), medium-term (30-90 days), and strategic (90-365 days)
 8. **Generate heat map** — Produce visual risk heat map for executive communication
 
+## Severity & Risk Scoring
+
+One scoring method across matrix, heat map, and roadmap — divergent scales between deliverables are the top cause of inconsistency findings. [INFERENCIA]
+
+**Gap severity** = max(control absence, regulatory weight):
+- **Critical** — Mandatory control absent AND framework imposes fines/license loss/breach-notification (e.g., GDPR Art. 32 encryption gap, PCI-DSS Req. 3 cardholder data unencrypted). [DOC]
+- **High** — Mandatory control partial/ineffective, or compensating control exists but undocumented. [DOC]
+- **Medium** — Recommended (not mandatory) control missing, or documentation gap with control operating. [DOC]
+- **Low** — Cosmetic/maturity gap; no audit-finding exposure. [DOC]
+
+**Residual risk** = Likelihood (1–5) × Impact (1–5) → heat map band: 1–4 green, 5–9 yellow, 10–14 orange, 15–25 red. Impact anchors to regulatory penalty tier, not engineering effort. [SUPUESTO → confirm penalty tiers per framework with legal counsel before publishing scores]
+
+**Anti-scope (do NOT score):** absolute fine amounts (legal counsel only), probability of enforcement action, insurance/indemnity adequacy. [DOC]
+
 ## Quality Criteria
 
-- [ ] All applicable regulatory frameworks identified and justified
-- [ ] Gap matrix covers 100% of framework requirements (not sampled)
-- [ ] Each gap has severity classification (critical/high/medium/low)
-- [ ] Remediation roadmap includes effort estimates and ownership
-- [ ] Risk heat map uses consistent scoring methodology
-- [ ] Evidence tags applied: [DOC], [CONFIG], [INFERENCIA], [SUPUESTO]
-- [ ] No legal advice given — skill produces technical compliance assessment only
-- [ ] Cross-references to related security and architecture assessments
+Each item is binary and machine-checkable; partial credit is a fail. [INFERENCIA]
+
+- [ ] All applicable frameworks identified, each with a one-line applicability justification (industry/geo/data-type trigger) [DOC]
+- [ ] Gap matrix covers 100% of framework requirements (every control ID present, not sampled) [DOC]
+- [ ] Every gap row has: severity, evidence tag, residual-risk score, remediation owner role, effort band [DOC]
+- [ ] Heat map and matrix use the single scoring method in "Severity & Risk Scoring" — no scale drift [INFERENCIA]
+- [ ] Remediation roadmap items each map to ≥1 gap ID (no orphan actions, no unremediated critical/high gaps) [DOC]
+- [ ] Evidence tags applied per references/verification-tags.md Alfa set: [DOC], [CONFIG], [INFERENCIA], [SUPUESTO] [DOC]
+- [ ] Mandatory legal disclaimer present and verbatim (see Assumptions) [DOC]
+- [ ] Cross-references to related security and architecture assessments resolve [DOC]
 
 ## Assumptions and Limits
 
-- This is a technical compliance assessment, NOT legal advice
-- Assumes access to documentation of existing controls and policies
-- Does not replace formal certification audits (ISO, SOC2, PCI QSA)
-- Regulatory interpretations should be validated by legal counsel
+- **Verbatim disclaimer (mandatory, every output):** "This is a technical compliance gap assessment, not legal advice. Regulatory interpretations and penalty exposure must be validated by qualified legal counsel before action." [DOC]
+- Assumes access to documentation of existing controls and policies; absence triggers Edge Case 2. [DOC]
+- Does NOT replace formal certification audits (ISO 27001 Stage 2, SOC 2 Type II, PCI QSA RoC); output is pre-audit readiness, not attestation. [DOC]
+- Point-in-time snapshot — controls drift; assessment is stale once scope, data flows, or framework versions change. [INFERENCIA]
+- Evidence freshness: a control with documentation older than its review cycle is scored "partial," not "present." [SUPUESTO → confirm each org's review cadence]
 
 ## Edge Cases
 
-1. **Multiple overlapping regulatory frameworks** — When GDPR + PCI-DSS + SOX apply simultaneously, the skill generates a unified control matrix that maps shared requirements to avoid effort duplication. [EXPLICIT]
-2. **Organization without control documentation** — If no policies or documented procedures exist, the skill generates an inventory based on interviews/inference tagged with [SUPUESTO] and prioritizes documentation as the first remediation step. [EXPLICIT]
-3. **Local regulation not covered by standard frameworks** — For local regulations (e.g., Ley 1581 Colombia, LGPD Brazil), the skill structures the evaluation with the same principles but requires user input on specific requirements. [EXPLICIT]
-4. **Early-stage startup without formal controls** — The skill adapts the evaluation to identify minimum viable controls and generates a pragmatic roadmap instead of an exhaustive gap analysis. [EXPLICIT]
+1. **Multiple overlapping frameworks** — GDPR + PCI-DSS + SOX simultaneously: generate a unified control matrix mapping shared requirements (e.g., access logging satisfies all three) to avoid effort duplication. Tag each shared control with all frameworks it discharges. [EXPLICIT]
+2. **No control documentation** — Generate inventory from interviews/inference, tag every undocumented control [SUPUESTO] with a verification step, and make "establish control documentation" the first roadmap item. Do not score an undocumented control as "present." [EXPLICIT]
+3. **Local regulation outside standard frameworks** — For Ley 1581 (Colombia), LGPD (Brazil), etc., apply the same structure but require user-supplied requirement text; do not infer obligations from analogous frameworks. [EXPLICIT]
+4. **Early-stage startup, no formal controls** — Produce a minimum-viable-controls roadmap (pragmatic), not an exhaustive gap analysis; flag deferred requirements explicitly so scope-down is a conscious decision, not an omission. [EXPLICIT]
+5. **Conflicting requirements across frameworks** — When two frameworks mandate incompatible controls (e.g., GDPR erasure vs. SOX 7-year retention), do NOT resolve it — surface the conflict as a flagged item routed to legal/DPO with both citations. [INFERENCIA]
+6. **Framework version mismatch** — If the org's controls target a superseded version (e.g., PCI-DSS 3.2.1 vs 4.0), assess against the current mandatory version and list version-delta requirements as a distinct remediation cluster. [INFERENCIA]
+
+## Failure Modes
+
+| Failure | Symptom | Guard |
+|---|---|---|
+| False completeness | Single-framework run presented as "compliant" | Default `multi`; state which frameworks were out of scope [DOC] |
+| Undocumented = present | Control assumed effective with no evidence | Edge Case 2; absence of evidence → "partial" max [INFERENCIA] |
+| Scale drift | Heat map and matrix disagree on a gap's severity | Single scoring method; QC gate [INFERENCIA] |
+| Legal overreach | Output states a fine amount or "you are compliant" | Verbatim disclaimer; anti-scope list [DOC] |
+| Orphan remediation | Roadmap action maps to no gap, or critical gap has no action | QC bidirectional gap↔action check [DOC] |
+| Stale snapshot reused | Old assessment cited after data flows changed | Date-stamp; flag scope-change invalidation [INFERENCIA] |
+
+## Worked Example (abridged)
+
+Input: `payment-gateway` · `{MARCO}=multi` (PCI-DSS + GDPR). [SUPUESTO illustrative]
+
+| Req | Control state | Sev | L×I | Tag | Remediation (owner, band) |
+|---|---|---|---|---|---|
+| PCI 3.4 (PAN encryption) | Absent | Critical | 5×5=25 | [CONFIG] | Tokenize PAN at ingress (Sec Eng, 30–90d) |
+| GDPR Art.30 (RoPA) | Partial, undocumented | High | 4×3=12 | [SUPUESTO] | Document processing register (DPO, 0–30d) |
+| PCI 10.2 (audit logs) | Present, satisfies GDPR Art.32 too | — | — | [DOC] | None — shared control, mapped twice |
+
+Roadmap: quick win = RoPA doc (0–30d); core = tokenization (30–90d). No orphan actions; one critical gap → one action. [INFERENCIA]
 
 ## Decisions and Trade-offs
 

@@ -1,0 +1,63 @@
+{
+  "skill": "observability",
+  "version": "1.0.0",
+  "description": "Per-topic quality gates the guardian applies before sign-off. Green requires evidence, never color alone.",
+  "global_gates": [
+    "exactly_one_topic_resolved",
+    "exactly_one_playbook_loaded",
+    "every_non_obvious_claim_tagged",
+    "single_brand_no_invented_prices_no_client_pii",
+    "not_green_as_success"
+  ],
+  "evidence_tags": ["EXPLICIT", "DOC", "CONFIG", "INFERENCIA", "SUPUESTO"],
+  "topics": {
+    "monitoring-setup": {
+      "gates": [
+        "every_metric_has_source_and_consumer",
+        "slo_has_target_and_window",
+        "cardinality_budget_stated",
+        "retention_and_cost_ceiling_stated"
+      ],
+      "deterministic_script": null
+    },
+    "alerting-strategy": {
+      "gates": [
+        "every_alert_has_owner_severity_threshold_for_window_runbook",
+        "only_p1_p2_page",
+        "thresholds_slo_derived_and_tagged",
+        "fatigue_controls_configured",
+        "no_orphan_alerts"
+      ],
+      "deterministic_script": "scripts/validate_alerting_strategy.py"
+    },
+    "health-check-automation": {
+      "gates": [
+        "required_checks_have_threshold_direction_units",
+        "every_check_has_dated_evidence",
+        "rollup_precedence_applied",
+        "unknown_or_stale_cannot_be_healthy",
+        "every_alert_has_owner_and_route"
+      ],
+      "deterministic_script": "scripts/validate_health_check.py"
+    },
+    "log-management": {
+      "gates": [
+        "minimum_schema_present",
+        "request_traceable_via_correlation_id",
+        "no_secrets_or_pii_in_stream",
+        "levels_and_retention_chosen_explicitly"
+      ],
+      "deterministic_script": null
+    },
+    "incident-response": {
+      "gates": [
+        "severity_from_matrix",
+        "ic_and_scribe_named_before_mitigation",
+        "mitigation_precedes_root_cause",
+        "resolution_confirmed_across_cadence_window",
+        "sev1_sev2_postmortem_dated_owned_actions_blameless"
+      ],
+      "deterministic_script": null
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "skill": "business-analysis",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json/rubric",
+      "purpose": "Universal and per-topic pass/partial/fail criteria the guardian scores deliverables against before sign-off.",
+      "used_by": ["SKILL.md", "agents/guardian.md", "templates/output.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "markdown/checklist",
+      "purpose": "Operational acceptance gate the lead runs box-by-box before declaring a deliverable done.",
+      "used_by": ["SKILL.md", "prompts/primary.md", "prompts/variations/deep.md"]
+    }
+  ]
+}

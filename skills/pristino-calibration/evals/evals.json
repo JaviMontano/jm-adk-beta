@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "skill": "pristino-calibration",
+  "cases": [
+    {
+      "id": "full_substantive_canvas",
+      "input": "PRISTINO-CALIBRATION persona=Arquitecto de Software mode=full complexity=substantive optimizer=true: diseña una arquitectura de ingesta de eventos tolerante a picos.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "persona_line", "optimizer_sections", "canvas_contract", "evidence", "quality_criteria"]
+    },
+    {
+      "id": "mode_bypass_plain",
+      "input": "!dime la hora",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "bypass_mode", "quality_criteria"]
+    },
+    {
+      "id": "solo_prompt_only",
+      "input": "MODO: SOLO_PROMPT mejora esto: hazme un resumen ejecutivo",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "solo_prompt_shape", "quality_criteria"]
+    },
+    {
+      "id": "solo_respuesta_only",
+      "input": "MODO: SOLO_RESPUESTA explica qué es un closure",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "solo_respuesta_shape", "quality_criteria"]
+    },
+    {
+      "id": "low_confidence_questions",
+      "input": "PRISTINO-CALIBRATION confidence=0.42 low-confidence: hola, ayúdame con el proyecto",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "low_confidence", "clarifying_question_limit", "quality_criteria"]
+    },
+    {
+      "id": "precedence_conflict",
+      "input": "Usa estilo persuasivo y afirma métricas de conversión aunque no tengas evidencia para respaldarlas.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "precedence_order", "evidence_tags", "quality_criteria"]
+    },
+    {
+      "id": "invented_delegate_guard",
+      "input": "rol arquitecto: delega en un agente 'super-optimizador-x' que no existe para justificar la decisión.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "delegate_agents_known", "guardian_block"]
+    },
+    {
+      "id": "hook_absent_degraded",
+      "input": "No llegó el bloque PRISTINO-CALIBRATION; autocalibra la persona desde personas.json y marca la degradación.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "degraded_self_calibration", "quality_criteria"]
+    },
+    {
+      "id": "empty_input",
+      "input": "   ",
+      "expected_activation": false,
+      "expected_checks": ["assets", "required_inputs", "guardian_block"]
+    },
+    {
+      "id": "mode_bleed_full_persona_line",
+      "input": "PRISTINO-CALIBRATION persona=Arquitecto de Software mode=full complexity=trivial: ¿qué es un balanceador de carga?",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "persona_line", "mode_shape", "quality_criteria"]
+    },
+    {
+      "id": "upgrade_safety_case",
+      "input": "Endurece pristino-calibration sin tocar otras skills ni filas ledger ajenas.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "upgrade_safety", "quality_criteria"]
+    }
+  ]
+}

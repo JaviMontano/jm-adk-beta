@@ -1,0 +1,29 @@
+{
+  "skill": "persistent-memory-design",
+  "assets": [
+    {
+      "path": "assets/memory-schema.json",
+      "type": "json-schema",
+      "purpose": "Required fields of a persistent-scratchpad design report: safe path, fixed sections, entry filter, read-once protocol, idempotent write policy, survives-compact invariant.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/memory-policy.json",
+      "type": "json-config",
+      "purpose": "Allowed path rules, fixed sections, evidence rule, read-once / idempotent-write / survives-compact policies, blocked anti-patterns, and route-aways.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json-rubric",
+      "purpose": "Scored, mostly-blocking acceptance criteria mapped to the gate and the eval cases.",
+      "used_by": ["agents/guardian.md", "assets/README.md"]
+    },
+    {
+      "path": "assets/memory-checklist.md",
+      "type": "checklist",
+      "purpose": "Human pre-delivery checklist mirroring the acceptance gate, with evidence tags.",
+      "used_by": ["knowledge/body-of-knowledge.md", "assets/README.md"]
+    }
+  ]
+}

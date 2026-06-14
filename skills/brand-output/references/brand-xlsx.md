@@ -74,6 +74,11 @@ Return exactly one of these outputs:
 - A saved `.xlsx` artifact path plus validation evidence.
 - A plan for generating the `.xlsx` when the user asks for instructions only.
 
+Acceptance criteria (all must hold before delivery): the file opens in
+Excel/LibreOffice without a repair prompt; `check.sh` exits `0`; every
+validation-gate box below is checked with evidence. A partial or
+repair-prompting workbook is a FAIL, not a warning. [CONFIG]
+
 The delivered `.xlsx` must include:
 
 - Real XLSX ZIP package structure, not HTML or CSV renamed as `.xlsx`.
@@ -90,6 +95,31 @@ The delivered `.xlsx` must include:
 - No unresolved `{{PLACEHOLDER}}` tokens.
 - No remote fonts, remote logos, remote images, base64 images, external
   relationships, runtime current-date calls, or random values.
+
+## Edge Cases
+
+- Empty `rows`: still emit header row, freeze panes, and footer; do not skip
+  styling or emit a zero-sheet workbook. [INFERENCIA]
+- Sheet names: max 31 chars; strip `\ / ? * [ ] :`; must be unique. Truncate
+  deterministically (no counters that change per run). [CÓDIGO]
+- Leading `= + - @` in any cell value: prefix with `'` (text) so Excel does
+  not evaluate it. Generated workbooks never emit live formulas. [CÓDIGO]
+- Wide data (> 26 columns): bound each width and keep auto filter across the
+  full used range, not just A–Z. [CONFIG]
+- Long strings / numbers: store numbers as numeric cells (not text) so sums
+  work; keep IDs that have leading zeros as text. [INFERENCIA]
+- Non-ASCII / emoji in titles or headers: valid; XML-escape and keep UTF-8.
+
+## Failure Modes (reject before delivery)
+
+- HTML or CSV renamed to `.xlsx` — not a ZIP; fails the package check. [CÓDIGO]
+- Missing `_rels/.rels` or `xl/_rels/workbook.xml.rels` — Excel shows a repair
+  prompt; treat repair prompt as FAIL. [CÓDIGO]
+- `Sheet1` left as a name, or merged region without an anchor value. [CONFIG]
+- Unresolved `{{PLACEHOLDER}}`, legacy hardcoded palette, or remote/base64
+  asset — token or asset violation, not cosmetic. [CONFIG]
+- Runtime `=TODAY()`/`NOW()` or `random()` — breaks determinism; two runs with
+  identical inputs must yield byte-stable structure. [CÓDIGO]
 
 ## Token Rules
 
@@ -116,15 +146,35 @@ The delivered `.xlsx` must include:
 - [ ] No remote assets, base64 images, runtime dates, or randomness.
 - [ ] `bash skills/brand-xlsx/scripts/check.sh` passes.
 
+## Decisions And Trade-offs
+
+- Validator uses the Python standard library (`zipfile` + XML parsing), not
+  `openpyxl`. Trade-off: more validation code, but CI runs with zero third-party
+  deps so the gate cannot drift with a library upgrade. [CONFIG]
+- `openpyxl` is allowed for *generation* when available; it is not required for
+  *validation*. Generation path and validation path are decoupled. [CONFIG]
+- Determinism over convenience: no runtime dates or randomness, so identical
+  inputs produce a structurally identical package, enabling diff-based review.
+  [CÓDIGO]
+
 ## Assumptions And Limits
 
-- This skill creates XLSX/Excel artifacts only; it does not build HTML pages,
-  DOCX documents, PDFs, slide decks, or CSV-only exports. [CONFIG]
-- `openpyxl` is a suitable implementation path when available, but the
-  validation gate uses the Python standard library so CI remains deterministic.
-  [CONFIG]
-- Excel rendering can vary by installed fonts; fallback font must be declared.
-  [INFERENCIA]
+- Creates XLSX/Excel artifacts only; does not build HTML, DOCX, PDF, slide
+  decks, or CSV-only exports. Route those elsewhere. [CONFIG]
+- Excel rendering varies by installed fonts; fallback font must be declared so
+  layout degrades predictably. [INFERENCIA]
+- Anti-scope: no macros/VBA (`.xlsm`), no live external data connections, no
+  pivot caches, no charts requiring remote images. [CONFIG]
+
+## Worked Example
+
+Input: `/brand-xlsx "AtlasOps KPI Workbook" ./brand-config.json`, 1 KPI block
+(3 boxes) + 40-row data table, `artifact_date=2026-06-11`, `year=2026`.
+Expected output: one `.xlsx` whose sheet is named `KPI Workbook` (not
+`Sheet1`), tab color = primary token, merged title region A1, frozen header at
+row 2, auto filter on the used range, alternating row fill from
+`colors.primarySoft`, footer with wordmark + tagline + `2026` + domain, and
+`check.sh` exit `0`. [CÓDIGO]
 
 ## Usage
 

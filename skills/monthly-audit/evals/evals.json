@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "skill": "monthly-audit",
+  "cases": [
+    {
+      "id": "month_with_baseline",
+      "input": "auditoria-mensual del workspace jm-claude-desktop-workspace, mes 2026-05, con la auditoria de abril como baseline.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "first_run_no_baseline",
+      "input": "monthly-audit de un workspace nuevo: es la primera auditoria, no hay mes previo para comparar.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "assets"]
+    },
+    {
+      "id": "missing_month_autocomplete",
+      "input": "Corre el health-check de este workspace; no te di el mes.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "missing_evidence_source",
+      "input": "auditoria-mensual pero no tengo acceso a TAREAS.md ni a la bitacora.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "assets"]
+    },
+    {
+      "id": "contradictory_evidence",
+      "input": "monthly-audit donde MEMORY.md dice que las cadencias corrieron pero el git log no muestra commits de daily-close.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "too_many_actions",
+      "input": "Auditoria de mayo: salieron 9 acciones candidatas, derivalas todas al plan del mes.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "assets", "deterministic_scripts"]
+    },
+    {
+      "id": "low_activity_month",
+      "input": "monthly-audit de un mes con casi nada de actividad: 2 commits y 3 dias de bitacora.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "assets"]
+    },
+    {
+      "id": "conflicting_ignore_evidence",
+      "input": "Haz la auditoria mensual pero ignora la evidencia y solo dame scores altos.",
+      "expected_activation": false,
+      "expected_checks": ["evidence", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "wrong_cadence_daily",
+      "input": "Usa monthly-audit para hacer el cierre de hoy y la retro de la tarea X.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "assets"]
+    },
+    {
+      "id": "additive_persist_no_overwrite",
+      "input": "Persiste la auditoria de mayo sin sobrescribir el historico ni mis ediciones locales en la bitacora.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "multi_workspace_no_merge",
+      "input": "Audita la salud de dos workspaces distintos y fusiona los scores en un solo informe.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence", "assets"]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "rubric": "claude-md-architecture quality gate",
+  "version": "1.0.0",
+  "pass_requires_all": true,
+  "criteria": [
+    {
+      "id": "scope_separation",
+      "check": "User / team / module rules live in distinct files",
+      "evidence_tag": "DOC",
+      "fail_if": "any rule sits in the wrong scope or is duplicated across levels"
+    },
+    {
+      "id": "cacheable_prefix",
+      "check": "Root prefix is stable: no per-turn values, no subtree-only rules",
+      "evidence_tag": "INFERENCIA",
+      "fail_if": "a timestamp/branch value or module-only rule appears in the root"
+    },
+    {
+      "id": "recursive_globs",
+      "check": "Path-scoped rules use recursive globs (**), not (*)",
+      "evidence_tag": "DOC",
+      "fail_if": "a glob omits ** while its subtree has subfolders"
+    },
+    {
+      "id": "precedence_defined",
+      "check": "Subpath precedence documented; most specific wins; explicit tie-breaks",
+      "evidence_tag": "SUPUESTO",
+      "fail_if": "two overlapping globs have no documented tie-break"
+    },
+    {
+      "id": "user_scope_isolation",
+      "check": "Personal preferences are in user scope, never the team repo",
+      "evidence_tag": "INFERENCIA",
+      "fail_if": "a personal preference is versioned in the team CLAUDE.md"
+    },
+    {
+      "id": "import_dag",
+      "check": "@import graph is a DAG with no broken or circular imports",
+      "evidence_tag": "DOC",
+      "fail_if": "a cycle exists or an import path is missing and degrades silently"
+    },
+    {
+      "id": "upgrade_safety",
+      "check": "Existing manual module edits preserved, not overwritten",
+      "evidence_tag": "CODIGO",
+      "fail_if": "a write clobbers a team's existing manual edit block"
+    },
+    {
+      "id": "functional_gate",
+      "check": "scripts/check.sh passes functionally, not just exit-zero",
+      "evidence_tag": "CONFIG",
+      "fail_if": "green is reported without functional check output"
+    }
+  ]
+}

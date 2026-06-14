@@ -1,0 +1,17 @@
+{
+  "skill": "brand-output",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json",
+      "purpose": "Pass/partial/fail rubric across routing, brand, determinism, execution, validation, and governance dimensions for the router.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/routing-checklist.md",
+      "type": "markdown",
+      "purpose": "Discover-Route-Execute-Validate checklist walked before delivering any branded artifact.",
+      "used_by": ["README.md", "agents/lead.md"]
+    }
+  ]
+}

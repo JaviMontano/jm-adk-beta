@@ -1,0 +1,37 @@
+{
+  "skill": "daily-close",
+  "status_vocabulary": ["pass", "conditional", "fail", "not-verified"],
+  "verdict_rule": "Solo 'pass' habilita declarar el cierre cerrado. Cualquier dimension en 'fail' fuerza veredicto global 'fail'.",
+  "dimensions": [
+    {
+      "id": "three_axes",
+      "label": "Tres ejes presentes",
+      "weight": 0.20,
+      "pass_when": "Cerrado, Pendiente y Aprendido presentes; ningun eje vacio sin justificacion explicita."
+    },
+    {
+      "id": "closed_evidence",
+      "label": "Evidencia en lo Cerrado",
+      "weight": 0.25,
+      "pass_when": "Cada item Cerrado liga un artefacto verificable (commit/archivo/ancla) con tag {DOC} o {EXTRAIDO_HILO}."
+    },
+    {
+      "id": "seeded_next_day",
+      "label": "Semilla sembrada",
+      "weight": 0.20,
+      "pass_when": "Semilla de 1-3 pendientes priorizados, cada uno con primer paso ejecutable en frio."
+    },
+    {
+      "id": "tag_discipline",
+      "label": "Disciplina de tags",
+      "weight": 0.20,
+      "pass_when": "Cada afirmacion no obvia con exactamente un tag Jarvis {...}; sin familia Alfa [...]; ningun {WEB} sin cita."
+    },
+    {
+      "id": "additive_persistence",
+      "label": "Persistencia aditiva",
+      "weight": 0.15,
+      "pass_when": "Cierre aplicado como append; historico y ediciones locales intactos; bloque fechado al dia real; un solo workspace (marca unica)."
+    }
+  ]
+}

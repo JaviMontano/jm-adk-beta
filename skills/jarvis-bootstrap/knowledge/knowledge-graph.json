@@ -1,0 +1,32 @@
+{
+  "nodes": [
+    { "id": "jarvis_os", "label": "Jarvis OS", "kind": "system" },
+    { "id": "claude_md_root", "label": "CLAUDE.md raiz", "kind": "artifact" },
+    { "id": "memory_md_root", "label": "MEMORY.md raiz", "kind": "artifact" },
+    { "id": "levels", "label": "Niveles N0-N4", "kind": "structure" },
+    { "id": "seeds", "label": "Semillas P00/P01/P02", "kind": "structure" },
+    { "id": "delta", "label": "Delta (piezas faltantes)", "kind": "concept" },
+    { "id": "missing_only", "label": "Modo missing-only", "kind": "mode" },
+    { "id": "force_mode", "label": "Modo --force", "kind": "mode" },
+    { "id": "bootstrap_report", "label": "Reporte de bootstrap", "kind": "output" },
+    { "id": "evidence_tags", "label": "Tags familia Jarvis OS", "kind": "taxonomy" },
+    { "id": "read_before_write", "label": "Read-before-write", "kind": "rule" },
+    { "id": "validation_gate", "label": "Gate de validacion", "kind": "gate" },
+    { "id": "vacio_critico", "label": "{VACIO_CRITICO}", "kind": "tag" }
+  ],
+  "edges": [
+    { "from": "jarvis_os", "to": "claude_md_root", "rel": "requiere" },
+    { "from": "jarvis_os", "to": "memory_md_root", "rel": "requiere" },
+    { "from": "jarvis_os", "to": "levels", "rel": "se_estructura_en" },
+    { "from": "levels", "to": "seeds", "rel": "contiene" },
+    { "from": "delta", "to": "missing_only", "rel": "calculado_en" },
+    { "from": "missing_only", "to": "force_mode", "rel": "prevalece_sobre" },
+    { "from": "read_before_write", "to": "delta", "rel": "precede_a" },
+    { "from": "delta", "to": "bootstrap_report", "rel": "se_reporta_en" },
+    { "from": "bootstrap_report", "to": "evidence_tags", "rel": "etiquetado_con" },
+    { "from": "validation_gate", "to": "bootstrap_report", "rel": "verifica" },
+    { "from": "validation_gate", "to": "force_mode", "rel": "controla_sobrescritura_de" },
+    { "from": "vacio_critico", "to": "jarvis_os", "rel": "bloquea_bootstrap_de" },
+    { "from": "memory_md_root", "to": "evidence_tags", "rel": "siembra_con" }
+  ]
+}

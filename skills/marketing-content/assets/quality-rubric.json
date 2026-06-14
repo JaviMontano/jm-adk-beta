@@ -1,0 +1,37 @@
+{
+  "skill": "marketing-content",
+  "version": "1.0.0",
+  "dimensions": [
+    {
+      "id": "routing_integrity",
+      "weight": 0.30,
+      "pass_if": "Exactly one playbook loaded; resolved topic matches the produced artifact; depth honored.",
+      "fail_examples": ["two playbooks loaded to compare", "topic says press-release but output is a case study"]
+    },
+    {
+      "id": "topic_acceptance",
+      "weight": 0.30,
+      "pass_if": "The resolved playbook's own Quality/Acceptance Criteria all pass with evidence.",
+      "fail_examples": ["case study with no before-number", "press-release lede over 35 words or missing ###"]
+    },
+    {
+      "id": "evidence_tagging",
+      "weight": 0.15,
+      "pass_if": "Every claim carries exactly one tag from EXPLICIT/DOC/INFERENCIA/SUPUESTO.",
+      "fail_examples": ["untagged metric", "two tags on one claim"]
+    },
+    {
+      "id": "governance",
+      "weight": 0.15,
+      "pass_if": "No invented prices/ROI; no unsourced superlatives; single-brand; no PII.",
+      "fail_examples": ["'leading platform' with no source", "mixes MetodologIA and Sofka in one asset"]
+    },
+    {
+      "id": "open_item_disclosure",
+      "weight": 0.10,
+      "pass_if": "Unapproved quotes held as [NEEDS APPROVAL]; every [SUPUESTO] resolved or disclosed; never green-as-success.",
+      "fail_examples": ["publishes an unapproved client quote", "reports pass while placeholders remain"]
+    }
+  ],
+  "verdict_rule": "dod=pass only when routing_integrity, topic_acceptance, and governance all pass and no open item blocks publish."
+}

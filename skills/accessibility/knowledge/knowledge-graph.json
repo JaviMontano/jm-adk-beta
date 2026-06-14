@@ -1,0 +1,42 @@
+{
+  "nodes": [
+    { "id": "router", "label": "accessibility router", "kind": "skill" },
+    { "id": "audit", "label": "Audit playbook", "kind": "topic" },
+    { "id": "design", "label": "Design playbook", "kind": "topic" },
+    { "id": "testing", "label": "Testing playbook", "kind": "topic" },
+    { "id": "writing", "label": "Writing playbook", "kind": "topic" },
+    { "id": "wcag", "label": "WCAG 2.1 AA", "kind": "standard" },
+    { "id": "pour", "label": "POUR principles", "kind": "standard" },
+    { "id": "axe", "label": "axe-core automated scan", "kind": "tool" },
+    { "id": "manual", "label": "Manual keyboard + SR verification", "kind": "method" },
+    { "id": "contrast", "label": "Contrast ratios (4.5:1 / 3:1)", "kind": "criterion" },
+    { "id": "keyboard", "label": "Keyboard contracts & focus", "kind": "criterion" },
+    { "id": "aria", "label": "Native-first / ARIA patterns", "kind": "criterion" },
+    { "id": "alttext", "label": "Alt-text treatment matrix", "kind": "criterion" },
+    { "id": "status", "label": "pass/conditional/fail/not-verified", "kind": "gate" },
+    { "id": "evidence", "label": "Evidence tags + artifacts", "kind": "gate" }
+  ],
+  "edges": [
+    { "from": "router", "to": "audit", "rel": "routes_to" },
+    { "from": "router", "to": "design", "rel": "routes_to" },
+    { "from": "router", "to": "testing", "rel": "routes_to" },
+    { "from": "router", "to": "writing", "rel": "routes_to" },
+    { "from": "audit", "to": "wcag", "rel": "measures_against" },
+    { "from": "design", "to": "wcag", "rel": "measures_against" },
+    { "from": "testing", "to": "wcag", "rel": "measures_against" },
+    { "from": "writing", "to": "wcag", "rel": "measures_against" },
+    { "from": "wcag", "to": "pour", "rel": "organized_by" },
+    { "from": "audit", "to": "axe", "rel": "runs" },
+    { "from": "testing", "to": "axe", "rel": "runs" },
+    { "from": "axe", "to": "manual", "rel": "must_be_followed_by" },
+    { "from": "manual", "to": "contrast", "rel": "verifies" },
+    { "from": "manual", "to": "keyboard", "rel": "verifies" },
+    { "from": "design", "to": "aria", "rel": "specifies" },
+    { "from": "design", "to": "keyboard", "rel": "specifies" },
+    { "from": "writing", "to": "alttext", "rel": "selects" },
+    { "from": "audit", "to": "status", "rel": "concludes_with" },
+    { "from": "testing", "to": "status", "rel": "concludes_with" },
+    { "from": "status", "to": "evidence", "rel": "requires" },
+    { "from": "evidence", "to": "wcag", "rel": "cites_criterion_of" }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "nodes": [
+    { "id": "event", "label": "Analytics Event", "kind": "concept" },
+    { "id": "property", "label": "Event Property", "kind": "concept" },
+    { "id": "identity", "label": "Identity (user/anonymous)", "kind": "concept" },
+    { "id": "metric", "label": "Metric", "kind": "concept" },
+    { "id": "kpi", "label": "KPI / North Star", "kind": "concept" },
+    { "id": "funnel", "label": "Funnel", "kind": "concept" },
+    { "id": "cohort", "label": "Cohort", "kind": "concept" },
+    { "id": "experiment", "label": "A/B Experiment", "kind": "concept" },
+    { "id": "instrumentation", "label": "Instrumentation", "kind": "process" },
+    { "id": "realtime", "label": "Real-time Pipeline", "kind": "process" },
+    { "id": "visualization", "label": "Data Visualization", "kind": "process" },
+    { "id": "srm", "label": "Sample Ratio Mismatch", "kind": "validity-threat" },
+    { "id": "evidence_tag", "label": "Evidence Tag", "kind": "governance" }
+  ],
+  "edges": [
+    { "from": "event", "to": "property", "rel": "carries" },
+    { "from": "event", "to": "identity", "rel": "stitched_by" },
+    { "from": "instrumentation", "to": "metric", "rel": "captures" },
+    { "from": "metric", "to": "kpi", "rel": "promoted_to" },
+    { "from": "event", "to": "funnel", "rel": "defines_step_of" },
+    { "from": "event", "to": "cohort", "rel": "keys" },
+    { "from": "experiment", "to": "metric", "rel": "measures" },
+    { "from": "experiment", "to": "srm", "rel": "must_check" },
+    { "from": "funnel", "to": "experiment", "rel": "generates_hypothesis_for" },
+    { "from": "realtime", "to": "event", "rel": "streams" },
+    { "from": "visualization", "to": "metric", "rel": "renders" },
+    { "from": "kpi", "to": "evidence_tag", "rel": "tagged_by" },
+    { "from": "experiment", "to": "evidence_tag", "rel": "tagged_by" }
+  ]
+}

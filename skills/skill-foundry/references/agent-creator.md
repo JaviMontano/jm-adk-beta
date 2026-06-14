@@ -21,6 +21,28 @@ Use `agent-constitution-creator` instead when the user needs a full
 governance constitution with identity, authority, memory, handoff, and
 multi-agent operating rules.
 
+### Negative Triggers (do NOT activate) [EXPLICIT]
+
+- User wants a one-off action done now, not a reusable definition — just do it.
+- User says "skill", "command", "hook", or "output style" explicitly — route there.
+- User wants a multi-agent governance charter — route to
+  `agent-constitution-creator`.
+- User wants to edit an existing agent's behavior only — read the existing file,
+  patch it, skip the discovery/normalize steps.
+
+### Assumptions [EXPLICIT]
+
+- Target runtime is Claude Code (subagents spawned by a parent session with
+  isolated context). [EXPLICIT]
+- Agent files are Markdown + YAML frontmatter at `.claude/agents/{name}.md`
+  (project) or `~/.claude/agents/{name}.md` (global). [EXPLICIT]
+- Built-in agent names `Explore`, `Plan`, `general-purpose` are reserved and
+  must not be shadowed. [EXPLICIT]
+- The parent — not the agent — decides when to spawn, based solely on the
+  `description` field; the agent never sees parent chat history. [EXPLICIT]
+- If any assumption is false (different runtime, different file layout), STOP and
+  confirm with the user before compiling. [OPEN]
+
 ## Deterministic Contract
 
 - Use `assets/agent-spec-schema.json` as the canonical structured input shape.
@@ -54,6 +76,11 @@ Do not create an agent when a lighter artifact fits better:
 If the request is underspecified, ask only for the missing fields required by
 `assets/agent-spec-schema.json`: responsibility, scope, read/write authority,
 expected output, and complexity.
+
+Worked decision: "I want something to keep my changelog updated on every commit"
+→ this is *always-run automation*, not an agent. Route to a Hook. [EXPLICIT]
+"Review every PR diff for security issues when I ask" → bounded, on-demand,
+read-only → agent is correct. [EXPLICIT]
 
 ### Step 2: Discover Existing Agents
 
@@ -97,6 +124,49 @@ lack a negative boundary, or collision rules are violated.
 - Run `python3 -B scripts/validate-skill-scripts.py --strict --run-checks --skill agent-creator`.
 - Treat runtime installation into `.claude/agents/` or `~/.claude/agents/` as a
   separate user-approved mutation.
+
+## Worked Example: PR Security Reviewer [EXPLICIT]
+
+Request: "Make an agent that reviews PR diffs for security problems when I ask."
+
+Normalized spec (abridged):
+
+- `agent.responsibility`: flag security issues in a supplied diff. `non-goals`:
+  fixing code, running the app, reviewing style.
+- `routing.triggers`: "review this diff for security", "security-check the PR".
+  `negative_triggers`: "fix", "refactor", "format". `model`: `sonnet`.
+  `tools`: `["Read", "Glob", "Grep"]` (read-only — it never writes).
+- `behavior.output`: a table of `severity | file:line | issue | fix`.
+- `quality.escalation`: if no diff is provided, report back instead of scanning
+  the whole repo.
+
+Compiled frontmatter:
+
+```yaml
+name: "pr-security-reviewer"
+description: "Spawn when the user asks to review a PR or diff for security
+  issues. Do NOT spawn to fix, refactor, or format code."
+model: "sonnet"
+tools: ["Read", "Glob", "Grep"]
+```
+
+Why these choices: read-only tools because the agent only *reports*
+(least privilege, Tool Restriction Patterns); `sonnet` because security triage is
+balanced reasoning, not a trivial check (Model Selection); negative triggers
+because "review" and "fix" frequently co-occur and would otherwise over-spawn
+(Edge Cases). [EXPLICIT]
+
+## Acceptance Criteria [EXPLICIT]
+
+An agent definition is DONE only when ALL hold:
+
+1. `compile-agent.py` exits 0 on the structured input. [EXPLICIT]
+2. `check.sh` passes positive AND negative fixtures. [EXPLICIT]
+3. Every box in the Validation Gate is checked. [EXPLICIT]
+4. The Worked Example pattern is matched: description states WHEN, tools are
+   least-privilege, output format is a table or code block, constraints contain
+   at least one "never"/"do not". [EXPLICIT]
+5. No write to `.claude/agents/` happened without explicit user approval. [EXPLICIT]
 
 ## Agent File Anatomy
 
@@ -202,6 +272,39 @@ Default to read-only unless the agent must create or modify artifacts.
 - If the output is too verbose, add a hard line limit to the output format.
 - If related agents overlap, define a team only when ownership boundaries are
   explicit per file, module, or workflow stage.
+
+## Failure Modes [EXPLICIT]
+
+| Symptom | Root cause | Fix |
+|---|---|---|
+| Agent never spawns | `description` states WHAT, not WHEN | Rewrite to trigger phrases the parent can match. |
+| Agent spawns on unrelated turns | Triggers too broad; no negatives | Narrow phrases, add `negative_triggers`. |
+| Agent edits files it should only read | Tools over-granted | Drop to read-only set; re-run compile. |
+| Output unusable downstream | Format is prose, not structured | Define an exact table/code-block schema. |
+| Agent asks parent for missing context | Prompt references parent history | Add in-prompt discovery steps (Glob/Grep/Read). |
+| Two agents fight over the same files | Overlapping ownership | Split by file/module/stage, or merge into one. |
+| `compile-agent.py` exits non-zero | Thin process, no negative constraint, unsafe tools | Read the error; it names the failing gate. |
+
+## Trade-offs [EXPLICIT]
+
+- Read-only vs read-write: read-only is safer and the default, but forces a
+  human to apply changes. Grant write only when the agent's *purpose* is
+  producing artifacts. [EXPLICIT]
+- `haiku` vs `sonnet` vs `opus`: cheaper/faster models trade reasoning depth.
+  Under-spec'ing causes shallow misses; over-spec'ing wastes budget on trivial
+  checks. Justify the pick against task complexity, not preference. [EXPLICIT]
+- One broad agent vs several narrow agents: broad agents over-spawn and blur
+  ownership; narrow agents multiply maintenance. Split only on clear ownership
+  boundaries (file, module, workflow stage). [EXPLICIT]
+
+## Anti-scope (this skill does NOT) [EXPLICIT]
+
+- Install or activate agents at runtime — that is a separate user-approved
+  mutation.
+- Author multi-agent governance constitutions — see
+  `agent-constitution-creator`.
+- Call external APIs, MCP servers, or live registries from scripts.
+- Generate hooks, skills, commands, or output styles — route to their creators.
 
 ## Related Assets
 

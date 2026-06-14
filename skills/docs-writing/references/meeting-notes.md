@@ -20,8 +20,19 @@
 | Action item extraction | "Pull out the action items from this meeting" |
 
 Activate when the user provides meeting content (transcript, notes, agenda) and needs
-structured documentation. Do NOT activate for meeting planning (use `workshop-facilitator`)
-or retrospective facilitation (use `retrospective-facilitation`).
+structured documentation.
+
+### Anti-Scope — Do NOT Activate
+
+| Request | Route to | Why |
+|---------|----------|-----|
+| Meeting planning / agenda design | `workshop-facilitator` | Forward-looking, no source content |
+| Retrospective facilitation | `retrospective-facilitation` | Needs sentiment/dynamics, not minutes |
+| Board / governance minutes (legal record) | `board-minutes` | Statutory format, quorum, motions |
+| Live transcription from audio/video | external tooling | This skill is text-in only [EXPLICIT] |
+| Status report from project data | `status-report` | Not meeting-sourced |
+
+Boundary test: if there is **no captured meeting content to structure**, this skill does not apply. [EXPLICIT]
 
 ---
 
@@ -55,6 +66,15 @@ Extract or ask for:
 
 If the user omits metadata fields, mark them `[NOT PROVIDED]` rather than guessing.
 
+**Why never guess metadata**: a fabricated date or attendee makes the minutes an
+unreliable record and erodes trust in every other section. Missing-but-flagged is
+recoverable; wrong-but-confident is not. [INFERRED]
+
+**Date/time normalization**: render dates as `YYYY-MM-DD` and times in 24h with an
+explicit timezone. If the input gives a relative date ("yesterday", "last Tuesday")
+and no anchor date exists, mark `[NOT PROVIDED]` — do not compute from the current
+date, which may differ from when the meeting occurred. [INFERRED]
+
 ---
 
 ## S2 — Discussion Summary & Decision Log
@@ -77,10 +97,14 @@ For each agenda item:
 ```
 
 Rules:
-- Attribute statements to speakers when identifiable.
-- Maintain neutral tone — do not editorialize or interpret intent.
-- Summarize, do not transcribe verbatim (respect copyright and brevity).
-- Flag unresolved disagreements explicitly.
+- Attribute statements to speakers when identifiable; mark ambiguous speakers `[SPEAKER UNCLEAR]`.
+- Maintain neutral tone — report what was said, not what you infer was meant. "Carlos
+  disagreed" (observed) is fine; "Carlos was frustrated" (interpreted intent) is not.
+- Summarize, do not transcribe verbatim (respect copyright and brevity). Preserve at most
+  short verbatim quotes where exact wording is load-bearing (e.g., a committed number).
+- Flag unresolved disagreements explicitly — never paper over conflict with false "consensus".
+- A discussion item is **not** a decision. If no choice was made, set Status, do not invent
+  a Decision Log row.
 
 ### Decision Log
 
@@ -89,7 +113,13 @@ Rules:
 | D1 | Adopt serverless for MVP | Cost reduction + faster iteration | CTO | 2026-03-27 |
 | D2 | Delay mobile app to Q3 | Resource constraints | PM | 2026-03-27 |
 
-Each decision gets a unique ID for traceability across future meetings.
+Each decision gets a unique ID for traceability across future meetings. IDs are
+session-scoped (`D1`, `D2`, …) and reset per meeting unless the user supplies a running
+register; true cross-meeting tracking needs external tooling. [INFERRED]
+
+**Decision vs Action distinction** (common failure): a Decision is a *choice made*
+("adopt serverless"); an Action is *work to do* ("draft the proposal"). One decision
+often spawns several actions. Do not collapse them into one row.
 
 ---
 
@@ -104,11 +134,16 @@ Each decision gets a unique ID for traceability across future meetings.
 | A3 | Review vendor contracts | Legal team | 2026-04-07 | High | Open |
 
 Rules:
-- Every action item must have an **owner** (person, not team, when possible).
+- Every action item must have an **owner** (person, not team, when possible). A team owner
+  diffuses accountability; flag `[OWNER NEEDED]` rather than assigning to "the team".
 - Every action item must have a **due date** (if not stated, suggest one and mark `[SUGGESTED]`).
-- Priority levels: High, Medium, Low.
+  A `[SUGGESTED]` date is a prompt for the owner to confirm, not a commitment on their behalf.
+- Phrase actions as imperative verb + object ("Draft the RFC"), not status ("RFC in progress").
+- Priority levels: High, Medium, Low. Default to Medium if unstated; do not invent urgency.
 - Status on creation is always "Open".
 - Actions without clear owners are flagged: `[OWNER NEEDED]`.
+- One action = one owner = one verb. Split "Maria and Carlos review and deploy" into separate
+  rows so each owner has an unambiguous commitment.
 
 ### Follow-up Section
 
@@ -146,6 +181,10 @@ When the user requests HTML output or distribution-ready format:
   action items in a highlighted card section.
 - **Print styles**: clean black-on-white with visible table borders.
 - **Self-contained**: single HTML file, no external dependencies beyond Google Fonts.
+- **Offline fallback**: if Google Fonts cannot load, the page must degrade to system fonts
+  (`font-family: Inter, system-ui, sans-serif`) without breaking layout. [INFERRED]
+- **Markdown is the source of truth**: HTML is a rendering of the same content. Never let the
+  two diverge — regenerate HTML from the markdown, do not hand-edit both. [INFERRED]
 
 ### Distribution Checklist
 
@@ -190,6 +229,17 @@ When the user requests HTML output or distribution-ready format:
    add a glossary section at the end if 5+ specialized terms appear.
 4. **Multilingual meeting (mixed ES/EN)** — Write notes in the dominant language; include
    key terms in both languages where they first appear: "sprint planning (planificacion de sprint)".
+5. **Conflicting accounts of the same outcome** — If two attendees state different versions of
+   what was decided, record both as a flagged disagreement; do not silently pick one.
+6. **Sensitive / off-the-record content** — If the input contains compensation, legal exposure,
+   PII, or "do not minute this" asides, exclude from the shared record and note `[REDACTED — see
+   facilitator]` rather than copying it verbatim. [EXPLICIT]
+7. **Decision reversed later in the same meeting** — Keep the final decision in the log; note the
+   reversal in the discussion ("initially agreed X, reversed to Y after …") for traceability.
+8. **Action with a dependency but no owner for the dependency** — Record the action, then add a
+   `[BLOCKED — depends on …]` note so the gap is visible, not buried.
+9. **Empty or near-empty input** — If content is too thin to structure (e.g., one vague line),
+   ask for the transcript/notes rather than fabricating sections. [EXPLICIT]
 
 ---
 
@@ -236,6 +286,22 @@ Why it fails: no attribution, no decision detail, vague action item with no owne
 
 ---
 
+## Failure Modes
+
+| Failure | Symptom | Prevention |
+|---------|---------|-----------|
+| Hallucinated metadata | Date/attendee not in source | Mark `[NOT PROVIDED]`; never infer from current date |
+| Decision/action conflation | A choice lands only in the action table | Apply the Decision-vs-Action test (S2/S3) |
+| Orphan action | Action with no owner or no date | Flag `[OWNER NEEDED]` / `[SUGGESTED]`; do not assign blame |
+| Editorializing | "Was frustrated", "obviously wrong" | Report observed words only; strip inferred intent |
+| False consensus | "Group agreed" over an unresolved split | Flag disagreement; set Status Deferred/Escalated |
+| Verbatim dump | Notes mirror the raw transcript length | Summarize; quote only load-bearing wording |
+| Section omission | Empty Decisions/Actions silently dropped | State "No decisions recorded" explicitly (Edge Case 2) |
+| HTML/markdown drift | Two outputs disagree | Regenerate HTML from markdown source of truth |
+| Leaked sensitive content | PII/comp/legal in shared file | Redact per Edge Case 6 before distribution |
+
+---
+
 ## Validation Gate
 
 Before delivering the final meeting notes, confirm every item:
@@ -248,8 +314,14 @@ Before delivering the final meeting notes, confirm every item:
 - [ ] Speaker attribution is present where identifiable
 - [ ] No editorializing or interpreting speaker intent
 - [ ] Unresolved items are explicitly marked as Deferred or Escalated
-- [ ] HTML output (if requested) uses brand colors #122562, #FFD700, #137DC5
+- [ ] HTML output (if requested) uses brand colors #122562, #FFD700, #137DC5 and degrades to system fonts offline
 - [ ] Follow-up section includes next meeting date and carry-over items
+- [ ] No hallucinated metadata — every field is from source or explicitly flagged
+- [ ] Sensitive/off-the-record content redacted before any external share (Edge Case 6)
+- [ ] Decisions and actions are distinct rows (no conflation)
+
+If any box cannot be checked, deliver with the gap **visibly flagged** rather than silently
+filled — a flagged hole is fixable; a confident fabrication is not. [INFERRED]
 
 ---
 

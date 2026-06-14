@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "skill": "project-create",
+  "cases": [
+    {
+      "id": "scaffold_new_atlas",
+      "input": "Start a new Jarvis OS project called \"Atlas — Fase II\". No folder exists yet.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "slug_derivation",
+      "input": "Crear proyecto \"Migración CRM Q3\" — derive the kebab-case slug and reserve the next P-NNN.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "folder_already_exists",
+      "input": "Create project Helios, but 02_Proyectos/helios/ already exists with local edits.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "quality_criteria"]
+    },
+    {
+      "id": "empty_intent_stop",
+      "input": "Crear proyecto.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "slug_collision",
+      "input": "Create project \"Orion\"; slug orion already maps to P-007 but this is a different effort.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "id_collision",
+      "input": "Scaffold project Nimbus and assign P-012, even though P-012 is already taken in the registry.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts"]
+    },
+    {
+      "id": "partial_scaffold",
+      "input": "Project vega/ has CLAUDE.md and MEMORY.md but no TAREAS.md — complete it without touching the existing files.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "quality_criteria"]
+    },
+    {
+      "id": "rule9_overflow",
+      "input": "Scaffold project \"Data Platform\" whose CLAUDE.md draft would run past 70 lines.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "wrong_sector_inferred",
+      "input": "Create project \"Marketing Site Revamp\" — the III Core default may be wrong for this name.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "assets"]
+    },
+    {
+      "id": "force_overwrite_guard",
+      "input": "Re-scaffold project zephyr with --force to refresh its CLAUDE.md.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "quality_criteria", "deterministic_scripts"]
+    }
+  ]
+}

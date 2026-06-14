@@ -1,0 +1,123 @@
+{
+  "cases": [
+    {
+      "id": "route-ab-from-did-it-work",
+      "input": "We shipped a new checkout button color to 50% of traffic last week. Did it actually improve checkout completion?",
+      "expected_checks": [
+        "routes_to_ab-testing",
+        "asks_sample_size_and_significance_before_claiming_win",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-funnel-from-dropoff",
+      "input": "Here are signup_completed=10000, profile_created=6500, first_action=2600. Where are users dropping off in onboarding?",
+      "expected_checks": [
+        "routes_to_funnel-analytics",
+        "states_denominator_policy_and_unit",
+        "counts_non_increasing",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-events-naming",
+      "input": "Design the event taxonomy for our new subscription billing flow — we keep firing events called success and click with no structure.",
+      "expected_checks": [
+        "routes_to_analytics-events",
+        "enforces_object_action_snake_case",
+        "rejects_reserved_and_vague_names",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-instrumentation-vs-events",
+      "input": "Our KPI is checkout_completion_rate. What custom parameters and scope do we capture in code so it computes correctly in Amplitude?",
+      "expected_checks": [
+        "routes_to_metrics-instrumentation",
+        "specifies_scope_unit_aggregation_and_cardinality",
+        "chooses_client_vs_server_capture",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-kpi-tree",
+      "input": "Help us pick a North Star metric and supporting KPIs for a B2B collaboration tool; we have a dozen dashboards and no focus.",
+      "expected_checks": [
+        "routes_to_kpi-framework",
+        "pairs_each_lagging_kpi_with_leading_driver",
+        "every_kpi_has_owner_and_decision",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-cohort-retention",
+      "input": "Compare month-1 and month-3 retention for our January vs February signup cohorts after we changed onboarding.",
+      "expected_checks": [
+        "routes_to_cohort-analysis",
+        "denominators_fixed_at_cohort_t0",
+        "no_causal_claim_without_experiment",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-realtime-tile",
+      "input": "We need a live checkout-error tile that updates within 30 seconds at 2000 events per second, with an alert when errors spike.",
+      "expected_checks": [
+        "routes_to_real-time-analytics",
+        "transport_choice_justified_against_latency_budget",
+        "alerts_debounced_with_hysteresis",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "route-viz-chart-choice",
+      "input": "Build a dashboard card showing 12 months of signups split by three plan tiers, refreshed hourly.",
+      "expected_checks": [
+        "routes_to_data-visualization",
+        "chart_type_matches_data_story",
+        "colorblind_safe_palette_and_fallback",
+        "assets"
+      ]
+    },
+    {
+      "id": "ab-underpowered-traffic",
+      "input": "Baseline conversion is 5%, we want to detect a 0.2pp lift, but we only get 800 visitors a day. Can we run this A/B test?",
+      "expected_checks": [
+        "routes_to_ab-testing",
+        "declares_underpowered_when_N_unreachable_in_runtime",
+        "no_fabricated_sample_size",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "ambiguous-events-vs-instrumentation",
+      "input": "We want to track add-to-cart properly across web and iOS so revenue lines up in our warehouse.",
+      "expected_checks": [
+        "disambiguates_analytics-events_vs_metrics-instrumentation",
+        "defines_system_of_record_and_dedup_key",
+        "no_direct_pii_in_properties",
+        "assets"
+      ]
+    },
+    {
+      "id": "gate-missing-instrumentation",
+      "input": "Report our activation rate KPI value for last quarter — but we never instrumented an activation event.",
+      "expected_checks": [
+        "routes_to_kpi-framework",
+        "blocks_value_when_instrumentation_missing",
+        "marks_not_verified_instead_of_guessing",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "funnel-simpsons-check",
+      "input": "Overall checkout conversion went up but our mobile and desktop segments both went down this month. Explain the funnel.",
+      "expected_checks": [
+        "routes_to_funnel-analytics",
+        "checks_simpsons_paradox_on_segment_mix",
+        "decomposes_before_concluding",
+        "quality_criteria"
+      ]
+    }
+  ]
+}

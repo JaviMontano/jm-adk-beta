@@ -1,0 +1,43 @@
+{
+  "skill": "qbr-quarterly",
+  "verdict_vocabulary": ["pass", "conditional", "fail", "not-verified"],
+  "rule": "Un solo 'fail' bloquea la entrega. 'not-verified' nunca cuenta como 'pass'.",
+  "dimensions": [
+    {
+      "id": "baseline_integrity",
+      "weight": 0.20,
+      "question": "El QBR se audito contra el baseline registrado de OKRs, no de memoria.",
+      "pass_when": "Baseline localizado y citado; sin baseline el QBR se detuvo como {VACIO_CRITICO}."
+    },
+    {
+      "id": "evidence_linked_status",
+      "weight": 0.25,
+      "question": "Cada estado de meta cuelga de metrica observada con fuente tagueada.",
+      "pass_when": "logrado/parcial/fallido con {DOC} o {EXTRAIDO_HILO}; metas sin medir marcadas {POR_CONFIRMAR}."
+    },
+    {
+      "id": "lessons_connected",
+      "weight": 0.15,
+      "question": "Toda lecion va a causa raiz y mapea a un objetivo o riesgo del proximo Q.",
+      "pass_when": "Cero lecciones huerfanas; cada una con causa accionable."
+    },
+    {
+      "id": "objectives_measurable",
+      "weight": 0.20,
+      "question": "Cada objetivo nuevo es medible y tiene owner.",
+      "pass_when": "Todos con metrica + owner + dependencia; ninguno es deseo sin metrica."
+    },
+    {
+      "id": "tag_governance",
+      "weight": 0.10,
+      "question": "Una sola familia de tags Jarvis {...}, sin {WEB} sin cita ni mezcla con [...].",
+      "pass_when": "Familia unica; exactamente un tag por afirmacion no obvia."
+    },
+    {
+      "id": "safety_and_brand",
+      "weight": 0.10,
+      "question": "Cero precios inventados, sin PII de cliente, marca unica, persistencia aditiva.",
+      "pass_when": "Sin precios; sin PII; un solo workspace/marca; sin overwrite no revisado."
+    }
+  ]
+}

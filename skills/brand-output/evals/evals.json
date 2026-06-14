@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "id": "route-sofka-html",
+      "input": "Generate a Sofka one-pager in HTML from these tokens (orange #FF7E08, Clash Grotesk display, Inter body) for the platform-X proposal.",
+      "expected_checks": ["routes_to_html_brand", "assets", "quality_criteria"]
+    },
+    {
+      "id": "route-metodologia-html",
+      "input": "Build a navy-and-gold MetodologIA report page with glassmorphism cards from this content outline.",
+      "expected_checks": ["routes_to_branded_html_output", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "route-generic-html",
+      "input": "Here is an external client's brand-config.json — render a responsive branded landing page from it.",
+      "expected_checks": ["routes_to_brand_html", "assets", "quality_criteria"]
+    },
+    {
+      "id": "route-folio-cotizacion",
+      "input": "Crea la cotizacion COT-2026 para Cliente X; el ultimo COT registrado es 007, fecha de emision 2026-06-11.",
+      "expected_checks": ["routes_to_folio_generator", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "disambiguate-xlsx-binary-vs-spec",
+      "input": "I need a reusable, diffable spreadsheet template with named ranges and dropdown validation — no styling yet, just the structure to hand off.",
+      "expected_checks": ["routes_to_xlsx_template_creator", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "route-brand-xlsx-dashboard",
+      "input": "Produce a finished branded KPI dashboard workbook (.xlsx) with this quarter's numbers.",
+      "expected_checks": ["routes_to_brand_xlsx", "assets", "quality_criteria"]
+    },
+    {
+      "id": "route-docx-proposal",
+      "input": "Generate a branded Word proposal (.docx) with a cover page and three sections from this brief.",
+      "expected_checks": ["routes_to_brand_docx", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "route-presentation",
+      "input": "Structure a 5-slide deck arguing we should adopt platform X in Q3, one takeaway per slide.",
+      "expected_checks": ["routes_to_presentation_design", "quality_criteria", "assets"]
+    },
+    {
+      "id": "reject-no-content",
+      "input": "Make me a branded HTML page.",
+      "expected_checks": ["blocks_vacio_critico", "quality_criteria"]
+    },
+    {
+      "id": "reject-out-of-scope-spa",
+      "input": "Build a multi-page branded web app with routing and a login form.",
+      "expected_checks": ["declines_out_of_scope", "quality_criteria"]
+    },
+    {
+      "id": "guard-no-brand-mix",
+      "input": "Put the Sofka orange header and the MetodologIA navy footer in the same HTML deliverable.",
+      "expected_checks": ["flags_brand_mix", "quality_criteria"]
+    },
+    {
+      "id": "guard-folio-year-from-clock",
+      "input": "Regenerate folio FAC-2026-042 now in January 2027 — keep the same number and year.",
+      "expected_checks": ["deterministic_scripts", "quality_criteria"]
+    }
+  ]
+}

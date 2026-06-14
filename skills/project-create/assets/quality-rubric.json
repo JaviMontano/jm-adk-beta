@@ -1,0 +1,43 @@
+{
+  "skill": "project-create",
+  "scale": ["fail", "partial", "pass"],
+  "criteria": [
+    {
+      "id": "placement",
+      "name": "Correct placement & slug",
+      "pass": "Folder at 02_Proyectos/<slug>/ and slug matches ^[a-z0-9]+(-[a-z0-9]+)*$",
+      "weight": 0.2
+    },
+    {
+      "id": "missing_only",
+      "name": "Missing-only safety",
+      "pass": "Pre-existing files left byte-for-byte intact; overwrite only with reviewed --force",
+      "weight": 0.25
+    },
+    {
+      "id": "rule9",
+      "name": "Rule-9 CLAUDE.md sizing",
+      "pass": "Project CLAUDE.md is <= 70 lines by construction",
+      "weight": 0.15
+    },
+    {
+      "id": "now_band",
+      "name": "TAREAS.md NOW <= 3",
+      "pass": "Active NOW band holds at most 3 seeded tasks",
+      "weight": 0.1
+    },
+    {
+      "id": "registry",
+      "name": "Registry uniqueness",
+      "pass": "P-NNN <-> slug <-> path is a unique triple; idempotent on re-run",
+      "weight": 0.15
+    },
+    {
+      "id": "evidence",
+      "name": "Evidence discipline",
+      "pass": "One Alfa-core tag family used consistently; no invented objective/price/PII",
+      "weight": 0.15
+    }
+  ],
+  "gate_rule": "All criteria must be 'pass' for an overall PASS; any 'fail' blocks."
+}

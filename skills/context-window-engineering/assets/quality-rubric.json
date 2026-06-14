@@ -1,0 +1,41 @@
+{
+  "skill": "context-window-engineering",
+  "criteria": [
+    {
+      "id": "prefix_byte_identity",
+      "label": "Prefijo byte-idéntico",
+      "check": "El prefijo estático es idéntico byte a byte entre turnos; ningún valor por-turno (timestamp, request-id, contador) aparece en él.",
+      "fail_signal": "cache-hit rate bajo o inestable",
+      "evidence": "DOC"
+    },
+    {
+      "id": "dynamic_tail_last",
+      "label": "Cola dinámica al final",
+      "check": "Todo estado volátil vive en un único bloque <reminder> que es el último del contexto.",
+      "fail_signal": "dynamic tail intercalado o no final",
+      "evidence": "DOC"
+    },
+    {
+      "id": "edge_placement",
+      "label": "Reglas críticas en bordes",
+      "check": "Las reglas irrenunciables están en el borde inicial y reafirmadas en el borde final; ninguna queda solo en el centro.",
+      "fail_signal": "regla crítica falla en contexto largo",
+      "evidence": "DOC"
+    },
+    {
+      "id": "compaction_threshold",
+      "label": "Umbral de compactación explícito",
+      "check": "Existe un umbral fijo (>55% u otro justificado) cuya compactación no toca ni reordena los bordes.",
+      "fail_signal": "ausencia de umbral o bordes recortados",
+      "evidence": "CONFIG"
+    },
+    {
+      "id": "measured_validation",
+      "label": "Validación medida",
+      "check": "Se midió el cache-hit rate y se ejecutó la prueba de retención de la regla crítica en contexto largo.",
+      "fail_signal": "verde sin mediciones",
+      "evidence": "DOC"
+    }
+  ],
+  "gate": "PASA solo si los cinco criterios se cumplen con evidencia; nunca verde sin cache-hit + retención medidos."
+}

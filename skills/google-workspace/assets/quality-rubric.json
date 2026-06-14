@@ -1,0 +1,57 @@
+{
+  "skill": "google-workspace",
+  "version": "1.0.0",
+  "purpose": "Score a google-workspace routing decision and offline plan against the acceptance gate.",
+  "scale": { "0": "fail", "1": "partial", "2": "pass" },
+  "criteria": [
+    {
+      "id": "topic_correct",
+      "label": "Correct topic for the actual Google surface",
+      "evidence": ["DOC", "INFERENCE"],
+      "fail_if": "topic does not match the surface, or analytics setup/reporting conflated"
+    },
+    {
+      "id": "single_route",
+      "label": "Exactly one playbook loaded",
+      "evidence": ["DOC"],
+      "fail_if": "two or more references loaded 'to be safe'"
+    },
+    {
+      "id": "least_privilege_scope",
+      "label": "Narrowest scope/key per operation; Sheets bound to file not tab; Maps uses restricted API key",
+      "evidence": ["DOC"],
+      "fail_if": "broad write scope without escalation reason, tab-level scope claim, or Maps modeled as OAuth"
+    },
+    {
+      "id": "mutation_safety",
+      "label": "Mutations gated by human confirmation + read-before-write + idempotency key",
+      "evidence": ["CODE"],
+      "fail_if": "any mutation lacks consent, read-back, or idempotency key"
+    },
+    {
+      "id": "secrets_policy",
+      "label": "No client secret, refresh token, or key-file path in plan or fixtures",
+      "evidence": ["CODE"],
+      "fail_if": "secret-shaped value present or secrets placed in browser config"
+    },
+    {
+      "id": "error_taxonomy",
+      "label": "Error/quota handling covers 400, 401, 403, 429, 5xx, refresh/re-auth, backoff",
+      "evidence": ["DOC"],
+      "fail_if": "retry classes not distinguished or codes unmapped"
+    },
+    {
+      "id": "evidence_tags",
+      "label": "Alfa evidence tags on every claim; assumptions paired with verify steps",
+      "evidence": ["DOC"],
+      "fail_if": "untagged claims, mixed tag families, or assumptions without verification"
+    },
+    {
+      "id": "no_invention",
+      "label": "No invented quotas or prices; no green-as-success; offline plan only",
+      "evidence": ["DOC", "CODE"],
+      "fail_if": "fabricated quota/price, success asserted without evidence, or live call made"
+    }
+  ],
+  "pass_threshold": "every criterion scores 2; any 0 rejects the whole plan"
+}

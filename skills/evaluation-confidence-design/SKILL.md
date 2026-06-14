@@ -1,7 +1,8 @@
 ---
 name: evaluation-confidence-design
-version: 1.0.0
-description: "Disenar evaluacion con confidence calibrada contra labeled set, stratified sampling y criterios categoricos para reducir falsos positivos."
+version: 1.1.0
+last_updated: 2026-06-11
+description: "Disenar evaluacion con confidence calibrada contra labeled set, stratified sampling y criterios categoricos por severidad para reducir falsos positivos sin ocultar sesgo en metricas agregadas."
 owner: "JM Labs"
 triggers:
   - evaluation confidence design
@@ -19,25 +20,41 @@ allowed-tools:
 
 ## Capacidad
 
-Diseñar e implementar el sistema de evaluación de un agente o pipeline de clasificación de modo que la decisión de aceptar/rechazar un hallazgo no dependa de la `confidence` cruda del modelo, sino de un umbral **calibrado contra un labeled set**. La capacidad incluye: muestreo estratificado por `document_type` (u otra dimensión de riesgo) para que cada estrato esté representado, criterios categóricos con ejemplos positivos y negativos por severidad, capacidad de desactivar temporalmente una categoría con alta tasa de falsos positivos, y reporte de accuracy desglosada por estrato y por categoría en vez de una métrica agregada que oculta el sesgo.
+Diseñar el sistema de evaluación de un agente o pipeline de clasificación para que aceptar/rechazar un hallazgo dependa de un umbral **calibrado contra un labeled set**, no de la `confidence` cruda del modelo. Incluye: muestreo estratificado por `document_type` (u otra dimensión de riesgo) con mínimo por estrato, criterios categóricos con ejemplos +/- por severidad, disable temporal de categorías con FP rate alto, y reporte de accuracy + FP **desglosado** por estrato y categoría en vez de una métrica agregada que oculta el sesgo. [DOC]
 
 ## Cuándo usarla
 
-- Cuando un agente emite hallazgos con un score de `confidence` y alguien propone usar ese número crudo como umbral de corte.
-- Cuando el equipo evalúa con una sola muestra global y reporta una accuracy agregada.
-- Cuando una categoría concreta dispara muchos falsos positivos y no hay forma de aislarla.
-- Cuando el criterio de una categoría es vago ("sé conservador") en lugar de categórico con ejemplos +/-.
-- Antes de promover un evaluador a producción: la calibración es un gate de release.
+- Alguien propone cortar sobre la `confidence` cruda como umbral. [DOC]
+- Se evalúa con una sola muestra global y se reporta accuracy agregada. [DOC]
+- Una categoría dispara muchos falsos positivos y no hay forma de aislarla. [DOC]
+- El criterio de una categoría es vago ("sé conservador") en vez de categórico con +/-. [DOC]
+- Gate de release: antes de promover un evaluador a producción. La calibración es bloqueante. [DOC]
+
+**No la uses (anti-scope)** para entrenar/re-entrenar el modelo, etiquetar documentos crudos desde cero, ni para tunear prompts del agente productor. Esta skill evalúa salidas etiquetadas; no genera ground truth ni modifica el clasificador. [INFERENCIA]
+
+## Inputs → Outputs
+
+**Inputs:** labeled set humano (positivo/negativo) etiquetado además por `document_type` y por `category`; `raw_confidence` por hallazgo; dimensión de estratificación. [DOC]
+**Outputs:** calibration map (raw→precisión observada), umbral sobre confidence calibrada, criterios categóricos +/- por severidad, FP rate por categoría, lista de `disabled_categories`, y reporte desglosado por estrato+categoría. [DOC]
+
+**Vacío crítico:** sin ground truth etiquetado no hay calibración posible — detén y pide el labeled set, no inventes umbrales. [SUPUESTO]
 
 ## Cómo construir
 
-1. **Construir el labeled set.** Reúne ejemplos etiquetados por humano (positivo/negativo) y, crucialmente, etiquétalos también por `document_type` y por categoría de hallazgo. Sin ground truth no hay calibración posible.
-2. **Estratificar el muestreo.** Muestrea por `document_type` (u otra dimensión de riesgo) en vez de aleatorio global, garantizando un mínimo por estrato para que los estratos raros no desaparezcan de la métrica.
-3. **Calibrar la confidence.** Ajusta un mapeo (p. ej. binning o isotonic/Platt) de `confidence` cruda a probabilidad observada en el labeled set. El umbral de corte se elige sobre la confidence calibrada, no sobre la cruda.
-4. **Definir criterios categóricos.** Para cada categoría, redacta un criterio categórico con ejemplos positivos y negativos por nivel de severidad. Evita instrucciones vagas.
-5. **Medir FP rate por categoría.** Calcula la tasa de falsos positivos por categoría, no solo la accuracy global. Una categoría puede arrastrar la precisión sin que la métrica agregada lo muestre.
-6. **Habilitar disable temporal.** Implementa un flag para desactivar una categoría con FP rate alto mientras se rediseña su criterio, sin tumbar el resto del evaluador.
-7. **Reportar desglosado.** Emite accuracy y FP rate por estrato y por categoría. Corre `scripts/qa/run-confidence-fp-tests.py` como gate.
+1. **Labeled set.** Reúne ejemplos humanos +/- etiquetados también por `document_type` y `category`. [DOC]
+2. **Estratificar.** Muestrea por `document_type` con mínimo por estrato; los estratos raros no deben desaparecer de la métrica. [DOC]
+3. **Calibrar.** Ajusta un mapeo (binning, isotonic o Platt) de `raw_confidence` a precisión observada en el labeled set. El corte se elige sobre la calibrada. [DOC]
+4. **Criterios categóricos.** Por categoría, criterio con ejemplos +/- por nivel de severidad. Evita instrucciones vagas. [DOC]
+5. **FP rate por categoría.** Una categoría puede arrastrar la precisión sin que la métrica agregada lo muestre. [DOC]
+6. **Disable temporal.** Flag para desactivar una categoría con FP alto mientras se rediseña su criterio, sin tumbar el resto. [DOC]
+7. **Reportar desglosado** por estrato y categoría; corre el gate de QA. [DOC]
+
+## Decisiones y trade-offs
+
+- **Calibrada vs cruda:** la calibrada cuesta un labeled set y re-ajuste cuando el modelo cambia, pero la cruda no es comparable entre versiones ni entre categorías. Trade-off aceptado: el coste de mantenimiento compra umbrales con significado de precisión real. [INFERENCIA]
+- **Estratificado vs aleatorio global:** el global es más barato pero invisibiliza estratos raros (justo los de mayor riesgo). Estratifica por la dimensión de riesgo, no por volumen. [INFERENCIA]
+- **Disable temporal vs subir el umbral global:** subir el umbral global sacrifica recall en categorías sanas para tapar una ruidosa. Aislar la categoría preserva el resto. [INFERENCIA]
+- **Método de calibración:** isotonic necesita más datos pero captura no-monotonías; Platt/binning bastan con labeled sets chicos. Elige por tamaño del set, no por moda. [SUPUESTO]
 
 ## Patrón correcto
 
@@ -86,23 +103,43 @@ def evaluate_bad(findings, raw_threshold=0.7):
     return accepted, accuracy  # metrica agregada oculta el sesgo por categoria
 ```
 
-## Checklist de validación
+## Edge cases
 
-- ¿El umbral usa confidence **calibrada** contra el labeled set, no la cruda?
-- ¿El muestreo es **estratificado** por `document_type` con mínimo por estrato?
-- ¿Cada categoría tiene **criterio categórico con ejemplos +/-** por severidad?
-- ¿Se reporta **FP rate por categoría**, no solo accuracy agregada?
-- ¿Existe **disable temporal** para categorías con FP alto?
-- ¿Corre `scripts/qa/run-confidence-fp-tests.py` y pasa como gate?
+- **Estrato con muy pocos labels:** `per_stratum` mayor que el bucket → reporta cobertura insuficiente y marca el estrato como no-calibrado, no rellenes con otro estrato. [INFERENCIA]
+- **Categoría 100% en `disabled_categories`:** su FP rate no entra al reporte; lístala aparte como "suspendida", no como 0% FP (sería un falso verde). [INFERENCIA]
+- **`calibration_map` vacío o no monótono:** rechaza; un mapa no monótono indica fit defectuoso, no lo apliques. [SUPUESTO]
+- **Bucket aceptado vacío** (todo bajo umbral): `fp_rate` por categoría queda indefinido — repórtalo como "sin aceptados", nunca como precisión perfecta. [INFERENCIA]
+- **Drift del modelo:** un cambio de versión invalida el calibration map; re-ajusta antes de reusar umbrales. [INFERENCIA]
 
-## Paquete deterministico
+## Self-correction triggers
 
-- Usa `assets/evaluation-schema.json` y `assets/confidence-policy.json` para declarar el evaluador antes de fijar umbrales o disabled categories.
-- Ejecuta `scripts/compile-evaluation-confidence.py <evaluacion.json> --output <reporte.md>` para generar un reporte reproducible con labeled set, muestreo, calibration map, criterios, metricas y riesgos.
-- Ejecuta `bash skills/evaluation-confidence-design/scripts/check.sh` antes de marcar la skill como lista.
-- Rechaza corte sobre confidence cruda, muestreo global, categorias sin ejemplos +/-, high-FP activo y accuracy agregada como metrica primaria.
+Si te descubres haciendo cualquiera de esto, deténte y reencuadra: comparar confidences crudas entre versiones; reportar una sola accuracy agregada como métrica primaria; muestrear aleatorio global; redactar un criterio sin ejemplos +/-; presentar una categoría disabled como sana; o fijar umbrales sin labeled set. [INFERENCIA]
+
+## Validation gate (antes de marcar lista)
+
+- ¿El umbral usa confidence **calibrada** contra el labeled set, no la cruda? [DOC]
+- ¿El muestreo es **estratificado** por `document_type` con mínimo por estrato? [DOC]
+- ¿Cada categoría tiene **criterio categórico con ejemplos +/-** por severidad? [DOC]
+- ¿Se reporta **FP rate por categoría**, no solo accuracy agregada? [DOC]
+- ¿Existe **disable temporal** para categorías con FP alto? [DOC]
+- ¿Corre `scripts/qa/run-confidence-fp-tests.py` y pasa como gate? [SUPUESTO]
+
+## Paquete determinístico
+
+- `assets/evaluation-schema.json` y `assets/confidence-policy.json` declaran el evaluador **antes** de fijar umbrales o disabled categories. [SUPUESTO]
+- `scripts/compile-evaluation-confidence.py <evaluacion.json> --output <reporte.md>` genera un reporte reproducible (labeled set, muestreo, calibration map, criterios, métricas, riesgos). [SUPUESTO]
+- `bash skills/evaluation-confidence-design/scripts/check.sh` antes de marcar lista. [SUPUESTO]
+- Rechaza: corte sobre confidence cruda, muestreo global, categorías sin +/-, high-FP activo, accuracy agregada como métrica primaria. [DOC]
+
+> Los assets/scripts anteriores son **contratos objetivo**, aún no presentes en repo; créalos al materializar la skill. Hasta entonces son `[SUPUESTO]`, no `[CÓDIGO]`. [INFERENCIA]
+
+## Upgrade safety
+
+- **No sobrescribir ediciones locales:** al completar archivos faltantes, crea solo lo ausente; nunca pises cambios locales sin diff explícito. [SUPUESTO]
+- **Override experimental:** variantes de prueba van bajo `.local/` y tienen prioridad sobre la versión versionada; no edites el canónico para experimentar. [SUPUESTO]
+- **Bump de versión:** sube `version` y `last_updated` al cambiar el contrato; no rompas `triggers` ni el `name` (rompe el catálogo y los cross-links). [DOC]
 
 ## Katas y skills relacionadas
 
-- Katas: 29, 30.
-- Skills relacionadas: `katas-confidence-stratified-sampling`, `katas-false-positive-criteria`.
+- Katas: 29, 30. [DOC]
+- Skills: `katas-confidence-stratified-sampling`, `katas-false-positive-criteria`. [DOC]

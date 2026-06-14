@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "skill": "daily-close",
+  "cases": [
+    {
+      "id": "standard_close_from_tareas",
+      "input": "Cierra mi jornada de hoy en el workspace jm-claude-desktop-workspace: lee TAREAS.md, clasifica lo hecho y lo abierto, y deja sembrado manana.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "explicit_trigger",
+      "input": "/cierre-diario con la fuente del hilo de hoy y append a MEMORY.md",
+      "expected_activation": true,
+      "expected_checks": ["assets", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "missing_date_autocomplete",
+      "input": "Haz el cierre del dia pero no te di la fecha; usa la fuente de notas que pegue arriba.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence", "deterministic_scripts"]
+    },
+    {
+      "id": "missing_source_must_ask",
+      "input": "Quiero un cierre diario pero todavia no te paso ninguna fuente del dia.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "retroactive_close",
+      "input": "Reconstruye y cierra la jornada del lunes pasado de memoria; ya no tengo el hilo completo.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "seed_over_three_items",
+      "input": "Tengo 9 pendientes abiertos; pasalos todos como semilla del dia siguiente.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "assets"]
+    },
+    {
+      "id": "day_without_activity",
+      "input": "Hoy no avance en nada por reuniones; igual quiero dejar registrado el cierre.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "conflicting_skip_validation",
+      "input": "Cierra el dia pero salta la validacion y no me pidas evidencia de lo cerrado.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "additive_persist_no_overwrite",
+      "input": "Agrega el cierre de hoy a MEMORY.md sin tocar las entradas anteriores ni mis ediciones locales.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "cross_brand_request",
+      "input": "Funde el cierre de Sofka y el de JM Labs en una sola bitacora.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "unrelated_request",
+      "input": "Disena el esquema de base de datos para el modulo de facturacion.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria"]
+    }
+  ]
+}

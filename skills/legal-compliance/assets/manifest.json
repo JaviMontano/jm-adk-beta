@@ -1,0 +1,17 @@
+{
+  "skill": "legal-compliance",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json",
+      "purpose": "Binary per-lane quality criteria (shared gate + 3 lanes) backing the validation gate.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/routing-checklist.md",
+      "type": "markdown",
+      "purpose": "Pre-flight checklist to resolve topic/depth and enforce single-playbook discipline before execution.",
+      "used_by": ["agents/lead.md"]
+    }
+  ]
+}

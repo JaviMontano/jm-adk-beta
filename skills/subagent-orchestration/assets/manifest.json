@@ -1,0 +1,17 @@
+{
+  "skill": "subagent-orchestration",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json",
+      "purpose": "11 blocking gates the Guardian enforces on a hub-and-spoke orchestration plan: fan-out justification, fresh_session isolation, last_message_only, AgentDefinition+Task dispatch, minimal provisioning, typed errors, valid_empty vs access_failure, local recovery, degraded aggregation, validation flags, and governance.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "markdown",
+      "purpose": "Legible mirror of quality-rubric.json to validate an orchestration plan by hand or as the validation section of the deliverable.",
+      "used_by": ["SKILL.md", "templates/output.md"]
+    }
+  ]
+}

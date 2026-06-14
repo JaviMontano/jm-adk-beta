@@ -1,0 +1,42 @@
+{
+  "skill": "station-create",
+  "scale": "0=absent, 1=partial, 2=met",
+  "pass_threshold": "all criteria == 2",
+  "criteria": [
+    {
+      "id": "placement",
+      "criterion": "Station placed at correct path; slug matches ^[a-z0-9]+(-[a-z0-9]+)*$",
+      "evidence_tag": "[CONFIG]"
+    },
+    {
+      "id": "type_recorded",
+      "criterion": "Type recorded as universal|dedicated; dedicated has a bound sector; type never guessed",
+      "evidence_tag": "[DOC]"
+    },
+    {
+      "id": "structure_traced",
+      "criterion": "P06/P23/P24 structure matches the chosen type and every folder traces to the ontology (no invented structure)",
+      "evidence_tag": "[SUPUESTO]"
+    },
+    {
+      "id": "rule9",
+      "criterion": "CLAUDE.md exists and is <=70 lines, achieved by linking out not inlining",
+      "evidence_tag": "[DOC]"
+    },
+    {
+      "id": "missing_only",
+      "criterion": "No pre-existing file modified without --force after a reviewed diff",
+      "evidence_tag": "[DOC]"
+    },
+    {
+      "id": "registry",
+      "criterion": "Registry maps station<->slug<->type<->path with no duplicate slug or path; re-run is idempotent",
+      "evidence_tag": "[INFERENCIA]"
+    },
+    {
+      "id": "tag_discipline",
+      "criterion": "Exactly one Alfa-core evidence family used per file; no prices; single-brand (JM Labs); no client PII",
+      "evidence_tag": "[DOC]"
+    }
+  ]
+}

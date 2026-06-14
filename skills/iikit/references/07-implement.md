@@ -112,8 +112,10 @@ Do NOT mark `[x]` in tasks.md until all three gates pass. [EXPLICIT]
 
 Before writing source code: [EXPLICIT]
 1. **Install dependencies** from plan.md Technical Context (detect package manager, add runtime + dev deps, commit manifest + lockfile)
-2. **Install Tessl tiles** for each major dependency: `tessl search <pkg>` then `tessl install <tile>`. Query tile docs before writing library code. See [tessl-integration.md](references/tessl-integration.md).
+2. **Install Tessl tiles** for each major dependency: `tessl search <pkg>` then `tessl install <tile>`. Query tile docs before writing library code. See [tessl-integration.md](references/tessl-integration.md). (Tile install + query is referenced elsewhere as "§4" for historical numbering; §3.2 is canonical.) [EXPLICIT]
 3. **Scaffold project** if needed. For existing directories, use force/overwrite flags. See [ignore-patterns.md](references/ignore-patterns.md) for gitignore patterns.
+
+> **Section numbering**: §4 and §5 are intentionally folded into §3 (Tessl = §3.2) and §6 respectively; cross-references to "§4 Tessl tiles" resolve to §3.2. Do not renumber — downstream artifacts and `formatting-guide.md` anchor on these labels. [EXPLICIT]
 
 ### 6. Parse and Execute Tasks
 
@@ -133,7 +135,16 @@ Cross-story parallelism: independent stories can run as parallel workstreams aft
 
 **6.4 Rules**: install dependencies (§3) and Tessl tiles (§4) before writing code, query tiles before library code, tests before code if TDD, run tests after writing them, only orchestrator updates tasks.md.
 
-**6.5 Failure handling**: let in-flight siblings finish, mark successes, report failures, halt phase. Constitutional violations in workers: worker stops, reports to orchestrator, treated as task failure.
+**6.5 Failure handling**: let in-flight siblings finish, mark successes, report failures, halt phase. Constitutional violations in workers: worker stops, reports to orchestrator, treated as task failure. Do NOT auto-retry a failed task more than once without surfacing the error to the user — a silent retry loop can mask a constitutional or environment fault. [EXPLICIT]
+
+**Failure modes (named)**: [EXPLICIT]
+| Mode | Trigger | Orchestrator action |
+|------|---------|---------------------|
+| Worker crash | subagent returns no result / non-zero | mark task failed, finish siblings, halt phase |
+| Partial batch | some `[P]` tasks pass, others fail | commit + `[x]` the passes, halt before next phase |
+| Lockfile drift | dependency install changes lockfile mid-run | commit lockfile as its own change before proceeding |
+| Tasks.md write race | a worker tries to edit tasks.md | reject — only orchestrator writes tasks.md (§6.4) |
+| Test flake | GREEN-phase test fails intermittently | re-run once; if still red, treat as code failure, do not mark `[x]` |
 
 **6.6 Task Commits**: After each task is marked `[x]`, stage its changed files (`git add` specific files, NOT `-A`) and commit:
 
@@ -145,6 +156,14 @@ Cross-story parallelism: independent stories can run as parallel workstreams aft
   ```bash
   bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/generate-dashboard-safe.sh
   ```
+
+**Worked example** (FEATURE_DIR = `specs/001-user-auth/`, task `T-012 Add login endpoint`): [EXPLICIT]
+```bash
+git add src/auth/login.ts tests/step_definitions/login_steps.ts
+git commit -m "feat(001-user-auth): T-012 Add login endpoint" \
+  --trailer "iikit-feature: 001-user-auth" --trailer "iikit-task: T-012"
+```
+Bugfix variant (task `T-B003` closing `BUG-007` linked to issue `#42`, §9): subject `fix(001-user-auth): T-B003 Fix null session crash`, and the **last** task's commit body adds `Fixes #42`. Never `git add -A` — staging unrelated files breaks per-task traceability and the dashboard's file→task mapping. [EXPLICIT]
 
 ### 7. Output Validation
 
@@ -168,7 +187,16 @@ After completing bug fix tasks (tasks with `T-B` prefix pattern): [EXPLICIT]
 
 ### 10. Completion
 
-All tasks `[x]`, features validated against spec, test execution enforcement (§2.1) satisfied, Tessl usage reported. [EXPLICIT]
+Acceptance criteria — ALL must hold before declaring complete: [EXPLICIT]
+1. Every non-skipped task is `[x]` in tasks.md (orchestrator-written)
+2. Each FR-XXX from spec.md maps to at least one completed task (no orphaned requirement)
+3. If `.feature` files exist: §2.4 three-gate (steps defined, GREEN, step-quality) passed for every task
+4. Test execution enforcement (§2.3) satisfied — execution output exists, no `[x]` without a run
+5. Every completed task produced a commit (or was a no-op, §6.6) with correct trailers
+6. Tessl tile usage reported; no constitutional violation left unresolved
+7. Dashboard regenerated and reflects final state
+
+If any criterion fails, the feature is **incomplete** — `next-step.sh` will return `/iikit-07-implement` (resume), not null. [EXPLICIT]
 
 ## Error Handling
 
@@ -219,14 +247,24 @@ Example invocations: [EXPLICIT]
 
 ## Assumptions & Limits
 
-- Assumes access to project artifacts (code, docs, configs) [EXPLICIT]
+- Assumes access to project artifacts (code, docs, configs) and a writable git working tree [EXPLICIT]
 - Requires English-language output unless otherwise specified [EXPLICIT]
 - Does not replace domain expert judgment for final decisions [EXPLICIT]
+- **Anti-scope** — this phase does NOT: author or edit specs/plans/tasks (run phases 01–05); modify `.feature` files (§2.2 — re-run `/iikit-04-testify`); merge/deploy without explicit user choice (§Next Steps A/B/C); invent requirements absent from spec.md; or alter tasks.md from a worker (orchestrator-only, §6.4). [EXPLICIT]
+- Parallel execution (§6.2) requires a runtime with `Task` subagent dispatch; without it, falls back to sequential — correctness is preserved, throughput is not. [EXPLICIT]
 
 ## Edge Cases
 
 | Scenario | Handling |
 |----------|----------|
-| Empty or minimal input | Request clarification before proceeding |
-| Conflicting requirements | Flag conflicts explicitly, propose resolution |
-| Out-of-scope request | Redirect to appropriate skill or escalate |
+| Empty or minimal input | Request clarification before proceeding [EXPLICIT] |
+| Conflicting requirements | Flag conflicts explicitly, propose resolution [EXPLICIT] |
+| Out-of-scope request | Redirect to appropriate skill or escalate [EXPLICIT] |
+| `needs_selection: true` (multiple features) | Present numbered table, set-active-feature, re-run prereqs (§Prerequisites step 3) [EXPLICIT] |
+| All unchecked tasks are `T-B` | Bugfix-only run — relaxed gates, require bugs.md not spec/plan (§Pre-Implementation) [EXPLICIT] |
+| `.feature` files present but TDD framework absent | `verify-steps.sh` returns `DEGRADED` — proceed with caution, do not hard-block (§2.1) [EXPLICIT] |
+| TDD mandatory but `tests/features/` empty | ERROR: instruct `/iikit-04-testify` (§2) [EXPLICIT] |
+| GREEN test still fails after retry | Fix production code, never the test or `.feature`; do not mark `[x]` (§2.3, §6.5) [EXPLICIT] |
+| Checklist <100% complete | Ask user to proceed or block (standard mode only; bugfix skips) [EXPLICIT] |
+| No files changed by a task | Skip the commit, still mark `[x]` (§6.6) [EXPLICIT] |
+| Linked GitHub issue but `gh` unavailable | Fall back to `curl` GitHub API for comment; `Fixes #N` still closes on push (§9) [EXPLICIT] |

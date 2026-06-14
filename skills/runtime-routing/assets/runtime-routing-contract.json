@@ -1,0 +1,48 @@
+{
+  "skill": "runtime-routing",
+  "description": "Shape of a valid route decision report. Used to make the route machine-checkable.",
+  "type": "object",
+  "required": ["task", "recommendation", "required_capabilities", "capability_table", "fallback", "gate"],
+  "properties": {
+    "task": { "type": "string" },
+    "recommendation": {
+      "type": "object",
+      "required": ["runtime", "permission_level", "reason"],
+      "properties": {
+        "runtime": { "enum": ["claude", "codex", "gemini", "antigravity", "vscode", "local"] },
+        "permission_level": { "enum": ["local", "repo-cli", "ide", "hosted-agentic", "remote-model"] },
+        "reason": { "type": "string" }
+      }
+    },
+    "required_capabilities": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "capability_table": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["capability", "runtime", "status", "evidence_id"],
+        "properties": {
+          "capability": { "type": "string" },
+          "runtime": { "type": "string" },
+          "status": { "enum": ["supported", "validation pending", "unsupported"] },
+          "evidence_id": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "fallback": {
+      "type": "object",
+      "required": ["markdown_first", "no_auth_path", "secret_boundary"],
+      "properties": {
+        "markdown_first": { "type": "string" },
+        "no_auth_path": { "type": "string" },
+        "secret_boundary": { "type": "string" }
+      }
+    },
+    "gate": { "enum": ["pass", "fail"] }
+  },
+  "invariants": [
+    "Any capability_table row with status 'supported' MUST have a non-null evidence_id.",
+    "recommendation.runtime MUST be present in runtime-catalog-policy.json.",
+    "gate must be 'pass' for the report to be done."
+  ]
+}

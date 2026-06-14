@@ -1,0 +1,17 @@
+{
+  "skill": "jarvis-bootstrap",
+  "assets": [
+    {
+      "path": "assets/checklist.md",
+      "type": "markdown",
+      "purpose": "Operational checklist the guardian walks before declaring gate=pass.",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    },
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json",
+      "purpose": "Weighted acceptance-criteria rubric used to score a bootstrap run.",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    }
+  ]
+}

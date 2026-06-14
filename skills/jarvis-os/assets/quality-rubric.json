@@ -1,0 +1,44 @@
+{
+  "skill": "jarvis-os",
+  "purpose": "Rúbrica de calidad para evaluar un ruteo COOL del pack paraguas Jarvis OS.",
+  "scale": ["fail", "partial", "pass"],
+  "criteria": [
+    {
+      "id": "state_read_first",
+      "label": "Estado leído antes de inferir",
+      "check": "Se leyeron docs/jarvis-os/ y user-context/context/routing-map.md; no se infirió desde caché/historial.",
+      "weight": 0.2
+    },
+    {
+      "id": "routing_resolved",
+      "label": "Ruteo concreto o pregunta",
+      "check": "La cascada resolvió sector N0-N4 + skill/cadencia objetivo, o se formuló pregunta explícita ante ambigüedad.",
+      "weight": 0.25
+    },
+    {
+      "id": "no_domain_artifact",
+      "label": "Deriva, no produce",
+      "check": "El pack enrutó/derivó; no produjo el artefacto de dominio dentro del pack.",
+      "weight": 0.15
+    },
+    {
+      "id": "sovereignty_boundary",
+      "label": "Frontera de soberanía",
+      "check": "Nada íntimo en skills/ tracked; user-context/ solo leído; sin secretos.",
+      "weight": 0.15
+    },
+    {
+      "id": "rules_preserved",
+      "label": "Reglas operativas",
+      "check": "NOW<=3, rule-stacking, Rule-9 por capa y kebab-case respetados.",
+      "weight": 0.15
+    },
+    {
+      "id": "single_tag_family",
+      "label": "Tags de una familia",
+      "check": "Verification tags presentes y de una sola familia por documento.",
+      "weight": 0.1
+    }
+  ],
+  "pass_threshold": 0.85
+}

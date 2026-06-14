@@ -1,0 +1,42 @@
+{
+  "nodes": [
+    { "id": "kata_router", "label": "kata router (hub)", "kind": "skill" },
+    { "id": "topic", "label": "topic resolution", "kind": "decision" },
+    { "id": "depth", "label": "depth (quick/deep)", "kind": "parameter" },
+    { "id": "playbook", "label": "single playbook (spoke)", "kind": "artifact" },
+    { "id": "loop_control", "label": "loop & control cluster", "kind": "cluster" },
+    { "id": "tools_mcp", "label": "tools & MCP cluster", "kind": "cluster" },
+    { "id": "extraction_review", "label": "extraction & review cluster", "kind": "cluster" },
+    { "id": "context_memory", "label": "context & memory cluster", "kind": "cluster" },
+    { "id": "hooks_config", "label": "hooks & config cluster", "kind": "cluster" },
+    { "id": "multiagent", "label": "multi-agent cluster", "kind": "cluster" },
+    { "id": "stop_reason", "label": "typed stop_reason control", "kind": "concept" },
+    { "id": "categorical_criteria", "label": "categorical FP criteria", "kind": "concept" },
+    { "id": "forced_structure", "label": "forced JSON tool_choice", "kind": "concept" },
+    { "id": "hub_spoke", "label": "hub-and-spoke isolation", "kind": "concept" },
+    { "id": "edge_placement", "label": "edge placement / compaction", "kind": "concept" },
+    { "id": "evidence_tags", "label": "Alfa-core evidence tags", "kind": "standard" },
+    { "id": "validation_gate", "label": "acceptance validation gate", "kind": "gate" },
+    { "id": "constitution", "label": "Constitution v6.0.0", "kind": "standard" }
+  ],
+  "edges": [
+    { "from": "kata_router", "to": "topic", "rel": "resolves" },
+    { "from": "topic", "to": "playbook", "rel": "selects-exactly-one" },
+    { "from": "depth", "to": "playbook", "rel": "scopes-application" },
+    { "from": "playbook", "to": "loop_control", "rel": "member-of" },
+    { "from": "playbook", "to": "tools_mcp", "rel": "member-of" },
+    { "from": "playbook", "to": "extraction_review", "rel": "member-of" },
+    { "from": "playbook", "to": "context_memory", "rel": "member-of" },
+    { "from": "playbook", "to": "hooks_config", "rel": "member-of" },
+    { "from": "playbook", "to": "multiagent", "rel": "member-of" },
+    { "from": "loop_control", "to": "stop_reason", "rel": "teaches" },
+    { "from": "extraction_review", "to": "categorical_criteria", "rel": "teaches" },
+    { "from": "extraction_review", "to": "forced_structure", "rel": "teaches" },
+    { "from": "multiagent", "to": "hub_spoke", "rel": "teaches" },
+    { "from": "context_memory", "to": "edge_placement", "rel": "teaches" },
+    { "from": "playbook", "to": "validation_gate", "rel": "gated-by" },
+    { "from": "validation_gate", "to": "evidence_tags", "rel": "enforces" },
+    { "from": "validation_gate", "to": "constitution", "rel": "enforces" },
+    { "from": "hub_spoke", "to": "kata_router", "rel": "justifies-single-read" }
+  ]
+}

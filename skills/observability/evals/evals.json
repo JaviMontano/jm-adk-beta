@@ -1,0 +1,108 @@
+{
+  "cases": [
+    {
+      "id": "route-monitoring-first-slos",
+      "input": "We just shipped a new payments-api service with no dashboards. Stand up first-time metrics and SLOs for it.",
+      "expected_checks": [
+        "routes_to_monitoring_setup",
+        "golden_signals_inventoried",
+        "metrics_bound_to_consumer",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-alerting-noisy-pager",
+      "input": "Our on-call is getting paged 40 times a night, mostly for CPU spikes nobody acts on. Fix the alerting.",
+      "expected_checks": [
+        "routes_to_alerting_strategy",
+        "symptom_based_severity",
+        "only_p1_p2_page",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-health-dependency-rollup",
+      "input": "Validate this captured health snapshot: api p95=420ms, postgres up, disk free 8%, cache check has no evidence. Should we mark the release healthy?",
+      "expected_checks": [
+        "routes_to_health_check_automation",
+        "rollup_precedence_applied",
+        "unknown_blocks_healthy",
+        "deterministic_scripts",
+        "assets"
+      ]
+    },
+    {
+      "id": "route-logs-untraceable-request",
+      "input": "Checkout returns intermittent 500s and we can't follow a single request across our four services. Design our logging.",
+      "expected_checks": [
+        "routes_to_log_management",
+        "correlation_id_threaded",
+        "no_pii_in_stream",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-incident-live-outage",
+      "input": "The checkout page is fully down right now and customers can't pay. Walk us through handling this outage.",
+      "expected_checks": [
+        "routes_to_incident_response",
+        "severity_from_matrix",
+        "ic_scribe_before_mitigation",
+        "mitigate_before_root_cause"
+      ]
+    },
+    {
+      "id": "disambiguate-alert-vs-monitoring",
+      "input": "Our latency alert fires on every 30-second blip and wakes people up. Make it stop flapping.",
+      "expected_checks": [
+        "routes_to_alerting_strategy",
+        "for_window_added",
+        "not_routed_to_monitoring_setup",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "missing-target-system",
+      "input": "Set up observability for us.",
+      "expected_checks": [
+        "asks_clarifying_question",
+        "no_invented_target_system",
+        "stops_at_critical_gap"
+      ]
+    },
+    {
+      "id": "pii-in-existing-logs",
+      "input": "We found full credit card numbers and auth tokens in our application logs. What do we do?",
+      "expected_checks": [
+        "routes_to_log_management",
+        "redact_pii_at_source",
+        "blocks_until_remediated",
+        "assets"
+      ]
+    },
+    {
+      "id": "deep-alerting-from-slos",
+      "input": "Depth deep: derive a full paging policy for the orders service from its 99.9%/28d availability SLO, including escalation and fatigue controls.",
+      "expected_checks": [
+        "routes_to_alerting_strategy",
+        "thresholds_slo_derived_and_tagged",
+        "escalation_and_fatigue_controls",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "evidence-tags-and-validator-gate",
+      "input": "Here is a JSON alerting strategy handoff for the billing team. Confirm it is ready to ship before we merge.",
+      "expected_checks": [
+        "routes_to_alerting_strategy",
+        "validator_must_pass",
+        "evidence_tags_present",
+        "assets",
+        "deterministic_scripts",
+        "quality_criteria"
+      ]
+    }
+  ]
+}

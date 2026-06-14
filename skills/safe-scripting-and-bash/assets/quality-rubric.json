@@ -1,0 +1,67 @@
+{
+  "skill": "safe-scripting-and-bash",
+  "version": 1,
+  "verdict_rule": "PASS only if every required check passes; never green-as-success over a failed check.",
+  "checks": [
+    {
+      "id": "dry_run_default",
+      "weight": "blocking",
+      "pass_when": "Dry-run is the default whenever a write is possible; --force requires a prior dry-run.",
+      "tag": "DOC"
+    },
+    {
+      "id": "repo_root_detection",
+      "weight": "blocking",
+      "pass_when": "Repo root resolved via git rev-parse --show-toplevel; no absolute machine paths.",
+      "tag": "CODE"
+    },
+    {
+      "id": "write_surface_declared",
+      "weight": "blocking",
+      "pass_when": "Every path/glob the script can touch is declared and bounded; broad write flagged.",
+      "tag": "CONFIG"
+    },
+    {
+      "id": "no_unguarded_destructive",
+      "weight": "blocking",
+      "pass_when": "No rm -rf, git reset --hard, or force push without explicit approval AND path isolation.",
+      "tag": "CONFIG"
+    },
+    {
+      "id": "no_secret_exposure",
+      "weight": "blocking",
+      "pass_when": "No env var, token, or credential is read, printed, or persisted.",
+      "tag": "DOC"
+    },
+    {
+      "id": "safe_tempdir",
+      "weight": "blocking",
+      "pass_when": "Tempdirs use mktemp -d with a trap-clean; no static /tmp names.",
+      "tag": "CODE"
+    },
+    {
+      "id": "offline_validation",
+      "weight": "blocking",
+      "pass_when": "Validation runs offline; no network call decides local safety.",
+      "tag": "DOC"
+    },
+    {
+      "id": "quoting_portability",
+      "weight": "high",
+      "pass_when": "Every expansion is quoted; Bashisms justified inline; stdlib/portable preferred.",
+      "tag": "CODE"
+    },
+    {
+      "id": "rollback_documented",
+      "weight": "high",
+      "pass_when": "Failure modes and rollback/fallback are documented.",
+      "tag": "DOC"
+    },
+    {
+      "id": "evidence_tags",
+      "weight": "high",
+      "pass_when": "Every non-obvious claim carries one Alfa-core tag with consistent spelling.",
+      "tag": "DOC"
+    }
+  ]
+}

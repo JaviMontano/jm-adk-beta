@@ -1,0 +1,79 @@
+{
+  "skill": "product-analytics",
+  "purpose": "Scored gate the guardian applies before a product-analytics deliverable ships.",
+  "scale": { "pass": "all required criteria true", "block": "any required criterion false" },
+  "criteria": [
+    {
+      "id": "single_route",
+      "required": true,
+      "check": "Exactly one playbook was read and topic matches the enum verbatim.",
+      "applies_to": "all"
+    },
+    {
+      "id": "evidence_tags",
+      "required": true,
+      "check": "Every non-obvious / numeric claim carries [DOC] [CONFIG] [CODIGO] [INFERENCIA] or [SUPUESTO]; each [SUPUESTO] paired with a verification step.",
+      "applies_to": "all"
+    },
+    {
+      "id": "no_fabricated_numbers",
+      "required": true,
+      "check": "Baselines, traffic, conversion rates, and benchmarks are sourced or marked 'not verified'.",
+      "applies_to": "all"
+    },
+    {
+      "id": "ab_significance_honesty",
+      "required": true,
+      "check": "No significance/lift/causality before sample size + method satisfied; 'green = win' rejected; SRM check planned.",
+      "applies_to": "ab-testing"
+    },
+    {
+      "id": "funnel_integrity",
+      "required": true,
+      "check": "One unit; denominator policy stated; strict-ordered counts non-increasing; causal 'why' cited or labeled hypothesis.",
+      "applies_to": "funnel-analytics"
+    },
+    {
+      "id": "cohort_denominators",
+      "required": true,
+      "check": "Denominators fixed at cohort t0; immature late-period cells excluded; 'active' defined identically across cohorts.",
+      "applies_to": "cohort-analysis"
+    },
+    {
+      "id": "event_contract_complete",
+      "required": true,
+      "check": "Every event has owner, single-fire trigger, typed properties, identity policy, privacy class, and evidence tag.",
+      "applies_to": "analytics-events"
+    },
+    {
+      "id": "kpi_actionable",
+      "required": true,
+      "check": "Each KPI is owned, defined, instrumented, and tied to a decision; every lagging KPI has a leading driver.",
+      "applies_to": "kpi-framework"
+    },
+    {
+      "id": "instrumentation_scope",
+      "required": true,
+      "check": "Each parameter has name, type, scope, unit, cardinality bound, PII class; client-vs-server stated.",
+      "applies_to": "metrics-instrumentation"
+    },
+    {
+      "id": "realtime_budget",
+      "required": true,
+      "check": "Latency budget + freshness SLO met at peak; transport justified; alerts debounced with hysteresis.",
+      "applies_to": "real-time-analytics"
+    },
+    {
+      "id": "viz_accessibility",
+      "required": true,
+      "check": "Chart type matches data story; palette colorblind-safe; non-visual fallback; loading/empty/error states.",
+      "applies_to": "data-visualization"
+    },
+    {
+      "id": "no_client_pii",
+      "required": true,
+      "check": "No direct personal identifiers in the deliverable; aggregates or hashed IDs used.",
+      "applies_to": "all"
+    }
+  ]
+}

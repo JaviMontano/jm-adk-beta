@@ -1,0 +1,17 @@
+{
+  "skill": "firebase",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Machine-readable quality gates (single-route, deny-by-default rules, indexes, idempotent triggers, tested-before-deploy, no-prices) applied before a firebase deliverable is done.",
+      "used_by": ["prompts/primary.md", "agents/guardian.md", "evals/evals.json"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "text/markdown",
+      "purpose": "Human-readable pre-deploy checklist mirroring the rubric gates for routing, Firestore/Rules, Functions, test/deploy, and cost/governance.",
+      "used_by": ["README.md", "agents/guardian.md"]
+    }
+  ]
+}

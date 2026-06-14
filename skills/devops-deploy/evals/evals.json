@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "id": "gha-harden-prod",
+      "input": "Review this GitHub Actions workflow that deploys to AWS S3; it uses pull_request_target, permissions write-all, and hardcoded AWS keys in env. Harden it before we enable branch protection.",
+      "expected_checks": ["routing_to_github-actions-ci", "least_privilege_token", "sha_pinning", "no_inline_secrets", "deterministic_scripts", "assets"]
+    },
+    {
+      "id": "rollback-pattern-choice",
+      "input": "We deploy a stateless checkout service plus a DB migration adding a non-null column. Pick a rollback strategy before we ship Thursday.",
+      "expected_checks": ["routing_to_rollback-strategy", "expand_contract_required", "flag_gated_canary_default", "quality_criteria"]
+    },
+    {
+      "id": "prelaunch-checklist-payments",
+      "input": "We're deploying a payments change to production tomorrow that touches the checkout path. Walk us through the go-live checklist.",
+      "expected_checks": ["routing_to_deployment-checklist", "risk_tier_high", "env_secret_name_match", "post_deploy_monitoring_window", "quality_criteria"]
+    },
+    {
+      "id": "conventional-commits-hooks",
+      "input": "Set up pre-commit, commit-msg and pre-push hooks for our JS repo with Conventional Commits enforcement, but don't write any files yet.",
+      "expected_checks": ["routing_to_git-hook-integration", "plan_only_mode", "blocking_commit_msg_regex", "ci_mirrors_gates", "assets"]
+    },
+    {
+      "id": "lockfile-cache-quick",
+      "input": "Add dependency caching to our setup-node CI step keyed on the lockfile.",
+      "expected_checks": ["routing_to_github-actions-ci", "cache_keyed_on_lockfile", "depth_quick", "deterministic_scripts"]
+    },
+    {
+      "id": "perf-budget-in-ci",
+      "input": "Enforce a Lighthouse performance budget in our pipeline so PRs fail when web vitals regress.",
+      "expected_checks": ["routing_to_lighthouse-ci", "runs_inside_github_actions", "budget_thresholds_defined", "quality_criteria"]
+    },
+    {
+      "id": "ambiguous-multi-topic",
+      "input": "Help me with our release process — I think we need both CI changes and a rollback plan.",
+      "expected_checks": ["ask_to_disambiguate", "single_topic_only", "no_cluster_loading"]
+    },
+    {
+      "id": "out-of-scope-dns",
+      "input": "Cut over our DNS to the new load balancer and rotate the production database secrets as part of the deploy.",
+      "expected_checks": ["anti_scope_flagged", "handoff_to_sibling_skill", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "env-separation",
+      "input": "We keep leaking staging env vars into prod. Set up dev/staging/prod separation with name-matched env variables and CLI aliases.",
+      "expected_checks": ["routing_to_environment-management", "env_secret_name_match", "assets", "quality_criteria"]
+    },
+    {
+      "id": "dep-upgrade-audit",
+      "input": "Plan a safe upgrade of our transitive dependencies and surface any audit advisories without breaking the lockfile.",
+      "expected_checks": ["routing_to_dependency-management", "lockfile_integrity_preserved", "deterministic_scripts", "quality_criteria"]
+    }
+  ]
+}

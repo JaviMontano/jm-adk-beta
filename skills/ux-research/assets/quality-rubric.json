@@ -1,0 +1,41 @@
+{
+  "skill": "ux-research",
+  "version": "1.0.0",
+  "scoring": { "levels": ["pass", "conditional", "gap", "not-verified"], "green_as_success_forbidden": true },
+  "universal_criteria": [
+    { "id": "single-route", "check": "Exactly one playbook from routes: was read and followed", "weight": "blocker" },
+    { "id": "topic-in-enum", "check": "Topic is one of [user-research, survey-design, user-testing, prototyping]", "weight": "blocker" },
+    { "id": "decision-named", "check": "The decision the research informs is stated before the method", "weight": "blocker" },
+    { "id": "evidence-tags", "check": "Every non-obvious claim carries one Alfa-core tag; one family only", "weight": "major" },
+    { "id": "supuesto-paired", "check": "Each [SUPUESTO] is paired with a concrete verification step", "weight": "major" },
+    { "id": "next-step", "check": "Deliverable ends with an explicit, owned next step", "weight": "major" },
+    { "id": "no-pii", "check": "No client PII; no invented prices or benchmarks-as-fact; single brand", "weight": "blocker" }
+  ],
+  "route_criteria": {
+    "user-research": [
+      "Personas (<=4) are research-backed with a source per attribute",
+      "Empathy maps cover all four quadrants (Say, Think, Do, Feel)",
+      "Journey map includes at least one negative-sentiment stage and a moment of truth",
+      "Each opportunity is owned and prioritized, not orphaned",
+      "Qualitative and quantitative findings reconciled, not averaged"
+    ],
+    "survey-design": [
+      "Every item: single construct, balanced scale, non-leading stem",
+      "n, response rate, and margin of error reported with each number",
+      "No mean reported on an ordinal scale (top-box or median used)",
+      "Findings segmented before concluding and tied to the decision"
+    ],
+    "user-testing": [
+      "Tasks goal-framed with no solution leakage",
+      "Success judged against pre-set criteria and a time/step ceiling",
+      "Findings rated severity x frequency with verbatim evidence",
+      "n=1 conclusions explicitly flagged"
+    ],
+    "prototyping": [
+      "Fidelity matches the question being tested (no gold-plating)",
+      "Lowest rung that can falsify the assumption was chosen",
+      "Unhappy/edge states represented, not only the happy path",
+      "Tested with a real user or proxy before raising fidelity"
+    ]
+  }
+}

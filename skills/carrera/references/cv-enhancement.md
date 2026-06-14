@@ -23,11 +23,16 @@ in that role at that company, it has not been rewritten yet.
 - User mentions ATS, applicant tracking, or keyword optimization in context of their CV [EXPLICIT]
 
 **Do NOT activate when:**
-- User asks for cover letter help (different skill — cover letter writing)
+- User asks for cover letter help (different skill — cover letter writing; for combined CV+cover work, see `cv-cover-optimizer`)
 - User needs LinkedIn profile optimization (different format, character limits, and strategy)
 - User needs a personal portfolio or brand page (use landing-pages or portfolio-sites skill)
 - User wants a full career coaching session without a CV to work from (no artifact to transform)
 - User provides no CV and no role context — ask for at least one before proceeding
+
+**Hand-off boundaries (where this skill stops):** [EXPLICIT]
+- Produces the CV artifact only. Cover letter, outreach message, and verbal pitch are downstream skills (see Related Skills).
+- Does not submit applications, fill ATS forms, or contact recruiters. It generates the document the user submits.
+- Does not invent employment history, dates, titles, or numbers. Fabrication is a hard stop, not a trade-off.
 
 ---
 
@@ -35,6 +40,11 @@ in that role at that company, it has not been rewritten yet.
 
 Before rewriting, diagnose what is weak. Apply a structured rubric to the CV as provided.
 Share the audit findings with the user before beginning rewrites — confirm scope. [EXPLICIT]
+
+**Sequencing:** Run S1 → S5 in order. S1 (audit) gates everything: never rewrite before
+sharing findings and confirming scope, because a "light polish" request must not silently
+become a full rewrite. S4 (ATS) and S5 (targeting) require a named role or job description;
+if absent, run S2–S3 generically and flag that S4–S5 are deferred until the user names a target. [INFERRED]
 
 **Structure Audit — section presence and quality:**
 
@@ -105,6 +115,20 @@ R — Result:             What measurably improved? (quantify whenever possible)
 **Compression rule:** Most bullets collapse PAR into one sentence.
 Full P+A+R structure is used for the most impactful or complex achievements.
 
+**Worked decomposition (one bullet, traced):**
+- Raw input from user: *"I set up the new ticketing system and things got faster."*
+- P (context): support team drowning in 4-day average resolution time. → implied, not stated in bullet
+- A (your action): "Implemented Zendesk with tiered routing and 12 macro templates"
+- R (result): "cutting average ticket resolution from 4 days to 9 hours"
+- Final bullet: *"Implemented Zendesk with tiered routing and 12 macro templates, cutting average ticket resolution from 4 days to 9 hours across a 6-agent support team."*
+- Note: "across a 6-agent support team" is a scope proxy added because the user could confirm headcount but not a ticket-volume figure. [INFERRED]
+
+**Quantification guardrails — estimation vs. fabrication:** [EXPLICIT]
+- A user-supplied *range* the user stands behind ("roughly 30–40%") is usable; render the conservative end ("~30%").
+- A *derived* number (e.g., "16h → 2h" implies ~88% reduction) may be computed and stated — it is arithmetic on facts the user gave, not invention.
+- A number the user *cannot source or estimate* is forbidden, even if "plausible for the role." Drop to a scope proxy or keep the claim qualitative-but-specific.
+- Never round upward into a different order of magnitude (do not turn "~18%" into "20%+"); precision signals credibility, inflation signals padding.
+
 **PAR Transformation Examples:**
 
 | Before (Duty language) | After (PAR-Impact) |
@@ -159,10 +183,16 @@ Rewrite each CV section with role-specific and level-appropriate language. [EXPL
 The summary is the first-read section. Must be: role-specific (not generic), 3–4 lines,
 and contain at least one quantified claim or scope signal.
 
+*Summary formula (assemble, then trim to 3–4 lines):* [INFERRED]
+`[Seniority + role] with [N years] in [domain]. [Single strongest quantified achievement].
+[2–3 specializations matching the target posting]. [Location + work-mode availability].`
+
 *Bad:* "Experienced professional with strong communication skills and a passion for results."
 *Good:* "Senior product manager with 8 years building B2B SaaS products. Led 0-to-1 launch
 of [Product] reaching $2.4M ARR in 14 months. Specializes in data-driven roadmapping,
 cross-functional alignment, and enterprise go-to-market. Based in Bogotá, open to remote."
+*Why the good one works:* leads with seniority+role (ATS title match), one hard metric in line 2,
+specializations mirror posting keywords, closes with location/availability that pre-answers a recruiter filter.
 
 **Work Experience Bullets**
 Apply PAR to every bullet. Aim for 3–5 bullets per role. More recent roles get more bullets.
@@ -269,6 +299,18 @@ Customize the CV for a specific job posting or industry vertical. [EXPLICIT]
 | Senior (7–15y) | Leadership + strategy | Business impact + team and org scope | 2 pages |
 | Executive (15y+) | Vision + P&L + org transformation | Revenue, company-wide change | 2 pages max |
 
+**Market / Locale Calibrations** (CV conventions differ by region): [INFERRED]
+
+| Market | Conventions |
+|---|---|
+| LatAm (CO/MX/regional) | Photo and ID/document number still common but optional; "Hoja de Vida" header acceptable; keep metrics — they remain rare and differentiate strongly. |
+| US / Canada | No photo, no age, no marital status, no full address (city + state only); strict anti-discrimination norms. |
+| EU / UK | "CV" term standard; GDPR means no photo expected in UK; some continental markets still expect a photo — confirm with the user. |
+| Remote-first / global | Lead with time-zone and async-collaboration signals; spell out currency on any financial figure ("USD 2.4M"). |
+
+> When in doubt about photo, ID number, or address inclusion, ask the user which market they
+> target rather than assuming the LatAm default. The default applies only absent a stated target. [EXPLICIT]
+
 **Career Change Targeting** (switching tracks entirely):
 - Switch to skills-first format: Skills section moves above Experience
 - Emphasize transferable skills with PAR bullets showing adaptability
@@ -368,6 +410,8 @@ for clients who need to switch language of the CV display without re-generating.
 | Generalist vs. targeted summary | Generic summary for all roles | Role-specific summary per application | Role-specific always wins for conversion rate |
 | One-page vs. two-page | Strict one page | Two pages for senior | Junior: one page max. Mid and above: two pages fine. Executive: two pages max. |
 | Markdown vs. HTML output | Clean markdown (ATS-safe) | Branded HTML (visual, shareable) | Markdown for job applications; HTML for portfolio, LinkedIn share, recruiter outreach |
+| Photo / personal data | Include (LatAm norm) | Omit (US/UK norm) | Follow the target market, not the user's home market; when unknown, ask. Default to omit for ATS submissions. |
+| Verb variety vs. strongest verb | Reuse the single best verb | Rotate the verb bank | Rotate — repetition reads as templated; reserve the strongest verb for the lead bullet. |
 
 ---
 
@@ -396,6 +440,24 @@ for clients who need to switch language of the CV display without re-generating.
 | New graduate / <1 year experience | Amplify projects, coursework, internships, hackathons, volunteer work. Education section leads over experience. One page strictly. |
 | Long tenure in one role (8y+ same company) | Break the role into sub-roles or initiative clusters if scope changed significantly. Prevents appearance of stagnation. |
 | User refuses to provide any metrics | Use scope proxies throughout. Note in output that metrics are scope-based, not outcome-based. |
+| Overlapping / concurrent roles (e.g., consulting + employment) | Keep both, label clearly ("Concurrent with above"). Do not merge — merging distorts the timeline and can read as deception. |
+| Layoff or termination in history | Do not annotate the reason on the CV; reasons belong in the interview. Keep clean dates with months; address only if the user asks how to frame a gap. |
+| Confidential employer / NDA-bound metrics | Use relative figures ("grew revenue 3×") or ranges instead of absolute dollars; never reproduce numbers the user says are under NDA. [EXPLICIT] |
+| CV exceeds page budget for the level | Cut oldest/weakest bullets and roles >15 years old before shrinking font or margins. Content discipline beats typographic compression. |
+
+---
+
+## Failure Modes (workflow self-checks)
+
+| Failure | Symptom | Mitigation |
+|---|---|---|
+| Scope creep on audit | User asked "light polish"; output is a full rewrite | S1 confirms scope before any rewrite; restate the agreed scope in the audit summary. [EXPLICIT] |
+| Silent fabrication | A metric appears that the user never supplied | Every number traces to user input, user range, or arithmetic on those; otherwise it is a scope proxy. [EXPLICIT] |
+| Keyword stuffing | A term repeats >5× or reads unnaturally | Keyword Density Check in S4; cap any single keyword at 5 and verify each insertion reads as a sentence. [INFERRED] |
+| Homogenized bullets | Every bullet opens with "Led" / same verb | Rotate using the Action Verb Bank; no verb opens more than ~2 bullets per role. [INFERRED] |
+| ATS-breaking HTML submission | User sends the branded HTML to an ATS portal | HTML output footer + delivery note state markdown/PDF is the ATS artifact; never present HTML as application-ready. [EXPLICIT] |
+| Lost truthfulness on translation | EN version inflates a title beyond the ES original | Title mapping must be a faithful equivalent, not a promotion (e.g., "Analista Senior" ≠ "Lead"). [EXPLICIT] |
+| Metrics below threshold | <70% of bullets quantified but output shipped | Validation Gate blocks delivery; if metrics are unavailable, ship with an explicit scope-proxy disclosure instead of pretending. [EXPLICIT] |
 
 ---
 
@@ -432,6 +494,10 @@ Before delivering any CV output, verify all of the following:
 - [ ] Markdown CV output is clean, portable, and free of formatting artifacts
 - [ ] HTML output uses JM Labs brand tokens (navy `#122562`, gold `#FFD700`, blue `#137DC5`, dark bg)
 - [ ] HTML output includes `@media print` CSS and `[data-l]` bilingual attributes on section labels
+- [ ] Every quantified claim traces to user input, a user-confirmed range, or arithmetic on those — zero fabricated numbers
+- [ ] Agreed scope (full rewrite / targeted / light polish) matches what the user confirmed after the S1 audit
+- [ ] Delivery note states which artifact is ATS-safe (markdown/PDF) vs. share-only (branded HTML)
+- [ ] If S4–S5 were skipped (no target role named), the output flags ATS/targeting as deferred rather than implying it was done
 
 ---
 

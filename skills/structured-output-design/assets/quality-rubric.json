@@ -1,0 +1,70 @@
+{
+  "skill": "structured-output-design",
+  "rubric": "Gate de aceptación del contrato de salida. Cada criterio es pass/fail con evidencia tageada; no hay verde sin evidencia.",
+  "criteria": [
+    {
+      "id": "required_fields_grounded",
+      "statement": "Cada campo required corresponde a algo realmente presente en la fuente, no a un deseo del consumidor.",
+      "evidence_tag": "DOC",
+      "fail_if": "Un required marcado sin presencia observada en cada documento."
+    },
+    {
+      "id": "nullable_union_used",
+      "statement": "Los opcionales se modelan como union nullable (p. ej. [\"string\",\"null\"]).",
+      "evidence_tag": "DOC",
+      "fail_if": "Un opcional declarado como tipo simple con default."
+    },
+    {
+      "id": "false_defaults_blocked",
+      "statement": "No existe ningun default falso ('', 0, 'N/A') representando ausencia.",
+      "evidence_tag": "CODIGO",
+      "fail_if": "Aparece '' / 0 / 'N/A' como sustituto de null."
+    },
+    {
+      "id": "schema_closed",
+      "statement": "El objeto es cerrado: type=object + additionalProperties=false + propiedades declaradas.",
+      "evidence_tag": "CONFIG",
+      "fail_if": "additionalProperties ausente o true."
+    },
+    {
+      "id": "enum_escape_present",
+      "statement": "Todo enum cerrado incluye 'other' y un campo hermano *_details nullable.",
+      "evidence_tag": "DOC",
+      "fail_if": "Enum cerrado sin valvula de escape."
+    },
+    {
+      "id": "tool_choice_proportional",
+      "statement": "tool_choice se fuerza solo cuando emitir la estructura es la unica accion valida; si hay decision real entre tools, es auto.",
+      "evidence_tag": "DOC",
+      "fail_if": "Se fuerza una tool cuando el modelo debia elegir entre varias."
+    },
+    {
+      "id": "typed_parse_source",
+      "statement": "El consumidor parsea desde tool_use.input, nunca desde texto en prosa ni regex.",
+      "evidence_tag": "DOC",
+      "fail_if": "json.loads sobre prosa o regex sobre texto libre."
+    },
+    {
+      "id": "schema_validation_required",
+      "statement": "La salida se valida contra el schema antes de aceptarse, con ruta a retry/escalada.",
+      "evidence_tag": "DOC",
+      "fail_if": "Se acepta el dict sin validar o sin canal de escalada."
+    },
+    {
+      "id": "free_text_fallback_blocked",
+      "statement": "No existe ningun camino de fallback a texto libre cuando la tool no sale.",
+      "evidence_tag": "DOC",
+      "fail_if": "Fallo de tool degrada a parseo best-effort de texto."
+    },
+    {
+      "id": "upgrade_safety",
+      "statement": "Al completar archivos faltantes no se sobreescriben ediciones locales del schema; el cambio queda acotado al contrato de salida.",
+      "evidence_tag": "SUPUESTO",
+      "fail_if": "Se sobreescribe schema editado localmente o se toca la logica del consumidor."
+    }
+  ],
+  "verdict": {
+    "pass": "Todos los criterios pass con evidencia tageada.",
+    "fail": "Cualquier criterio fail; reportar la lista y la remediacion."
+  }
+}

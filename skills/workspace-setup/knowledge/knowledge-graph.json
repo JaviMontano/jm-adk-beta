@@ -1,0 +1,36 @@
+{
+  "nodes": [
+    { "id": "local_profile", "label": ".jm-adk.local.json", "kind": "artifact" },
+    { "id": "setup_plan", "label": "deterministic setup plan", "kind": "artifact" },
+    { "id": "dry_run", "label": "dry-run mode (default)", "kind": "mode" },
+    { "id": "apply", "label": "apply mode (explicit)", "kind": "mode" },
+    { "id": "runtime_prefs", "label": "runtime preferences", "kind": "policy_block" },
+    { "id": "command_policy", "label": "command policy", "kind": "policy_block" },
+    { "id": "privacy_policy", "label": "privacy policy", "kind": "policy_block" },
+    { "id": "write_policy", "label": "write policy", "kind": "policy_block" },
+    { "id": "secret_scan", "label": "secret detection scan", "kind": "gate" },
+    { "id": "overwrite_guard", "label": "overwrite guard (--force)", "kind": "gate" },
+    { "id": "offline_validator", "label": "offline plan validator", "kind": "tool" },
+    { "id": "gitignore", "label": ".gitignore coverage", "kind": "constraint" },
+    { "id": "evidence_tags", "label": "Alfa core evidence tags", "kind": "governance" },
+    { "id": "workspace_governance", "label": "workspace-governance (anti-scope)", "kind": "boundary" }
+  ],
+  "edges": [
+    { "from": "setup_plan", "to": "local_profile", "rel": "describes" },
+    { "from": "setup_plan", "to": "dry_run", "rel": "defaults_to" },
+    { "from": "setup_plan", "to": "apply", "rel": "may_switch_to_on_explicit" },
+    { "from": "setup_plan", "to": "runtime_prefs", "rel": "contains" },
+    { "from": "setup_plan", "to": "command_policy", "rel": "contains" },
+    { "from": "setup_plan", "to": "privacy_policy", "rel": "contains" },
+    { "from": "setup_plan", "to": "write_policy", "rel": "contains" },
+    { "from": "privacy_policy", "to": "secret_scan", "rel": "requires" },
+    { "from": "secret_scan", "to": "apply", "rel": "blocks_on_hit" },
+    { "from": "write_policy", "to": "overwrite_guard", "rel": "enforces" },
+    { "from": "overwrite_guard", "to": "apply", "rel": "gates" },
+    { "from": "write_policy", "to": "gitignore", "rel": "requires" },
+    { "from": "offline_validator", "to": "setup_plan", "rel": "validates" },
+    { "from": "offline_validator", "to": "apply", "rel": "blocks_on_fail" },
+    { "from": "setup_plan", "to": "evidence_tags", "rel": "tagged_with" },
+    { "from": "setup_plan", "to": "workspace_governance", "rel": "must_not_overlap" }
+  ]
+}

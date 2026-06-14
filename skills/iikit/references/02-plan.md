@@ -24,7 +24,7 @@ Load constitution per [constitution-loading.md](../iikit-core/references/constit
    ```
    Windows: `pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/check-prerequisites.ps1 -Phase 02 -Json`
 
-2. Parse JSON for `FEATURE_SPEC`, `IMPL_PLAN`, `FEATURE_DIR`, `BRANCH`. If missing spec.md: ERROR.
+2. Parse JSON for `FEATURE_SPEC`, `IMPL_PLAN`, `FEATURE_DIR`, `BRANCH`. If missing spec.md: ERROR (halt — planning has no source of truth without a spec). [EXPLICIT]
 3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in [conversation-guide.md](../iikit-core/references/conversation-guide.md). After user selects, run:
    ```bash
    bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/set-active-feature.sh --json <selection>
@@ -44,6 +44,12 @@ Before planning, validate spec.md: [EXPLICIT]
 5. **Cross-references**: check for orphan requirements not linked to stories
 
 Report quality score per [formatting-guide.md](../iikit-core/references/formatting-guide.md) (Spec Quality section). If score < 6: recommend `/iikit-clarify` first. [EXPLICIT]
+
+**Gate semantics** (so downstream callers can rely on a deterministic contract): [EXPLICIT]
+- ERROR halts the workflow; WARNING surfaces but allows continuation after explicit user acknowledgement. [EXPLICIT]
+- A `< 6` score is a *recommendation*, not a halt — the user MAY override and proceed. Record the override as an assumption in research.md so it is traceable. [EXPLICIT]
+- Trade-off: stricter auto-halts reduce bad plans but block legitimate spikes/PoCs. iikit chooses recommend-not-block at this gate because the spec, not the plan, is the right place to enforce requirement completeness. [EXPLICIT]
+- Anti-scope: this gate validates spec *quality signals*, not domain correctness. It cannot detect a requirement that is well-formed but wrong; that remains human judgment. [EXPLICIT]
 
 ## Execution Flow
 
@@ -69,6 +75,10 @@ For each NEEDS CLARIFICATION item and dependency: research, document findings in
 2. Generate API contracts from functional requirements -> `contracts/`
 3. Create `quickstart.md` with test scenarios
 4. Update agent context:
+
+**Acceptance criteria** for this step (all must hold before advancing to step 5): every spec entity appears in data-model.md; every FR with an external interface maps to at least one contract; quickstart.md exercises at least one happy path plus one failure path; the agent-context script exits 0. [EXPLICIT]
+
+**Failure modes**: if no entities are extractable, the spec is likely behavioural-only — emit a WARNING and produce contracts directly from FRs rather than fabricating a data model. If `update-agent-context.sh` fails (missing agent file), continue but flag in the Report; the plan artifacts are still valid. [EXPLICIT]
    ```bash
    bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/update-agent-context.sh claude
    ```
@@ -103,6 +113,8 @@ Classification rules: [EXPLICIT]
 - **server**: APIs, gateways, workers, middleware, backend services — anything that processes requests
 - **storage**: databases, caches, queues, file stores, object storage — anything that persists data
 - **external**: third-party APIs, SaaS services, payment providers — anything outside the project boundary
+
+Tie-breakers for ambiguous nodes: a component that both serves and persists (e.g. an embedded KV store inside a service) is classified by its *dominant role in the diagram edge it terminates* — if other nodes read/write it, it is `storage`; if it only processes inbound requests, it is `server`. A managed cloud DB you operate is `storage`; a DB-as-a-service you cannot configure is `external`. [EXPLICIT]
 
 If no architecture diagram exists in the plan, skip this step. [EXPLICIT]
 
@@ -197,8 +209,11 @@ Example invocations: [EXPLICIT]
 ## Assumptions & Limits
 
 - Assumes access to project artifacts (code, docs, configs) [EXPLICIT]
+- Assumes the prerequisites script and `jq` are available on PATH; without `jq`, step 5 (dashboard pre-compute) degrades to skipped, not failed. [EXPLICIT]
+- Assumes a valid, present constitution; if absent, the enforcement hard gate cannot be declared and planning must halt per constitution-loading.md. [EXPLICIT]
 - Requires English-language output unless otherwise specified [EXPLICIT]
 - Does not replace domain expert judgment for final decisions [EXPLICIT]
+- **Anti-scope**: this phase produces *design intent* (plan + research + data model + contracts), not implementation or task breakdown — those belong to later phases (05-tasks, 07-implement). It does not run tests or write production code. [EXPLICIT]
 
 ## Edge Cases
 
@@ -207,3 +222,10 @@ Example invocations: [EXPLICIT]
 | Empty or minimal input | Request clarification before proceeding |
 | Conflicting requirements | Flag conflicts explicitly, propose resolution |
 | Out-of-scope request | Redirect to appropriate skill or escalate |
+| spec.md missing | ERROR and halt (step 2 of Prerequisites) — no spec, no plan [EXPLICIT] |
+| `needs_selection: true` | Present features table, run set-active-feature, re-run prerequisites [EXPLICIT] |
+| Unresolved `[NEEDS CLARIFICATION]` in spec | Ask whether to proceed with assumptions; record each assumption in research.md [EXPLICIT] |
+| Tessl not installed | Skip tile discovery and eval-score pre-compute; note "no tiles" in Report [EXPLICIT] |
+| No architecture diagram in plan.md | Skip node classification (step 5a) [EXPLICIT] |
+| plan.md already exists | Run Semantic Diff; flag breaking tech-stack/architecture changes before overwrite [EXPLICIT] |
+| Constitution violation at post-design check | STOP, state violation, propose compliant alternative — do not write artifacts [EXPLICIT] |

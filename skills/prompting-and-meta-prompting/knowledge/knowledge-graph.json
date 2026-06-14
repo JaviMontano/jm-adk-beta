@@ -1,0 +1,35 @@
+{
+  "nodes": [
+    { "id": "prompt", "label": "Prompt", "kind": "artifact" },
+    { "id": "system_prompt", "label": "System Prompt", "kind": "artifact" },
+    { "id": "meta_prompt", "label": "Meta-Prompt", "kind": "artifact" },
+    { "id": "output_contract", "label": "Output Contract", "kind": "component" },
+    { "id": "anti_drift", "label": "Anti-Drift Rules", "kind": "component" },
+    { "id": "missing_data", "label": "Missing-Data Handling", "kind": "component" },
+    { "id": "review_dimensions", "label": "Review Dimensions", "kind": "component" },
+    { "id": "acceptance_criteria", "label": "Acceptance Criteria", "kind": "quality" },
+    { "id": "eval_cases", "label": "Eval Cases", "kind": "quality" },
+    { "id": "safety_boundary", "label": "Safety Boundary", "kind": "gate" },
+    { "id": "guardian_block", "label": "Guardian Block", "kind": "gate" },
+    { "id": "evidence_tag", "label": "Evidence Tag", "kind": "policy" },
+    { "id": "prompt_pattern", "label": "Prompt Pattern", "kind": "method" },
+    { "id": "failure_mode", "label": "Failure Mode", "kind": "risk" }
+  ],
+  "edges": [
+    { "from": "prompt", "to": "output_contract", "rel": "must-contain" },
+    { "from": "prompt", "to": "anti_drift", "rel": "must-contain" },
+    { "from": "prompt", "to": "missing_data", "rel": "must-contain" },
+    { "from": "system_prompt", "to": "anti_drift", "rel": "encodes" },
+    { "from": "meta_prompt", "to": "review_dimensions", "rel": "requires" },
+    { "from": "meta_prompt", "to": "prompt", "rel": "reviews" },
+    { "from": "prompt_pattern", "to": "prompt", "rel": "shapes" },
+    { "from": "prompt_pattern", "to": "failure_mode", "rel": "exposes" },
+    { "from": "acceptance_criteria", "to": "output_contract", "rel": "verifies" },
+    { "from": "eval_cases", "to": "prompt", "rel": "validates" },
+    { "from": "eval_cases", "to": "failure_mode", "rel": "covers" },
+    { "from": "safety_boundary", "to": "guardian_block", "rel": "triggers" },
+    { "from": "guardian_block", "to": "prompt", "rel": "blocks" },
+    { "from": "evidence_tag", "to": "acceptance_criteria", "rel": "annotates" },
+    { "from": "evidence_tag", "to": "guardian_block", "rel": "annotates" }
+  ]
+}

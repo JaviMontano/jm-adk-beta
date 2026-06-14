@@ -1,0 +1,40 @@
+{
+  "nodes": [
+    { "id": "cool", "label": "Ciclo COOL", "kind": "method" },
+    { "id": "clarify", "label": "Clarify", "kind": "phase" },
+    { "id": "organize", "label": "Organize", "kind": "phase" },
+    { "id": "optimize", "label": "Optimize", "kind": "phase" },
+    { "id": "liberate", "label": "Liberate", "kind": "phase" },
+    { "id": "sectors", "label": "5 Sectores N0-N4", "kind": "taxonomy" },
+    { "id": "routing_cascade", "label": "Cascada de ruteo", "kind": "rule" },
+    { "id": "scaffolders", "label": "Scaffolders", "kind": "skill-group" },
+    { "id": "cadences", "label": "6 Cadencias", "kind": "skill-group" },
+    { "id": "foundation_skills", "label": "Foundation skills", "kind": "skill-group" },
+    { "id": "verification_tags", "label": "Verification tags", "kind": "rule" },
+    { "id": "rule9", "label": "Rule-9 (tamaño CLAUDE.md)", "kind": "rule" },
+    { "id": "now3", "label": "NOW <= 3", "kind": "rule" },
+    { "id": "sovereignty", "label": "Soberania digital / user-context", "kind": "principle" },
+    { "id": "adoption_levels", "label": "12 niveles de adopcion", "kind": "maturity" },
+    { "id": "orchestrator", "label": "jarvis-orchestrator", "kind": "agent" }
+  ],
+  "edges": [
+    { "from": "cool", "to": "clarify", "rel": "has-phase" },
+    { "from": "cool", "to": "organize", "rel": "has-phase" },
+    { "from": "cool", "to": "optimize", "rel": "has-phase" },
+    { "from": "cool", "to": "liberate", "rel": "has-phase" },
+    { "from": "organize", "to": "sectors", "rel": "places-into" },
+    { "from": "organize", "to": "routing_cascade", "rel": "uses" },
+    { "from": "routing_cascade", "to": "scaffolders", "rel": "routes-to" },
+    { "from": "routing_cascade", "to": "cadences", "rel": "routes-to" },
+    { "from": "sectors", "to": "scaffolders", "rel": "instantiated-by" },
+    { "from": "sectors", "to": "cadences", "rel": "maintained-by" },
+    { "from": "optimize", "to": "verification_tags", "rel": "enforces" },
+    { "from": "optimize", "to": "rule9", "rel": "enforces" },
+    { "from": "optimize", "to": "now3", "rel": "enforces" },
+    { "from": "cool", "to": "foundation_skills", "rel": "reuses" },
+    { "from": "sovereignty", "to": "sectors", "rel": "bounds" },
+    { "from": "orchestrator", "to": "cool", "rel": "applies" },
+    { "from": "orchestrator", "to": "verification_tags", "rel": "marks" },
+    { "from": "adoption_levels", "to": "sovereignty", "rel": "culminates-in" }
+  ]
+}

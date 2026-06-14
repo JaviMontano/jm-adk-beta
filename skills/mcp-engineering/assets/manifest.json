@@ -1,0 +1,17 @@
+{
+  "skill": "mcp-engineering",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Deterministic acceptance rubric: binary criteria the guardian gate evaluates before certifying an mcp-engineering deliverable (scope, env-var secrets, typed error fields, bounded client retry, leak remediation, deterministic evidence).",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "text/markdown",
+      "purpose": "Human-readable acceptance checklist mirroring the rubric, used by the guardian agent to run the gate item by item.",
+      "used_by": ["agents/guardian.md"]
+    }
+  ]
+}

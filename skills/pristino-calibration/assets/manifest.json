@@ -1,0 +1,17 @@
+{
+  "skill": "pristino-calibration",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Gate dimensions the guardian uses to pass or block a pristino-calibration output (persona line, mode shape, optimizer sections, Canvas, evidence, precedence, delegate integrity, guardian block, degraded path, no green-as-success, single-brand). Maps 1:1 to evals/evals.json expected_checks.",
+      "used_by": ["agents/guardian.md", "templates/output.md", "SKILL.md"]
+    },
+    {
+      "path": "assets/mode-shape.json",
+      "type": "lookup",
+      "purpose": "Deterministic MODE(+COMPLEXITY) -> output shape table (persona_line, sections, canvas) so the lead and guardian agree on what mode-correct means.",
+      "used_by": ["agents/lead.md", "knowledge/body-of-knowledge.md", "SKILL.md"]
+    }
+  ]
+}

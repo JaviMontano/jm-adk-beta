@@ -9,9 +9,10 @@ Designs complete Firebase project architecture covering Firestore data model, Cl
 - Redesigning an existing Firebase architecture
 - When `/jm:design-architecture` targets Firebase
 ## Core Principles
-1. **Law of Denormalization:** Firestore rewards reading over writing. Model for your queries, not your entities. [EXPLICIT]
-2. **Law of Triggers:** Cloud Functions react to events. Design event chains, not request chains. [EXPLICIT]
-3. **Law of Rules:** Security Rules are your last line. Design them BEFORE implementation. [EXPLICIT]
+1. **Law of Denormalization:** Firestore rewards reading over writing. Model for your queries, not your entities. Duplicate fields a read needs rather than join. Trade-off: writes fan out to N copies; reconcile via a Firestore-trigger that updates duplicates on source change. [EXPLICIT]
+2. **Law of Triggers:** Cloud Functions react to events. Design event chains, not request chains. Triggers are at-least-once and unordered — every handler must be idempotent (guard on a processed-marker doc/field). [EXPLICIT]
+3. **Law of Rules:** Security Rules are your last line, not your only line. Design them BEFORE implementation; they cannot do joins or call out, so push authorization data (role, ownership) into the document or custom claims. [EXPLICIT]
+4. **Law of Cost:** Every query is N document reads + index reads. A collection-group query over millions of docs is a billing event, not just a perf event. Estimate read/write volume per feature before committing the schema. [INFERENCIA]
 ## Core Process
 ### Phase 1: Service Selection
 1. Map FR-XXX requirements to Firebase services (Auth, Firestore, Functions, Hosting, Storage). [EXPLICIT]
@@ -30,17 +31,33 @@ Designs complete Firebase project architecture covering Firestore data model, Cl
 ## 3. Inputs / Outputs
 | Input | Type | Required | Description |
 |-------|------|----------|-------------|
-| spec.md or requirements | File/Text | Yes | What to build |
+| spec.md or requirements | File/Text | Yes | FR-XXX list with query/access patterns [EXPLICIT] |
+| Existing Firebase config | `firebase.json`, `firestore.rules`, `firestore.indexes.json` | No | Present when redesigning; read before changing [SUPUESTO] |
+| Expected scale | Text | No | Doc counts + read/write rates; drives cost + index design. Absent → flag `[SUPUESTO]` and design for the stated tier [INFERENCIA] |
+
 | Output | Type | Description |
 |--------|------|-------------|
-| Architecture document | Markdown | C4 diagrams + service matrix |
-| ADR | File | Key decisions |
+| Architecture document | Markdown | Service matrix + Firestore schema + Functions topology + Rules strategy |
+| C4 diagrams | Mermaid | Context + container; embedded in the doc |
+| ADR(s) | File | One per significant decision, with rejected alternatives |
+| Cost estimate | Table | Reads/writes/invocations per feature at expected scale |
+
+## Worked Example (mini)
+Requirement FR-012: "users see their own orders, newest first." [EXPLICIT]
+- **Schema:** top-level `orders/{orderId}` with `userId`, `createdAt`, denormalized `userName` (avoids a second read). Not a subcollection under `users/` — keeps a single collection-group query simple. [EXPLICIT]
+- **Index:** composite `(userId ASC, createdAt DESC)` in `firestore.indexes.json`. Without it the query throws `FAILED_PRECONDITION` at runtime, not at deploy. [INFERENCIA]
+- **Rule:** `allow read: if request.auth.uid == resource.data.userId;` — ownership lives on the doc, no join needed. [EXPLICIT]
+- **Trigger:** `onUpdate(users/{uid})` reconciles `userName` across that user's orders; idempotent (writes only if changed). [EXPLICIT]
+
 ## Validation Gate
-- [ ] All FR-XXX mapped to Firebase services
-- [ ] Firestore schema designed for query patterns
-- [ ] Security Rules strategy documented
-- [ ] C4 diagrams produced (Mermaid)
-- [ ] No AWS/Azure references (R-002)
+- [ ] Every FR-XXX maps to ≥1 Firebase/GCP service in the matrix [EXPLICIT]
+- [ ] Each Firestore query has a backing collection shape AND composite index [INFERENCIA]
+- [ ] Each denormalized field names the trigger that keeps it consistent [EXPLICIT]
+- [ ] Security Rules cover read + write per collection; default-deny confirmed [EXPLICIT]
+- [ ] Every Functions trigger handler is idempotent (at-least-once safe) [EXPLICIT]
+- [ ] C4 context + container diagrams render (valid Mermaid) [EXPLICIT]
+- [ ] Cost estimate present at expected scale; hotspots flagged [EXPLICIT]
+- [ ] No AWS/Azure references (R-002); no Docker/K8s (R-003) [EXPLICIT]
 ## 5. Self-Correction Triggers
 > [!WARNING]
 > IF designing SQL-style normalized schema THEN **STOP**. Firestore requires denormalization.
@@ -55,15 +72,24 @@ Example invocations:
 
 
 ## Assumptions & Limits
+- Assumes access to project artifacts (code, docs, configs); English output unless specified [EXPLICIT]
+- Designs architecture only — does not write app code, deploy, or run migrations [EXPLICIT]
+- Cost figures are estimates from stated scale, not a quote; no prices, FTE-months only [SUPUESTO]
+- Does not replace domain-expert judgment for final decisions [EXPLICIT]
 
-- Assumes access to project artifacts (code, docs, configs) [EXPLICIT]
-- Requires English-language output unless otherwise specified [EXPLICIT]
-- Does not replace domain expert judgment for final decisions [EXPLICIT]
+## Anti-Scope (out of bounds)
+- Multi-cloud / AWS / Azure designs (R-002) and Docker/K8s topologies (R-003) [EXPLICIT]
+- Relational/SQL schema modeling — Firestore is the target store [EXPLICIT]
+- Live data migration plans, load testing, or production deploys — separate skills [SUPUESTO]
 
-## Edge Cases
-
+## Edge Cases & Failure Modes
 | Scenario | Handling |
 |----------|----------|
-| Empty or minimal input | Request clarification before proceeding |
-| Conflicting requirements | Flag conflicts explicitly, propose resolution |
-| Out-of-scope request | Redirect to appropriate skill or escalate |
+| Empty or minimal input | Request clarification; do not auto-invent requirements [EXPLICIT] |
+| Conflicting requirements | Flag explicitly, propose resolution, get sign-off before designing [EXPLICIT] |
+| Out-of-scope request | Redirect to the appropriate skill or escalate [EXPLICIT] |
+| Query needs OR / multiple range filters | Firestore cannot; split into reads or denormalize a query field [INFERENCIA] |
+| Read needs data across many docs | Use a denormalized aggregate doc updated by trigger, not a fan-out read [INFERENCIA] |
+| Hot document (counter, leaderboard) | >1 write/sec contends; shard the counter across N subdocs [INFERENCIA] |
+| Unbounded subcollection growth | Document write/storage cost; consider TTL or archival collection [SUPUESTO] |
+| Cross-doc atomicity required | Use a transaction or batched write; Rules alone cannot enforce it [INFERENCIA] |

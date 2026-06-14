@@ -100,6 +100,14 @@ Defines the complete testing landscape across 6 test types and 6 system layers. 
 - Test priority ordering based on system risk profile
 - Coverage target per cell (percentage of scenarios tested)
 
+**Acceptance criteria:** every one of the 36 cells carries an explicit verdict — `mandatory`, `aspirational`, or `N/A` with a one-line exclusion reason. No cell is left blank. At least the Data Management × Functional and Model Processing × Fairness cells are `mandatory` for any production system. [EXPLICIT]
+
+**Worked example (fraud-scoring API):** the highest-priority cell is `Model Processing × Fairness` (regulatory exposure under disparate-impact law), not `API × Functional` (which most teams reflexively test first). Risk-ordering surfaces this; alphabetical or layer-ordering hides it. [EXPLICIT]
+
+**Failure modes this section prevents:**
+- *Coverage theater* — a high cell count with all targets at 5%, giving false confidence. Mitigation: coverage target per cell is mandatory metadata, not optional. [EXPLICIT]
+- *Silent N/A* — cells excluded without reason, indistinguishable from cells forgotten. Mitigation: every `N/A` records a reason. [EXPLICIT]
+
 ### S2: Model & Prediction Testing
 
 Defines tests that verify model behavior, accuracy, robustness, and regression safety. [EXPLICIT]
@@ -121,6 +129,12 @@ Defines tests that verify model behavior, accuracy, robustness, and regression s
 - Test dataset management (static holdout vs. rolling window vs. both)
 - Adversarial testing scope (automated tools vs. red team vs. both)
 - Regression gate strictness (any degradation blocks vs. threshold-based)
+
+**Acceptance criteria:** holdout never overlaps training rows (verified by hash join, not assumed); slice analysis covers every fairness-relevant segment from S4; each AP threshold maps to exactly one automated assertion in S6. A passing aggregate metric with a failing slice fails the gate. [EXPLICIT]
+
+**Trade-off — "any degradation blocks" vs. threshold-based regression gate:** strict blocking guarantees no quality loss but stalls on metric noise (a 0.1% accuracy wobble from a reshuffled holdout halts release); threshold-based ships faster but can normalize slow erosion. Decision rule: use threshold-based with a *confidence interval* on the metric, not a raw delta — block only when the degradation exceeds the holdout's measurement noise. [EXPLICIT]
+
+**Edge case — metric improves overall but degrades on a protected slice:** treat as a regression, not a pass. Aggregate-only gates are the most common way fairness regressions reach production. [EXPLICIT]
 
 ### S3: Data Quality & Pipeline Testing
 
@@ -148,6 +162,14 @@ Defines tests for data integrity, feature quality, and pipeline reliability. [EX
 - Data quality tool selection (Great Expectations, deepchecks, Pandera, custom)
 - Reference distribution management (when to update reference baselines)
 - Contract testing scope (which stage boundaries need contracts)
+
+**Acceptance criteria:** schema validation runs on *serving* inputs, not only training data; PSI/KS thresholds are set per-feature (a low-cardinality categorical and a heavy-tailed numeric need different bands); training-serving skew is measured on the *same* feature for the *same* entity, not on aggregate distributions. [EXPLICIT]
+
+**Worked example — training-serving skew:** training computes `days_since_last_login` from a nightly batch (as-of midnight); serving computes it live. The distributions look identical, but per-request the serving value is hours fresher, shifting the decision boundary. The skew test must compare the two computations on identical entities at identical timestamps, or it reports a false pass. [EXPLICIT]
+
+**Failure modes:**
+- *Baseline staleness* — a reference distribution frozen at launch flags legitimate seasonal change as drift, training the team to ignore alerts. Mitigation: scheduled baseline review cadence is a named decision above, not an afterthought. [EXPLICIT]
+- *Silent garbage-in* — a column flips from cents to dollars; schema (still numeric) passes, predictions degrade. Distribution testing, not schema testing, is the catch — both are mandatory. [EXPLICIT]
 
 ### S4: Compliance, Fairness & Ethics Testing
 
@@ -178,6 +200,14 @@ Defines tests for regulatory adherence, bias detection, and ethical AI operation
 - Fairness metric selection (which fairness definition applies to this domain)
 - Compliance framework mapping (GDPR, HIPAA, SOX, PCI-DSS requirements per test)
 
+**Trade-off — fairness metrics are mutually exclusive:** demographic parity and equal opportunity cannot both hold unless base rates are equal across groups (impossibility result). Picking "all of them" is not a strategy; it guarantees a failing gate. Decision rule: choose the metric whose error type carries the domain's real-world harm — equal opportunity (false-negative parity) for medical screening, predictive parity for lending. Document the *rejected* metrics and why. [EXPLICIT]
+
+**Acceptance criteria:** protected attributes come from the business in writing — never inferred by the system; each compliance requirement (CP-2, CP-3, CP-4) maps to at least one executable test, not a checklist tick; audit-trail tests verify *immutability*, not just presence (a writable log is not an audit trail). [EXPLICIT]
+
+**Edge case — small protected subgroup:** an intersectional cell (e.g. group A × region B) with 12 samples yields a fairness ratio with a confidence interval spanning 0.4–1.6. Report the interval and flag "insufficient power," do not report a point estimate that reads as a pass or fail. [EXPLICIT]
+
+**Failure mode:** *proxy leakage* — a removed protected attribute re-enters via a correlated feature (zip code ≈ race). Fairness tests on the protected attribute pass while the model still discriminates. Mitigation: test fairness on outcomes, not on whether the attribute is a model input. [EXPLICIT]
+
 ### S5: Integration Approaches & Harness Design
 
 Selects the integration testing strategy and designs the test harness for end-to-end validation. [EXPLICIT]
@@ -206,6 +236,14 @@ Selects the integration testing strategy and designs the test harness for end-to
 - Harness fidelity level (exact replica vs. representative subset)
 - Test data strategy (synthetic, anonymized production, sampled production)
 - Contract ownership (producer-owned, consumer-owned, shared)
+
+**Approach selection rule (decision shortcut):** user-facing + tight UX SLA → Top-Down; data-intensive + compliance-first → Bottom-Up; large multi-team org → Parallel; production-critical or audit-bound → Integration Harness mandatory. Big Bang only for <3-component systems or as a final smoke test — never as the primary strategy. [EXPLICIT]
+
+**Trade-off — harness fidelity:** an exact production replica gives maximal confidence at high standing infra cost and drift-maintenance burden; a representative subset is cheap but can miss scale-only failures (a join that's fine at 10k rows, OOMs at 10M). Decision rule: replica for the data and model layers (where scale bugs hide), subset for UI/API. [EXPLICIT]
+
+**Contract acceptance criteria:** every contract is executable and version-pinned; a producer change that breaks a consumer contract fails the producer's own CI (consumer-driven contracts), not the consumer's. A contract that lives only in a wiki is not a contract. [EXPLICIT]
+
+**Failure mode:** *replica rot* — the harness silently diverges from production config, so tests pass against a system that no longer exists. Mitigation: the comparison engine periodically diffs harness config against live production and fails on drift. [EXPLICIT]
 
 ### S6: CI/CD Test Automation for AI
 
@@ -244,6 +282,12 @@ Defines how tests are automated within the CI/CD pipeline for continuous validat
 - Test environment provisioning strategy (on-demand vs. persistent)
 - Test data refresh cadence
 - Monitoring alert routing and escalation
+
+**Tier-to-trigger acceptance criteria:** T1–T2 run in minutes (or they get skipped under deadline pressure — keep them fast); T5 acceptance is the only tier permitted to gate a production promotion; every CI/CD gate has a named owner who can authorize an override and a logged justification when one is used. An override with no recorded reason is a process failure. [EXPLICIT]
+
+**Trade-off — hard block vs. override-with-approval gate:** hard blocks guarantee the threshold but create incentives to weaken the threshold itself when it stalls a hot fix; override-with-approval preserves throughput but erodes to rubber-stamping without an audit trail. Decision rule: hard-block the fairness, security, and regression gates (irreversible harm); allow logged override on performance gates (recoverable, often noise). [EXPLICIT]
+
+**Failure mode:** *flaky gate fatigue* — a non-deterministic model-quality gate (random seed, GPU non-determinism) fails ~10% of the time, teams learn to re-run until green, and the gate becomes decorative. Mitigation: pin seeds, set thresholds on confidence intervals (S2), quarantine and fix flaky gates rather than tolerating them. [EXPLICIT]
 
 ---
 
@@ -294,7 +338,13 @@ Model updates frequently with new data. Testing strategy must handle continuous 
 Testing individual models is necessary but insufficient. Ensemble behavior must be tested as a unit. Disagreement patterns between models should be analyzed. Voting/aggregation logic needs dedicated tests. [EXPLICIT]
 
 **Privacy-Constrained Testing:**
-Production data cannot be used for testing (GDPR, HIPAA). Synthetic data generation must match production distributions without exposing real data. Differential privacy techniques for test data. Anonymization verification before test data creation. [EXPLICIT]
+Production data cannot be used for testing (GDPR, HIPAA). Synthetic data generation must match production distributions without exposing real data. Differential privacy techniques for test data. Anonymization verification before test data creation. Note the tension with S3: synthetic test data that perfectly hides real records also hides the rare real-world edge cases that cause production failures — budget for a small, tightly-governed real-data slice for skew validation. [EXPLICIT]
+
+**Cold-Start / Pre-Production System:**
+No production traffic, no drift history, no champion model to regress against yet. Substitute: seed regression baselines from the holdout, treat the first release as the champion, and gate on absolute thresholds (AP-7, AP-8) rather than version-over-version deltas until a real baseline exists. [EXPLICIT]
+
+**Vendor / Black-Box Model:**
+Model internals are inaccessible (third-party API). Adversarial and counterfactual tests still apply at the input/output boundary; explainability tests degrade to output-consistency checks; the model contract (S5) and output monitoring (S6) carry more weight because internal instrumentation is impossible. [EXPLICIT]
 
 ---
 

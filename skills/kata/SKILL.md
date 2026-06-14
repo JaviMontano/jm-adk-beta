@@ -1,5 +1,6 @@
 ---
 name: kata
+version: 1.0.0
 description: "Agentic engineering katas: proven prompt/loop/tooling patterns from JM Labs. Topics: adaptive-investigation, builtin-tool-selection, confidence-stratified-sampling, context-dilution-mitigation, critical-self-correction, custom-commands-skills, defensive-structured-extraction, deterministic-agent-loop, false-positive-criteria, fewshot-edge-calibration, headless-code-review, hierarchical-claude-memory, hub-and-spoke-isolation, human-handoff-protocol, independent-reviewer-multipass, mcp-server-configuration, mcp-structured-errors, message-batch-processing, multiagent-error-propagation, multipass-prompt-chaining, path-conditional-rules, persistent-scratchpad, plan-mode-exploration, posttooluse-normalization, prefix-caching, pretooluse-guardrails, provenance-preservation, session-resume-fork, tool-description-quality, validation-retry-feedback."
 params:
   topic:
@@ -44,9 +45,54 @@ routes:
 
 # kata
 
-Router skill. Resolve `topic` from the request, then Read EXACTLY ONE playbook
-from `routes:`. Never load the whole cluster. `depth=deep` → apply the playbook
-exhaustively with verification at each step; `quick` → essentials only.
+Router skill: one entry, 30 agentic-engineering playbooks. Resolve `topic`, Read
+EXACTLY ONE playbook from `routes:`, apply it. [DOC]
 
-Spine: Discover → Analyze → Execute → Validate.
-Quality gates: constitution v6.0.0 (enforcement), evidence tags, script-first rule.
+## When to use
+
+Trigger when the request maps to a known agentic pattern — building a Claude
+agent loop, MCP server, hook, structured extraction, code-review harness, memory
+hierarchy, multi-agent topology, or prompt/sampling/context tactic — and you want
+the proven JM Labs recipe instead of improvising. [INFERENCIA]
+Do NOT use as a generic chat or to answer questions that no playbook covers; if
+no `topic` fits, say so and route the user elsewhere rather than guessing. [DOC]
+
+## Inputs
+
+- `topic` (required): one of the 30 `routes:` keys. Infer from the request; ask
+  only when two topics are genuinely plausible. [DOC]
+- `depth` (default `quick`): `quick` → essentials + the validation gate only;
+  `deep` → apply exhaustively, verifying at each step. [DOC]
+
+## Procedure
+
+1. Map request → `topic`. If ambiguous, present the 2 closest keys and ask. [DOC]
+2. Read EXACTLY ONE playbook (its `routes:` path). Never load the whole
+   cluster — that dilutes context and defeats hub-and-spoke isolation. [INFERENCIA]
+3. Execute along the spine: Discover → Analyze → Execute → Validate. [DOC]
+4. Apply the playbook's own acceptance criteria before declaring done. [DOC]
+
+## Validation gate (acceptance)
+
+- Exactly one playbook was read; topic matches the user's actual intent. [DOC]
+- Output follows the chosen playbook's structure, not improvised prose. [DOC]
+- Every non-obvious claim carries an evidence tag from the kit (Alfa/bracket)
+  family per `../../references/verification-tags.md` — never mix tag families. [DOC]
+- Constitution v6.0.0 gates honored: enforcement, evidence tags, script-first
+  (prefer a script over manual steps when one exists). [DOC]
+- Score the result with `assets/quality-rubric.json` and run `assets/routing-checklist.md`
+  before declaring done (see `assets/README.md`). [DOC]
+
+## Anti-patterns
+
+- Loading several playbooks "to compare" — pick one; re-route if wrong. [DOC]
+- Guessing a `topic` silently when the request is ambiguous. [DOC]
+- Answering from memory of a pattern instead of reading its current
+  playbook — recipes drift; the file is the source of truth. [INFERENCIA]
+- Emitting `quick` depth but skipping the validation gate. [DOC]
+
+## Self-correction
+
+If mid-task the evidence contradicts the chosen topic (wrong failure mode, the
+playbook's preconditions don't hold), STOP, name the mismatch, and re-resolve
+`topic` — do not force-fit the original playbook. [INFERENCIA]

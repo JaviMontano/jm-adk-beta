@@ -1,0 +1,49 @@
+{
+  "skill": "dbr-daily-plan",
+  "artifact": "P09",
+  "scale": ["fail", "weak", "pass"],
+  "dimensions": [
+    {
+      "id": "drum_focus",
+      "label": "Tambor enfocado",
+      "weight": 0.25,
+      "pass": "1-3 prioridades elegidas por impacto-en-la-restriccion",
+      "fail": "4+ items o ranking por urgencia (to-do list disfrazada)"
+    },
+    {
+      "id": "verifiable_results",
+      "label": "Resultados verificables",
+      "weight": 0.2,
+      "pass": "cada prioridad expresa un 'hecho' observable",
+      "fail": "formulaciones tipo 'avanzar en X'"
+    },
+    {
+      "id": "capacity",
+      "label": "Capacidad vs restriccion",
+      "weight": 0.2,
+      "pass": "suma estimada + buffer <= horas reales, mostrado",
+      "fail": "dia al 100% o sin gate de capacidad"
+    },
+    {
+      "id": "buffer",
+      "label": "Buffer real",
+      "weight": 0.15,
+      "pass": "riesgo principal + mitigacion por prioridad",
+      "fail": "falso buffer o ausente"
+    },
+    {
+      "id": "no_hoy",
+      "label": "No-hoy explicito",
+      "weight": 0.1,
+      "pass": "descartes escritos que defienden el foco",
+      "fail": "no se nombra lo que se posterga"
+    },
+    {
+      "id": "evidence",
+      "label": "Evidencia Jarvis OS",
+      "weight": 0.1,
+      "pass": "tags correctos solo en lo no trivial; VACIO_CRITICO terminal",
+      "fail": "familia incorrecta, sobre-tagueo o auto-relleno de backlog"
+    }
+  ]
+}

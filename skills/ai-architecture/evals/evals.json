@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "id": "route-rag-grounding",
+      "input": "We have 2M support articles and need the assistant to answer only from them and cite the source article. Design the retrieval and grounding flow.",
+      "expected_checks": ["routes_to:rag-patterns", "single_playbook_read", "quality_criteria", "grounding_cite_or_abstain"]
+    },
+    {
+      "id": "route-embedding-not-rag",
+      "input": "Which embedding model, dimension, and distance metric should we use for 5M chunks with a p95 < 300ms latency budget?",
+      "expected_checks": ["routes_to:embedding-strategy", "not_routes_to:rag-patterns", "deterministic_scripts", "assets"]
+    },
+    {
+      "id": "route-prompt-reliability",
+      "input": "Our classification prompt is flaky across edge cases. Make it reliable and add guardrails plus adversarial tests.",
+      "expected_checks": ["routes_to:prompt-engineering", "single_tag_family", "quality_criteria"]
+    },
+    {
+      "id": "route-structured-json",
+      "input": "We need the model to emit JSON our parser can ingest without a human in the loop, with a legal way to refuse.",
+      "expected_checks": ["routes_to:structured-output", "enforcement_tier_selected", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "route-conops-before-arch",
+      "input": "Before we design anything, define what this triage system does, for whom, its autonomy level, and its operational modes.",
+      "expected_checks": ["routes_to:ai-conops", "ieee1362_alignment", "assets", "quality_criteria"]
+    },
+    {
+      "id": "route-audit-existing",
+      "input": "Assess our existing model-serving and feature-store setup for gaps and give us a prioritized remediation roadmap.",
+      "expected_checks": ["routes_to:audit", "severity_ranked_findings", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "route-pipeline-infra",
+      "input": "Design the dev-to-prod data flow: ingestion, model registry, and CI/CD for retraining and deployment.",
+      "expected_checks": ["routes_to:ai-pipeline-architecture", "single_playbook_read", "assets"]
+    },
+    {
+      "id": "route-design-patterns",
+      "input": "Recommend structural patterns for safe model rollout — we want champion-challenger and shadow deployment with drift detection.",
+      "expected_checks": ["routes_to:ai-design-patterns", "anti_pattern_detection", "quality_criteria"]
+    },
+    {
+      "id": "guard-no-bulk-load",
+      "input": "Compare RAG and fine-tuning for our use case and just load both playbooks so we can decide.",
+      "expected_checks": ["single_playbook_read", "rejects_bulk_load", "self_correction"]
+    },
+    {
+      "id": "guard-ambiguous-topic",
+      "input": "Help us with our AI chatbot's voice features and how it talks back to users.",
+      "expected_checks": ["asks_one_clarifying_question_or_picks_owner", "routes_to:voice-interface", "single_playbook_read"]
+    },
+    {
+      "id": "guard-out-of-scope",
+      "input": "Set up our Kubernetes cluster autoscaling and node pools for general web traffic.",
+      "expected_checks": ["not_ai_system_shaped", "stops_without_force_fit", "no_invented_prices"]
+    },
+    {
+      "id": "guard-tag-family-and-governance",
+      "input": "Design a RAG pipeline for a healthcare client and include the source documents in your example.",
+      "expected_checks": ["single_tag_family", "no_client_pii", "single_brand", "quality_criteria"]
+    }
+  ]
+}

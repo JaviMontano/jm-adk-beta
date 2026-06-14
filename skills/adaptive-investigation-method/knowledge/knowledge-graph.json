@@ -1,0 +1,39 @@
+{
+  "nodes": [
+    { "id": "goal", "label": "Goal (concrete question)", "kind": "input" },
+    { "id": "budget", "label": "Hard exploration budget", "kind": "invariant" },
+    { "id": "surface_root", "label": "Surface root", "kind": "input" },
+    { "id": "cheap_map", "label": "Cheap surface map (Glob/Grep)", "kind": "move" },
+    { "id": "candidate_nodes", "label": "Candidate nodes", "kind": "artifact" },
+    { "id": "ranked_hypotheses", "label": "Ranked hypotheses (value/cost)", "kind": "artifact" },
+    { "id": "deep_dive", "label": "Selective deep-dive (expensive Read)", "kind": "move" },
+    { "id": "finding", "label": "Finding (node + evidence + tag)", "kind": "artifact" },
+    { "id": "verdict", "label": "Verdict: confirm | intact | invalidated", "kind": "decision" },
+    { "id": "replan", "label": "Disciplined re-plan", "kind": "move" },
+    { "id": "scratchpad", "label": "Typed scratchpad", "kind": "artifact" },
+    { "id": "stop_reason", "label": "Stop reason (resolved | exhausted)", "kind": "decision" },
+    { "id": "deliverable", "label": "Traceable deliverable", "kind": "output" },
+    { "id": "provenance_tag", "label": "Provenance tag", "kind": "standard" },
+    { "id": "compiler", "label": "Deterministic compiler + check.sh", "kind": "tool" }
+  ],
+  "edges": [
+    { "from": "goal", "to": "ranked_hypotheses", "rel": "seeds" },
+    { "from": "budget", "to": "deep_dive", "rel": "bounds" },
+    { "from": "budget", "to": "stop_reason", "rel": "guarantees_termination" },
+    { "from": "surface_root", "to": "cheap_map", "rel": "scopes" },
+    { "from": "cheap_map", "to": "candidate_nodes", "rel": "produces" },
+    { "from": "candidate_nodes", "to": "ranked_hypotheses", "rel": "anchors" },
+    { "from": "ranked_hypotheses", "to": "deep_dive", "rel": "justifies" },
+    { "from": "deep_dive", "to": "finding", "rel": "produces" },
+    { "from": "deep_dive", "to": "budget", "rel": "decrements" },
+    { "from": "finding", "to": "verdict", "rel": "evaluated_by" },
+    { "from": "verdict", "to": "replan", "rel": "triggers_only_on_invalidated" },
+    { "from": "replan", "to": "ranked_hypotheses", "rel": "reprioritizes" },
+    { "from": "finding", "to": "scratchpad", "rel": "persisted_in" },
+    { "from": "finding", "to": "provenance_tag", "rel": "carries" },
+    { "from": "scratchpad", "to": "deliverable", "rel": "synthesized_from" },
+    { "from": "stop_reason", "to": "deliverable", "rel": "closes" },
+    { "from": "compiler", "to": "scratchpad", "rel": "validates" },
+    { "from": "compiler", "to": "budget", "rel": "rejects_if_missing" }
+  ]
+}

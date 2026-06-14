@@ -1,0 +1,30 @@
+{
+  "skill": "lab-session",
+  "protocol": "P08",
+  "note": "Canonical starting state for each CREATE file. Support writes these verbatim; placeholders in {BRACES} are stubs the human fills later.",
+  "files": [
+    {
+      "name": "notas.md",
+      "required_sections": ["title", "dated_entry", "Open questions", "Next probe"],
+      "starting_state": "# Notas — {slug}\n\n## {ISO_DATE}\n- Session opened. {first_observation} [tag]\n\n## Open questions\n- {question} [tag]\n\n## Next probe\n- {next_step} [tag]\n"
+    },
+    {
+      "name": "hipotesis.md",
+      "required_sections": ["title", "claim", "refuted_if"],
+      "starting_state": "# Hipotesis — {slug}\n\nClaim (falsifiable): {claim_or_{HIPOTESIS_POR_DEFINIR}} [tag]\n\nRefuted if: {refuting_condition} [tag]\n"
+    },
+    {
+      "name": "referencias.md",
+      "required_sections": ["title", "entries"],
+      "entry_rule": "one Alfa-core tag per entry, one spelling throughout",
+      "starting_state": "# Referencias — {slug}\n\n- {source} [tag]\n"
+    },
+    {
+      "name": "decision.md",
+      "required_sections": ["title", "verdict"],
+      "human_only": true,
+      "starting_state": "# Decision — {slug}\n\nVerdict (keep / pivot / kill): {POR_CONFIRMAR}\n"
+    }
+  ],
+  "tags": ["[CODE]", "[CONFIG]", "[DOC]", "[INFERENCE]", "[ASSUMPTION]"]
+}

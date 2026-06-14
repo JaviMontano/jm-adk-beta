@@ -1,0 +1,63 @@
+{
+  "skill": "mcp-engineering",
+  "version": "1.0.0",
+  "description": "Deterministic acceptance rubric for an mcp-engineering deliverable. Each criterion is binary; a deliverable certifies only when every required criterion is satisfied.",
+  "criteria": [
+    {
+      "id": "scope_resolved",
+      "label": "Scope correctly resolved",
+      "required": true,
+      "check": "Deliverable states team -> .mcp.json or personal -> ~/.claude.json with rationale.",
+      "evidence": "DOC"
+    },
+    {
+      "id": "no_literal_secrets",
+      "label": "Zero literal secrets in versioned files",
+      "required": true,
+      "check": "All credentials referenced as ${ENV_VAR}; no sk-, ghp_, or long base64 literals.",
+      "evidence": "CODIGO"
+    },
+    {
+      "id": "typed_error_fields",
+      "label": "Typed error contract complete",
+      "required": true,
+      "check": "Every error exposes isError, errorCategory, isRetryable, and retryAfterSeconds when applicable.",
+      "evidence": "CODIGO"
+    },
+    {
+      "id": "category_retry_mapping",
+      "label": "Error-to-retryability mapping correct",
+      "required": true,
+      "check": "auth=false, rate_limit=true, transient=true, fatal=false; client may harden, not relax.",
+      "evidence": "INFERENCIA"
+    },
+    {
+      "id": "client_owned_bounded_retry",
+      "label": "Retry policy client-owned and bounded",
+      "required": true,
+      "check": "Retry loop lives in client code with a maxRetries ceiling; not in the model prompt.",
+      "evidence": "CODIGO"
+    },
+    {
+      "id": "leak_remediation_complete",
+      "label": "Leak remediation rotates and purges",
+      "required": false,
+      "check": "If a secret leaked: rotate credential AND git filter-repo; .gitignore/git rm alone rejected.",
+      "evidence": "DOC"
+    },
+    {
+      "id": "mcp_vs_builtin_justified",
+      "label": "MCP justified over built-in",
+      "required": true,
+      "check": "Confirms no built-in (Read/Grep/Bash) covers the capability before endorsing a server.",
+      "evidence": "INFERENCIA"
+    },
+    {
+      "id": "deterministic_evidence",
+      "label": "Deterministic evidence attached",
+      "required": true,
+      "check": "scripts/check.sh accepts valid fixtures and rejects mutations when JSON evidence is required.",
+      "evidence": "CODIGO"
+    }
+  ]
+}

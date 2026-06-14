@@ -32,15 +32,14 @@ If input contains BOTH `#number` and text, prioritize the `#number` and warn tha
 
 ### 2a. GitHub Inbound Flow
 
-1. Fetch issue: use `gh issue view <number> --json title,body,labels` if available, otherwise `curl` the GitHub API (`GET /repos/{owner}/{repo}/issues/{number}`)
-2. If fetch fails (issue not found, auth error, no GitHub remote): ERROR with clear message and suggest using text description instead.
-4. If fetch fails (issue not found, auth error): ERROR with clear message and remediation.
-5. Map fields:
+1. Fetch issue: use `gh issue view <number> --json title,body,labels` if available, otherwise `curl` the GitHub API (`GET /repos/{owner}/{repo}/issues/{number}`). [EXPLICIT]
+2. If fetch fails (issue not found, auth error, closed issue, or no GitHub remote): ERROR with a clear message + remediation, and suggest re-running with a text description instead. Do NOT silently continue with a half-populated record. [EXPLICIT]
+3. Map fields: [EXPLICIT]
    - `title` → bug description
-   - `body` → reproduction steps
-   - `labels` → severity mapping: labels containing "critical" → critical, "high"/"priority" → high, "bug" → medium (default), otherwise → medium
-6. Store issue number for GitHub Issue field in bugs.md
-7. Continue to Step 3
+   - `body` → reproduction steps (preserve markdown; if empty, fall back to Step 5 prompt)
+   - `labels` → severity. Precedence is highest-wins, evaluated in order: "critical"/"sev1"/"p0" → critical; "high"/"priority"/"p1" → high; "low"/"minor" → low; "bug" or no match → medium. First matching tier wins so a `bug,critical` pair resolves to critical, not medium. [INFERENCE]
+4. Store the issue number for the GitHub Issue field in bugs.md. [EXPLICIT]
+5. Continue to Step 3. [EXPLICIT]
 
 ### 2b. Text Description Flow
 
@@ -88,13 +87,15 @@ If invalid: ERROR with the message from the JSON response. [EXPLICIT]
 
 ### 5. Gather Bug Details
 
-**For text input (2b):**
-- Prompt user for **severity**: present options (critical, high, medium, low) with descriptions
-- Prompt user for **reproduction steps**: numbered list of steps to reproduce
+**For text input (2b):** [EXPLICIT]
+- Prompt for **severity** (one of): `critical` = data loss / outage / security, no workaround; `high` = core flow broken, workaround painful; `medium` = degraded but usable (default); `low` = cosmetic / edge.
+- Prompt for **reproduction steps**: numbered list. If the user supplies none, record `_(not provided)_` rather than blocking — investigation (T-BNNN) can fill it later.
 
-**For GitHub inbound (2a):**
-- Severity is pre-filled from labels (confirm with user if mapping is ambiguous)
-- Reproduction steps are pre-filled from issue body (confirm with user)
+**For GitHub inbound (2a):** [EXPLICIT]
+- Severity is pre-filled from labels (Step 2a.3). Confirm with the user only if no label matched (resolved to default `medium`).
+- Reproduction steps are pre-filled from issue body. Confirm with user; do not re-prompt if body is non-empty.
+
+Acceptance for this step: severity ∈ {critical,high,medium,low} and a description string is non-empty before continuing. [INFERENCE]
 
 ### 6. Generate Bug ID
 
@@ -106,6 +107,8 @@ bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash
 ```powershell
 pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/bugfix-helpers.ps1 --next-bug-id "<feature_dir>"
 ```
+
+The helper derives the next ID by scanning existing `BUG-NNN` markers in `bugs.md`. IDs are monotonic and never reused, even after a bug is closed — gaps are expected and acceptable. The ID is allocated here but only persisted in Step 7; if the run aborts between, the next run reuses the same ID (no orphan). [INFERENCE]
 
 ### 7. Write bugs.md
 
@@ -232,7 +235,7 @@ bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash
 ```
 Windows: `pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/generate-dashboard-safe.ps1` [EXPLICIT]
 
-### 13. Report
+### 14. Report
 
 Output a summary: [EXPLICIT]
 
@@ -268,7 +271,7 @@ Next step:
 | Feature validation failed | ERROR with specific message |
 | GitHub API unreachable | Fall back: `gh` → `curl` GitHub API → skip with WARN |
 | GitHub issue not found | ERROR with "verify issue number" |
-| TDD required, no test artifacts | ERROR: "Run `/iikit-04-testify` first" |
+| TDD mandatory | Auto-generate `bugfix_<BUG-NNN>.feature` (Step 10); STOP only if `verify-hash` ≠ `valid` |
 | Existing bugs.md | Append without modifying existing entries |
 | Existing tasks.md | Append without modifying existing entries |
 
@@ -277,27 +280,37 @@ Next step:
 Example invocations: [EXPLICIT]
 
 - "/iikit-bugfix" — Run the full iikit bugfix workflow
-- "iikit bugfix on this project" — Apply to current context
-
+- "/iikit-bugfix 'Login fails when email contains plus sign'" — text inbound
+- "/iikit-bugfix #42" — GitHub inbound from issue 42
 
 ## Validation Gate
 
-- [ ] Output follows the defined structure and format [EXPLICIT]
-- [ ] All claims are tagged with evidence markers [EXPLICIT]
-- [ ] No placeholder content (TBD, TODO) [EXPLICIT]
-- [ ] Actionable recommendations with priority levels [EXPLICIT]
-- [ ] Assumptions explicitly documented [EXPLICIT]
+The run is complete only when ALL hold: [EXPLICIT]
+
+- [ ] A `BUG-NNN` entry exists in `<feature_dir>/bugs.md` with Status `reported`, a non-empty Severity ∈ {critical,high,medium,low}, and a Reported date. [EXPLICIT]
+- [ ] Existing `bugs.md` / `tasks.md` entries are byte-for-byte unchanged; the new content was appended, not rewritten. [EXPLICIT]
+- [ ] Generated tasks carry the `T-B` prefix and a `[BUG-NNN]` back-reference. [EXPLICIT]
+- [ ] If TDD `mandatory`: a `bugfix_<BUG-NNN>.feature` file exists and `verify-hash` returned `valid`. [EXPLICIT]
+- [ ] No placeholder leakage (`<description>`, `TBD`, `NNN`) in committed files. [EXPLICIT]
 
 ## Assumptions & Limits
 
-- Assumes access to project artifacts (code, docs, configs) [EXPLICIT]
-- Requires English-language output unless otherwise specified [EXPLICIT]
-- Does not replace domain expert judgment for final decisions [EXPLICIT]
+- A feature directory already exists (created by `/iikit-01-specify`); this skill records bugs, it does not create features. [EXPLICIT]
+- GitHub steps are best-effort: absent `gh`/`curl`/remote, the local workflow still completes with a WARN. [EXPLICIT]
+- This skill REPORTS and PLANS a bug; it does NOT implement the fix — that is `/iikit-07-implement`. Writing fix code here is out of scope. [INFERENCE]
+- English-language artifacts unless the constitution specifies otherwise. [EXPLICIT]
 
-## Edge Cases
+## Edge Cases & Failure Modes
 
 | Scenario | Handling |
 |----------|----------|
-| Empty or minimal input | Request clarification before proceeding |
-| Conflicting requirements | Flag conflicts explicitly, propose resolution |
-| Out-of-scope request | Redirect to appropriate skill or escalate |
+| Empty input | ERROR with usage example (Step 1). [EXPLICIT] |
+| Both `#number` and text given | Prioritize `#number`; WARN that text is ignored (Step 1). [EXPLICIT] |
+| `#number` references a closed/missing/foreign-repo issue | ERROR; suggest text-description re-run (Step 2a). [EXPLICIT] |
+| GitHub label set has no severity match | Default `medium`; flag for user confirmation (Step 2a.3). [INFERENCE] |
+| No features found | ERROR: "Run `/iikit-01-specify` first" (Step 3). [EXPLICIT] |
+| Duplicate bug (same description already `reported`) | Proceed but WARN — IDs are not deduplicated; surfacing the prior BUG-ID helps the user decide. [INFERENCE] |
+| Run aborts after Step 6 (ID issued, not written) | Safe: next run re-derives the same ID by scanning `bugs.md`; no orphan. [INFERENCE] |
+| TDD `mandatory` but `rehash`/`verify-hash` ≠ `valid` | STOP and report; do not generate TDD tasks against an unverified spec (Step 10.4). [EXPLICIT] |
+| `git` absent or repo dirty mid-commit | Step 12 fails non-fatally; report the unstaged files so the user can commit manually. [INFERENCE] |
+| Dashboard regen fails | Never blocks; the bug record is already persisted (Step 13). [EXPLICIT] |

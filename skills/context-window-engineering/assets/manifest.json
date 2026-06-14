@@ -1,0 +1,29 @@
+{
+  "skill": "context-window-engineering",
+  "assets": [
+    {
+      "path": "assets/context-assembly-schema.json",
+      "type": "json-schema",
+      "purpose": "Declara el ensamblado de la ventana (bloques, zonas, compactacion) antes de escribir prompts o adapters; validable contra un contexto.json.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/context-policy.json",
+      "type": "config",
+      "purpose": "Politica dura del ensamblado: tokens prohibidos en el prefijo, cola dinamica final, edge placement, umbral de compactacion y reglas de rechazo.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Criterios de calidad y senales de fallo que el guardian aplica en el gate de aceptacion.",
+      "used_by": ["agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "checklist",
+      "purpose": "Verificacion operativa previa a marcar la skill como aplicada.",
+      "used_by": ["agents/support.md"]
+    }
+  ]
+}

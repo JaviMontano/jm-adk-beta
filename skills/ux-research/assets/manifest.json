@@ -1,0 +1,17 @@
+{
+  "skill": "ux-research",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Universal and route-specific acceptance criteria with severity weights; enforces no-green-as-success. Guardian scores deliverables against it.",
+      "used_by": ["SKILL.md", "agents/guardian.md", "agents/support.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "checklist",
+      "purpose": "Operator route-selection, pre-fielding, and gate checklist — human-readable companion to the rubric.",
+      "used_by": ["agents/support.md", "agents/guardian.md"]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "nodes": [
+    { "id": "mcp_server", "label": "MCP Server", "kind": "entity" },
+    { "id": "scope", "label": "Scope Decision", "kind": "decision" },
+    { "id": "project_scope", "label": ".mcp.json (team, versioned)", "kind": "config" },
+    { "id": "user_scope", "label": "~/.claude.json (personal)", "kind": "config" },
+    { "id": "env_var", "label": "${ENV_VAR} Expansion", "kind": "policy" },
+    { "id": "literal_secret", "label": "Literal Secret (anti-pattern)", "kind": "risk" },
+    { "id": "leak_remediation", "label": "Rotate + git filter-repo", "kind": "procedure" },
+    { "id": "error_contract", "label": "Typed Error Contract", "kind": "artifact" },
+    { "id": "error_category", "label": "errorCategory (auth/rate_limit/transient/fatal)", "kind": "field" },
+    { "id": "is_retryable", "label": "isRetryable", "kind": "field" },
+    { "id": "retry_after", "label": "retryAfterSeconds", "kind": "field" },
+    { "id": "client_retry", "label": "Client-owned Retry Loop", "kind": "policy" },
+    { "id": "max_retries", "label": "maxRetries ceiling", "kind": "constraint" },
+    { "id": "builtin_tool", "label": "Built-in Tool (Read/Grep/Bash)", "kind": "alternative" }
+  ],
+  "edges": [
+    { "from": "mcp_server", "to": "scope", "rel": "requires" },
+    { "from": "scope", "to": "project_scope", "rel": "resolves_to_when_team" },
+    { "from": "scope", "to": "user_scope", "rel": "resolves_to_when_personal" },
+    { "from": "user_scope", "to": "project_scope", "rel": "shadows" },
+    { "from": "mcp_server", "to": "env_var", "rel": "injects_credentials_via" },
+    { "from": "literal_secret", "to": "env_var", "rel": "must_be_replaced_by" },
+    { "from": "literal_secret", "to": "leak_remediation", "rel": "triggers" },
+    { "from": "mcp_server", "to": "error_contract", "rel": "returns" },
+    { "from": "error_contract", "to": "error_category", "rel": "has_field" },
+    { "from": "error_contract", "to": "is_retryable", "rel": "has_field" },
+    { "from": "error_contract", "to": "retry_after", "rel": "has_field" },
+    { "from": "error_category", "to": "is_retryable", "rel": "determines" },
+    { "from": "is_retryable", "to": "client_retry", "rel": "consumed_by" },
+    { "from": "retry_after", "to": "client_retry", "rel": "bounds" },
+    { "from": "client_retry", "to": "max_retries", "rel": "bounded_by" },
+    { "from": "builtin_tool", "to": "mcp_server", "rel": "preferred_over_when_sufficient" }
+  ]
+}

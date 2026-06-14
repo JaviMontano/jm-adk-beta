@@ -1,0 +1,17 @@
+{
+  "skill": "seo-growth",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json",
+      "purpose": "Machine-readable acceptance rubric: routing gates, governance gates, and per-topic acceptance checks the guardian enforces before emitting pass.",
+      "used_by": ["SKILL.md", "agents/guardian.md", "templates/output.md"]
+    },
+    {
+      "path": "assets/routing-matrix.json",
+      "type": "json",
+      "purpose": "Deterministic topic disambiguation: maps request signals to exactly one enum, with not-this-if rules, tie-break, and out-of-scope list.",
+      "used_by": ["agents/lead.md", "prompts/meta.md", "README.md"]
+    }
+  ]
+}

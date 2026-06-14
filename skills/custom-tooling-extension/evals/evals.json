@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "skill": "custom-tooling-extension",
+  "cases": [
+    {
+      "id": "skill_contextual_project_scope",
+      "input": "Quiero que todo el equipo pueda pedirle a Claude que genere las notas de versión desde el git log entre dos tags, sin inflar la sesión ni poder borrar nada.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "evidence", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "slash_command_explicit_trigger",
+      "input": "Necesito un comando que yo invoque a mano como /deploy-check <env> para verificar readiness de deploy en solo lectura.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "evidence", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "fork_for_context_economy",
+      "input": "Mi skill de auditoria de dependencias esta inflando la sesion principal; como la aislo para que no contamine el contexto?",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "evidence", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "allowed_tools_whitelist_review",
+      "input": "Revisa el frontmatter de esta skill que ejecuta git y npm; quiero acotar allowed-tools al minimo y mantenerla segura.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "evidence", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "convention_belongs_in_claude_md",
+      "input": "Tengo una skill que repite siempre nuestras convenciones de naming del repo; deberia ir en la skill o en CLAUDE.md?",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "evidence", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "command_with_contextual_trigger_reclassify",
+      "input": "Hice un slash command pero esperaba que se disparara solo cuando hablo de seguridad; por que nunca se activa sin que lo llame por nombre?",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "evidence", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "upgrade_existing_skill_rename",
+      "input": "Quiero renombrar el id de una skill ya publicada y cambiarla de user a project scope; como lo hago sin romper las invocaciones del equipo?",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "evidence", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "missing_critical_data_ask_first",
+      "input": "Crea una skill que limpie ramas viejas del repo, no se si la usara solo yo o todo el equipo.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "evidence", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "negative_unrelated_domain",
+      "input": "Ayudame a redactar el correo de cierre trimestral para un cliente.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "evidence", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "negative_empty_input",
+      "input": "",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "evidence", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "negative_anti_pattern_request",
+      "input": "Crea la skill en user scope, sin context fork y sin allowed-tools para que pueda hacer cualquier cosa rapido.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "evidence", "quality_criteria", "upgrade_safety"]
+    }
+  ]
+}

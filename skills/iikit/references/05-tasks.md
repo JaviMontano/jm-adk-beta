@@ -4,6 +4,8 @@
 
 Generate an actionable, dependency-ordered tasks.md for the feature. [EXPLICIT]
 
+**Anti-scope** — this phase ONLY produces the task breakdown. It does NOT write product code, run tests, create issues (that is `/iikit-08-taskstoissues`), or modify plan.md/spec.md. If plan.md is wrong, stop and route back to `/iikit-02-plan`. [INFERENCIA]
+
 ## User Input
 
 ```text
@@ -15,6 +17,8 @@ You **MUST** consider the user input before proceeding (if not empty). [EXPLICIT
 ## Constitution Loading
 
 Load constitution per [constitution-loading.md](../iikit-core/references/constitution-loading.md) (basic mode — note TDD requirements for task ordering). [EXPLICIT]
+
+If the constitution mandates TDD, every implementation task for a story MUST be preceded by its test task(s) in ID order; a story whose first task is an implementation task is a constitution violation — reorder before writing. [INFERENCIA]
 
 ## Prerequisites Check
 
@@ -30,10 +34,20 @@ Load constitution per [constitution-loading.md](../iikit-core/references/constit
    Then re-run the prerequisites check from step 1.
 4. Checklist gate per [checklist-gate.md](../iikit-core/references/checklist-gate.md).
 
+**Failure modes** — handle deterministically, do not improvise: [INFERENCIA]
+
+| Symptom | Cause | Action |
+|---------|-------|--------|
+| `FEATURE_DIR` empty / no plan.md | Phase 02 not run | ERROR, route to `/iikit-02-plan` |
+| script exits with testify error | Phase 04 not run | STOP, route to `/iikit-04-testify` |
+| `needs_selection: true` | multiple active features | present table, set-active, re-run step 1 |
+| script not found / non-zero exit | wrong cwd or uninstalled tile | report exact command + exit code, do not fabricate task output |
+| both bash and pwsh fail | unsupported shell | report and ask user for environment |
+
 ## Plan Readiness Validation
 
-1. **Tech stack**: verify plan.md has Language/Version defined (WARNING if missing)
-2. **User story mapping**: verify each story in spec.md has acceptance criteria
+1. **Tech stack**: verify plan.md has Language/Version defined (WARNING if missing — proceed but flag that file paths/extensions are inferred, not authoritative) [EXPLICIT]
+2. **User story mapping**: verify each story in spec.md has acceptance criteria (story with zero criteria → WARNING, cannot generate verifiable tasks for it)
 3. **Dependency pre-analysis**: identify shared entities used by multiple stories -> suggest Foundational phase
 
 Report readiness per [formatting-guide.md](../iikit-core/references/formatting-guide.md) (Plan Readiness section). [EXPLICIT]
@@ -55,6 +69,8 @@ If Tessl installed: query primary framework tile for project structure conventio
 
 Extract tech stack from plan.md, user stories from spec.md, entities from data-model.md, endpoints from contracts/, decisions from research.md. Organize by user story with dependency graph and parallel markers. [EXPLICIT]
 
+**Coverage rule** — every required source artifact maps to at least one task; nothing in plan/spec/data-model/contracts is silently dropped. If an artifact yields no task (e.g., a documented-but-deferred endpoint), state that explicitly rather than omitting it. [INFERENCIA]
+
 ### 4. Task Format (REQUIRED)
 
 ```text
@@ -62,10 +78,10 @@ Extract tech stack from plan.md, user stories from spec.md, entities from data-m
 ```
 
 - Checkbox: always `- [ ]`
-- Task ID: sequential (T001, T002...)
-- [P]: only if parallelizable (different files, no dependencies)
+- Task ID: sequential (T001, T002...), zero-padded to 3 digits, never reused or renumbered out of order [EXPLICIT]
+- [P]: only if parallelizable (different files, no dependencies). Two tasks touching the SAME file MUST NOT both carry [P] — concurrent edits to one file are a merge hazard. [INFERENCIA]
 - [USn]: required for user story tasks only (not Setup/Foundational/Polish)
-- Description: clear action with exact file path
+- Description: clear action with exact file path (relative to repo root; one primary file per task — split if a task touches many)
 
 **Examples**:
 - `- [ ] T001 Create project structure per implementation plan` (setup, no story)
@@ -73,10 +89,12 @@ Extract tech stack from plan.md, user stories from spec.md, entities from data-m
 - `- [ ] T012 [P] [US1] Create User model in src/models/user.py` (parallel, story)
 - `- [ ] T014 [US1] Implement UserService in src/services/user_service.py` (sequential, story)
 
-**Wrong** — missing required elements:
+**Wrong** — missing or misordered required elements:
 - `- [ ] Create User model` (no ID, no story label)
 - `T001 [US1] Create model` (no checkbox)
 - `- [ ] [US1] Create User model` (no task ID)
+- `- [ ] T020 [US1] [P] Create model` (order wrong: [P] must precede [USn])
+- `- [ ] T030 [P] [US1] Update src/app.py` + `- [ ] T031 [P] [US2] Update src/app.py` (same file, both [P] — race)
 
 **Traceability**: When referencing multiple test spec IDs, enumerate them explicitly as a comma-separated list. Do NOT use English prose ranges like "TS-005 through TS-010" — these break automated traceability checks.
 
@@ -89,6 +107,8 @@ Extract tech stack from plan.md, user stories from spec.md, entities from data-m
 - **Phase 2**: Foundational (blocking prerequisites, complete before stories)
 - **Phase 3+**: User Stories in priority order (P1, P2, P3...) — tests -> models -> services -> endpoints -> integration
 - **Final**: Polish & Cross-Cutting Concerns
+
+Phases are sequential gates: no Phase 3 task may depend on an unfinished Phase 3+ task from a later story, and nothing in Setup/Foundational may depend on a story task (that would invert the gate). [INFERENCIA]
 
 ### 6. Task Organization
 
@@ -103,6 +123,8 @@ After generating, validate: [EXPLICIT]
 4. **Phase boundaries**: no backward cross-phase dependencies
 5. **Story independence**: warn on priority inversions (higher-priority depending on lower)
 
+A clean graph is the acceptance bar for this phase: zero cycles, zero phase-boundary violations, every story task traceable to a spec story, every [P] file-disjoint. Cycles are a hard ERROR (block write); orphans and priority inversions are WARNINGs (write, but surface in the report). [INFERENCIA]
+
 ### 8. Write tasks.md
 
 Use [tasks-template.md](../iikit-core/templates/tasks-template.md) with phases, dependencies, parallel examples, and implementation strategy. [EXPLICIT]
@@ -114,6 +136,15 @@ Output: path to tasks.md, total count, count per story, parallel opportunities, 
 ## Semantic Diff on Re-run
 
 If tasks.md exists: preserve `[x]` completion status, map old IDs to new by similarity, warn about changes to completed tasks. Ask confirmation before overwriting. Use format from [formatting-guide.md](../iikit-core/references/formatting-guide.md) (Semantic Diff section). [EXPLICIT]
+
+**Re-run edge cases** — never silently destroy completion state: [INFERENCIA]
+
+| Scenario | Handling |
+|----------|----------|
+| Completed task no longer maps to any new task | Flag as "completed-but-dropped"; ask before removing — work may have shipped |
+| New task has no old match | Mark as net-new; default unchecked |
+| Old `[x]` task's description changed materially | Warn; keep `[x]` but surface the diff for user review |
+| Ambiguous many-to-one ID mapping | Do NOT auto-merge completion; ask user to confirm mapping |
 
 ## Commit
 
@@ -168,12 +199,17 @@ Example invocations: [EXPLICIT]
 - [ ] No placeholder content (TBD, TODO) [EXPLICIT]
 - [ ] Actionable recommendations with priority levels [EXPLICIT]
 - [ ] Assumptions explicitly documented [EXPLICIT]
+- [ ] Dependency graph has zero cycles and zero phase-boundary violations [INFERENCIA]
+- [ ] Every task ID is unique, sequential, and zero-padded; every [P] task is file-disjoint [INFERENCIA]
+- [ ] Every spec story maps to ≥1 task; every required artifact is covered or explicitly deferred [INFERENCIA]
 
 ## Assumptions & Limits
 
 - Assumes access to project artifacts (code, docs, configs) [EXPLICIT]
 - Requires English-language output unless otherwise specified [EXPLICIT]
 - Does not replace domain expert judgment for final decisions [EXPLICIT]
+- Assumes plan.md and spec.md are current and consistent; stale upstream docs produce stale tasks — this phase does not reconcile them [INFERENCIA]
+- Parallelism markers are static hints from file-disjointness, not a runtime scheduler guarantee [INFERENCIA]
 
 ## Edge Cases
 
@@ -182,3 +218,7 @@ Example invocations: [EXPLICIT]
 | Empty or minimal input | Request clarification before proceeding |
 | Conflicting requirements | Flag conflicts explicitly, propose resolution |
 | Out-of-scope request | Redirect to appropriate skill or escalate |
+| spec.md story with no acceptance criteria | WARNING; generate placeholder-free skeleton task and flag the gap, do not invent criteria |
+| Two stories share an entity | Hoist entity task to Foundational, mark both stories as dependents |
+| Single story / trivial feature | Skip empty phases; never emit empty headers or TODO fillers |
+| Contract present but no matching story | Flag orphan contract; propose a contract-test task or explicit deferral |

@@ -1,0 +1,35 @@
+{
+  "skill": "official-source-verifier",
+  "assets": [
+    {
+      "path": "assets/official-source-verifier-contract.json",
+      "type": "json-schema",
+      "purpose": "Required report fields, enums, and invariants: status, source_registry entry shape, claim shape, decision shape.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/source-priority-policy.json",
+      "type": "json-config",
+      "purpose": "Fixed hierarchy official>vendor>spec>repo>secondary, which tiers can be authority, and the conflict-escalation rule.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/citation-policy.json",
+      "type": "json-config",
+      "purpose": "URL + ISO accessed_date + extract requirements and the date/secondary self-correction triggers.",
+      "used_by": ["SKILL.md"]
+    },
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json-rubric",
+      "purpose": "Scored, mostly-blocking acceptance criteria mapped to the validation gate and the fail-closed evals.",
+      "used_by": ["agents/guardian.md"]
+    },
+    {
+      "path": "assets/verification-checklist.md",
+      "type": "checklist",
+      "purpose": "Human pre-delivery checklist mirroring the acceptance gate, with evidence tags.",
+      "used_by": ["knowledge/body-of-knowledge.md", "assets/README.md"]
+    }
+  ]
+}

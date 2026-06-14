@@ -4,6 +4,10 @@
 
 Create or update a feature specification from a natural language description. [EXPLICIT]
 
+**Contract.** Input: free-text feature description (`$ARGUMENTS`). Output: `spec.md` (WHAT/WHY only), `checklists/requirements.md`, `qa/acceptance-criteria.md`, a feature branch + dir, refreshed dashboard. Side effects: creates a git branch and commit. Idempotent on re-run via semantic diff (§ Semantic Diff). [INFERENCIA]
+
+**Anti-scope.** This phase does NOT design architecture, choose tech, write tasks, or implement — those are phases 02/05/07. No HOW. No code. If the description is a bug fix, it routes out (Step 0). [INFERENCIA]
+
 ## User Input
 
 ```text
@@ -60,11 +64,17 @@ pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powe
 
 Parse JSON for `BRANCH_NAME`, `SPEC_FILE`, `FEATURE_NUM`. Only run ONCE per feature. [EXPLICIT]
 
+**Failure modes** [INFERENCIA]
+- Script exits non-zero or emits no JSON → stop; surface stderr verbatim, do not fabricate `SPEC_FILE`. [SUPUESTO]
+- Branch name collides with existing branch → script should suffix `FEATURE_NUM`; if it errors, ask the user to pick a distinct short-name. [SUPUESTO]
+- Dirty working tree blocks branch switch → instruct user to commit/stash first; never force-checkout. [INFERENCIA]
+- Re-invoked after success (script run twice) → branch/dir already exist; skip creation, reuse parsed paths. [INFERENCIA]
+
 ### 3. Generate Specification
 
 1. Parse user description — if empty: ERROR with usage example
 2. Extract key concepts: actors, actions, data, constraints
-3. For unclear aspects: make informed guesses. Only use `[NEEDS CLARIFICATION: question]` (max 3) when choice significantly impacts scope and no reasonable default exists
+3. For unclear aspects: make informed guesses. Only use `[NEEDS CLARIFICATION: question]` (max 3) when choice significantly impacts scope and no reasonable default exists. **Rationale:** cap at 3 to avoid clarification fatigue; defaulting is cheaper to correct downstream than blocking the spec. [INFERENCIA]
 4. Fill User Scenarios with independently testable stories (P1, P2, P3 priorities)
 5. Generate Functional Requirements (testable, with reasonable defaults)
 6. Define Success Criteria (measurable, technology-agnostic)
@@ -86,7 +96,7 @@ Generate `FEATURE_DIR/qa/acceptance-criteria.md` from the spec's SC-XXX success 
 
 ```markdown
 # Acceptance Criteria — {Feature Name}
-Generated from spec.md | {date} [EXPLICIT]
+Generated from spec.md | {date}
 
 ## Success Criteria Checklist
 - [ ] SC-001: {description} — Target: {measurable target}
@@ -99,7 +109,7 @@ Generated from spec.md | {date} [EXPLICIT]
 | SC-001 | FR-001, FR-002 | Unit test / E2E |
 ```
 
-Each SC-XXX from spec.md becomes a checkable acceptance criterion with a measurable target. [EXPLICIT]
+Each SC-XXX from spec.md becomes a checkable acceptance criterion with a measurable target. Every SC must map to ≥1 FR; an SC with no linked FR is a defect (orphan criterion) — flag it, do not silently drop. [INFERENCIA]
 
 ### 6. Handle Clarifications
 
@@ -149,16 +159,25 @@ Parse the JSON and present: [EXPLICIT]
 
 Format:
 ```
-Specification complete! [EXPLICIT]
-Next: [/clear → ] <next_step> (model: <tier>) [EXPLICIT]
+Specification complete!
+Next: [/clear → ] <next_step> (model: <tier>)
 [- <alt_step> — <reason> (model: <tier>)]
 
 - Dashboard: file://$(pwd)/.specify/dashboard.html (resolve the path)
 ```
 
+## Worked Example
+
+Input: `"Let users reset their password via an emailed link that expires in 1 hour"` [INFERENCIA]
+- Step 0: not a bug fix (new capability) → proceed.
+- Step 1: branch `password-reset`.
+- Step 3: actor=registered user; action=request reset, follow link, set new password; data=reset token (TTL 1h), email; one `[NEEDS CLARIFICATION]` candidate (lockout policy after N attempts) — defaulted to "no lockout in v1" since reasonable default exists, so no marker emitted.
+- SC-001: "≥95% of valid reset requests deliver an email within 60s" → links FR-001 (issue token), FR-002 (send email).
+- Output: `spec.md`, `requirements.md`, `acceptance-criteria.md`, branch + dashboard.
+
 ## Usage
 
-Example invocations: [EXPLICIT]
+Example invocations:
 
 - "/iikit-01-specify" — Run the full iikit 01 specify workflow
 - "iikit 01 specify on this project" — Apply to current context
@@ -177,11 +196,26 @@ Example invocations: [EXPLICIT]
 - Assumes access to project artifacts (code, docs, configs) [EXPLICIT]
 - Requires English-language output unless otherwise specified [EXPLICIT]
 - Does not replace domain expert judgment for final decisions [EXPLICIT]
+- Assumes a git repo is initialized and the `iikit-core` scripts are present at the `.tessl/...` paths; absent → Step 2 fails fast. [SUPUESTO]
+- Constitution is soft-loaded: a missing constitution warns but does not block; downstream phases (02/03) may re-require it. [INFERENCIA]
+- Produces a spec, not a contract — success criteria are measurable targets, not guarantees; final acceptance is human-gated (Step 6/7). [INFERENCIA]
 
 ## Edge Cases
 
 | Scenario | Handling |
 |----------|----------|
-| Empty or minimal input | Request clarification before proceeding |
-| Conflicting requirements | Flag conflicts explicitly, propose resolution |
+| Empty or minimal input | ERROR with usage example (Step 3.1); do not invent a feature |
+| Conflicting requirements | Flag conflicts explicitly, propose resolution, do not silently pick one |
 | Out-of-scope request | Redirect to appropriate skill or escalate |
+| Bug-fix intent | Route to `/iikit-bugfix` (Step 0); proceed only on explicit user override |
+| `spec.md` already exists | Semantic diff + downstream-impact warning; confirm before overwrite (§ Semantic Diff) |
+| On main/master/develop | Default to creating a feature branch; `--skip-branch` only if user declines |
+| >3 genuine unknowns | Emit max 3 `[NEEDS CLARIFICATION]`; default the rest and note them in the spec |
+| Detached HEAD / dirty tree | Stop before branch ops; ask user to checkout a branch or commit/stash |
+
+## Step Acceptance Criteria
+- `spec.md` contains no implementation detail (passes Step 4 phase-separation scan). [DOC]
+- Every FR is independently testable; every SC is measurable and technology-agnostic. [DOC]
+- Every SC traces to ≥1 FR in `acceptance-criteria.md`; no orphan criteria. [INFERENCIA]
+- No `[NEEDS CLARIFICATION]` markers survive past Step 6 unanswered. [DOC]
+- Branch, `SPEC_FILE`, and dashboard all exist and the commit landed before Step 7 reports done. [INFERENCIA]

@@ -1,0 +1,17 @@
+{
+  "skill": "evaluation-confidence-design",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Pass/fail gate criteria for the calibrated-confidence evaluator (calibrated-not-raw, stratified sampling, +/- categorical criteria, FP per category, temporal disable, no false-green, monotonic map, ground-truth-present).",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "checklist",
+      "purpose": "Operational validation-gate checklist to mark off before declaring the evaluator ready; feeds section 9 of the output template.",
+      "used_by": ["SKILL.md", "templates/output.md"]
+    }
+  ]
+}

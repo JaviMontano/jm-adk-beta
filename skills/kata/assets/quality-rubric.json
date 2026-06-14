@@ -1,0 +1,37 @@
+{
+  "skill": "kata",
+  "version": "1.0.0",
+  "dimensions": [
+    {
+      "id": "routing_precision",
+      "weight": 0.30,
+      "pass": "Resolved exactly one topic that matches the user's actual failure mode; rejected alternatives named.",
+      "fail": "Guessed a near-match silently, or routed to a kata whose precondition does not hold."
+    },
+    {
+      "id": "single_playbook_isolation",
+      "weight": 0.20,
+      "pass": "Exactly one references/*.md was read; no second playbook loaded to compare.",
+      "fail": "Multiple playbooks loaded, diluting context and breaking hub-and-spoke."
+    },
+    {
+      "id": "pattern_fidelity",
+      "weight": 0.20,
+      "pass": "Correct pattern instantiated verbatim where it is code/config; anti-pattern removed.",
+      "fail": "Improvised prose instead of the playbook's structure."
+    },
+    {
+      "id": "acceptance_criteria_met",
+      "weight": 0.20,
+      "pass": "Every acceptance criterion in the chosen playbook is satisfied and shown in the checklist.",
+      "fail": "Declared done without checking the playbook's own criteria."
+    },
+    {
+      "id": "evidence_governance",
+      "weight": 0.10,
+      "pass": "One Alfa-core tag per non-obvious claim; no mixed families; every assumption has a verification step; no prices/PII; single brand.",
+      "fail": "Untagged claims, mixed tag families, or invented prices/PII."
+    }
+  ],
+  "gate": "All five dimensions must pass. Green/no-errors is not proof of success; verify against the criteria."
+}

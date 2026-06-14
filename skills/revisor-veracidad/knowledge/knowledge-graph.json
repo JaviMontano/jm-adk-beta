@@ -1,0 +1,36 @@
+{
+  "nodes": [
+    { "id": "claim", "label": "Afirmacion (claim)", "kind": "concept" },
+    { "id": "provenance_tag", "label": "Tag de procedencia", "kind": "concept" },
+    { "id": "family", "label": "Familia de tags", "kind": "concept" },
+    { "id": "jarvis_set", "label": "Set Jarvis OS (operador)", "kind": "family" },
+    { "id": "alfa_set", "label": "Set Alfa core (kit/repo)", "kind": "family" },
+    { "id": "homologation", "label": "Homologacion Jarvis->Alfa", "kind": "rule" },
+    { "id": "weakest_tag_rule", "label": "Regla del tag mas debil", "kind": "rule" },
+    { "id": "web_citation_rule", "label": "{WEB} requiere cita", "kind": "rule" },
+    { "id": "closure_step", "label": "Paso de cierre / verificacion", "kind": "artifact" },
+    { "id": "por_confirmar", "label": "{POR_CONFIRMAR}", "kind": "tag" },
+    { "id": "supuesto", "label": "{SUPUESTO}", "kind": "tag" },
+    { "id": "vacio_critico", "label": "{VACIO_CRITICO}", "kind": "tag" },
+    { "id": "validation_gate", "label": "Gate de aceptacion", "kind": "control" },
+    { "id": "over_tagging", "label": "Sobre-tageo (anti-patron)", "kind": "anti_pattern" },
+    { "id": "audience", "label": "Audiencia", "kind": "input" }
+  ],
+  "edges": [
+    { "from": "claim", "to": "provenance_tag", "rel": "recibe_un" },
+    { "from": "provenance_tag", "to": "family", "rel": "pertenece_a" },
+    { "from": "family", "to": "jarvis_set", "rel": "instancia" },
+    { "from": "family", "to": "alfa_set", "rel": "instancia" },
+    { "from": "audience", "to": "family", "rel": "selecciona" },
+    { "from": "homologation", "to": "jarvis_set", "rel": "origen" },
+    { "from": "homologation", "to": "alfa_set", "rel": "destino" },
+    { "from": "weakest_tag_rule", "to": "provenance_tag", "rel": "restringe" },
+    { "from": "web_citation_rule", "to": "provenance_tag", "rel": "valida" },
+    { "from": "por_confirmar", "to": "closure_step", "rel": "exige" },
+    { "from": "supuesto", "to": "closure_step", "rel": "exige" },
+    { "from": "vacio_critico", "to": "claim", "rel": "bloquea" },
+    { "from": "validation_gate", "to": "claim", "rel": "verifica" },
+    { "from": "validation_gate", "to": "over_tagging", "rel": "rechaza" },
+    { "from": "over_tagging", "to": "family", "rel": "degrada" }
+  ]
+}

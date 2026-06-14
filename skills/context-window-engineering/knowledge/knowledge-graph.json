@@ -1,0 +1,39 @@
+{
+  "nodes": [
+    { "id": "context_window", "label": "Ventana de contexto", "kind": "concept" },
+    { "id": "prefix_cache", "label": "Prefix / KV cache", "kind": "concept" },
+    { "id": "static_first", "label": "Orden estatico-first", "kind": "strategy" },
+    { "id": "dynamic_tail", "label": "Cola dinamica (<reminder>)", "kind": "strategy" },
+    { "id": "byte_identity", "label": "Byte-identidad del prefijo", "kind": "constraint" },
+    { "id": "cache_invalidation", "label": "Invalidacion del cache", "kind": "failure" },
+    { "id": "per_turn_value", "label": "Valor por-turno (timestamp/id)", "kind": "artifact" },
+    { "id": "softmax_dilution", "label": "Dilucion softmax", "kind": "failure" },
+    { "id": "u_curve", "label": "Curva en U (lost-in-the-middle)", "kind": "concept" },
+    { "id": "edge_placement", "label": "Edge placement", "kind": "strategy" },
+    { "id": "critical_rule", "label": "Regla critica", "kind": "artifact" },
+    { "id": "compaction", "label": "Compactacion sobre umbral", "kind": "strategy" },
+    { "id": "fixed_threshold", "label": "Umbral fijo (>55%)", "kind": "config" },
+    { "id": "cache_hit_rate", "label": "Cache-hit rate", "kind": "metric" },
+    { "id": "retention_test", "label": "Prueba de retencion", "kind": "metric" },
+    { "id": "compiler", "label": "compile-context-window.py", "kind": "tool" }
+  ],
+  "edges": [
+    { "from": "static_first", "to": "prefix_cache", "rel": "habilita" },
+    { "from": "byte_identity", "to": "prefix_cache", "rel": "es_requisito_de" },
+    { "from": "per_turn_value", "to": "cache_invalidation", "rel": "causa" },
+    { "from": "cache_invalidation", "to": "prefix_cache", "rel": "rompe" },
+    { "from": "per_turn_value", "to": "dynamic_tail", "rel": "debe_vivir_en" },
+    { "from": "u_curve", "to": "softmax_dilution", "rel": "explica" },
+    { "from": "softmax_dilution", "to": "critical_rule", "rel": "amenaza" },
+    { "from": "edge_placement", "to": "critical_rule", "rel": "protege" },
+    { "from": "edge_placement", "to": "u_curve", "rel": "explota" },
+    { "from": "compaction", "to": "fixed_threshold", "rel": "se_dispara_por" },
+    { "from": "compaction", "to": "critical_rule", "rel": "no_debe_tocar" },
+    { "from": "cache_hit_rate", "to": "prefix_cache", "rel": "mide" },
+    { "from": "retention_test", "to": "critical_rule", "rel": "mide" },
+    { "from": "compiler", "to": "byte_identity", "rel": "valida" },
+    { "from": "compiler", "to": "edge_placement", "rel": "valida" },
+    { "from": "context_window", "to": "static_first", "rel": "se_ensambla_con" },
+    { "from": "context_window", "to": "dynamic_tail", "rel": "se_ensambla_con" }
+  ]
+}

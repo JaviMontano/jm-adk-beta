@@ -1,0 +1,31 @@
+{
+  "nodes": [
+    { "id": "claim", "label": "Claim tipado", "kind": "concept" },
+    { "id": "source", "label": "Source (id, locator, as_of)", "kind": "concept" },
+    { "id": "inventory", "label": "Inventario de fuentes", "kind": "concept" },
+    { "id": "locator", "label": "Locator", "kind": "concept" },
+    { "id": "as_of", "label": "Fecha as_of", "kind": "attribute" },
+    { "id": "conflict", "label": "Conflicto entre fuentes", "kind": "concept" },
+    { "id": "normalization", "label": "Normalizacion previa", "kind": "rule" },
+    { "id": "escalation", "label": "Escalacion a humano", "kind": "process" },
+    { "id": "silent_resolution", "label": "Resolucion silenciosa", "kind": "antipattern" },
+    { "id": "structural_test", "label": "Test estructural", "kind": "control" },
+    { "id": "type_invariant", "label": "Invariante por construccion", "kind": "control" },
+    { "id": "render", "label": "Render auditable", "kind": "artifact" }
+  ],
+  "edges": [
+    { "from": "claim", "to": "source", "rel": "requiere source[] no vacio" },
+    { "from": "source", "to": "locator", "rel": "incluye" },
+    { "from": "source", "to": "as_of", "rel": "incluye" },
+    { "from": "source", "to": "inventory", "rel": "source_id debe pertenecer a" },
+    { "from": "normalization", "to": "conflict", "rel": "precede a la deteccion de" },
+    { "from": "conflict", "to": "escalation", "rel": "se enruta a" },
+    { "from": "conflict", "to": "silent_resolution", "rel": "nunca se colapsa via" },
+    { "from": "escalation", "to": "silent_resolution", "rel": "reemplaza a" },
+    { "from": "type_invariant", "to": "claim", "rel": "previene source[] vacio en" },
+    { "from": "structural_test", "to": "claim", "rel": "valida en CI el output de" },
+    { "from": "structural_test", "to": "inventory", "rel": "rechaza ids fuera de" },
+    { "from": "render", "to": "as_of", "rel": "expone visiblemente" },
+    { "from": "render", "to": "conflict", "rel": "muestra marcador de" }
+  ]
+}

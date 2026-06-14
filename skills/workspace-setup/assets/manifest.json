@@ -1,0 +1,23 @@
+{
+  "skill": "workspace-setup",
+  "assets": [
+    {
+      "path": "assets/workspace-setup-plan-contract.json",
+      "type": "json-schema",
+      "purpose": "Deterministic JSON-Schema contract for a .jm-adk.local.json setup plan; the offline validator checks plans against it.",
+      "used_by": ["SKILL.md", "knowledge/body-of-knowledge.md"]
+    },
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Hard-gate scoring of a setup plan: dry-run default, secret containment, overwrite guard, offline determinism, policy completeness, git safety, evidence governance.",
+      "used_by": ["agents/guardian.md", "prompts/meta.md"]
+    },
+    {
+      "path": "assets/apply-checklist.md",
+      "type": "checklist",
+      "purpose": "Pre-apply, write-safety, and governance gate checklist run before any write to .jm-adk.local.json.",
+      "used_by": ["agents/support.md", "templates/output.md"]
+    }
+  ]
+}

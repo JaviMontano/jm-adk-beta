@@ -10,7 +10,9 @@ orchestrator explicitly requests a write. [EXPLICIT]
 
 ## Deterministic Assets
 
-Use these local assets before producing or validating a report. [EXPLICIT]
+Use these local assets before producing or validating a report. They are the
+single source of truth; this playbook only summarizes them. On any conflict
+between this prose and an asset, the asset wins. [EXPLICIT]
 
 | Path | Use |
 |---|---|
@@ -23,7 +25,16 @@ Use these local assets before producing or validating a report. [EXPLICIT]
 | `scripts/check.sh` | Deterministic fixture check for pass, block, and false-pass cases |
 
 The validator reads only explicit local JSON paths. It does not call the
-network, current time, model providers, MCP tools, or random sources. [EXPLICIT]
+network, current time, model providers, MCP tools, or random sources — so two
+runs over the same inputs always agree. This is intentional: gate decisions
+must be reproducible and auditable, which forbids any nondeterministic input.
+A criterion needing live data (e.g. a running emulator) is supplied as a
+captured artifact, never fetched at validation time. [EXPLICIT]
+
+**Assets missing or unreadable.** If a required asset is absent or invalid
+JSON, do not improvise the criterion list from memory: stop and return
+`needs_evidence` naming the missing asset. Fabricating criteria defeats the
+determinism guarantee. [INFERENCE]
 
 ## When To Activate
 
@@ -54,7 +65,14 @@ At least one artifact or explicit missing-evidence statement is required.
 | `score_history` | Existing entry when re-evaluating; otherwise emit a proposed `score_history_entry` |
 
 If required evidence is absent, mark the criterion `not_verified`. Never mark a
-criterion `pass` from silence. [EXPLICIT]
+criterion `pass` from silence — this is the core fail-closed invariant: absence
+of a failure signal is not a pass. [EXPLICIT]
+
+**Assumptions about inputs.** Artifacts are trusted as supplied; the gatekeeper
+does not re-run tests or re-scan code, it evaluates the evidence presented. A
+green check whose log is not attached is `not_verified`, not `pass` — a claim
+is only as strong as its attached evidence. If `gate_id` is inferred, the
+report header states the inference and its basis. [ASSUMPTION]
 
 ## Gate Process
 
@@ -81,7 +99,31 @@ criterion `pass` from silence. [EXPLICIT]
 | G2 Architecture | data model, API/contracts, security rules, BDD traceability, design tokens | architecture evidence complete |
 | G3 Deploy-ready | tests, Lighthouse >= 90, emulator/security checks, accessibility audit, brand voice/monitoring | all release checks green |
 
-Use `assets/gate-criteria.json` as the canonical criterion list. [EXPLICIT]
+Use `assets/gate-criteria.json` as the canonical criterion list. The four rows
+above are a memory aid, not the contract; never evaluate from them alone. [EXPLICIT]
+
+## Worked Example
+
+Request: "Can G2 pass? source `analysis`, target `architecture`." Artifacts:
+data-model.md, openapi.yaml; no security-rules file; BDD specs present but
+untraceable to scenarios; design tokens attached. [EXPLICIT]
+
+Evaluation (per `gate-criteria.json` G2 rows):
+
+| Criterion | Status | Evidence | Remediation |
+|---|---|---|---|
+| data model | `pass` | data-model.md [DOC] | — |
+| API/contracts | `pass` | openapi.yaml [DOC] | — |
+| security rules | `not_verified` | no file supplied [ASSUMPTION] | add firestore.rules + test |
+| BDD traceability | `fail` | specs present, no scenario IDs [DOC] | map each spec to a scenario ID |
+| design tokens | `pass` | tokens.json [DOC] | — |
+
+Decision: **block**. `overall_status: blocked` (one `fail`, one `not_verified`).
+Severities: BDD `P1`, security rules `P1`. `assumption_ratio` = 1/5 = 0.20, below
+0.30, no banner. Proposed `score_history_entry`: `{gate: G2, blocked: true,
+decision: block, not_verified_count: 1, evaluator: quality-gatekeeper}`. No
+project state written. Note the contrast: three `pass` rows do NOT yield "mostly
+pass" — a single `fail` or `not_verified` blocks the whole gate. [EXPLICIT]
 
 ## Report Contract
 
@@ -123,17 +165,46 @@ Every report must include: [EXPLICIT]
 | `P3` | Low-risk wording or documentation gap | Warn |
 | `none` | Criterion passes or does not apply | Allow |
 
-## Edge Cases
+## Key Decisions and Trade-offs
 
-- **G3 requested before G1:** block with sequential gate violation.
-- **No files or docs yet:** return `not_verified`, not `pass`.
-- **Partial green checks:** block the gate; no "mostly pass" language.
+- **Fail-closed over fail-open.** Missing evidence blocks rather than waves
+  through. Trade-off: more false blocks (annoying) but zero silent gate
+  bypasses (dangerous). A blocked gate is recoverable by attaching evidence; a
+  falsely-passed gate ships the defect. [INFERENCE]
+- **Stateless by default.** No write unless explicitly permitted. Trade-off:
+  the orchestrator must do a second step to persist, but the gatekeeper can
+  never corrupt `.specify/score-history.json` on a dry run or a misread. [EXPLICIT]
+- **Assets as source of truth, prose as summary.** Trade-off: this file can
+  drift from the JSON; mitigated by the "asset wins" rule and `check.sh`
+  fixtures that pin behavior. [INFERENCE]
+- **Binary gate, no partial credit.** One `fail`/`not_verified` blocks the
+  gate. Trade-off: loses nuance ("90% ready") but removes the judgment call
+  that lets borderline work advance. [EXPLICIT]
+
+## Edge Cases and Failure Modes
+
+- **G3 requested before G1:** block with a sequential gate violation (`P1`),
+  even if all G3 artifacts look complete — order is non-negotiable. [EXPLICIT]
+- **Skipped intermediate gate (G0+G2, no G1):** block; G1 is a prerequisite,
+  not optional. Report the gap as out-of-sequence. [INFERENCE]
+- **No files or docs yet:** return `not_verified` for each criterion, not
+  `pass`, and overall `needs_evidence`. [EXPLICIT]
+- **Partial green checks:** block the gate; no "mostly pass" language. [EXPLICIT]
 - **Assumption-heavy report:** if more than 30% of criterion evidence is
-  `[ASSUMPTION]`, add a warning banner and avoid `allow`.
+  `[ASSUMPTION]`, add a warning banner and avoid `allow`. The ratio counts
+  criterion rows, not sentences. [EXPLICIT]
+- **Lighthouse 90 exactly:** passes (`>= 90`); 89 fails. Boundary is inclusive. [EXPLICIT]
 - **Score-history file absent:** emit a valid proposed entry; do not invent that
-  it was written.
+  it was written or assume prior scores. [EXPLICIT]
+- **Conflicting evidence (passing test log + failing CI badge):** take the
+  stricter signal; classify `fail` and cite both. Never average. [INFERENCE]
+- **Duplicate criterion rows:** each required criterion appears exactly once; a
+  duplicate is a malformed report, not extra confidence — flag it. [EXPLICIT]
 - **Explicit write request:** only update `.specify/score-history.json` after
-  the user/orchestrator permits writes and a valid report exists.
+  the user/orchestrator permits writes AND a valid report exists. A write with
+  an invalid report is refused. [EXPLICIT]
+- **Stale source_stage (claims `architecture` but no G1 record):** treat the
+  unproven prior gate as `not_verified`; do not assume earlier gates passed. [ASSUMPTION]
 
 ## Reference Files
 
@@ -146,4 +217,4 @@ Every report must include: [EXPLICIT]
 | `scripts/check.sh` | Fixture-backed deterministic check | When local scripts can run |
 
 ---
-**Author:** Javier Montano | **Last updated:** 2026-06-05
+**Author:** Javier Montano | **Last updated:** 2026-06-11

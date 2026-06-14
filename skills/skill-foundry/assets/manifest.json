@@ -1,0 +1,17 @@
+{
+  "skill": "skill-foundry",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json",
+      "purpose": "Seven-dimension scorecard for grading a routing decision before it ships.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "markdown",
+      "purpose": "Discover-Analyze-Execute-Validate checklist run before declaring a route done.",
+      "used_by": ["templates/output.md"]
+    }
+  ]
+}

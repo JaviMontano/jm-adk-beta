@@ -1,0 +1,17 @@
+{
+  "skill": "pm-delivery",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Weighted scoring rubric and pass rule for the pm-delivery acceptance gate, including the 30% assumption-warning threshold.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "text/markdown",
+      "purpose": "Reusable acceptance checklist the guardian walks before emitting dod=pass.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "skill": "market-intel",
+  "version": "1.0.0",
+  "scale": "0=absent, 1=partial, 2=met",
+  "pass_threshold": "every dimension >= 1 AND all gate dimensions = 2",
+  "dimensions": [
+    {
+      "id": "routing_integrity",
+      "gate": true,
+      "criterion": "Exactly one playbook loaded; topic in enum; ambiguity resolved by asking not guessing."
+    },
+    {
+      "id": "evidence_single_family",
+      "gate": true,
+      "criterion": "Every non-obvious claim has exactly one tag from the loaded playbook's family; no family mixing."
+    },
+    {
+      "id": "sourcing_discipline",
+      "gate": true,
+      "criterion": "Market/competitor figures are [DOC]/[EXPLICIT] only with source + date; else downgraded."
+    },
+    {
+      "id": "no_invented_price",
+      "gate": true,
+      "criterion": "No concrete price; FTE-months / ranges / placeholders only."
+    },
+    {
+      "id": "single_brand_no_pii",
+      "gate": true,
+      "criterion": "One brand per artifact with correct token set; no client PII; contact intel public-channel only."
+    },
+    {
+      "id": "playbook_acceptance",
+      "gate": true,
+      "criterion": "The loaded playbook's own acceptance checklist is satisfied."
+    },
+    {
+      "id": "actionability",
+      "gate": false,
+      "criterion": "Findings and recommendations are specific and tied to evidence, not filler."
+    },
+    {
+      "id": "depth_honored",
+      "gate": false,
+      "criterion": "depth=deep ran the playbook's Validate step; depth=quick delivered the headline artifact only."
+    }
+  ]
+}

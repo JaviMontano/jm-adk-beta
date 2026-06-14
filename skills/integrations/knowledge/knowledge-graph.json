@@ -1,0 +1,42 @@
+{
+  "nodes": [
+    { "id": "router", "label": "integrations router", "kind": "skill" },
+    { "id": "payment", "label": "payment-integration", "kind": "topic" },
+    { "id": "push", "label": "push-notifications", "kind": "topic" },
+    { "id": "recaptcha", "label": "recaptcha-integration", "kind": "topic" },
+    { "id": "webhook", "label": "webhook-handling", "kind": "topic" },
+    { "id": "security-boundary", "label": "security boundary", "kind": "concept" },
+    { "id": "signature-verification", "label": "signature/origin verification", "kind": "control" },
+    { "id": "idempotency", "label": "idempotency on money/event paths", "kind": "control" },
+    { "id": "fast-ack", "label": "fast-ack + async processing", "kind": "control" },
+    { "id": "secrets", "label": "server-side secrets", "kind": "control" },
+    { "id": "evidence-tags", "label": "Alfa-core evidence taxonomy", "kind": "governance" },
+    { "id": "validation-gate", "label": "validation gate", "kind": "governance" },
+    { "id": "stripe", "label": "Stripe / PayPal", "kind": "provider" },
+    { "id": "fcm", "label": "FCM / Web Push", "kind": "provider" },
+    { "id": "recaptcha-v3", "label": "reCAPTCHA v3 + App Check", "kind": "provider" }
+  ],
+  "edges": [
+    { "from": "router", "to": "payment", "rel": "routes-to" },
+    { "from": "router", "to": "push", "rel": "routes-to" },
+    { "from": "router", "to": "recaptcha", "rel": "routes-to" },
+    { "from": "router", "to": "webhook", "rel": "routes-to" },
+    { "from": "payment", "to": "stripe", "rel": "integrates" },
+    { "from": "push", "to": "fcm", "rel": "integrates" },
+    { "from": "recaptcha", "to": "recaptcha-v3", "rel": "integrates" },
+    { "from": "payment", "to": "webhook", "rel": "fulfilled-by" },
+    { "from": "security-boundary", "to": "signature-verification", "rel": "enforced-by" },
+    { "from": "webhook", "to": "signature-verification", "rel": "requires" },
+    { "from": "recaptcha", "to": "signature-verification", "rel": "requires" },
+    { "from": "payment", "to": "idempotency", "rel": "requires" },
+    { "from": "webhook", "to": "idempotency", "rel": "requires" },
+    { "from": "webhook", "to": "fast-ack", "rel": "requires" },
+    { "from": "payment", "to": "secrets", "rel": "requires" },
+    { "from": "push", "to": "secrets", "rel": "requires" },
+    { "from": "validation-gate", "to": "signature-verification", "rel": "checks" },
+    { "from": "validation-gate", "to": "idempotency", "rel": "checks" },
+    { "from": "validation-gate", "to": "secrets", "rel": "checks" },
+    { "from": "router", "to": "evidence-tags", "rel": "applies" },
+    { "from": "router", "to": "validation-gate", "rel": "gated-by" }
+  ]
+}

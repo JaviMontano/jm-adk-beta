@@ -1,0 +1,17 @@
+{
+  "skill": "market-intel",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Scored rubric the guardian applies before emitting a routed deliverable; gate dimensions cover routing integrity, evidence family, sourcing, no-price, single-brand, and playbook acceptance.",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    },
+    {
+      "path": "assets/routing-checklist.md",
+      "type": "text/markdown",
+      "purpose": "Top-to-bottom checklist that resolves the topic to exactly one playbook and enforces the one-playbook-per-invocation rule.",
+      "used_by": ["agents/lead.md", "agents/guardian.md"]
+    }
+  ]
+}

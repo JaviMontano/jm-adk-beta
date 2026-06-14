@@ -4,9 +4,15 @@
 
 Generate "Unit Tests for English" — checklists that validate REQUIREMENTS quality, not implementation. [EXPLICIT]
 
+**Scope (what this skill does):** review and extend a requirements checklist, resolve gaps by editing `spec.md`, drive items to 100%, record phase completion, refresh the dashboard. [EXPLICIT]
+
+**Anti-scope (what it MUST NOT do):** write/run code or tests; assert that an implementation behaves correctly; create a checklist from scratch when one exists (extend instead); modify `plan.md`/`tasks.md` (read-only here); fabricate spec references to hit the 80% traceability bar. [INFERENCIA]
+
 ## Core Principle
 
 Every checklist item evaluates the **requirements themselves** for completeness, clarity, consistency, measurability, and coverage. Items MUST NOT test implementation behavior. [EXPLICIT]
+
+**Litmus test** — if an item can only be answered by executing the system, it tests implementation and belongs in a test suite, not here. If it can be answered by reading the spec alone, it is a valid requirements check. [INFERENCIA]
 
 ## User Input
 
@@ -25,6 +31,8 @@ Load constitution per [constitution-loading.md](../iikit-core/references/constit
 1. Run: `bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/check-prerequisites.sh --phase 03 --json`
    Windows: `pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/check-prerequisites.ps1 -Phase 03 -Json`
 2. Parse JSON for `FEATURE_DIR` and `AVAILABLE_DOCS`.
+   - If the script exits non-zero or emits non-JSON (e.g. not in an iikit repo, missing `.specify/`), STOP and report the raw error — do not guess `FEATURE_DIR`. [INFERENCIA]
+   - If `AVAILABLE_DOCS` lacks `spec.md`, STOP: step 2 of Execution requires it. [INFERENCIA]
 3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in [conversation-guide.md](../iikit-core/references/conversation-guide.md). After user selects, run:
    ```bash
    bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/set-active-feature.sh --json <selection>
@@ -60,7 +68,16 @@ Wrong: "Verify the button clicks correctly" (this tests implementation) [EXPLICI
 
 **Categories**: Requirement Completeness, Clarity, Consistency, Acceptance Criteria Quality, Scenario Coverage, SC-XXX Test Coverage, Edge Case Coverage, Non-Functional Requirements, Dependencies & Assumptions.
 
-**Traceability**: >=80% of items must reference spec sections or use markers: `[Gap]`, `[Ambiguity]`, `[Conflict]`, `[Assumption]`.
+**Traceability**: >=80% of items must reference spec sections or use markers: `[Gap]`, `[Ambiguity]`, `[Conflict]`, `[Assumption]`. Markers count toward the 80% — an item flagging a missing requirement is itself traceable to the gap it names. [INFERENCIA]
+
+**Worked example — one item per category** (question form, dimension tag, spec ref): [INFERENCIA]
+- Completeness: "Is every user-facing error state given a defined requirement?" `[Gap]`
+- Clarity: "Is 'fast load' quantified (e.g. p95 < 2s)?" `[Ambiguity, Spec NFR-2]`
+- Consistency: "Do SFR-3 and SFR-7 agree on the session-timeout value?" `[Conflict]`
+- Acceptance Criteria: "Does SC-4 state a measurable pass/fail threshold?" `[Acceptance, Spec SC-4]`
+- Edge Case: "Is empty-input behavior specified?" `[Gap]`
+
+**Marker semantics** (one per finding type): `[Gap]` = a required statement is absent; `[Ambiguity]` = present but under-specified/unmeasurable; `[Conflict]` = two requirements contradict; `[Assumption]` = relied-upon condition not stated in spec. [INFERENCIA]
 
 See [checklist-examples.md](references/checklist-examples.md) for correct/wrong examples and required patterns. [EXPLICIT]
 
@@ -77,6 +94,10 @@ After gap resolution, validate ALL unchecked `[ ]` items against spec/plan/const
 - If genuine gap: convert to `[Gap]` and resolve or defer
 
 Continue until all items are `[x]` or explicitly deferred. [EXPLICIT]
+
+**Done criteria** (all must hold before Report): every item is `[x]` or carries an explicit `[Deferred: reason]`; no bare `[ ]` remains; traceability >=80%; no `TBD`/`TODO` text in the file; `spec.md` edits from gap resolution are saved. [INFERENCIA]
+
+**Decision — defer vs resolve**: resolve when the answer is knowable from spec/plan/constitution or a quick user confirmation; defer only when resolution needs work owned by a downstream phase. Trade-off: deferring keeps this phase moving but every deferral is surfaced as a warning downstream, so default to resolve. [INFERENCIA]
 
 **IMPORTANT**: Checklists are optional — not creating one is fine. But once created, they MUST reach 100% before the skill reports success.
 
@@ -96,10 +117,12 @@ git commit -m "checklist: <feature-short-name> requirements review"
 Write a timestamp to `.specify/context.json` so the dashboard knows the checklist phase was run (not just that requirements.md exists from specify): [EXPLICIT]
 
 ```bash
-CONTEXT_FILE=".specify/context.json" [EXPLICIT]
+CONTEXT_FILE=".specify/context.json"
 [[ -f "$CONTEXT_FILE" ]] || echo '{}' > "$CONTEXT_FILE"
 jq --arg ts "$(date -u +%Y-%m-%dT%H:%M:%SZ)" '.checklist_reviewed_at = $ts' "$CONTEXT_FILE" > "$CONTEXT_FILE.tmp" && mv "$CONTEXT_FILE.tmp" "$CONTEXT_FILE"
 ```
+
+The write-to-tmp-then-`mv` pattern is deliberate: it prevents a corrupt/truncated `context.json` if `jq` fails mid-write. If `jq` exits non-zero the `&&` stops the `mv`, leaving the original intact — report the failure rather than proceeding. If `jq` is unavailable, STOP and surface it; do not hand-edit JSON. [INFERENCIA]
 
 ## Dashboard Refresh
 
@@ -127,8 +150,8 @@ If deferred items remain, warn that downstream skills will flag incomplete check
 
 Format:
 ```
-Checklist complete! [EXPLICIT]
-Next: [/clear → ] <next_step> (model: <tier>) [EXPLICIT]
+Checklist complete!
+Next: [/clear → ] <next_step> (model: <tier>)
 [- <alt_step> — <reason> (model: <tier>)]
 
 - Dashboard: file://$(pwd)/.specify/dashboard.html (resolve the path)
@@ -163,3 +186,10 @@ Example invocations: [EXPLICIT]
 | Empty or minimal input | Request clarification before proceeding |
 | Conflicting requirements | Flag conflicts explicitly, propose resolution |
 | Out-of-scope request | Redirect to appropriate skill or escalate |
+| `requirements.md` missing (skipped specify) | Create it from [checklist-template.md](../iikit-core/templates/checklist-template.md); do not silently no-op [INFERENCIA] |
+| `spec.md` absent or empty | STOP at Load Feature Context — cannot evaluate requirements quality without a spec [INFERENCIA] |
+| `--no-interactive` with open `[Gap]` items | Skip resolution, leave gaps marked, surface count in Report; never auto-invent requirements [INFERENCIA] |
+| Item phrased as implementation test | Reword to a requirements question or drop it (see Litmus test) [INFERENCIA] |
+| Traceability below 80% | Add spec refs/markers before Report; do not fabricate section IDs [INFERENCIA] |
+| `set-active-feature` selection out of range | Re-present the numbered table; do not assume index 1 [INFERENCIA] |
+| Dashboard script fails | Report the error; phase completion (context.json) already persisted, so do not re-run the whole skill [INFERENCIA] |

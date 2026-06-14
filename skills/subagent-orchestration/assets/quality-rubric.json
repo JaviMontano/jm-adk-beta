@@ -1,0 +1,73 @@
+{
+  "skill": "subagent-orchestration",
+  "version": "1.0.0",
+  "description": "Deterministic blocking gates for a hub-and-spoke orchestration plan. The Guardian fails the plan if any blocking gate is unmet.",
+  "gates": [
+    {
+      "id": "fanout_justified",
+      "blocking": true,
+      "rule": "Plan declares 2+ genuinely independent subtasks; a single-pass task is not forced into spokes.",
+      "blocker": "false-positive fan-out"
+    },
+    {
+      "id": "fresh_session_isolation",
+      "blocking": true,
+      "rule": "Every spoke runs in fresh_session; no shared coordinator transcript or mutable scratch object across spokes.",
+      "blocker": "shared context"
+    },
+    {
+      "id": "last_message_only",
+      "blocking": true,
+      "rule": "Coordinator consumes only each spoke's final message.",
+      "blocker": "full-transcript ingest"
+    },
+    {
+      "id": "agentdefinition_task_dispatch",
+      "blocking": true,
+      "rule": "Each of 2+ spokes declares AgentDefinition(description, prompt, tools, model) and is dispatched via Task.",
+      "blocker": "missing Task dispatch"
+    },
+    {
+      "id": "minimal_provisioning",
+      "blocking": true,
+      "rule": "No tool or model assigned that the spoke does not use; cheapest model that clears the bar.",
+      "blocker": "over-provisioning"
+    },
+    {
+      "id": "typed_errors",
+      "blocking": true,
+      "rule": "Spoke failures carry failure_type, attempted_query, partial_results, suggested_alternatives.",
+      "blocker": "untyped / swallowed error"
+    },
+    {
+      "id": "valid_empty_vs_access_failure",
+      "blocking": true,
+      "rule": "valid_empty (access ok, empty) is distinct from access_failure; never success + [] for an access failure.",
+      "blocker": "swallowed error"
+    },
+    {
+      "id": "local_recovery",
+      "blocking": true,
+      "rule": "Bounded retry or alternative proposal attempted before propagation.",
+      "blocker": "missing local recovery"
+    },
+    {
+      "id": "degraded_aggregation",
+      "blocking": true,
+      "rule": "Continue-on-partial-failure with explicit coverage_gaps; fail-fast only if requested, with skipped spokes recorded.",
+      "blocker": "fail-fast aborting unrelated spokes"
+    },
+    {
+      "id": "validation_flags",
+      "blocking": true,
+      "rule": "offline=true, network_required=false, deterministic=true.",
+      "blocker": "non-deterministic plan"
+    },
+    {
+      "id": "governance",
+      "blocking": true,
+      "rule": "Evidence tags present (one family of [CÓDIGO]/[CONFIG]/[DOC]/[INFERENCIA]/[SUPUESTO]); no invented prices; no client PII; single brand.",
+      "blocker": "governance violation"
+    }
+  ]
+}

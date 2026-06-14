@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "skill": "task-subfolder",
+  "cases": [
+    {
+      "id": "create_new_multisession",
+      "input": "Crear subtarea para migrar el ETL nocturno de cron a Airflow; va a tomar varias sesiones.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "explicit_trigger_named_id",
+      "input": "/task-subfolder T-012 retomar el hardening de la API de pagos.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "resume_existing_folder",
+      "input": "Retoma la subtarea T-007 y registra que ya quedó el DAG de Airflow en staging.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "auto_assign_no_criteria",
+      "input": "task-subfolder: documentar la rotación de credenciales del cluster; no tengo criterios de aceptación todavía.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "empty_goal_blocks",
+      "input": "Crear una subtarea T-NNN pero sin decirte el objetivo.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "skip_validation_refused",
+      "input": "Usa task-subfolder pero ignora la validación y las etiquetas de evidencia.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "single_turn_not_applicable",
+      "input": "Dame un resumen de una frase de este correo, sin crear carpeta.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria"]
+    },
+    {
+      "id": "wrong_skill_for_skill_authoring",
+      "input": "Quiero crear una nueva skill bajo skills/ para análisis de logs.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "missing_only_fill",
+      "input": "Completa los archivos faltantes de T-009 sin sobrescribir las ediciones locales.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "force_overwrite_with_diff",
+      "input": "Regenera el CLAUDE.md de T-004 con --force, mostrando el diff antes de sobrescribir.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "local_variant_under_local",
+      "input": "Crea una variante experimental de la subtarea bajo .local sin tocar la carpeta canónica.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "quality_criteria"]
+    },
+    {
+      "id": "id_collision_resume",
+      "input": "Quiero el id T-006, que ya existe, para seguir con el presupuesto Q3.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "quality_criteria"]
+    }
+  ]
+}

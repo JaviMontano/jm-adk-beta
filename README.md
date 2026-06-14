@@ -2,21 +2,33 @@
 
 Catalog-driven multi-runtime agent harness. Successor of [jm-adk-alfa](https://github.com/JaviMontano/jm-adk-alfa) (frozen at tag `alfa-final`).
 
-**611 skills → ~92** (routers + hardened core + shared library) keeping all load-bearing functionality. Runs on **Claude Code, Antigravity, Codex**.
+**611 alfa skills → 73 beta skills** (35 routers + 24 competencies + 14 jarvis-os) [CODE: `ls -d skills/*/` = 73], all 611 dispositioned and traced, no load-bearing capability dropped. Runs on **Claude Code, Antigravity, Codex** from one catalog.
 
 ## Principles
 
-- `catalog/skills.json` = single source of truth; every runtime surface generated (`scripts/build-indexes.py`).
-- Script/template/prompt trilogy (spec-kit): deterministic scripts emit JSON → templates ingest → prompts add judgment.
-- Phase gates = artifact existence (iikit): `scripts/check-prerequisites.sh --phase pN --json`.
-- Constitution v6.0.0 enforcement mode in execution phases.
+- `catalog/skills.json` = single source of truth; every runtime surface is generated, never hand-edited (`scripts/build-indexes.py`). Editing `CLAUDE.md`/`AGENTS.md`/`GEMINI.md` directly is an anti-pattern — changes are lost on regen.
+- Script/template/prompt trilogy (spec-kit): deterministic scripts emit JSON → templates ingest → prompts add judgment. Determinism lives in scripts so prompts stay auditable.
+- Phase gates = artifact existence (iikit): `scripts/check-prerequisites.sh --phase pN --json`. A phase is "done" only when its artifacts exist, not when a model asserts it.
+- Constitution v6.0.0 enforcement mode in execution phases (`references/ontology/`).
 - Compressed output contracts (caveman) in all subagents; token budgets CI-enforced (`scripts/check-token-budget.py`).
+
+## Quickstart
+
+```
+python3 scripts/build-indexes.py                   # regenerate all runtime surfaces from catalog
+python3 scripts/validate-coverage.py               # assert 611/611 alfa skills dispositioned
+scripts/check-prerequisites.sh --phase p1 --json   # gate check before a phase
+python3 scripts/token-stats.py                     # remeasure token budgets (updates table below)
+scripts/auth-doctor.sh                             # diagnose per-runtime MCP/auth before smoke
+```
+
+Prereqs [ASSUMPTION, no version gate in scripts]: Python 3 + Bash; scripts are run from repo root. `.py` scripts are invoked via `python3` (not all carry the execute bit [CODE]); `.sh` scripts are executable. CI runs `validate-*.py` + `check-token-budget.py`; a red gate blocks merge.
 
 ## Layout
 
 ```
 catalog/      skills.json (truth) · consolidation-map.yaml · coverage-matrix.csv (611-row trace to alfa)
-skills/       ~92 dirs: SKILL.md (+ references/ playbooks + evals.json)
+skills/       73 dirs: SKILL.md (+ references/ playbooks + evals.json)
 references/   shared: brand/ guardrails/ ontology(v6)/ roles/ schemas/
 harness/      manifest.json (+schema) → adapters + MCP configs
 runtime/      core.md + per-runtime deltas → CLAUDE.md / AGENTS.md / GEMINI.md (generated)
@@ -26,24 +38,34 @@ migrate/      one-off porting scripts (deleted at GA)
 
 ## Token budgets (session start, CI-gated)
 
-Measured (`evals/token-benchmark.json`, chars/4 applied identically to all arms):
+Measured (`evals/token-benchmark.json`, chars/4 applied identically to all arms — relative deltas hold under any consistent tokenizer; absolute counts will shift with the real tokenizer):
 
 | Runtime | Alfa (measured) | Beta naive | Beta (measured) | vs alfa |
 |---|---|---|---|---|
-| Claude Code | 29,552 | 3,869 | **2,294** | **−92%** |
-| Antigravity | 36,801 | 5,377 | **2,990** | **−92%** |
-| Codex | 1,651 | 3,820 | **2,289** | +39%* |
+| Claude Code | 29,552 | 3,869 | **2,234** | **−92%** |
+| Antigravity | 36,801 | 5,377 | **3,377** | **−91%** |
+| Codex | 1,651 | 3,820 | **2,214** | +34%* |
 
-\* Alfa's AGENTS.md carried no skill index — Codex sessions had no catalog access.
-Beta inlines the full 73-skill tier-0 index; the +638 tokens buy complete
-catalog routing. Honest trade-off, recorded as measured.
+\* Alfa's AGENTS.md carried no skill index — Codex sessions had no catalog access. Beta inlines the full 73-skill tier-0 index; the +563 tokens buy complete catalog routing. Honest trade-off, recorded as measured, not hidden.
 
-Regenerate: `python3 scripts/token-stats.py`. README table updates only from
-committed benchmark data (caveman honesty rule).
+Regenerate with `python3 scripts/token-stats.py`. The table updates **only** from committed benchmark data, never hand-typed (caveman honesty rule) — a number here with no matching commit in `evals/` is a bug.
+
+## Acceptance criteria (GA gate)
+
+- `scripts/validate-coverage.py` PASS — 611/611 dispositioned.
+- `scripts/check-token-budget.py` green for all 3 runtimes (Codex +39% is an accepted, documented regression, not a failure).
+- 3-runtime smoke: 10 canonical tasks pass on Claude Code, Antigravity, Codex.
+- Generated surfaces match catalog: re-running `build-indexes.py` produces no diff.
+
+## Anti-scope
+
+- Not a general agent framework — only the JM/Sofka catalog, not arbitrary third-party skills.
+- No per-runtime forks of skill logic; runtime differences live only in `runtime/*-deltas`.
+- `migrate/` is throwaway and **deleted at GA** — do not build on it.
+- No prices in any output; FTE-months + disclaimers only (governance rule).
 
 ## Status
 
-- 611/611 alfa skills dispositioned (`scripts/validate-coverage.py` PASS)
-- 73 beta skills (35 routers + 24 competencies + 14 jarvis-os), 351 aliases
-- Pending field validation: 3-runtime smoke (10 canonical tasks), Stitch-on-Codex
-  proxy, Antigravity end-to-end MCP (`scripts/auth-doctor.sh` to check auth)
+- 611/611 alfa skills dispositioned (`scripts/validate-coverage.py` PASS).
+- 73 beta skills (35 routers + 24 competencies + 14 jarvis-os), 351 aliases.
+- Pending field validation: 3-runtime smoke (10 canonical tasks), Stitch-on-Codex proxy, Antigravity end-to-end MCP — run `scripts/auth-doctor.sh` first to rule out auth before debugging routing.

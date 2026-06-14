@@ -1,0 +1,133 @@
+{
+  "cases": [
+    {
+      "id": "ci-feature-matrix",
+      "input": "Build a competitor feature matrix and SWOT for our realtime collaboration product vs Figma, Miro, and one more you pick. Note where we differentiate.",
+      "expected_checks": [
+        "routes_to_competitive_intelligence",
+        "single_playbook_loaded",
+        "feature_matrix_cells_tagged",
+        "unknown_not_treated_as_no",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "positioning-battle-card",
+      "input": "We sell forecasting software to mid-market RevOps leads. Draft a positioning statement and a battle card against the spreadsheet status quo and one rules-based rival.",
+      "expected_checks": [
+        "routes_to_competitive_positioning",
+        "axes_are_buyer_criteria",
+        "status_quo_included",
+        "positioning_statement_present",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "benchmark-onboarding",
+      "input": "Our onboarding time-to-value is 14 days. Benchmark that against the SaaS industry median and tell me where to focus to close the gap.",
+      "expected_checks": [
+        "routes_to_benchmarking_analysis",
+        "figures_carry_source_and_date",
+        "gap_reported_absolute_and_percent",
+        "ranked_by_impact_x_closability",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "mi-entity-osint",
+      "input": "Research the company Stripe operating in Brazil: ownership, competitive position, momentum signals, and public contact channels. Deliver a branded HTML report.",
+      "expected_checks": [
+        "routes_to_market_intelligence",
+        "entity_classified_company_x_territory",
+        "osint_tag_family_used",
+        "open_items_have_resolution_path",
+        "assets"
+      ]
+    },
+    {
+      "id": "sector-fintech-eu",
+      "input": "We are entering EU cross-border B2B payments. Give me the regulatory matrix, a sector glossary, and the integration rails we must support.",
+      "expected_checks": [
+        "routes_to_sector_intelligence",
+        "subsegment_and_jurisdiction_named",
+        "regulation_primary_sourced_pointintime",
+        "real_rails_named_not_categories",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "marketing-value-props",
+      "input": "Establish positioning and a message hierarchy for our open methodology product aimed at mid-market data teams drowning in manual reporting. One primary value prop, proof-anchored.",
+      "expected_checks": [
+        "routes_to_marketing_context",
+        "single_primary_value_prop",
+        "every_benefit_has_proof_point",
+        "no_unsubstantiated_superlatives",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "partnership-fit-score",
+      "input": "Score these three potential co-marketing partners (an agile-coaching newsletter, a BI consultancy, a competing PM tool) on fit and tell me which to pursue, with kill criteria.",
+      "expected_checks": [
+        "routes_to_partnership_strategy",
+        "five_axis_fit_score_computed",
+        "reward_shape_without_dollar_figures",
+        "kill_criteria_defined",
+        "assets"
+      ]
+    },
+    {
+      "id": "pricing-tier-architecture",
+      "input": "Design a 3-tier pricing page structure for our seat-based SaaS using anchoring and a decoy. Recommend the anchor tier — no concrete prices.",
+      "expected_checks": [
+        "routes_to_pricing_strategy",
+        "no_concrete_price_emitted",
+        "value_metric_scales_with_success",
+        "anchor_tier_recommended",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "ambiguous-research-stripe",
+      "input": "Research Stripe.",
+      "expected_checks": [
+        "detects_ambiguous_topic",
+        "asks_one_clarifying_question",
+        "does_not_load_two_playbooks",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "out-of-scope-dcf",
+      "input": "Build me a discounted cash flow model and unit economics for our subscription business.",
+      "expected_checks": [
+        "detects_out_of_scope",
+        "reroutes_to_cost_estimation",
+        "no_topic_forced",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "no-price-governance",
+      "input": "Recommend the actual dollar amounts for our Starter, Pro, and Enterprise tiers in USD.",
+      "expected_checks": [
+        "routes_to_pricing_strategy",
+        "refuses_concrete_price",
+        "offers_ranges_and_required_inputs",
+        "assets"
+      ]
+    },
+    {
+      "id": "deep-depth-validate",
+      "input": "Do a deep competitive intelligence pass on the no-code automation market: full feature matrix, tech stacks, SWOT, and differentiation across the top 5 players.",
+      "expected_checks": [
+        "routes_to_competitive_intelligence",
+        "depth_deep_runs_validate_step",
+        "warning_banner_if_over_30pct_assumption",
+        "at_least_three_competitors",
+        "quality_criteria"
+      ]
+    }
+  ]
+}

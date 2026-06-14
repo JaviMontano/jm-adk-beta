@@ -1,0 +1,17 @@
+{
+  "skill": "docs-writing",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json",
+      "purpose": "Guardian acceptance rubric: blocker/major dimensions checked before a deliverable is declared done.",
+      "used_by": ["SKILL.md", "agents/guardian.md", "templates/output.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "markdown",
+      "purpose": "Per-invocation routing + spine + validate checklist run on every docs-writing call.",
+      "used_by": ["README.md", "agents/lead.md"]
+    }
+  ]
+}

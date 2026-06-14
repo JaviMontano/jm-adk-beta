@@ -1,0 +1,52 @@
+{
+  "skill": "firebase",
+  "version": "1.0.0",
+  "scale": ["fail", "partial", "pass"],
+  "gates": [
+    {
+      "id": "single-route",
+      "criterion": "Exactly one topic resolved and one playbook read; no multi-route loading.",
+      "evidence": "Named topic + the single references/*.md path used."
+    },
+    {
+      "id": "deny-by-default-rules",
+      "criterion": "Every collection AND subcollection has an explicit rule; deny-by-default confirmed; immutable fields asserted across resource.data / request.resource.data.",
+      "evidence": "Rule snippet + emulator allow/deny results."
+    },
+    {
+      "id": "list-rule-satisfiable",
+      "criterion": "Any list rule is satisfiable by the real client query (rules do not filter results).",
+      "evidence": "The query constraint that satisfies the list rule."
+    },
+    {
+      "id": "indexes-present",
+      "criterion": "Every compound/ordered query has a composite index in firestore.indexes.json.",
+      "evidence": "Index JSON entry."
+    },
+    {
+      "id": "idempotent-triggers",
+      "criterion": "Every Cloud Function trigger handler is idempotent (at-least-once safe) with a processed-marker.",
+      "evidence": "Guard logic in the handler."
+    },
+    {
+      "id": "tested-before-deploy",
+      "criterion": "Rules tested in emulator (allow AND deny); deploy uses dry-run / preview channel before prod.",
+      "evidence": "Emulator test output + dry-run log."
+    },
+    {
+      "id": "no-prices",
+      "criterion": "No price quoted anywhere; cost given as FTE-months / usage estimate with a disclaimer.",
+      "evidence": "Cost table in usage units + [SUPUESTO] disclaimer."
+    },
+    {
+      "id": "in-scope-single-brand",
+      "criterion": "No AWS/Azure/multi-cloud, no Docker/K8s, no SQL-normalized Firestore schema; single brand; no client PII.",
+      "evidence": "Scope statement."
+    },
+    {
+      "id": "evidence-tagged",
+      "criterion": "Every claim carries an evidence tag (EXPLICIT/CONFIG/INFERENCE/SUPUESTO).",
+      "evidence": "Evidence log section."
+    }
+  ]
+}

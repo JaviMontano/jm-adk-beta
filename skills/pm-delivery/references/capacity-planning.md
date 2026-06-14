@@ -10,10 +10,21 @@ La capacidad real es siempre menor que la teórica. Un recurso al 100% de utiliz
 ## Assumptions & Limits
 - Assumes resource availability data is current and reflects actual calendars [SUPUESTO]
 - Assumes demand data comes from approved project schedules, not wishful planning [PLAN]
-- Breaks when resource data is >2 weeks stale — capacity model becomes fiction
-- Does not account for unplanned work unless historical unplanned-work ratio is provided
+- Breaks when resource data is >2 weeks stale — capacity model becomes fiction; refuse to publish, refresh first [EXPLICIT]
+- Does not account for unplanned work unless historical unplanned-work ratio is provided [SUPUESTO]
 - Planning at 80% utilization is a guideline; organizational policy may override [SUPUESTO]
-- Multi-project capacity requires portfolio-level demand aggregation across all active projects
+- Multi-project capacity requires portfolio-level demand aggregation across all active projects [PLAN]
+
+**Anti-scope** (this skill does NOT do): individual performance evaluation; salary/cost budgeting (use `cost-estimation`); recruiting execution or candidate sourcing; legal leave-policy interpretation. It outputs the *signal* (gap, timing, magnitude); the staffing *decision* belongs to resource managers and the sponsor. [EXPLICIT]
+
+## Capacity Math (canonical formulas)
+- **Net available hours** = calendar_hours − holidays − PTO − statutory leave [SCHEDULE]
+- **Effective capacity** = net_available_hours × productivity_factor × (1 − context_switch_penalty) [INFERENCIA]
+- **Productivity factor** baseline 0.70–0.80 of theoretical; never assume 1.0 [SUPUESTO]
+- **Context-switch penalty** ≈ 0.20 per additional concurrent project beyond the first, capped (see Edge Case 2) [INFERENCIA]
+- **Utilization** = committed_demand_hours ÷ effective_capacity. >0.80 = over-allocated; >1.0 = infeasible [METRIC]
+- **Gap** = demand − effective_capacity, computed **per skill per period** (never aggregate-only) [METRIC]
+- Agile variant: capacity = team_velocity × sprints_in_horizon, discounted for known PTO/ceremonies [METRIC]
 
 ## Usage
 
@@ -72,6 +83,15 @@ La capacidad real es siempre menor que la teórica. Un recurso al 100% de utiliz
 2. **Resource shared across >3 projects**: Cap effective allocation at 60% per project to account for context-switching overhead. Document productivity loss assumption. [INFERENCIA]
 3. **Demand exceeds supply with no budget for hiring**: Prioritize demand using WSJF or sponsor input. Present trade-off: scope reduction, timeline extension, or quality compromise. [STAKEHOLDER]
 4. **Resource availability data is unreliable**: Use historical average availability (typically 70-75% of theoretical) as baseline. Tag as [SUPUESTO] and recommend improving data collection. [SUPUESTO]
+5. **Part-time / fractional resource**: Model as effective FTE (e.g., 0.6), not headcount; a 0.6 FTE at 80% utilization gives 0.48 FTE of usable capacity. Never count a part-timer as a full backup for bus-factor. [INFERENCIA]
+6. **Skill mismatch (right count, wrong skills)**: Aggregate headcount looks sufficient but per-skill gap analysis reveals shortage. Always resolve gaps at skill granularity; a surplus of one role does not offset a deficit in another. [EXPLICIT]
+7. **Ramp-up of new hires**: Apply a productivity ramp (e.g., 30% → 60% → 90% over first three months) so a hire approved in M1 does not show full capacity until M3+. Align hiring lead time accordingly. [SUPUESTO]
+
+## Failure Modes
+- **Theoretical-100% trap**: planning at full availability hides all variability slack → systemic slippage. Mitigate via 80% rule. [EXPLICIT]
+- **Aggregate-averaging trap**: portfolio looks balanced while a single skill in a single month is 200% over. Always time-phase per skill. [METRIC]
+- **Stale-data fiction**: model reports green while reality diverged; never signal readiness with green color. Gate on data freshness ≤2 weeks. [EXPLICIT]
+- **Optimistic-demand trap**: demand pulled from wishful roadmaps inflates need; accept only approved schedules. [PLAN]
 
 ## Example: Good vs Bad
 
@@ -88,6 +108,14 @@ La capacidad real es siempre menor que la teórica. Un recurso al 100% de utiliz
 
 **Bad Capacity Plan:**
 A spreadsheet showing "we need 10 developers" without supply analysis, no time-phasing, no skill breakdown, no over-allocation detection. Fails because it provides no actionable insight about when gaps occur, which skills are short, or what trade-offs exist. [EXPLICIT]
+
+**Worked example (single role, one month)** [METRIC]
+3 backend devs, 22 working days × 8h = 528 theoretical h. Subtract 5 PTO days (40h) → 488 net. Productivity 0.75 → 366 effective h. One dev also on a second project: context-switch penalty 0.20 on her share (~122h × 0.20 = 24h lost) → ~342 effective h. Committed demand = 410h. Utilization = 410 ÷ 342 = **1.20 → infeasible**. Signal: 68h gap (~0.4 FTE) for the month → recommend deferring 68h of scope, or pulling the dual-project dev fully onto this project (recovers 24h) plus a contractor for the rest.
+
+## Key Decisions & Trade-offs
+- **80% planning target vs higher utilization**: choosing 80% trades raw throughput for predictability and absorption of variability; only override above 85% for short, well-bounded crunch periods with explicit sponsor sign-off. [STAKEHOLDER]
+- **Cross-train vs hire**: cross-training is cheaper and de-risks bus-factor but is slower to yield and dilutes the source role; hiring adds net capacity but carries ramp-up lag (Edge Case 7) and lead-time risk. Prefer cross-train for persistent low-grade gaps, hire for sustained structural shortfall. [INFERENCIA]
+- **Buffer placement**: hold the 20% slack at the *constraint* role, not spread evenly — slack on a non-bottleneck resource buys nothing. [INFERENCIA]
 
 ## Validation Gate
 - [ ] Supply model reflects actual resource calendars, not theoretical 100% availability
@@ -127,5 +155,5 @@ A spreadsheet showing "we need 10 developers" without supply analysis, no time-p
 
 ## Output Configuration
 - **Language**: Spanish (Latin American, business register)
-- **Evidence**: [PLAN], [SCHEDULE], [METRIC], [INFERENCIA], [SUPUESTO], [STAKEHOLDER]
+- **Evidence**: [PLAN], [SCHEDULE], [METRIC], [INFERENCIA], [SUPUESTO], [STAKEHOLDER], [EXPLICIT]
 - **Branding**: #2563EB royal blue, #F59E0B amber (NEVER green), #0F172A dark

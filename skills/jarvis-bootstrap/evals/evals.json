@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "skill": "jarvis-bootstrap",
+  "cases": [
+    {
+      "id": "empty_target_full_skeleton",
+      "input": "Bootstrap a brand-new Jarvis OS at /Users/jm/jarvis-os; the directory is completely empty.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "partial_os_missing_memory",
+      "input": "The OS at /Users/jm/jarvis-os has a hand-edited CLAUDE.md but no MEMORY.md and no N2-N4; complete only what is missing in safe mode.",
+      "expected_activation": true,
+      "expected_checks": ["upgrade_safety", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "no_target_path",
+      "input": "Bootstrap the Jarvis OS.",
+      "expected_activation": false,
+      "expected_checks": ["evidence", "quality_criteria"]
+    },
+    {
+      "id": "force_overwrite_with_diffs",
+      "input": "Re-seed the root CLAUDE.md and MEMORY.md at /Users/jm/jarvis-os with --force, showing diffs before overwriting.",
+      "expected_activation": true,
+      "expected_checks": ["upgrade_safety", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "preserve_local_variants",
+      "input": "Complete the OS at /Users/jm/jarvis-os without touching CLAUDE.local.md or the user-context folder.",
+      "expected_activation": true,
+      "expected_checks": ["upgrade_safety", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "seed_memory_from_operator_context",
+      "input": "Initialize /Users/jm/jarvis-os; operator is Javier, active brand JM Labs, goal personal innovation lab.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "brand_mix_guard",
+      "input": "Seed MEMORY.md at /Users/jm/jarvis-os with both Sofka and JM Labs as active brands.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence"]
+    },
+    {
+      "id": "idempotent_second_run",
+      "input": "Run jarvis-bootstrap a second time on the already-complete OS at /Users/jm/jarvis-os in missing-only mode.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "upgrade_safety", "quality_criteria"]
+    },
+    {
+      "id": "unwritable_target",
+      "input": "Bootstrap a Jarvis OS at /readonly/jarvis-os where the path is not writable.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "out_of_scope_deliverable",
+      "input": "Use jarvis-bootstrap to write a client proposal deck for the Q3 sales pitch.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "evidence"]
+    }
+  ]
+}

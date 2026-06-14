@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "skill": "agentic-loop-engineering",
+  "cases": [
+    {
+      "id": "route_by_stop_reason",
+      "input": "Construye el bucle de control de mi agente Anthropic: que enrute por stop_reason, despache tool_use y reinyecte tool_result, con un techo de max_iterations.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "explicit_trigger_refactor",
+      "input": "/agentic-loop-engineering refactoriza este loop para que use stop_reason routing en lugar de leer el texto de la respuesta.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "infinite_loop_no_done",
+      "input": "Mi agente entra en bucle infinito porque nunca imprime 'done'. Necesito un budget duro y control por stop_reason.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "quality_criteria"]
+    },
+    {
+      "id": "parallel_tool_calls",
+      "input": "Tengo handlers {search, read_file} con el SDK de Anthropic; una respuesta trae varios bloques tool_use a la vez y se me pierden tool_result. Arregla el despacho en paralelo.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "migrate_prose_to_signal",
+      "input": "Migra mi agente de control por prosa ('done' in text) a un loop con stop_reason routing tipado y BudgetExceeded.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "tool_result_role_bug",
+      "input": "Reinyecto tool_result con rol assistant y el modelo diverge en el siguiente turno. Corrige el contrato de mensajes del loop.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria"]
+    },
+    {
+      "id": "unhandled_max_tokens",
+      "input": "Cuando stop_reason es max_tokens mi loop lo trata como end_turn y devuelve texto truncado. Define el manejo correcto de la señal.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "token_budget_variant",
+      "input": "Quiero acotar el agente por tokens consumidos en vez de por iteraciones, manteniendo el fallo fuerte. Adapta el budget del loop.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "quality_criteria"]
+    },
+    {
+      "id": "reject_prose_no_budget",
+      "input": "Construye el loop pero sin budget y decidiendo el halt leyendo el texto de la respuesta.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria"]
+    },
+    {
+      "id": "out_of_scope_prompt_tone",
+      "input": "Mejora el wording de mi system prompt para que suene más cordial.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria"]
+    },
+    {
+      "id": "out_of_scope_welcome_email",
+      "input": "Ayúdame a redactar el correo de bienvenida para un nuevo cliente.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria"]
+    }
+  ]
+}

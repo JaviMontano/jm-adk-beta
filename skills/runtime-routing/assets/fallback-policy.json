@@ -1,0 +1,16 @@
+{
+  "skill": "runtime-routing",
+  "description": "Every routing report must ship a local-first fallback with visible limits.",
+  "required_elements": [
+    { "id": "markdown_first", "statement": "Markdown-first instructions that need no remote runtime." },
+    { "id": "repo_local_scripts", "statement": "Reference the repo-local scripts that run the task and validators." },
+    { "id": "no_auth_path", "statement": "If the route uses gh/CLI, include the path that works when auth fails (local validators + Markdown PR body)." },
+    { "id": "secret_boundary", "statement": "State that local files, workspace state, and secrets stay local." },
+    { "id": "open_markers", "statement": "List every Dato requerido and validation pending marker." }
+  ],
+  "rules": [
+    "The fallback is non-optional; a report without it fails.",
+    "Degrade gracefully: prefer Markdown + repo-local scripts over asserting unverified runtime behavior.",
+    "Never move secrets outside their local boundary to satisfy a fallback."
+  ]
+}

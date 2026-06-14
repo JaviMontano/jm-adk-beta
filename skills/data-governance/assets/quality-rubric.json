@@ -1,0 +1,55 @@
+{
+  "skill": "data-governance",
+  "version": "1.0.0",
+  "dimensions": [
+    {
+      "id": "routing_fidelity",
+      "weight": 0.30,
+      "criteria": [
+        "Exactly one topic resolved from the 7-value enum",
+        "Exactly one playbook loaded; no sibling routes read",
+        "Tie-break favors the more specific topic (privacy/audit over governance)",
+        "On a genuine tie, one clarifying question asked rather than a silent guess"
+      ]
+    },
+    {
+      "id": "on_topic_output",
+      "weight": 0.20,
+      "criteria": [
+        "Deliverable answers the resolved topic, not the router",
+        "No router boilerplate echoed back to the user"
+      ]
+    },
+    {
+      "id": "topic_quality_criteria",
+      "weight": 0.25,
+      "criteria": [
+        "privacy: lawful basis + retention per PII field; re-identification test passed (k/l/t)",
+        "audit-trail: complete record schema with authenticated actor; integrity chain verifiable",
+        "documentation: zero orphan columns; doc-vs-live drift = 0; named source per field",
+        "pipeline: G0-G3 evaluated, no bypass; confidence >= 0.95 enforced",
+        "strategy/governance: named owners; rules carry metric + threshold + action-on-breach",
+        "storytelling: every claim traceable to its metric; no green-as-success spin"
+      ]
+    },
+    {
+      "id": "evidence_discipline",
+      "weight": 0.15,
+      "criteria": [
+        "Alfa tags applied, one per non-obvious claim",
+        "Every [SUPUESTO]/[ASSUMPTION] carries a verification step",
+        "Missing required input handled as a stop, not an inference"
+      ]
+    },
+    {
+      "id": "governance_guardrails",
+      "weight": 0.10,
+      "criteria": [
+        "No invented prices; criteria recommended, not vendors",
+        "No client PII reproduced in output or examples",
+        "Single brand per output"
+      ]
+    }
+  ],
+  "pass_threshold": 0.90
+}

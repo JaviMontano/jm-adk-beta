@@ -6,6 +6,12 @@
 Audit digital interfaces against WCAG 2.1 AA using automated axe-core scanning plus structured manual checks for keyboard, screen reader behavior, color contrast, forms, focus management, dynamic content, and semantic structure. [EXPLICIT]
 The default output is an evidence-backed accessibility audit report, not a code remediation patch. Code edits require an explicit remediation request. [EXPLICIT]
 
+### Anti-scope (this skill does NOT)
+- Auto-apply code fixes without an explicit remediation request. [EXPLICIT]
+- Certify WCAG 2.1 **AAA**, EN 301 549 legal conformance, or VPAT/ACR sign-off — those need a named human accessibility owner. [EXPLICIT]
+- Audit PDFs, native iOS/Android, or email HTML; axe-core targets DOM only. Out-of-scope targets return a gap report. [ASSUMPTION]
+- Replace lived-experience testing with disabled users; automated + heuristic checks cover roughly 30–40% of WCAG SCs. [INFERENCE]
+
 ## Physics — 3 Immutable Laws
 
 1. **Law of Universal Access**: If a sighted mouse user can do it, a keyboard-only or screen reader user must also be able to do it. No exceptions. [EXPLICIT]
@@ -37,6 +43,14 @@ The default output is an evidence-backed accessibility audit report, not a code 
 3. If remediation is requested, make the smallest safe patch and rerun the relevant automated/manual checks. [EXPLICIT]
 4. If remediation is not requested, produce owner-ready tickets and status: `pass`, `conditional`, `fail`, or `not verified`. [EXPLICIT]
 
+**Decisions & trade-offs**
+- **axe-core as default runner**: zero false positives by design, so it under-reports — it stays silent on the ~60% of SCs it cannot test (e.g. focus order, meaningful alt text). Trade-off accepted because a clean axe run is a trustworthy floor, not a ceiling. [INFERENCE]
+- **Report-first, not patch-first**: a wrong remediation can mask a violation from axe while leaving the barrier (e.g. `aria-hidden` on a focusable control). Defaulting to evidence keeps the human owner in the decision loop. [EXPLICIT]
+- **Impact-priority over axe severity**: axe `critical` on a hidden element outranks a `serious` on the primary CTA only by raw rule weight; user-blocker status reorders this. [EXPLICIT]
+
+**Worked example — custom dropdown**
+`<div class="select">` with click-only open. axe: **0 violations** (no rule covers it). Manual keyboard: Tab reaches it but Enter/Space/Arrow do nothing → SC 2.1.1 (A) **fail**. Manual SR: announced as "group", no role/state → SC 4.1.2 (A) **fail**. Verdict: **fail** despite clean automation — illustrates Law 2. Ticket: add `role="combobox"`, `aria-expanded`, `tabindex="0"`, key handlers; reproducer = "Tab to control, press Enter"; acceptance = SR announces role+expanded state. [EXPLICIT]
+
 ## I/O
 
 | Input | Output |
@@ -62,6 +76,17 @@ The default output is an evidence-backed accessibility audit report, not a code 
 - **SVG icons**: Add `aria-hidden="true"` for decorative. `role="img"` + `aria-label` for meaningful.
 - **ARIA overuse**: Prefer native HTML before adding ARIA. Remove redundant or misleading roles.
 - **Clean axe report with manual failure**: Overall status remains `fail` or `conditional`; automation cannot override manual blockers.
+- **Auth/SPA routes**: axe scans the rendered DOM only — scan *after* login and after each client-side route change, not just the initial HTML, or post-auth content is silently skipped. [EXPLICIT]
+- **Iframes / shadow DOM / canvas**: cross-origin iframes and `<canvas>` games are opaque to axe; flag as `not verified` and route to manual or SR testing rather than reporting a false pass. [INFERENCE]
+- **Data tables**: require `<th scope>`, `<caption>`, and programmatic header association — visual alignment alone fails SC 1.3.1. [EXPLICIT]
+- **Disabled vs aria-disabled**: native `disabled` removes the control from the tab order (SR users may miss it); `aria-disabled="true"` keeps it focusable and announceable. Choose per intent. [EXPLICIT]
+
+## Failure Modes (and the guard)
+
+- **False sense of security**: shipping on "axe: 0 violations" alone. Guard: Quality Gate 4 forbids a `pass` without manual evidence. [EXPLICIT]
+- **Flaky contrast checks**: gradient/image backgrounds and opacity defeat automated contrast math. Guard: sample the worst-case pixel manually; record the measured ratio, not the tool's "unable to determine". [EXPLICIT]
+- **Focus-trap regressions**: a modal that traps focus but never returns it to the trigger passes the open test, fails on close. Guard: test open *and* close in the same pass (Phase 2.1). [EXPLICIT]
+- **Tag drift**: introducing a foreign provenance taxonomy. Guard: this doc uses `[EXPLICIT]` plus canon `[INFERENCE]`/`[ASSUMPTION]` only; see `references/verification-tags.md`. [EXPLICIT]
 
 ## Self-Correction Triggers
 

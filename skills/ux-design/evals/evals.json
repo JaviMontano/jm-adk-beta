@@ -1,0 +1,59 @@
+{
+  "cases": [
+    {
+      "id": "critique-signup-screen",
+      "input": "Critique this 2-step signup screen. User goal is to create an account on mobile; the submit button has no loading state and Cancel is the same visual weight as Create.",
+      "expected_checks": ["routed_to_design_critique", "user_goal_captured", "severity_rated", "quality_criteria"]
+    },
+    {
+      "id": "design-system-success-color",
+      "input": "Apply the design system to this dashboard kit; the current success badges render green and some warning chips use white text on a light amber tint.",
+      "expected_checks": ["routed_to_design_system", "success_is_yellow_not_green", "deterministic_scripts", "wcag_aa_contrast"]
+    },
+    {
+      "id": "component-toggle-spec",
+      "input": "Spec a reusable Toggle switch component with on/off, disabled, and loading states, including its props contract and keyboard behavior.",
+      "expected_checks": ["routed_to_component_designer", "atomic_level_named", "props_contract_present", "quality_criteria"]
+    },
+    {
+      "id": "error-copy-payment-decline",
+      "input": "Rewrite the error message shown when a card payment is declined at checkout so it is blameless and tells the user the next action.",
+      "expected_checks": ["routed_to_error_messaging", "blameless_actionable_copy", "quality_criteria"]
+    },
+    {
+      "id": "table-bulk-actions",
+      "input": "Design the UX for a 5000-row invoices data grid that needs column sort, row selection, and a bulk archive action without losing scroll position.",
+      "expected_checks": ["routed_to_table_ux", "states_covered", "assets", "quality_criteria"]
+    },
+    {
+      "id": "empty-state-no-projects",
+      "input": "Design the no-data screen a brand-new user sees in the Projects tab before they have created anything.",
+      "expected_checks": ["routed_to_empty_states", "primary_action_present", "quality_criteria"]
+    },
+    {
+      "id": "ambiguous-onboarding-vs-firstuse",
+      "input": "We just cloned JM-ADK and there is no task context yet; what should greet the operator on first run?",
+      "expected_checks": ["routed_to_first_use_onboarding", "disambiguation_applied", "quality_criteria"]
+    },
+    {
+      "id": "motion-modal-transition",
+      "input": "Define the open and close transition for a confirmation modal, including duration, easing, and reduced-motion handling.",
+      "expected_checks": ["routed_to_motion_design", "reduced_motion_respected", "assets", "quality_criteria"]
+    },
+    {
+      "id": "search-filter-facets",
+      "input": "Design the query and filter experience for a document search with faceted filters and a no-results state.",
+      "expected_checks": ["routed_to_search_ux", "no_results_state_present", "quality_criteria"]
+    },
+    {
+      "id": "out-of-scope-brand-logo",
+      "input": "Design a new logo and brand color palette for our consulting practice.",
+      "expected_checks": ["no_enum_fits", "sibling_skill_proposed", "no_fabricated_route", "deterministic_scripts"]
+    },
+    {
+      "id": "critique-missing-goal",
+      "input": "Review this settings page screenshot.",
+      "expected_checks": ["routed_to_design_critique", "requests_user_goal_before_critique", "assets", "quality_criteria"]
+    }
+  ]
+}

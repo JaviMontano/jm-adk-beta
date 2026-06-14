@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "id": "dns-apex-cname-reject",
+      "input": "Point my apex domain example.com at my host using a CNAME, and add the www subdomain too.",
+      "expected_checks": ["correct_topic_dns-architecture", "rejects_apex_cname", "uses_a_or_alias_on_apex", "quality_criteria"]
+    },
+    {
+      "id": "dns-failover-ttl",
+      "input": "Set up active/passive DNS failover for my API with the fastest recovery I can reasonably get.",
+      "expected_checks": ["correct_topic_dns-architecture", "short_ttl_on_failover_targets", "recovery_equals_ttl_plus_check_interval", "deterministic_scripts"]
+    },
+    {
+      "id": "ssl-renewal-chain",
+      "input": "My HTTPS shows a certificate error in some browsers and the cert expires soon. Fix the renewal.",
+      "expected_checks": ["correct_topic_ssl-management", "serves_full_chain", "automated_renewal", "quality_criteria"]
+    },
+    {
+      "id": "dr-tier1-warm-standby",
+      "input": "Design disaster recovery for a tier-1 payments API with 15 minute RTO and 5 minute RPO.",
+      "expected_checks": ["correct_topic_disaster-recovery", "rto_rpo_traced_to_business_owner", "failback_documented", "game_day_drill", "quality_criteria"]
+    },
+    {
+      "id": "dr-no-targets-escalate",
+      "input": "Build me a DR plan for our internal reporting tool. Nobody has told me the downtime or data-loss limits yet.",
+      "expected_checks": ["correct_topic_disaster-recovery", "escalates_missing_rto_rpo", "does_not_invent_targets", "quality_criteria"]
+    },
+    {
+      "id": "serverless-fanout-idempotent",
+      "input": "On a new Firestore order document, send a notification, update a search index, and write an audit record.",
+      "expected_checks": ["correct_topic_serverless-patterns", "idempotent_dedupe_guard", "no_aws_azure_services", "deterministic_scripts"]
+    },
+    {
+      "id": "hostinger-node-vps-deploy",
+      "input": "Deploy my Node.js Express app to Hostinger with zero-downtime restarts and a rollback path.",
+      "expected_checks": ["correct_topic_hostinger-deployment", "pm2_startup_for_reboot_survival", "atomic_symlink_swap_rollback", "node_port_not_exposed", "assets"]
+    },
+    {
+      "id": "hostinger-static-atomic",
+      "input": "Push my Vite static build to Hostinger shared hosting without users ever seeing a half-copied site.",
+      "expected_checks": ["correct_topic_hostinger-deployment", "scripted_deploy_no_manual_upload", "atomic_symlink_swap_rollback", "deterministic_scripts"]
+    },
+    {
+      "id": "cdn-cache-invalidation",
+      "input": "Configure CDN caching for my marketing site so assets stay cached long but I can purge a page on publish.",
+      "expected_checks": ["correct_topic_cdn-configuration", "long_ttl_plus_targeted_invalidation", "tls_termination_decided", "quality_criteria"]
+    },
+    {
+      "id": "cross-cutting-cutover-sequence",
+      "input": "Migrate my site to a new host: move the domain, switch DNS, and reissue the SSL cert in one go.",
+      "expected_checks": ["sequences_not_merges_playbooks", "single_playbook_per_pass", "assets", "quality_criteria"]
+    },
+    {
+      "id": "domain-transfer-lock",
+      "input": "Transfer example.org to a new registrar and make sure renewal never lapses again.",
+      "expected_checks": ["correct_topic_domain-management", "uses_epp_auth_code", "respects_transfer_lock_window", "quality_criteria"]
+    },
+    {
+      "id": "backup-rpo-restore-proof",
+      "input": "Set a backup schedule for our customer database with a 1-hour data-loss tolerance.",
+      "expected_checks": ["correct_topic_backup-strategy", "snapshot_frequency_matches_rpo", "restore_is_proven_not_assumed", "assets", "deterministic_scripts"]
+    }
+  ]
+}

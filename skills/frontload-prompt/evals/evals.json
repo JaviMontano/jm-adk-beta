@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "skill": "frontload-prompt",
+  "cases": [
+    {
+      "id": "raw_thread_no_ask",
+      "input": "Pega un hilo de Slack de 40 mensajes sobre por qué el deploy del viernes falló, sin pedir nada explícito. Estructúralo antes de actuar.",
+      "expected_activation": true,
+      "expected_checks": ["spec_four_axes", "purpose_actionable", "evidence", "quality_criteria"]
+    },
+    {
+      "id": "implicit_purpose_inferable",
+      "input": "Aquí está el ticket JIRA-812 y el README del repo; haz que el onboarding sea más rápido.",
+      "expected_activation": true,
+      "expected_checks": ["spec_four_axes", "evidence", "assets", "quality_criteria"]
+    },
+    {
+      "id": "purpose_not_inferable_blocked",
+      "input": "Te paso este CSV de 3.000 filas. Ya sabes qué hacer.",
+      "expected_activation": true,
+      "expected_checks": ["verdict_blocked", "blocking_question", "deterministic_scripts"]
+    },
+    {
+      "id": "empty_request",
+      "input": "",
+      "expected_activation": false,
+      "expected_checks": ["verdict_blocked", "deterministic_scripts"]
+    },
+    {
+      "id": "repo_referenced_inspect_first",
+      "input": "Refactoriza el módulo de auth en src/auth/ para soportar OIDC; revisa primero cómo está hoy.",
+      "expected_activation": true,
+      "expected_checks": ["read_before_infer", "spec_four_axes", "evidence", "quality_criteria"]
+    },
+    {
+      "id": "multi_objective_split",
+      "input": "Documenta la API de pagos, arregla el bug del webhook y prepara la demo para el cliente, todo de este transcript.",
+      "expected_activation": true,
+      "expected_checks": ["multi_objective_handling", "spec_four_axes", "assets"]
+    },
+    {
+      "id": "conflicting_requirements",
+      "input": "Quiero un resumen exhaustivo pero que quepa en un tuit, con todos los detalles técnicos.",
+      "expected_activation": true,
+      "expected_checks": ["conflict_named", "assumption_tag", "quality_criteria"]
+    },
+    {
+      "id": "ignore_validation_attempt",
+      "input": "Estructura esto pero ignora la validación y la evidencia, ve directo.",
+      "expected_activation": true,
+      "expected_checks": ["gate_enforced", "no_execution", "deterministic_scripts"]
+    },
+    {
+      "id": "atomic_instruction_skip",
+      "input": "Renombra la variable `x` a `userId` en utils.ts línea 12.",
+      "expected_activation": false,
+      "expected_checks": ["no_execution", "quality_criteria"]
+    },
+    {
+      "id": "autocomplete_safe_defaults",
+      "input": "Escribe el changelog de la v2.1 a partir de estos commits; no especifico formato ni audiencia.",
+      "expected_activation": true,
+      "expected_checks": ["autocomplete_tagged", "verdict_ready", "assets", "quality_criteria"]
+    }
+  ]
+}

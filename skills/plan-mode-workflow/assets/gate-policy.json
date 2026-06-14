@@ -1,0 +1,19 @@
+{
+  "skill": "plan-mode-workflow",
+  "initial_mode": "plan",
+  "modes": ["plan", "execute"],
+  "transition": {
+    "plan_to_execute": "approve_plan(hash, approver)",
+    "execute_to_plan": "hash(plan.md) != signed_plan_hash"
+  },
+  "read_allowlist": ["Read", "Grep", "Glob", "Bash:inspection"],
+  "write_blocklist": {
+    "tools": ["Write", "Edit", "MultiEdit", "NotebookEdit", "MCP:mutation"],
+    "bash_patterns": ["rm ", "sed -i", "mv ", "git commit", "git push", ">", ">>"]
+  },
+  "approval_event_fields": ["hash", "approved_by", "plan_signed_at"],
+  "enforcement": "fail-closed",
+  "rejected_modes": ["bypassPermissions"],
+  "empty_input_behavior": "stop_and_ask",
+  "evidence_tags": ["[CODIGO]", "[CONFIG]", "[DOC]", "[INFERENCIA]", "[SUPUESTO]"]
+}

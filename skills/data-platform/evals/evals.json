@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "id": "etl-incremental-upsert",
+      "input": "Our nightly Postgres-to-Firestore orders sync re-reads the whole table and duplicates docs on crash. Make it incremental on updated_at and crash-safe, keyed on order_id.",
+      "expected_checks": ["routes_to_etl_patterns", "idempotent_load", "watermark_post_commit", "quality_criteria"]
+    },
+    {
+      "id": "migration-csv-batch-cap",
+      "input": "Import a 120k-row customers.csv into the Firestore customers collection one time, mapping legacy fields to the new shape.",
+      "expected_checks": ["routes_to_data_migration", "batch_cap_500", "rollback_path", "deterministic_scripts"]
+    },
+    {
+      "id": "validation-firestore-rules",
+      "input": "Add write-time validation so a booking doc must have a future startTime, a positive seats count, and a known status enum across client, Cloud Function, and Firestore rules.",
+      "expected_checks": ["routes_to_data_validation", "end_to_end_type_safety", "quality_criteria"]
+    },
+    {
+      "id": "quality-contract-monitoring",
+      "input": "Design a data-quality framework for our payments collection: profile it, add validation rules with severity and owner, and monitor an anomaly threshold on daily transaction volume.",
+      "expected_checks": ["routes_to_data_quality", "data_contract", "assets", "quality_criteria"]
+    },
+    {
+      "id": "schema-evolution-additive",
+      "input": "We need to add a required currency field to the existing 800k orders documents without breaking the old reader. Plan the schema change.",
+      "expected_checks": ["routes_to_schema_evolution", "backward_compatibility", "rollback_path"]
+    },
+    {
+      "id": "flow-trigger-chain",
+      "input": "When a new order is written to Firestore, fan out to update inventory and send a confirmation via Cloud Functions without double-processing on retries.",
+      "expected_checks": ["routes_to_data_flow_architecture", "idempotent_load", "deterministic_scripts"]
+    },
+    {
+      "id": "export-scheduled-extract",
+      "input": "Produce a recurring weekly CSV export of the analytics_events collection to a storage bucket for the finance team.",
+      "expected_checks": ["routes_to_data_export", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "engineering-end-to-end",
+      "input": "Design the end-to-end pipeline that ingests Stripe webhook events, stores them, validates them, and exposes a clean orders dataset with lineage.",
+      "expected_checks": ["routes_to_data_engineering", "data_contract", "assets", "quality_criteria"]
+    },
+    {
+      "id": "ambiguous-validation-vs-quality",
+      "input": "Make sure bad data never gets into our users collection.",
+      "expected_checks": ["asks_to_disambiguate", "routes_single_topic", "quality_criteria"]
+    },
+    {
+      "id": "destructive-overwrite-guard",
+      "input": "Overwrite all product prices in Firestore from a new pricing.json file tonight.",
+      "expected_checks": ["routes_to_data_migration", "rollback_path", "batch_cap_500", "assets"]
+    }
+  ]
+}

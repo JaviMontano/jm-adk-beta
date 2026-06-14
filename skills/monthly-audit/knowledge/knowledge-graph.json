@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    { "id": "p22", "label": "Cadencia P22 (auditoria mensual)", "kind": "cadence" },
+    { "id": "rubric", "label": "Rubrica de 6 ejes", "kind": "framework" },
+    { "id": "axis_memoria", "label": "Eje Memoria", "kind": "axis" },
+    { "id": "axis_cadencias", "label": "Eje Cadencias", "kind": "axis" },
+    { "id": "axis_tareas", "label": "Eje Tareas", "kind": "axis" },
+    { "id": "axis_estructura", "label": "Eje Estructura/AI", "kind": "axis" },
+    { "id": "axis_guardrails", "label": "Eje Guardrails", "kind": "axis" },
+    { "id": "axis_friccion", "label": "Eje Friccion/Deuda", "kind": "axis" },
+    { "id": "score", "label": "Score 0-3", "kind": "metric" },
+    { "id": "evidence", "label": "Evidencia citable", "kind": "artifact" },
+    { "id": "delta", "label": "Delta vs mes previo", "kind": "metric" },
+    { "id": "baseline", "label": "Auditoria mes previo (baseline)", "kind": "artifact" },
+    { "id": "top3", "label": "Top 3 acciones", "kind": "deliverable" },
+    { "id": "risk_impact", "label": "Riesgo x impacto", "kind": "criterion" },
+    { "id": "persist", "label": "Persistencia aditiva", "kind": "process" },
+    { "id": "tags", "label": "Tags Jarvis OS {...}", "kind": "convention" },
+    { "id": "gate", "label": "Gate de aceptacion", "kind": "control" },
+    { "id": "daily_close", "label": "daily-close (P10)", "kind": "related_skill" }
+  ],
+  "edges": [
+    { "from": "p22", "to": "rubric", "rel": "applies" },
+    { "from": "rubric", "to": "axis_memoria", "rel": "contains" },
+    { "from": "rubric", "to": "axis_cadencias", "rel": "contains" },
+    { "from": "rubric", "to": "axis_tareas", "rel": "contains" },
+    { "from": "rubric", "to": "axis_estructura", "rel": "contains" },
+    { "from": "rubric", "to": "axis_guardrails", "rel": "contains" },
+    { "from": "rubric", "to": "axis_friccion", "rel": "contains" },
+    { "from": "axis_memoria", "to": "score", "rel": "scored_with" },
+    { "from": "score", "to": "evidence", "rel": "must_cite" },
+    { "from": "evidence", "to": "tags", "rel": "tagged_with" },
+    { "from": "score", "to": "delta", "rel": "compared_via" },
+    { "from": "delta", "to": "baseline", "rel": "requires" },
+    { "from": "axis_friccion", "to": "top3", "rel": "feeds" },
+    { "from": "axis_guardrails", "to": "top3", "rel": "feeds" },
+    { "from": "top3", "to": "risk_impact", "rel": "prioritized_by" },
+    { "from": "top3", "to": "persist", "rel": "persisted_via" },
+    { "from": "persist", "to": "gate", "rel": "checked_by" },
+    { "from": "gate", "to": "evidence", "rel": "verifies" },
+    { "from": "p22", "to": "daily_close", "rel": "consumes_evidence_from" }
+  ]
+}

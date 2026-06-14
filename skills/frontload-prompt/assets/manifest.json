@@ -1,0 +1,17 @@
+{
+  "skill": "frontload-prompt",
+  "assets": [
+    {
+      "path": "assets/checklist.md",
+      "type": "markdown-checklist",
+      "purpose": "Checklist operable del Validation Gate; el guardian lo recorre antes de declarar READY.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "json-rubric",
+      "purpose": "Rubrica ponderada para puntuar un bloque SPEC; define el umbral de READY.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    }
+  ]
+}

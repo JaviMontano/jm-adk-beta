@@ -1,0 +1,38 @@
+{
+  "skill": "docs-writing",
+  "version": "1.0.0",
+  "description": "Acceptance rubric the guardian applies before a docs-writing deliverable is declared done.",
+  "dimensions": [
+    {
+      "id": "routing_integrity",
+      "criterion": "Exactly one route read and executed; topic matches the request; no two playbooks mixed.",
+      "weight": "blocker"
+    },
+    {
+      "id": "spine_completion",
+      "criterion": "Discover -> Analyze -> Execute -> Validate all ran; Validate not skipped.",
+      "weight": "blocker"
+    },
+    {
+      "id": "evidence_taxonomy",
+      "criterion": "One tag family per document; every non-obvious claim tagged; every [SUPUESTO] paired with a verification step.",
+      "weight": "blocker"
+    },
+    {
+      "id": "route_acceptance",
+      "criterion": "The routed playbook's own Quality Criteria all checkable (e.g. spec lints clean, breaking changes have migration notes, BLUF answers the ask).",
+      "weight": "blocker"
+    },
+    {
+      "id": "governance",
+      "criterion": "No invented prices (FTE-months only); never green-as-success without evidence; no client PII; single brand.",
+      "weight": "blocker"
+    },
+    {
+      "id": "actionability",
+      "criterion": "Reader can act from the output alone; examples are realistic and redacted.",
+      "weight": "major"
+    }
+  ],
+  "verdicts": ["PASS", "BLOCK"]
+}

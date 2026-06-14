@@ -1,0 +1,17 @@
+{
+  "skill": "plan-mode-workflow",
+  "assets": [
+    {
+      "path": "assets/gate-policy.json",
+      "type": "config",
+      "purpose": "Contrato determinístico del gate: modo inicial, transiciones (firma por hash / re-firma por mismatch), read-allowlist, write-blocklist (tools + patrones Bash mutante), campos del evento de aprobación y enforcement fail-closed. Es el dato que el hook PreToolUse lee para decidir allow/deny.",
+      "used_by": ["SKILL.md", "prompts/primary.md", "templates/output.md"]
+    },
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Los 6 criterios del gate de aceptación (hook enforcement, firma por hash, re-firma, blocklist, no-bypass, rastro de evidencia), cada uno con su fail_if y tag de evidencia, para el guardian.",
+      "used_by": ["agents/guardian.md", "prompts/meta.md"]
+    }
+  ]
+}

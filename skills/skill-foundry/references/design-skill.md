@@ -17,6 +17,13 @@ Use bundled contracts before drafting final output:
 
 Use `scripts/validate_design_skill_spec.py` to validate JSON design specs and `scripts/check.sh` to run deterministic fixtures. The scripts validate the design contract only; they do not create deployable skill files.
 
+**Precedence when sources conflict:** deterministic contract (`assets/*.json`) > this reference > model judgment. If a policy file forbids what the user requested, surface the conflict rather than silently overriding. [EXPLICIT]
+
+**Failure modes (resource layer):**
+- Missing/unreadable asset file -> halt and report which contract is absent; never fabricate field lists from memory. [EXPLICIT]
+- `validate_design_skill_spec.py` exits non-zero -> treat the design as failing; do not present it as complete. Echo the validator's error verbatim. [EXPLICIT]
+- Asset version newer than this reference -> trust the asset, flag the drift for a doc update. [EXPLICIT]
+
 ---
 
 ## Procedure
@@ -27,6 +34,8 @@ Use `scripts/validate_design_skill_spec.py` to validate JSON design specs and `s
 - Extract: skill name, purpose, movement, owning agent, MOAT depth.
 - If a plugin path is provided, read the existing plugin structure for context.
 - Tag source: `[DOC]` for plan-derived info, `[STAKEHOLDER]` for user input.
+- **Acceptance:** all five fields extracted, or the missing ones explicitly listed as open questions. Do not invent a purpose. [EXPLICIT]
+- **If concept is one line ("a skill that lints YAML"):** infer the minimal viable purpose, mark inferred fields `[SUPUESTO]`, and proceed — do not block on a full brief. [EXPLICIT]
 
 ### Step 2 -- Draft Frontmatter
 
@@ -52,6 +61,13 @@ Draft the complete YAML frontmatter using ALL official fields. The full field ca
 
 Apply **least privilege**: include only tools the skill genuinely needs. Read-only skills must NOT include Write. [EXPLICIT]
 
+**Decision — `description` is the discovery surface, not a summary.** The model auto-invokes on description match, so lead with trigger phrases and the noun the user will say, not internals. Trade-off: a keyword-stuffed description hurts readability but wins recall; cap at ~3 trigger phrases to keep both. [EXPLICIT]
+
+**Field traps:**
+- `name` must equal the skill's directory name, kebab-case; a mismatch breaks invocation routing silently. [EXPLICIT]
+- `argument-hint` is presentational only — it does not validate or coerce input; validate inside the procedure. [EXPLICIT]
+- `model` override pins a version; pinning a soon-deprecated id is a maintenance debt — prefer omitting unless a step genuinely needs a specific model. [EXPLICIT]
+
 ### Step 3 -- Design Procedure Steps
 
 - Write 5-10 numbered procedure steps.
@@ -62,6 +78,8 @@ Apply **least privilege**: include only tools the skill genuinely needs. Read-on
   - **Evidence tag**: Which tag applies to the step's output. [EXPLICIT]
 - Steps must be ordered logically -- no forward references.
 - Include conditional logic where relevant ("If X, then Y. Otherwise, Z.").
+- **Worked step:** `### Step 3 -- Parse Manifest` / Input: `plugin.json` path `[DOC]` / Action: Read + JSON-parse / Output: validated manifest object, or HALT with the parse error `[CODIGO]`. Note the explicit failure branch — a step with no failure branch is a happy-path-only step. [EXPLICIT]
+- **Step count rationale:** below 5 the skill is likely too thin to need a procedure; above 10 it is probably two skills — split it. [EXPLICIT]
 
 ### Step 4 -- Write Quality Criteria
 
@@ -72,6 +90,7 @@ Apply **least privilege**: include only tools the skill genuinely needs. Read-on
   - **Tagged**: Includes an evidence tag indicating the verification method. [EXPLICIT]
 - Format: Numbered list. Each criterion is a single declarative sentence.
 - Example: "Every finding references the exact file path relative to plugin root. `[CODIGO]`"
+- **Testable vs not:** "100% of config files validated, none skipped" (countable) PASSES; "validation is thorough" (no threshold) FAILS — rewrite it as a count, ratio, or boolean. [EXPLICIT]
 
 ### Step 5 -- Identify Anti-Patterns
 
@@ -113,6 +132,7 @@ Apply **least privilege**: include only tools the skill genuinely needs. Read-on
   - Maintainability: Are naming conventions consistent?
 - If the score is below 75 (Grade C), revise before presenting.
 - Reference `references/skill-frontmatter-spec.md` and `references/skill-body-patterns.md`.
+- **Scoring caveat:** weight the four dimensions equally unless the concept card overrides; a 90 in one dimension does not rescue a sub-threshold other — report the per-dimension floor, not just the average. [EXPLICIT]
 
 ### Step 10 -- Present Design Document
 
@@ -140,7 +160,7 @@ Apply **least privilege**: include only tools the skill genuinely needs. Read-on
 
 ## Assumptions & Limits
 
-- This skill produces a SKILL.md design document, not the final file. The output is a specification for review, not a deployable artifact.
+- This skill produces a SKILL.md design document, not the final file. The output is a specification for review, not a deployable artifact. **Anti-scope:** it does not create the skill directory, scaffold scripts/assets, register command routes, or run the skill — those belong to downstream assembly/install steps. [EXPLICIT]
 - The frontmatter field catalog in Step 2 reflects the official Claude Code plugin spec. If the spec evolves, this table must be updated.
 - MOAT scoring in Step 9 is a self-assessment, not an external audit. The designed skill may score differently when audited by `audit-content-quality`.
 - Cannot validate that procedure steps are actually executable -- only that they are structured correctly with action verbs, inputs, and outputs.
@@ -208,6 +228,9 @@ Includes: trigger phrases, least-privilege tools, guiding quote, structured step
 3. Skill is internal-only (called by agents, never by users) -- set `user-invocable: false` and omit from command routing. [EXPLICIT]
 4. Skill requires a specific model for quality (e.g., complex reasoning) -- use the `model` field with justification. [EXPLICIT]
 5. Skill's MOAT depth was set to MINIMAL but the design reveals HIGH complexity -- flag for MOAT strategy update. [EXPLICIT]
+6. Two trigger phrases collide with an existing skill's description -- namespace or sharpen this skill's triggers to avoid ambiguous auto-invocation. [EXPLICIT]
+7. Concept describes both a read and a write responsibility -- consider splitting into two skills rather than granting full-access tools to one. [EXPLICIT]
+8. Procedure needs a tool not in any least-privilege profile (e.g., network fetch) -- add it explicitly with documented rationale; do not silently widen the profile. [EXPLICIT]
 
 ## Usage
 

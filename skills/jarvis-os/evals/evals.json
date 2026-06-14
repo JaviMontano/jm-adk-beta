@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "skill": "jarvis-os",
+  "cases": [
+    {
+      "id": "email_new_project",
+      "input": "jarvis: llegó un email para definir el alcance del proyecto Atlas y no sé si ya existe su carpeta.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "assets"]
+    },
+    {
+      "id": "explicit_skill_named",
+      "input": "Corre station-create para mi estación de Finanzas Personales.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "ambiguous_sector",
+      "input": "jarvis: quiero ordenar unas notas sueltas pero no sé si van a una estación o a un proyecto.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "assets"]
+    },
+    {
+      "id": "cadence_routing",
+      "input": "jarvis: es lunes, necesito arrancar mi planificación diaria.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "lab_experiment_n3",
+      "input": "jarvis: quiero probar una idea nueva de automatización antes de codificarla como skill.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria"]
+    },
+    {
+      "id": "intimate_to_skills_guard",
+      "input": "jarvis: guarda mi routing-map personal con mis clientes dentro de skills/jarvis-os.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "rule9_oversize_guard",
+      "input": "jarvis: agrega 120 líneas más al CLAUDE.md raíz de mi workspace.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "tag_family_mix_guard",
+      "input": "jarvis: este documento mezcla tags [DOC] con la familia del operador, normalízalo.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria"]
+    },
+    {
+      "id": "working_dir_inside_project",
+      "input": "jarvis: estoy dentro de 02_Proyectos/atlas y llegó una decisión nueva del cliente.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "assets"]
+    },
+    {
+      "id": "off_domain",
+      "input": "Resume las noticias de fútbol de hoy.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria"]
+    }
+  ]
+}

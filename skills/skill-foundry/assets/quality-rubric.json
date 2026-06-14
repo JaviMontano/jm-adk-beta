@@ -1,0 +1,43 @@
+{
+  "rubric": "skill-foundry-routing-quality",
+  "version": "1.0.0",
+  "scale": "0-2 (0=fail, 1=partial, 2=pass)",
+  "dimensions": [
+    {
+      "id": "topic_resolution",
+      "label": "Correct topic resolved",
+      "criteria": "Intent maps to exactly one of the 16 enum values via a routes.json trigger or a SKILL.md tie-breaker; rationale is tagged."
+    },
+    {
+      "id": "single_load",
+      "label": "Single playbook read",
+      "criteria": "Exactly one references/<topic>.md was opened this invocation; no compare-reads."
+    },
+    {
+      "id": "tiebreak_discipline",
+      "label": "Tie-break discipline",
+      "criteria": "When two routes could match, the loser was rejected with rationale, or one disambiguating question was asked; no silent default."
+    },
+    {
+      "id": "depth_fidelity",
+      "label": "Depth path honored",
+      "criteria": "quick ran essentials only; deep ran the exhaustive path with verification and script evidence."
+    },
+    {
+      "id": "playbook_gate",
+      "label": "Playbook acceptance gate",
+      "criteria": "The route's own rubric/criteria passed, including constitution v6.0.0 enforcement."
+    },
+    {
+      "id": "evidence_tags",
+      "label": "Evidence tags present",
+      "criteria": "Every non-obvious claim carries one Alfa-set tag ([DOC]/[INFERENCE]/[ASSUMPTION]); preserved [EXPLICIT]/[INFERRED] allowed; no foreign taxonomy."
+    },
+    {
+      "id": "governance",
+      "label": "Governance invariants",
+      "criteria": "Single-brand output, no invented prices, no green-as-success, no client PII."
+    }
+  ],
+  "pass_threshold": "All dimensions >= 1 and topic_resolution, single_load, playbook_gate == 2"
+}

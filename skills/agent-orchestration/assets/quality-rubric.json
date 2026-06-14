@@ -1,0 +1,43 @@
+{
+  "skill": "agent-orchestration",
+  "version": "1.0.0",
+  "scale": ["fail", "partial", "pass"],
+  "dimensions": [
+    {
+      "id": "routing-discipline",
+      "weight": 0.30,
+      "pass": "Exactly one topic resolved from the 10-value enum and exactly one playbook loaded; runner-up named with the narrowest-match reason.",
+      "partial": "One playbook loaded but the topic choice is unjustified or the runner-up not addressed.",
+      "fail": "Multiple playbooks loaded, an out-of-enum topic used, or topic guessed on a genuine tie."
+    },
+    {
+      "id": "spine-completeness",
+      "weight": 0.20,
+      "pass": "Discover, Analyze, Execute, Validate all ran; chosen option and rejected trade-off recorded.",
+      "partial": "Spine ran but a step is thin or the trade-off is undocumented.",
+      "fail": "A spine step is skipped."
+    },
+    {
+      "id": "script-first",
+      "weight": 0.15,
+      "pass": "Bundled deterministic check run where the topic provides one; evidence attached.",
+      "partial": "Script exists but only a positive fixture was run.",
+      "fail": "Validity hand-asserted while a deterministic check was available."
+    },
+    {
+      "id": "evidence-tags",
+      "weight": 0.20,
+      "pass": "Every non-obvious claim carries one core-set tag ([CODE]/[CONFIG]/[DOC]/[INFERENCE]/[ASSUMPTION]); single family; EN/ES consistent.",
+      "partial": "Most claims tagged but family mixing or gaps appear.",
+      "fail": "Untagged claims or mixed tag families."
+    },
+    {
+      "id": "governance-gate",
+      "weight": 0.15,
+      "pass": "Constitution v6.0.0 enforced; no false 'passed' before Guardian; no invented prices; no client PII; single brand.",
+      "partial": "Gate applied but one governance item is weak.",
+      "fail": "Gate skipped, success claimed prematurely, or a governance rule breached."
+    }
+  ],
+  "verdict_rule": "Any dimension at 'fail' caps the overall verdict at PARTIAL; a clean run with all dimensions at 'pass' is PASS."
+}

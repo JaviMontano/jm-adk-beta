@@ -5,9 +5,18 @@ argument-hint: "<skill> [params]"
 ---
 # /pristino — dispatcher
 
-Replaces alfa's 215+ per-skill command stubs.
+Single entry point replacing alfa's 215+ per-skill command stubs. [DOC]
 
-1. Parse `$ARGUMENTS`: first token = skill id (resolve aliases via `catalog/skills.json.aliases`).
-2. If unknown id: fuzzy-match tier-0 index, propose top 3, ask.
-3. Read `skills/<id>/SKILL.md`. Router → resolve `topic` from remaining args or request context; read ONE playbook.
-4. Execute with constitution enforcement; report in compressed register.
+## Flow
+1. Parse `$ARGUMENTS`: first token = skill id (resolve aliases via `catalog/skills.json.aliases`). Remaining = `key=value` flags + positional args.
+2. Unknown id → fuzzy-match tier-0 index, propose top 3 by score, ask. Never auto-pick. [INFERENCE]
+3. Read `skills/<id>/SKILL.md`. Router resolves `topic` from flags first, else request context; load exactly ONE playbook (`depth=deep` may chain a second). [DOC]
+4. Execute under constitution enforcement; honor the skill's `allowed-tools`; report in compressed register. [EXPLICIT]
+
+## Defaults & limits
+- `depth` absent → `quick` (one playbook, no chaining). [ASSUMPTION]
+- Routes catalog skills only — does NOT invent skills, edit the catalog, or bypass `allowed-tools`. [EXPLICIT]
+- Empty/missing first token → list tier-0 index, do not guess. Ambiguous alias (≥2 exact hits) → ask. [EXPLICIT]
+
+## Acceptance
+- Resolved id maps to a real `skills/<id>/SKILL.md`; topic bound before execution; single brand per run; output in compressed register with evidence tags preserved. [EXPLICIT]

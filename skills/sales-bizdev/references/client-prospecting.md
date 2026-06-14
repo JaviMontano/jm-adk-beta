@@ -23,6 +23,17 @@
 - User needs market size data (use market-intelligence skill)
 - User's list is already built and needs only scoring (apply S3 only)
 
+**Anti-scope (this skill does NOT do):** write the outreach copy, run the calls,
+estimate deal value/pricing, or verify contact data — it produces a *scored,
+ranked hypothesis list* for a human to validate before any outreach. [EXPLICIT]
+
+**Inputs required before running:** product/service one-liner, one named
+reference customer (or a hypothesis of who buys), and target geography. If none
+exist, run S1 from first principles and tag every dimension `[INFERRED]`. [INFERRED]
+
+**Definition of done:** a tiered CSV (S5c) + an approach brief per Tier 1 (S5b),
+every Tier 1 carrying a dated trigger event. No Tier 1 without a trigger. [EXPLICIT]
+
 ---
 
 ## S1 — ICP Definition Workshop
@@ -76,6 +87,10 @@ Define who NOT to pursue. This is as important as the positive ICP: [EXPLICIT]
 - Geographies where you have no legal entity or support capacity
 - Startups pre-revenue (no budget, wrong stage)
 
+> A disqualifier removes a prospect *regardless* of fit score — it is a hard
+> gate, not a deduction. A perfect-fit company in an unserviceable geography is
+> still out. Apply negative ICP before scoring to avoid wasting S3 effort. [EXPLICIT]
+
 ### 1e. ICP Summary Template
 
 ```
@@ -89,6 +104,24 @@ Tech stack signal: [Must-have indicator]
 Behavioral signal: [Top 1-2 intent signals to prioritize]
 Negative filter:   [Disqualifier(s)]
 Estimated TAM:     [Number of companies fitting this profile] [INFERRED]
+```
+
+**S1 acceptance:** ICP has ≥1 firmographic + ≥1 technographic *or* behavioral
+signal + ≥1 disqualifier. An ICP with zero disqualifiers is incomplete — every
+real ICP excludes someone. [EXPLICIT]
+
+**Worked example (filled template):**
+```
+ICP Name:          Series A Fintech in Andean LatAm
+Industry:          Fintech (payments, lending)
+Headcount:         40-150 employees
+Revenue:           $3M-$20M ARR [INFERRED]
+Geography:         Colombia, Mexico (primary); Chile, Peru (secondary)
+Growth stage:      Series A (post-round < 18 months)
+Tech stack signal: Cloud-native (AWS/GCP), no legacy core banking
+Behavioral signal: Hiring data/platform engineers; recent round < 90 days
+Negative filter:   Pre-seed; regulated entities needing on-prem; > 300 headcount
+Estimated TAM:     ~60-90 companies [INFERRED via Crunchbase + LAVCA]
 ```
 
 ---
@@ -180,6 +213,22 @@ Score each prospect on two dimensions: BANT qualification and ICP fit.
 | 40-59 | Tier 3 — Cool | Template outreach + trigger alert setup |
 | Below 40 | Disqualified | Remove from active list; archive for 6 months |
 
+**Worked scoring (Acme Corp, the S5 example):** Budget 10 (Series B published) +
+Authority 10 (VP Eng named) + Need 5 (inferred from 4 open data roles) + Timing
+5 (round 5 months ago) = **BANT 30** (note: S5 shows 32 — values are
+illustrative). Fit: Industry 15 (exact fintech) + Size 15 (200 in range) + Tech
+8 (moderate signal) + Geo 10 (Bogotá primary) + Behavioral 7 (passive+active) =
+**Fit 55**. Total **85 → Tier 1**. [INFERRED]
+
+**Scoring discipline (failure modes to avoid):** [INFERRED]
+- Score from *evidence*, not optimism — "they'd probably buy" is 0 on Need, not 5.
+- Need=10 requires a *confirmed* pain statement, not a job posting (that is ≤5).
+- A disqualifier (S1d) caps Total at "Disqualified" no matter the points earned.
+- Re-score on every new trigger; scores decay — a 90-day-old round is now Timing 5, not 10.
+
+**S3 acceptance:** every prospect has a numeric BANT (0-40) AND Fit (0-60), and
+each tier boundary maps to exactly one action column. No prospect sits without a tier. [EXPLICIT]
+
 ---
 
 ## S4 — Prioritization Matrix
@@ -263,6 +312,16 @@ Rank,Company,Website,Industry,Headcount,HQ,BANT,Fit,Total,Tier,Trigger,Contact N
 | ICP breadth | Narrow ICP (1 segment) | Wide ICP (3 segments) | Start narrow, expand after first 3 customers confirm the ICP |
 | Geographic focus | Single market | Multi-market | Single market until first $100K ARR; expand after proof of concept |
 
+**Why these defaults (justification):** [INFERRED]
+- *Accuracy over speed* — a wrong Tier 1 costs a personalized sequence + a call
+  slot + the opportunity cost of the right account; a missed prospect costs only
+  a re-scan. The asymmetry favors precision.
+- *Narrow ICP first* — a wide ICP makes the scoring model's weights ambiguous
+  (what is "exact industry match" across 3 segments?) and dilutes pattern
+  learning from early wins.
+- *Single market first* — S2d shows source quality varies sharply by country;
+  multi-market before proof of concept multiplies low-confidence data.
+
 ---
 
 ## Assumptions & Limits
@@ -285,6 +344,17 @@ Rank,Company,Website,Industry,Headcount,HQ,BANT,Fit,Total,Tier,Trigger,Contact N
 | User wants to prospect internationally without local knowledge | Flag knowledge gaps per market; use S2d for LatAm-specific sources |
 | User's product has multiple ICPs | Build separate scored lists per ICP; do not mix in one list |
 | User has existing customers to exclude | Add "exclude" column to CSV; cross-reference against CRM export |
+| Every prospect scores Tier 3 / none reach Tier 1 | ICP is likely too broad or sources too shallow — return to S1, narrow, re-source; do not pad scores |
+| Trigger events are stale (> 90 days) at delivery | Down-rank Timing to 5; flag as "monitor" not "contact now"; re-run S2b before outreach |
+| Two prospects tie on Total | Break ties by Timing, then Authority — urgency and reachability convert faster than raw fit |
+| User pushes for a 200-account list | Deliver scored 200 but cap *Tier 1* at 25; volume belongs in T2/T3, not in the work-this-week bucket |
+| No public data for target geography | Tag the whole list `[INFERRED]`, flag the gap explicitly, recommend a local-knowledge validation pass before outreach |
+
+**Common failure modes (and the fix):** [INFERRED]
+- *Score inflation* — analyst rounds every signal up. Fix: require a cited source per non-zero BANT point.
+- *Trigger-less Tier 1* — a high-fit account with no "why now" is T2, not T1. Fix: enforce the dated-trigger gate.
+- *List ≠ ICP drift* — sources return adjacent companies that quietly widen the ICP. Fix: re-check each entry against S1d before scoring.
+- *Stale snapshot* — a list is a point-in-time artifact; funding/hires move. Fix: timestamp the list; treat as perishable.
 
 ---
 

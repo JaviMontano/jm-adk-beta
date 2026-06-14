@@ -1,0 +1,47 @@
+{
+  "skill": "persistent-memory-design",
+  "allowed_path": {
+    "must_be_repo_relative": true,
+    "default": ".agent/scratchpad.md",
+    "blocked_patterns": ["..", "~", "/etc/", "/Users/"],
+    "rationale": "A repo-relative path keeps memory scoped to one workspace; .. escapes leak state across repos."
+  },
+  "fixed_sections": ["Hypotheses", "Decisions", "Findings", "Open"],
+  "evidence_rule": {
+    "tag_format": "[src:<source> @ <date>]",
+    "required_in": ["Findings", "Decisions"],
+    "demote_without_evidence_to": ["Hypotheses", "Open"]
+  },
+  "read_policy": {
+    "read_once_at_bootstrap": true,
+    "reference_after": true,
+    "reread_each_turn": false,
+    "rationale": "Re-reading re-injects tokens and invalidates the prompt cache prefix."
+  },
+  "write_policy": {
+    "idempotent_upsert_by_key": true,
+    "full_rewrite_allowed": false,
+    "contradiction_handling": "replace_by_key_and_log_in_decisions",
+    "concurrency": ["last_upsert_by_key_wins", "lock"],
+    "rationale": "Append-only duplicates corrected findings; full rewrite invalidates the cache prefix."
+  },
+  "survives_compact": {
+    "required": true,
+    "test": "After /compact and reset, reconstruct state from the file alone and assert equality with pre-compact state."
+  },
+  "absent_file": "treat_as_empty_state_create_skeleton",
+  "corrupt_file": "fail_loud_never_blind_overwrite",
+  "bounded_growth": "prune_resolved_open_collapse_stale_findings_by_key",
+  "blocked_anti_patterns": [
+    "raw_transcript_dump",
+    "reread_each_turn",
+    "full_file_rewrite",
+    "variable_schema_across_sessions",
+    "unvalidated_in_findings",
+    "unsafe_path_escape"
+  ],
+  "routes_away": {
+    "session_resume_fork_fresh": "session-lifecycle-management",
+    "high_churn_task_queue": "task-store"
+  }
+}

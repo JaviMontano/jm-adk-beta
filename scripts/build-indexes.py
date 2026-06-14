@@ -33,13 +33,32 @@ def tier0_lines(skills: list[dict]) -> list[str]:
 
 
 def build_skills_md(skills: list[dict]) -> str:
-    return (
+    n = len(skills)
+    routers = sum(1 for s in skills if s.get("params"))
+    header = (
         "# Skills Index (tier-0)\n\n"
-        "Generated — no edit. ® = router (params in SKILL.md frontmatter; "
-        "resolve topic, read ONE playbook).\n\n"
+        f"GENERATED — do not edit by hand. Source of truth: `catalog/skills.json`; "
+        f"regenerate with `python scripts/build-indexes.py` (also rebuilds this header). "
+        f"Hand edits are overwritten on next build. [DOC]\n\n"
+        "Tier-0 = always-loaded discovery layer: one line per skill so the agent picks a "
+        "skill WITHOUT reading any SKILL.md. Match the user request to a `id` + description, "
+        "then load `skills/<id>/SKILL.md` (path is derivable from the id, never listed here). [DOC]\n\n"
+        "Legend [DOC]:\n"
+        "- `id` — backtick code span; the slug. Open `skills/<id>/SKILL.md` to run it.\n"
+        "- ® — router skill: `params` (topic enum + depth) live in its frontmatter `routes`. "
+        "Resolve the topic, read exactly ONE playbook under that skill's `references/` — not the whole skill.\n"
+        "- (no ®) — leaf skill: SKILL.md is the full playbook; many carry a `(Pnn)` cadence/process id.\n"
+        "- … — description elided for width; the authoritative full text is the SKILL.md `description`.\n\n"
+        "Selection contract [DOC]: pick the single best id; if two tie, prefer the more specific; "
+        "if none fit, fall back to the closest ® router and let its topic param disambiguate; "
+        "if still unmatched, ask — do NOT invent an id or a path. Anti-scope: this index lists no "
+        "params, routes, tools, or versions — read the SKILL.md for those.\n\n"
+        f"Counts [INFERENCE]: {n} skills, {routers} routers (®), {n - routers} leaf. "
+        "Sorted by id; stable for diffing.\n\n"
         + "\n".join(tier0_lines(skills))
         + "\n"
     )
+    return header
 
 
 def build_antigravity_index(skills: list[dict]) -> str:

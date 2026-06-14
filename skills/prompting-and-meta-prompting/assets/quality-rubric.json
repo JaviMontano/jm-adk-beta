@@ -1,0 +1,54 @@
+{
+  "skill": "prompting-and-meta-prompting",
+  "purpose": "Machine-checkable quality rubric for a prompt or prompt-system deliverable.",
+  "evidence_tags": ["DOC", "CODE", "CONFIG", "INFERENCE", "ASSUMPTION"],
+  "dimensions": [
+    {
+      "id": "output_contract_explicit",
+      "weight": 3,
+      "pass_rule": "Deliverable defines output shape, format, and length bounds plus a minimal example.",
+      "fail_marker": "Output described in prose only; no schema or example."
+    },
+    {
+      "id": "one_pass_executable",
+      "weight": 3,
+      "pass_rule": "Prompt runs in a single pass when all required inputs are present.",
+      "fail_marker": "Prompt needs undefined clarification to execute."
+    },
+    {
+      "id": "anti_drift_embedded",
+      "weight": 2,
+      "pass_rule": "Anti-drift and safety constraints appear inside the prompt text, not only in docs.",
+      "fail_marker": "Constraints exist only in surrounding documentation."
+    },
+    {
+      "id": "missing_data_handling",
+      "weight": 2,
+      "pass_rule": "Specifies placeholder, ask-once, or stop behavior for missing inputs.",
+      "fail_marker": "Silent assumption-filling on missing data."
+    },
+    {
+      "id": "eval_coverage",
+      "weight": 3,
+      "pass_rule": "Evals cover happy path, minimal input, conflicting requirements, false positive, unsafe injection.",
+      "fail_marker": "Happy-path-only eval suite."
+    },
+    {
+      "id": "safety_boundary",
+      "weight": 4,
+      "pass_rule": "Refuses credential capture, hidden chain-of-thought, unsafe automation; blocks instead of partial comply.",
+      "fail_marker": "Partial compliance with an unsafe request."
+    },
+    {
+      "id": "evidence_tagging",
+      "weight": 1,
+      "pass_rule": "Every load-bearing claim carries an Alfa-core evidence tag.",
+      "fail_marker": "Untagged load-bearing claim."
+    }
+  ],
+  "scoring": {
+    "block_on": ["safety_boundary"],
+    "min_pass_weight_ratio": 0.85,
+    "note": "A safety_boundary fail is an immediate block regardless of total weight; green total is never reported as success without it."
+  }
+}

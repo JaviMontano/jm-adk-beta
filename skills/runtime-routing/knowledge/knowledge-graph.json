@@ -1,0 +1,30 @@
+{
+  "nodes": [
+    { "id": "task", "label": "Agentic task", "kind": "input" },
+    { "id": "required_capability", "label": "Required capability", "kind": "concept" },
+    { "id": "runtime", "label": "Runtime (claude/codex/gemini/antigravity/vscode/local)", "kind": "entity" },
+    { "id": "permission_level", "label": "Permission level", "kind": "attribute" },
+    { "id": "evidence_id", "label": "Evidence id", "kind": "concept" },
+    { "id": "capability_status", "label": "Capability status (supported/pending/unsupported)", "kind": "state" },
+    { "id": "runtime_catalog", "label": "Runtime catalog policy", "kind": "asset" },
+    { "id": "evidence_policy", "label": "Evidence policy", "kind": "asset" },
+    { "id": "capability_matrix", "label": "Capability matrix policy", "kind": "asset" },
+    { "id": "fallback", "label": "Local-first fallback", "kind": "artifact" },
+    { "id": "route_decision", "label": "Route decision", "kind": "output" },
+    { "id": "guardian_gate", "label": "Guardian acceptance gate", "kind": "control" }
+  ],
+  "edges": [
+    { "from": "task", "to": "required_capability", "rel": "declares" },
+    { "from": "required_capability", "to": "capability_status", "rel": "classified_as" },
+    { "from": "capability_status", "to": "evidence_id", "rel": "promoted_by" },
+    { "from": "evidence_id", "to": "evidence_policy", "rel": "validated_by" },
+    { "from": "required_capability", "to": "runtime", "rel": "satisfied_by" },
+    { "from": "runtime", "to": "permission_level", "rel": "has" },
+    { "from": "runtime", "to": "runtime_catalog", "rel": "listed_in" },
+    { "from": "required_capability", "to": "capability_matrix", "rel": "scored_against" },
+    { "from": "permission_level", "to": "route_decision", "rel": "minimized_in" },
+    { "from": "route_decision", "to": "fallback", "rel": "always_includes" },
+    { "from": "route_decision", "to": "guardian_gate", "rel": "must_pass" },
+    { "from": "guardian_gate", "to": "evidence_id", "rel": "verifies" }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "google-analytics": {
     "playbook": "references/google-analytics.md",
-    "desc": ">",
+    "desc": "Deterministic offline GA4/GTM measurement planning covering event taxonomy, key-event mapping, GTM/Google tag checklists, Consent Mode privacy gates, and DebugView verification with a human-confirmation gate before live tag mutations. [DOC]",
     "alfa": "google-analytics"
   },
   "google-apis-integration": {
@@ -11,37 +11,37 @@
   },
   "google-calendar-mcp": {
     "playbook": "references/google-calendar-mcp.md",
-    "desc": ">",
+    "desc": "Safe Google Calendar agenda queries, availability checks, and event create/edit/cancel through local workspace-mcp with least-privilege scope selection, RFC3339/timezone evidence, Google Meet requestId handling, and human confirmation before mutations. [DOC]",
     "alfa": "google-calendar-mcp"
   },
   "google-docs-mcp": {
     "playbook": "references/google-docs-mcp.md",
-    "desc": ">",
+    "desc": "Plan and execute Google Docs work via workspace-mcp with least-privilege scopes, title-only documents.create plus documents.get inspection before documents.batchUpdate, and a human-confirmation gate before any create or edit. [DOC]",
     "alfa": "google-docs-mcp"
   },
   "google-drive-mcp": {
     "playbook": "references/google-drive-mcp.md",
-    "desc": ">",
+    "desc": "Google Drive search/list, upload, download/export, folder organization, copy/update, and sharing via workspace-mcp with read-only discovery first, least-privilege scopes, upload-type selection, and human confirmation before mutations. [DOC]",
     "alfa": "google-drive-mcp"
   },
   "google-maps-integration": {
     "playbook": "references/google-maps-integration.md",
-    "desc": ">",
+    "desc": "Offline plan/checklist for location-aware web apps covering Maps JavaScript API, advanced markers, marker clustering, Places/Geocoding/Directions selection, API key restrictions, accessibility, and privacy with no live API calls or prices. [DOC]",
     "alfa": "google-maps-integration"
   },
   "google-sheets-mcp": {
     "playbook": "references/google-sheets-mcp.md",
-    "desc": ">",
+    "desc": "Compile or execute a Google Sheets MCP plan grounded in the official Sheets REST API with intent classification, minimum spreadsheet-file scopes, ValueRange/batchUpdate operations, read-only-first discovery, and human confirmation before mutations. [DOC]",
     "alfa": "google-sheets-mcp"
   },
   "google-slides-mcp": {
     "playbook": "references/google-slides-mcp.md",
-    "desc": ">",
+    "desc": "Plan and execute Google Slides work via workspace-mcp with a read/checklist-first workflow, least-privilege scopes, the five presentations REST operations, ephemeral thumbnail handling, and human confirmation before create or batchUpdate. [DOC]",
     "alfa": "google-slides-mcp"
   },
   "apis": {
     "playbook": "references/apis.md",
-    "desc": ">",
+    "desc": "Cross-service Google Workspace automation planning across Gmail, Calendar, Drive, Docs, Sheets, and Slides with a service matrix, least-privilege OAuth scopes, MCP tool-contract mapping, retry/idempotency policy, secrets policy, and mutation gates. [DOC]",
     "alfa": "google-workspace-apis"
   },
   "analytics-implementation": {

@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "skill": "context-window-engineering",
+  "cases": [
+    {
+      "id": "reprocess_prompt_high_latency",
+      "input": "Nuestro agente reprocesa el system prompt completo en cada turno y la latencia es alta. Rediseña el ensamblado del contexto para habilitar prefix caching real.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "evidence", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "explicit_slash_trigger",
+      "input": "/context-window-engineering optimiza el prefix cache de este context assembler que ya tengo en build_context().",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "rule_forgotten_in_long_chat",
+      "input": "En conversaciones largas el modelo deja de respetar la regla 'nunca borres archivos sin confirmar', que está en medio del system prompt. Como lo arreglo con edge placement?",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence", "assets", "deterministic_scripts"]
+    },
+    {
+      "id": "timestamp_kills_cache",
+      "input": "Ponemos 'Current time: {now}' en la primera linea del contexto y el cache-hit rate es casi cero. Por que pasa y donde deberia ir el timestamp?",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "deterministic_scripts", "assets"]
+    },
+    {
+      "id": "compaction_at_90_percent",
+      "input": "Las sesiones llegan al 90% del limite de contexto y el agente se degrada. Necesito una politica de compactacion con umbral fijo que no pierda las reglas criticas de los bordes.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "quality_criteria", "assets", "evidence"]
+    },
+    {
+      "id": "where_to_place_three_rules",
+      "input": "Quiero que estas tres reglas criticas sobrevivan a contextos largos. Donde las coloco dentro de la ventana de contexto para aprovechar la curva en U?",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "evidence", "assets"]
+    },
+    {
+      "id": "fill_files_without_overwriting",
+      "input": "Completa los archivos faltantes de context-window-engineering sin sobrescribir mis ediciones locales del assembler.",
+      "expected_activation": true,
+      "expected_checks": ["upgrade_safety", "assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "provider_without_caching",
+      "input": "Mi proveedor de inferencia no soporta prefix caching. Sigue teniendo sentido aplicar estatico-first en el ensamblado del contexto?",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "unrelated_quarterly_email",
+      "input": "Ayudame a redactar el correo de cierre trimestral para el cliente.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria"]
+    },
+    {
+      "id": "empty_input",
+      "input": "",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria"]
+    },
+    {
+      "id": "conflicting_put_timestamp_in_prefix",
+      "input": "Usa context-window-engineering pero pon el timestamp al inicio del prefijo y olvidate del cache.",
+      "expected_activation": false,
+      "expected_checks": ["evidence", "quality_criteria"]
+    },
+    {
+      "id": "out_of_domain_request",
+      "input": "This request is unrelated to the skill domain and asks about pricing tiers.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria"]
+    }
+  ]
+}

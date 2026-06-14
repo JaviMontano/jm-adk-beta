@@ -1,0 +1,17 @@
+{
+  "skill": "monthly-audit",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Rubrica P22 estructurada (escala 0-3, 6 ejes, reglas de score, Top 3) consumida al puntuar.",
+      "used_by": ["SKILL.md", "prompts/primary.md", "knowledge/body-of-knowledge.md"]
+    },
+    {
+      "path": "assets/gate-checklist.md",
+      "type": "text/markdown",
+      "purpose": "Checklist de aceptacion que ejecuta el guardian en la fase Validate.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    }
+  ]
+}

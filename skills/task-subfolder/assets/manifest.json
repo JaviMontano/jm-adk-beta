@@ -1,0 +1,17 @@
+{
+  "skill": "task-subfolder",
+  "assets": [
+    {
+      "path": "assets/dod-checklist.md",
+      "type": "checklist",
+      "purpose": "Binary DoD gate (existence, identity, spec, journal, idempotency, evidence, governance) run by the guardian before declaring done.",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    },
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "0-3 scored quality dimensions with a pass threshold, making the guardian verdict reproducible.",
+      "used_by": ["agents/guardian.md", "prompts/meta.md"]
+    }
+  ]
+}

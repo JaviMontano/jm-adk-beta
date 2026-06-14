@@ -1,0 +1,47 @@
+{
+  "skill": "revisor-veracidad",
+  "scale": "0=ausente, 1=parcial, 2=cumple",
+  "dimensions": [
+    {
+      "id": "one_tag_one_family",
+      "criterion": "Cada afirmacion no obvia lleva exactamente un tag de una sola familia.",
+      "fail_if": "Mas de un tag por claim, o familias Jarvis OS y Alfa core mezcladas."
+    },
+    {
+      "id": "weakest_tag",
+      "criterion": "Ante dos tags posibles se eligio el mas debil (menos cierto).",
+      "fail_if": "Un {SUPUESTO} elevado a {MEMORIA} u otro tag mas fuerte sin justificacion."
+    },
+    {
+      "id": "web_citation",
+      "criterion": "Ningun {WEB} sin cita; los sin cita se degradaron a {CONOCIMIENTO} o se eliminaron.",
+      "fail_if": "Existe un {WEB} huerfano de cita."
+    },
+    {
+      "id": "closure_steps",
+      "criterion": "Cada {SUPUESTO}/{POR_CONFIRMAR} esta emparejado con un paso de cierre concreto y accionable.",
+      "fail_if": "Algun {SUPUESTO}/{POR_CONFIRMAR} sin paso (ruido)."
+    },
+    {
+      "id": "no_over_tagging",
+      "criterion": "Lo trivialmente auto-evidente, el input re-citado y la estructura del output van sin tag.",
+      "fail_if": "Casi todo el texto esta etiquetado."
+    },
+    {
+      "id": "spelling_consistency",
+      "criterion": "Ortografia de tags (ES vs EN) consistente en todo el documento.",
+      "fail_if": "Mezcla de alias ES/EN del mismo tag."
+    },
+    {
+      "id": "no_rewrite",
+      "criterion": "El contenido se auditó, no se reescribió ni se inventó respaldo.",
+      "fail_if": "Se reformulo el contenido o se fabrico una fuente."
+    },
+    {
+      "id": "critical_void",
+      "criterion": "Si faltaba dato esencial se emitio {VACIO_CRITICO} y se detuvo, sin auto-rellenar.",
+      "fail_if": "Hay {VACIO_CRITICO} seguido de dato fabricado, o se continuo sin marcar el bloqueo."
+    }
+  ],
+  "pass_threshold": "Todas las dimensiones en 2; cualquier 0 bloquea la entrega."
+}

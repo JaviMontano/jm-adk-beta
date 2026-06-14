@@ -6,7 +6,11 @@
 
 ## TL;DR
 
-Routes user input to the best available skill or prompt using deterministic evidence from `PRISTINO-INDEX.md`, `.agent/skills_index.json`, skill frontmatter, prompt metadata, and explicit user prefixes. Use for orchestration-layer prompt routing, not for executing the routed task. Never invent a skill, prompt, confidence score, or capability that is not present in the inspected sources. [EXPLICIT]
+Routes user input to the best available skill or prompt using deterministic evidence from `PRISTINO-INDEX.md`, `.agent/skills_index.json`, skill frontmatter, prompt metadata, and explicit user prefixes. Use for orchestration-layer prompt routing, **not** for executing the routed task. Never invent a skill, prompt, confidence score, or capability absent from the inspected sources. [DOC]
+
+**In scope:** select among indexed skills/prompts; emit a routing decision object. **Out of scope (anti-scope):** running the routed skill, summarizing the corpus, ranking skills not present in any index, or scoring confidence from memory. [DOC]
+
+**Confidence bands** (thresholds live in `assets/routing-checklist.md`): `route` = one candidate clears the threshold and beats the runner-up by the tie-break margin; `ask` = top candidates within margin, or evidence partial; `decline` = no candidate clears the floor or request is out-of-corpus. Default on ambiguity is `ask`, never a forced `route`. [CONFIG]
 
 ## Procedure
 
@@ -26,24 +30,36 @@ Routes user input to the best available skill or prompt using deterministic evid
 - Return a routing decision, not the downstream task result.
 - Include selected skill/prompt, confidence band, score components, sources inspected, rejected alternatives, and required next action.
 - If no candidate is reliable, ask a targeted clarification or hand off to discovery/orchestration instead of guessing.
-- Use evidence tags on all claims: `[CÓDIGO]` for inspected repo/index evidence, `[CONFIG]` for routing policy, `[INFERENCIA]` for derived fit, and `[SUPUESTO]` only for user-accepted defaults.
+- Use evidence tags on all claims (Alfa core set, per `references/verification-tags.md`): `[CÓDIGO]` inspected repo/index evidence, `[CONFIG]` routing policy/threshold, `[INFERENCIA]` derived fit, `[SUPUESTO]` user-accepted default. One tag per claim; never mix the Jarvis `{...}` family here. [CONFIG]
 
 ### Step 4: Validate
-- Verify the selected route exists in the inspected index or file tree.
-- Verify all confidence and tie-break claims cite score components.
-- Verify false positives are rejected: weather, generic writing, unsupported plugin claims, or requests outside the indexed corpus.
-- Verify `assets/routing-checklist.md` was applied before finalizing the route.
+- Selected route exists in an inspected index or the file tree (not memory). [CÓDIGO]
+- Every confidence/tie-break claim cites the score component that drives it.
+- Known false positives are rejected: weather, generic prose, unsupported plugin claims, or any request outside the indexed corpus.
+- `assets/routing-checklist.md` was applied before finalizing.
 
-## Quality Criteria
+## Worked Example
 
-- [ ] Evidence tags applied to every routing claim
-- [ ] Sources inspected are listed with path or index name
-- [ ] Candidate set contains only discovered skills/prompts
-- [ ] Score components and tie-breakers are visible
-- [ ] Ambiguous cases return `ask` with a narrow clarification
-- [ ] Unsupported cases return `decline` or handoff without invented capabilities
-- [ ] Final decision references `assets/routing-checklist.md`
-- [ ] Output is actionable by the coordinator
+Input: `"build a deterministic XLSX template"` (no prefix). Discover → `PRISTINO-INDEX.md` lists `xlsx-template-creator` (slug + purpose match) and `xlsx-author` (purpose-only). Analyze → checklist scores: `xlsx-template-creator` wins on slug + purpose + "deterministic" trigger; `xlsx-author` loses on narrower-scope tie-break. Decision: `route` → `xlsx-template-creator`, rejected `[xlsx-author: weaker purpose evidence]`, sources `[PRISTINO-INDEX.md]`. [INFERENCIA] Counter-case: same words but index missing both slugs → emit `coverage_gap` + `ask`, never guess a third skill. [CONFIG]
+
+## Acceptance Criteria
+
+- [ ] Output is a routing decision object (skill/prompt, band, score components, sources, rejected alternatives, next action) — not the downstream result.
+- [ ] Every routing claim carries exactly one Alfa-core tag; sources listed by path or index name.
+- [ ] Candidate set contains only discovered skills/prompts; missing indexes surface as `coverage_gap`.
+- [ ] Score components and tie-breakers are visible and reproducible (same input → same route).
+- [ ] Ambiguous → `ask` with one narrow clarification; unsupported → `decline`/handoff with zero invented capabilities.
+- [ ] Final decision references `assets/routing-checklist.md`.
+
+## Failure Modes
+
+| Failure | Symptom | Guard |
+|---------|---------|-------|
+| Hallucinated skill | Route names a slug absent from every index | Step 4 existence check; fail closed to `decline` [CÓDIGO] |
+| Forced route | `route` emitted with sub-threshold or tied scores | Default to `ask`; band thresholds in checklist [CONFIG] |
+| Stale index | Route points to a removed/renamed skill | Treat missing slug as `coverage_gap`; inspect direct files [INFERENCIA] |
+| Scope creep | Skill executed instead of routed | Anti-scope: emit decision only unless user asks to run it |
+| Tag drift | Foreign `{...}` tags or untagged claims | Single-family Alfa-core tags; one per claim [CONFIG] |
 
 ## Related Skills
 
@@ -63,11 +79,12 @@ Example invocations:
 
 ## Assumptions & Limits
 
-- Assumes access to project artifacts (code, docs, configs) [EXPLICIT]
-- Uses the language of the user request unless repo conventions require otherwise [EXPLICIT]
-- Does not replace domain expert judgment for final decisions [EXPLICIT]
-- Does not execute the routed skill unless the user explicitly asks for execution after routing [EXPLICIT]
-- Does not use memory or unstated plugin knowledge as a source of truth when indexes are unavailable [EXPLICIT]
+- Assumes read access to project artifacts (code, docs, configs); if none load, the only valid outputs are `coverage_gap` + `ask`. [DOC]
+- Uses the language of the user request unless repo conventions require otherwise. [DOC]
+- Does not replace domain-expert judgment for final decisions. [DOC]
+- Does not execute the routed skill unless the user explicitly asks for execution after routing. [DOC]
+- Does not use memory or unstated plugin knowledge as a source of truth when indexes are unavailable. [DOC]
+- Trade-off: deterministic, index-only routing can miss a capability that exists but is unindexed — accepted, because a reproducible `coverage_gap` is safer than a confident wrong route. [INFERENCIA]
 
 ## Edge Cases
 
@@ -79,6 +96,9 @@ Example invocations:
 | Source index missing or stale | Report `coverage_gap` and inspect direct skill files where possible |
 | Unsupported capability | Decline or hand off; do not invent a skill |
 | Out-of-scope request | Redirect to discovery/orchestration or ask for scope |
+| Prefix names a non-existent skill | `decline` with the prefix echoed; do not silently substitute a near-match |
+| Conflicting prefix vs. body intent | Prefix wins (it is explicit); note the conflict in the decision for the coordinator |
+| Mixed-language request | Route in the request's dominant language; keep brand/slug terms verbatim |
 
 ## Assets
 

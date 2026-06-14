@@ -1,0 +1,38 @@
+{
+  "nodes": [
+    { "id": "daily-close", "label": "Cadencia P10 de cierre diario", "kind": "skill" },
+    { "id": "discover", "label": "Discover (read-before-write)", "kind": "phase" },
+    { "id": "classify", "label": "Classify en tres ejes", "kind": "phase" },
+    { "id": "seed", "label": "Seed next day", "kind": "phase" },
+    { "id": "persist", "label": "Persist aditivo", "kind": "phase" },
+    { "id": "validate", "label": "Validate gate", "kind": "phase" },
+    { "id": "cerrado", "label": "Eje Cerrado", "kind": "axis" },
+    { "id": "pendiente", "label": "Eje Pendiente", "kind": "axis" },
+    { "id": "aprendido", "label": "Eje Aprendido", "kind": "axis" },
+    { "id": "semilla", "label": "Semilla 1-3 pendientes priorizados", "kind": "artifact" },
+    { "id": "evidencia", "label": "Evidencia ligada", "kind": "criterion" },
+    { "id": "tags", "label": "Familia de tags Jarvis OS {...}", "kind": "standard" },
+    { "id": "memory", "label": "Bitacora / MEMORY destino", "kind": "store" },
+    { "id": "gate", "label": "Gate de aceptacion", "kind": "gate" },
+    { "id": "marca-unica", "label": "Disciplina de marca unica", "kind": "constraint" }
+  ],
+  "edges": [
+    { "from": "daily-close", "to": "discover", "rel": "starts_with" },
+    { "from": "discover", "to": "classify", "rel": "precedes" },
+    { "from": "classify", "to": "seed", "rel": "precedes" },
+    { "from": "seed", "to": "persist", "rel": "precedes" },
+    { "from": "persist", "to": "validate", "rel": "precedes" },
+    { "from": "classify", "to": "cerrado", "rel": "produces" },
+    { "from": "classify", "to": "pendiente", "rel": "produces" },
+    { "from": "classify", "to": "aprendido", "rel": "produces" },
+    { "from": "pendiente", "to": "semilla", "rel": "feeds" },
+    { "from": "cerrado", "to": "evidencia", "rel": "requires" },
+    { "from": "discover", "to": "memory", "rel": "reads" },
+    { "from": "persist", "to": "memory", "rel": "appends_to" },
+    { "from": "persist", "to": "marca-unica", "rel": "constrained_by" },
+    { "from": "validate", "to": "gate", "rel": "runs" },
+    { "from": "gate", "to": "evidencia", "rel": "checks" },
+    { "from": "gate", "to": "semilla", "rel": "checks" },
+    { "from": "gate", "to": "tags", "rel": "checks" }
+  ]
+}

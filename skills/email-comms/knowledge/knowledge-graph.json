@@ -1,0 +1,34 @@
+{
+  "nodes": [
+    { "id": "router", "label": "email-comms router", "kind": "skill" },
+    { "id": "email-sending", "label": "Email Sending (deliverability)", "kind": "topic" },
+    { "id": "email-template-builder", "label": "Email Template Builder", "kind": "topic" },
+    { "id": "email-templates", "label": "Email Templates (bulletproof)", "kind": "topic" },
+    { "id": "newsletter-design", "label": "Newsletter Design", "kind": "topic" },
+    { "id": "domain-auth", "label": "SPF / DKIM / DMARC", "kind": "concept" },
+    { "id": "reputation", "label": "Sender reputation & suppression", "kind": "concept" },
+    { "id": "table-layout", "label": "Table layout + inline CSS", "kind": "concept" },
+    { "id": "outlook-vml", "label": "Outlook MSO / VML fixes", "kind": "concept" },
+    { "id": "firestore-trigger", "label": "firestore-send-email mail doc", "kind": "concept" },
+    { "id": "ctor", "label": "CTOR & engagement metrics", "kind": "concept" },
+    { "id": "unsubscribe", "label": "One-click List-Unsubscribe-Post", "kind": "concept" },
+    { "id": "evidence-tags", "label": "Alfa core EN evidence tags", "kind": "governance" }
+  ],
+  "edges": [
+    { "from": "router", "to": "email-sending", "rel": "routes-to" },
+    { "from": "router", "to": "email-template-builder", "rel": "routes-to" },
+    { "from": "router", "to": "email-templates", "rel": "routes-to" },
+    { "from": "router", "to": "newsletter-design", "rel": "routes-to" },
+    { "from": "email-sending", "to": "domain-auth", "rel": "requires" },
+    { "from": "email-sending", "to": "reputation", "rel": "maintains" },
+    { "from": "email-sending", "to": "unsubscribe", "rel": "implements" },
+    { "from": "email-template-builder", "to": "table-layout", "rel": "applies" },
+    { "from": "email-template-builder", "to": "firestore-trigger", "rel": "emits" },
+    { "from": "email-templates", "to": "table-layout", "rel": "applies" },
+    { "from": "email-templates", "to": "outlook-vml", "rel": "uses" },
+    { "from": "newsletter-design", "to": "ctor", "rel": "measures-by" },
+    { "from": "newsletter-design", "to": "email-template-builder", "rel": "hands-layout-to" },
+    { "from": "newsletter-design", "to": "email-sending", "rel": "depends-on" },
+    { "from": "router", "to": "evidence-tags", "rel": "governed-by" }
+  ]
+}

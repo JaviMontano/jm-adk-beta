@@ -1,0 +1,59 @@
+{
+  "skill": "persistent-memory-design",
+  "scale": "0=absent, 1=partial, 2=met",
+  "pass_threshold": "all blocking criteria == 2",
+  "criteria": [
+    {
+      "id": "validated_conclusions_only",
+      "blocking": true,
+      "check": "File holds only validated conclusions; no raw reasoning or tool dumps.",
+      "maps_to_eval": ["conflicting_requirements_raw_transcript", "cache_breaking_rework_fix"]
+    },
+    {
+      "id": "fixed_schema",
+      "blocking": true,
+      "check": "Exactly the four sections Hypotheses/Decisions/Findings/Open, identical across sessions."
+    },
+    {
+      "id": "read_once_reference",
+      "blocking": true,
+      "check": "Read once at bootstrap, referenced after; no per-turn re-read.",
+      "maps_to_eval": ["cache_breaking_rework_fix", "conflicting_requirements_raw_transcript", "unsafe_path_boundary"]
+    },
+    {
+      "id": "idempotent_upsert",
+      "blocking": true,
+      "check": "Writes upsert by stable key; no full-file rewrite; contradictions replaced + logged in Decisions.",
+      "maps_to_eval": ["multi_writer_concurrency", "contradicted_finding_handling"]
+    },
+    {
+      "id": "survives_compact",
+      "blocking": true,
+      "check": "State reconstructs from the file alone after /compact and reset.",
+      "maps_to_eval": ["long_investigation_survives_compact", "false_negative_synonym_notebook"]
+    },
+    {
+      "id": "evidence_traceability",
+      "blocking": true,
+      "check": "Every Finding/Decision carries [src:<source> @ <date>]."
+    },
+    {
+      "id": "concurrency_resolved",
+      "blocking": false,
+      "check": "If multiple writers, last-upsert-by-key-wins or a lock; no blind text merge.",
+      "maps_to_eval": ["multi_writer_concurrency"]
+    },
+    {
+      "id": "path_safety",
+      "blocking": true,
+      "check": "Path is stable and repo-relative; no .. escape.",
+      "maps_to_eval": ["unsafe_path_boundary"]
+    },
+    {
+      "id": "deterministic_scripts",
+      "blocking": true,
+      "check": "JSON design report passes scripts/check.sh against assets/ contracts."
+    }
+  ],
+  "governance": "Harness voice; evidence tags; single brand JM Labs; no invented prices; no client PII; never green without evidence."
+}

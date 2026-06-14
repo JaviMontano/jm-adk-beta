@@ -1,0 +1,49 @@
+{
+  "skill": "carrera",
+  "version": "1.0.0",
+  "dimensions": [
+    {
+      "id": "single_playbook",
+      "label": "Single-playbook discipline",
+      "pass_rule": "Exactly one routes.json playbook loaded; no cross-cluster reads.",
+      "weight": "gate"
+    },
+    {
+      "id": "contract_shape",
+      "label": "Contract shape",
+      "pass_rule": "Output matches the active playbook's output-contract and templates/output.md headings.",
+      "weight": "gate"
+    },
+    {
+      "id": "evidence_tied",
+      "label": "Evidence-tied claims",
+      "pass_rule": "Every specific claim references a supplied evidence id or is marked open; no fabricated numbers, FX, market data, settlement amounts, or competing offers.",
+      "weight": "gate"
+    },
+    {
+      "id": "tag_family",
+      "label": "Single tag family",
+      "pass_rule": "One family throughout (authoring or provenance); consistent ES/EN spelling; no mixing.",
+      "weight": "gate"
+    },
+    {
+      "id": "determinism",
+      "label": "Determinism",
+      "pass_rule": "Identical input yields byte-identical output; ISO dates only; relative dates block.",
+      "weight": "gate"
+    },
+    {
+      "id": "stop_on_empty",
+      "label": "Stop-on-empty",
+      "pass_rule": "Missing critical input triggers {VACIO_CRITICO} halt instead of auto-fill.",
+      "weight": "gate"
+    },
+    {
+      "id": "governance",
+      "label": "Governance",
+      "pass_rule": "No PII echoed, single brand, no green-as-success, no FOMO/servility in gratitude or counterproposal text.",
+      "weight": "gate"
+    }
+  ],
+  "verdict_rule": "All gate dimensions must pass; any fail blocks the deliverable."
+}

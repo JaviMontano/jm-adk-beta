@@ -1,0 +1,17 @@
+{
+  "skill": "hosting-infra",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Pass/fail validation-gate criteria: 5 blocking global checks plus per-topic checks for all nine routes; drives the guardian verdict.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "text/markdown",
+      "purpose": "Per-invocation pre-flight and gate checklist run along Discover -> Analyze -> Execute -> Validate.",
+      "used_by": ["README.md", "agents/support.md"]
+    }
+  ]
+}

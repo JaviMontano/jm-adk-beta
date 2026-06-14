@@ -1,0 +1,30 @@
+{
+  "nodes": [
+    { "id": "atomic_unit", "label": "Unidad atomica", "kind": "concept" },
+    { "id": "local_pass", "label": "Pase local tipado (map)", "kind": "stage" },
+    { "id": "local_schema", "label": "Schema del pase local", "kind": "schema" },
+    { "id": "transition_schema", "label": "Schema de transicion", "kind": "schema" },
+    { "id": "integration_pass", "label": "Pase de integracion (reduce)", "kind": "stage" },
+    { "id": "typed_error", "label": "Error tipado por unidad", "kind": "rule" },
+    { "id": "global_exception", "label": "Excepcion global", "kind": "antipattern" },
+    { "id": "single_pass_gate", "label": "Single-pass gate", "kind": "decision" },
+    { "id": "raw_in_p2", "label": "Crudo en el pase 2", "kind": "antipattern" },
+    { "id": "parallelization", "label": "Paralelizacion idempotente", "kind": "property" },
+    { "id": "guardian_gates", "label": "Gates del Guardian", "kind": "validation" }
+  ],
+  "edges": [
+    { "from": "atomic_unit", "to": "local_pass", "rel": "es_entrada_de" },
+    { "from": "local_pass", "to": "local_schema", "rel": "emite_contra" },
+    { "from": "local_schema", "to": "typed_error", "rel": "incluye" },
+    { "from": "local_pass", "to": "transition_schema", "rel": "alimenta" },
+    { "from": "transition_schema", "to": "integration_pass", "rel": "es_consumido_por" },
+    { "from": "integration_pass", "to": "raw_in_p2", "rel": "prohibe" },
+    { "from": "typed_error", "to": "global_exception", "rel": "reemplaza" },
+    { "from": "local_pass", "to": "parallelization", "rel": "habilita" },
+    { "from": "single_pass_gate", "to": "local_pass", "rel": "condiciona" },
+    { "from": "guardian_gates", "to": "raw_in_p2", "rel": "bloquea" },
+    { "from": "guardian_gates", "to": "global_exception", "rel": "bloquea" },
+    { "from": "guardian_gates", "to": "transition_schema", "rel": "exige" },
+    { "from": "guardian_gates", "to": "single_pass_gate", "rel": "aplica" }
+  ]
+}

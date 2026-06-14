@@ -22,6 +22,20 @@ Transforms raw metrics, scores, and quantitative findings into meaningful narrat
 
 Parse from `$ARGUMENTS`. [EXPLICIT]
 
+### Audience Framing (`$2`)
+
+The audience param shifts framing, not facts. Same metric, three lenses: [INFERENCIA]
+
+| Audience | Optimize for | Lead with | Avoid |
+|---|---|---|---|
+| `executive` | Decision + consequence | Magnitude in team-equivalents, the "so what" | Tool names, raw percentages without translation |
+| `technical` | Root cause + mechanism | The anomaly, the causal chain, the metric definition | Hand-wavy business framing without the "how" |
+| `mixed` | Both, layered | Headline insight first, technical detail in a footnote/appendix | Forcing one register on both readers |
+
+Worked contrast — coverage 92%, payment modules uncovered:
+- `executive`: "Calidad fuerte en general, pero el 8% sin cubrir es justo el módulo de pagos: un incidente ahí es facturación detenida." [INFERENCIA]
+- `technical`: "92% global enmascara distribución: pagos en 41%, sin tests de borde en reversa de transacción [CÓDIGO]." [INFERENCIA]
+
 ## Core Patterns
 
 ### Pattern 1: Metrics-to-Meaning
@@ -79,6 +93,28 @@ Abstract → Concrete → Impactful
 
 "$2M de deuda técnica" → NEVER. Use FTE-month equivalents. [EXPLICIT]
 ```
+
+### Failure Modes (anti-patterns to detect and reject)
+
+| Anti-pattern | Why it fails | Fix |
+|---|---|---|
+| Naked number ("coverage 92%") | Reader has no frame; forms premature judgment | Add at least one comparison + the consequence [EXPLICIT] |
+| False precision ("99.47% disponibilidad") | Implies measurement rigor the data lacks; distracts | Round to significant signal; pair with downtime hours [INFERENCIA] |
+| Comparison to an irrelevant baseline | "Better than 2019" when stack changed entirely → misleads | Pick a comparable reference frame; declare it [SUPUESTO] |
+| Insight without action ("coverage is low") | Names a problem, leaves reader stuck | End every interpretation in a concrete next step [EXPLICIT] |
+| Magnitude inflation ("catastrophic", "10x crisis") | Drama erodes trust; reader discounts all claims | State the magnitude; let the number carry the weight [INFERENCIA] |
+| Currency for internal cost ("$2M debt") | Violates governance; fabricates a number | FTE-months → team-equivalent only [EXPLICIT] |
+| Green-as-success shortcut ("all green, done") | Hides trend/degradation/opportunity cost | Read the trend beneath the snapshot (see Edge Cases) [INFERENCIA] |
+
+### Per-Metric Acceptance Criteria
+
+A metric narrative is DONE only when all hold: [EXPLICIT]
+1. Has context (what is being measured, against what target).
+2. Has at least one comparison (baseline / benchmark / target / prior period).
+3. Answers "so what" with a business consequence.
+4. Any magnitude is translated to a tangible equivalent.
+5. Ends in an actionable recommendation with a rough timeline.
+6. Carries an evidence tag from the Alfa set (`[CÓDIGO]` `[CONFIG]` `[DOC]` `[INFERENCIA]` `[SUPUESTO]`).
 
 ## Scoring Matrix Narratives
 
@@ -151,6 +187,13 @@ Each chart builds on the previous. No standalone charts. [EXPLICIT]
 - NUNCA usar valores monetarios para costos. Solo FTE-meses.
 - Esta skill posee **interpretacion de metricas y framing narrativo**. NO posee diseno de visualizacion (eso es data-viz-storytelling) ni arco narrativo general (eso es storytelling).
 
+**Anti-scope (handoff, not silent drop):** [EXPLICIT]
+- Calcular o corregir metricas crudas → upstream (data-quality / la fuente que las produce). Aqui se asume el dato dado.
+- Elegir tipo de grafico, paleta, layout → data-viz-storytelling.
+- Tejer el arco persuasivo end-to-end de un documento → storytelling / copywriting.
+- Validar la trazabilidad de la metrica fuente → technical-writing.
+Si el input cae fuera de scope, nombrar el handoff explicitamente; nunca inventar el dato faltante (`{VACIO_CRITICO}` → detener y preguntar).
+
 ## Edge Cases
 
 | Edge Case | Handling Strategy |
@@ -159,6 +202,9 @@ Each chart builds on the previous. No standalone charts. [EXPLICIT]
 | Contradictory metrics | Present the contradiction as a finding itself. "High coverage (92%) contradicts incident rate (8/month), suggesting tests that do not cover real scenarios [INFERENCIA]". The contradiction IS the story. |
 | Scarce data (<10 data points) | Acknowledge limitation explicitly: "With [N] data points, the trend is indicative, not conclusive". Use confidence intervals. Recommend collection period before definitive conclusions. |
 | Metrics that favor inaction (everything green) | Look for the story beneath the surface: trends, degradation velocity, opportunity cost. "Everything is green today, but the trend over the last 3 quarters shows..." |
+| Single data point, no history | No trend exists yet. State the snapshot, name what comparison would unlock interpretation, and recommend the minimum collection window before any trend claim [SUPUESTO]. |
+| Metric the audience cannot influence | An insight tied to no available lever is noise to the reader. Reframe toward the nearest controllable proxy, or route the finding to the owner who can act [INFERENCIA]. |
+| Vanity metric (impressive, decision-irrelevant) | "1M page views" with no link to the decision at hand. Demote it; surface the metric that actually moves the call being made [INFERENCIA]. |
 
 ## Decisions and Trade-offs
 
@@ -304,18 +350,6 @@ graph TD
 - `metodologia-copywriting` — Prosa persuasiva que envuelve los insights de datos
 - `metodologia-data-viz-storytelling` — Visualizaciones que representan las narrativas de datos
 - `metodologia-technical-writing` — Precision documental de las metricas fuente
-
-## Edge Cases
-
-- **No benchmarks available**: Use internal baseline or state explicitly: "Sin benchmark sectorial disponible; se usa linea base interna Q1 como referencia [SUPUESTO]".
-- **Conflicting metrics**: Present the contradiction as a finding: "La cobertura alta (92%) contradice la tasa de incidentes (8/mes), sugiriendo tests que no cubren escenarios reales [INFERENCIA]".
-- **Sparse data**: Acknowledge gaps: "Con [N] datos, la tendencia es indicativa, no concluyente".
-
-## Limits
-
-- This skill owns **metric interpretation and narrative framing**. It does NOT own visualization design (that's metodologia-data-viz-storytelling) or overall narrative arc (that's metodologia-storytelling).
-- NEVER present metrics without context and comparison.
-- NEVER use currency values for costs. FTE-months only.
 
 ## Usage
 

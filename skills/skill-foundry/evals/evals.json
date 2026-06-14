@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "id": "route-create-agent",
+      "input": "Add a custom subagent that reviews pull requests for our repo, with least-privilege tools.",
+      "expected_checks": ["routes_to_agent_creator", "single_playbook_read", "quality_criteria"]
+    },
+    {
+      "id": "route-certify-skill",
+      "input": "Certify the skill at ./skills/nda-review and tell me if it is production ready.",
+      "expected_checks": ["routes_to_certify_skill", "read_only_no_edits", "deterministic_scripts", "assets"]
+    },
+    {
+      "id": "tiebreak-create-vs-design",
+      "input": "I want a detailed spec for a new tariff-analysis skill, no build yet, just frontmatter and procedure.",
+      "expected_checks": ["routes_to_design_skill", "not_meta_skill_creator", "quality_criteria"]
+    },
+    {
+      "id": "tiebreak-prompt-creator-vs-forge",
+      "input": "Port our system prompt from Claude to Gemini and add adversarial test cases.",
+      "expected_checks": ["routes_to_prompt_forge", "not_prompt_creator", "deterministic_scripts"]
+    },
+    {
+      "id": "tiebreak-assembly-vs-xray",
+      "input": "Take the cold-call-prep skill all the way to production and prove the quality gain.",
+      "expected_checks": ["routes_to_assembly_skill", "single_playbook_read", "assets", "quality_criteria"]
+    },
+    {
+      "id": "route-workflow-forge",
+      "input": "Turn our incident response process into a phased slash command with handoffs.",
+      "expected_checks": ["routes_to_workflow_forge", "not_workflow_creator"]
+    },
+    {
+      "id": "route-mcp-creator",
+      "input": "Plan an MCP server config with transport, auth, secret handling and a rollback path.",
+      "expected_checks": ["routes_to_mcp_creator", "offline_validation", "deterministic_scripts"]
+    },
+    {
+      "id": "route-indexer",
+      "input": "Regenerate skills_index.json by scanning every SKILL.md for BM25 search.",
+      "expected_checks": ["routes_to_meta_skill_indexer", "assets"]
+    },
+    {
+      "id": "ambiguous-two-routes",
+      "input": "Compare our two skill versions and also clean them up.",
+      "expected_checks": ["asks_one_disambiguating_question", "no_silent_default"]
+    },
+    {
+      "id": "out-of-scope-redirect",
+      "input": "Run the existing earnings-analysis skill on this quarter's filing.",
+      "expected_checks": ["declares_out_of_foundry_scope", "redirects_no_forced_route"]
+    },
+    {
+      "id": "governance-evidence-tags",
+      "input": "Benchmark v1 against v2 of the buyer-list skill and give me the net assessment.",
+      "expected_checks": ["routes_to_benchmark_skill", "alfa_evidence_tags", "quality_criteria", "no_green_as_success"]
+    },
+    {
+      "id": "governance-single-brand",
+      "input": "Audit the saas-msa-review skill and surface the top five gaps.",
+      "expected_checks": ["routes_to_x_ray_skill", "single_brand_output", "deterministic_scripts", "assets"]
+    }
+  ]
+}

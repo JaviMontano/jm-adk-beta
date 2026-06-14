@@ -1,0 +1,17 @@
+{
+  "skill": "agent-orchestration",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Score a dispatch packet across routing discipline, spine completeness, script-first, evidence tags, and governance.",
+      "used_by": ["agents/guardian.md"]
+    },
+    {
+      "path": "assets/routing-checklist.md",
+      "type": "checklist",
+      "purpose": "Pre-emit gate the router walks before returning a dispatch packet.",
+      "used_by": ["SKILL.md", "templates/output.md"]
+    }
+  ]
+}

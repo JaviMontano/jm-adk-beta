@@ -1,0 +1,17 @@
+{
+  "skill": "devops-deploy",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Weighted scoring rubric the Guardian agent applies to gate any devops-deploy deliverable across routing, topic correctness, supply-chain security, release safety, and governance.",
+      "used_by": ["SKILL.md", "agents/guardian.md", "evals/evals.json"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "checklist",
+      "purpose": "Reviewer pass/fail checklist mirroring the SKILL.md validation gate; consumed by templates/output.md section 4 and the Guardian.",
+      "used_by": ["templates/output.md", "agents/guardian.md"]
+    }
+  ]
+}

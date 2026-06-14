@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "skill": "mcp-engineering",
+  "cases": [
+    {
+      "id": "team_billing_env_var_config",
+      "input": "Wire the 'billing' MCP server (node ./servers/billing/index.js) for the whole team using BILLING_API_KEY, and give me the versionable config.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "scope_policy", "secret_policy", "evidence", "quality_criteria"]
+    },
+    {
+      "id": "typed_error_for_429_500",
+      "input": "Our MCP server returns 429 and 500 as plain prose and the model retries blindly. Design a typed error contract with errorCategory, isRetryable and retryAfterSeconds.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "typed_error_contract", "client_retry_policy", "evidence", "quality_criteria"]
+    },
+    {
+      "id": "personal_vs_team_scope",
+      "input": "Should this search MCP server go in .mcp.json or ~/.claude.json? It is only for my personal use.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "scope_policy", "evidence", "quality_criteria"]
+    },
+    {
+      "id": "leaked_token_rotate_and_purge",
+      "input": "Someone committed a literal sk- token in .mcp.json. Walk me through sanitizing the repo properly.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "secret_rotation", "history_purge", "evidence", "quality_criteria"]
+    },
+    {
+      "id": "personal_server_with_full_taxonomy",
+      "input": "Configure a personal MCP server in ~/.claude.json using SEARCH_API_KEY and typed errors for auth, rate_limit, transient and fatal.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "scope_policy", "typed_error_contract", "evidence", "quality_criteria"]
+    },
+    {
+      "id": "bounded_retry_loop_design",
+      "input": "Give me a client-side retry loop for our MCP tool calls that honors retryAfterSeconds and is bounded by maxRetries=3, not driven by the model.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "client_retry_policy", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "rate_limit_without_retry_after_edge",
+      "input": "Our server hits 429 but the upstream omits the Retry-After header. How should the error contract and client behave?",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "typed_error_contract", "client_retry_policy", "evidence", "quality_criteria"]
+    },
+    {
+      "id": "false_positive_local_grep",
+      "input": "I just want to search for a string across my local files with grep.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "builtin_review", "quality_criteria", "evidence"]
+    },
+    {
+      "id": "false_positive_unrelated_minutes",
+      "input": "Draft the minutes of yesterday's meeting in Spanish.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "quality_criteria", "activation_scope"]
+    },
+    {
+      "id": "reject_literal_secret_request",
+      "input": "Set up the MCP server but leave the API key as a literal string in the versioned file, no env-var.",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "reject_literal_secret", "evidence", "quality_criteria"]
+    },
+    {
+      "id": "reject_prose_only_error",
+      "input": "The MCP server only returns 'Something went wrong, please try again' and asks the model to decide retries. Is that acceptable?",
+      "expected_activation": false,
+      "expected_checks": ["assets", "deterministic_scripts", "typed_error_contract", "client_retry_policy", "evidence", "quality_criteria"]
+    },
+    {
+      "id": "shadowing_drift_dual_scope",
+      "input": "I have the same 'docs' MCP server defined in both .mcp.json and ~/.claude.json. Which one wins and how do I avoid drift?",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "scope_policy", "quality_criteria", "evidence"]
+    }
+  ]
+}

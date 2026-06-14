@@ -1,0 +1,41 @@
+{
+  "nodes": [
+    { "id": "frontload-prompt", "label": "Pre-procesa input a contrato SPEC", "kind": "skill" },
+    { "id": "spec", "label": "Modelo SPEC (S/P/E/C)", "kind": "model" },
+    { "id": "situation", "label": "S — Situation", "kind": "axis" },
+    { "id": "purpose", "label": "P — Purpose (accionable)", "kind": "axis" },
+    { "id": "expectations", "label": "E — Expectations", "kind": "axis" },
+    { "id": "context", "label": "C — Context", "kind": "axis" },
+    { "id": "discover", "label": "Discover (read-before-infer)", "kind": "phase" },
+    { "id": "analyze", "label": "Analyze (clasificar huecos)", "kind": "phase" },
+    { "id": "structure", "label": "Structure (emitir SPEC)", "kind": "phase" },
+    { "id": "validate", "label": "Validate (gate)", "kind": "phase" },
+    { "id": "vacio-critico", "label": "Hueco bloqueante {VACIO_CRITICO}", "kind": "gap" },
+    { "id": "autocompletado", "label": "Hueco autocompletable {AUTOCOMPLETADO}", "kind": "gap" },
+    { "id": "inferencia", "label": "Hueco inferible {INFERENCIA}", "kind": "gap" },
+    { "id": "tags", "label": "Familia de tags Jarvis OS {...}", "kind": "standard" },
+    { "id": "gate", "label": "Validation Gate", "kind": "gate" },
+    { "id": "ready", "label": "Veredicto READY", "kind": "verdict" },
+    { "id": "blocked", "label": "Veredicto BLOCKED", "kind": "verdict" }
+  ],
+  "edges": [
+    { "from": "frontload-prompt", "to": "spec", "rel": "produces" },
+    { "from": "frontload-prompt", "to": "discover", "rel": "starts_with" },
+    { "from": "discover", "to": "analyze", "rel": "precedes" },
+    { "from": "analyze", "to": "structure", "rel": "precedes" },
+    { "from": "structure", "to": "validate", "rel": "precedes" },
+    { "from": "spec", "to": "situation", "rel": "has_axis" },
+    { "from": "spec", "to": "purpose", "rel": "has_axis" },
+    { "from": "spec", "to": "expectations", "rel": "has_axis" },
+    { "from": "spec", "to": "context", "rel": "has_axis" },
+    { "from": "analyze", "to": "vacio-critico", "rel": "classifies" },
+    { "from": "analyze", "to": "autocompletado", "rel": "classifies" },
+    { "from": "analyze", "to": "inferencia", "rel": "classifies" },
+    { "from": "purpose", "to": "vacio-critico", "rel": "often_is" },
+    { "from": "structure", "to": "tags", "rel": "applies" },
+    { "from": "validate", "to": "gate", "rel": "runs" },
+    { "from": "gate", "to": "ready", "rel": "emits" },
+    { "from": "gate", "to": "blocked", "rel": "emits" },
+    { "from": "vacio-critico", "to": "blocked", "rel": "forces" }
+  ]
+}

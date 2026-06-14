@@ -1,8 +1,9 @@
 ---
 name: session-lifecycle-management
-version: 1.0.0
+version: 1.1.0
 description: "Decidir resume vs fork vs fresh con summary tipado segun validez de contexto y deteccion de tool results stale."
 owner: "JM Labs"
+last_updated: 2026-06-11
 triggers:
   - session lifecycle management
   - resume vs fork
@@ -19,27 +20,53 @@ allowed-tools:
 
 ## Capacidad
 
-Diseñar e implementar el manejo del ciclo de vida de una sesión de agente, decidiendo de forma explícita entre tres transiciones: `resume` cuando el contexto sigue siendo válido, `fork` cuando se quieren explorar ramas paralelas sin interferencia, y `fresh` con un summary tipado cuando el mundo cambió y los tool results del scratchpad quedaron stale. La capacidad produce un mecanismo de decisión auditable, no una intuición ad hoc del modelo.
+Decidir de forma **auditable**, no por intuición del modelo, entre tres transiciones de sesión de agente: `resume` (contexto aún válido, objetivo continuo), `fork` (explorar ramas paralelas sin interferencia) y `fresh` con `TypedSummary` (el mundo cambió y el scratchpad quedó stale). [DOC]
 
-El núcleo de ingeniería es la **detección de staleness**: identificar cuándo los resultados cacheados (lecturas de archivo, salidas de comandos, estados de build) ya no reflejan el estado actual del mundo, y emitir un `TypedSummary` que comprima el scratchpad en hechos verificables en lugar de pegar un transcript crudo.
-
-Usa los assets determinísticos en `assets/` para política de staleness, matriz de decisión, summary tipado, aislamiento de forks y contrato de reporte. Cuando produzcas un reporte JSON de decisión de ciclo de vida, valídalo offline con `bash skills/session-lifecycle-management/scripts/check.sh`.
+El núcleo de ingeniería es la **detección de staleness**: identificar cuándo los resultados cacheados (lecturas de archivo, salidas de comando, estados de build) ya no reflejan el estado actual, y comprimir el scratchpad en hechos verificables —no un transcript crudo. [INFERENCIA]
 
 ## Cuándo usarla
 
-- Estás construyendo un agente de larga duración que debe sobrevivir a múltiples turnos o reinicios y necesita decidir si reusar el contexto previo.
-- Hubo un refactor, migración o despliegue masivo entre dos turnos y dudas si el contexto en memoria sigue siendo confiable.
-- Quieres explorar varias hipótesis de solución en paralelo sin que un experimento contamine el contexto del otro.
-- El scratchpad creció tanto que pegarlo completo es caro y ruidoso; necesitas un summary tipado.
+- Agente de larga duración que sobrevive a múltiples turnos/reinicios y debe decidir si reusar el contexto previo. [DOC]
+- Hubo refactor, migración o despliegue entre dos turnos y dudas si el contexto en memoria sigue siendo confiable. [DOC]
+- Quieres probar varias hipótesis en paralelo sin que un experimento contamine al otro. [DOC]
+- El scratchpad creció tanto que pegarlo completo es caro y ruidoso. [DOC]
+
+**No la uses (anti-scope)** para: tareas de dominio sin sesión persistente (p. ej. generar un reporte financiero), un solo turno sin contexto previo, o input vacío. Si no hay `SessionContext` previo, no hay transición que decidir → no activar. [INFERENCIA]
+
+## Inputs / Outputs
+
+- **Input:** `SessionContext` (timestamp de captura, `tool_results[]` con su `source`+`mtime`/hash, invariantes del mundo: HEAD de git, hash del lockfile, esquema de BD) y un `Goal` (continuo | ramificable). [CODE]
+- **Output:** una `Transition` (`Resume | Fork | Fresh`) + un **reporte JSON de decisión** con: transición elegida, `stale[]` detectados, razón del disparo, y `TypedSummary` cuando es `fresh`. [CODE]
+- **Gate:** el reporte JSON valida offline con `bash skills/session-lifecycle-management/scripts/check.sh`. [CONFIG]
 
 ## Cómo construir
 
-1. **Define el contrato de validez de contexto.** Modela qué hace que un `SessionContext` sea válido: timestamp de captura, conjunto de tool results con su hash o `mtime` de origen, y los invariantes del mundo (HEAD de git, hash del lockfile, esquema de BD).
-2. **Implementa el detector de staleness.** Compara cada tool result cacheado contra su fuente actual. Si el `mtime`/hash divergió, marca ese result como `stale`. Una sola dependencia stale crítica invalida el `resume`.
-3. **Codifica la matriz de decisión resume/fork/fresh.** Reglas explícitas: contexto válido y objetivo continuo → `resume`; objetivo ramificable sin interferencia → `fork`; staleness crítico o mundo cambiado → `fresh`.
-4. **Diseña el `TypedSummary`.** En vez de transcript crudo, emite un objeto tipado: `goal`, `decisions[]`, `open_questions[]`, `verified_facts[]`, `stale_dropped[]`. Cada hecho conserva su evidencia y se descartan los results stale.
-5. **Aísla los forks.** Garantiza que cada rama tenga su propio scratchpad y workspace para que dos forks no compartan estado mutable.
-6. **Valida con el checklist y registra la decisión.** La transición elegida debe quedar trazada con su razón (qué disparó el `fresh`, qué quedó stale).
+1. **Contrato de validez de contexto.** Modela qué hace válido un `SessionContext`: timestamp, `tool_results` con hash/`mtime` de origen, e invariantes del mundo (HEAD, lockfile, esquema). [CODE]
+2. **Detector de staleness.** Compara cada result cacheado contra su fuente actual; si `mtime`/hash divergió, márcalo `stale`. Una sola dependencia stale **crítica** invalida el `resume`. [CODE]
+3. **Matriz de decisión.** Reglas explícitas: válido y objetivo continuo → `resume`; ramificable sin estado mutable compartido → `fork`; staleness crítico o mundo cambiado → `fresh`. [CODE]
+4. **`TypedSummary`.** Emite objeto tipado, no transcript: `goal`, `decisions[]`, `open_questions[]`, `verified_facts[]` (cada hecho con su evidencia), `stale_dropped[]`. [CODE]
+5. **Aísla los forks.** Cada rama con su propio scratchpad y workspace; dos forks nunca comparten estado mutable. [CODE]
+6. **Traza la decisión.** La transición queda registrada con su razón (qué disparó el `fresh`, qué quedó stale) y pasa el gate. [CODE]
+
+## Decisiones y trade-offs
+
+- **`mtime` + hash, no solo `mtime`.** `mtime` solo da falsos positivos (touch sin cambio) y falsos negativos (clock skew, checkout). El hash es la verdad; `mtime` es el filtro barato que evita hashear todo. Trade-off: doble fuente por algo de costo. [INFERENCIA]
+- **`TypedSummary` sobre transcript crudo.** El transcript reintroduce results stale que el modelo tratará como verdad actual y quema tokens. El tipado fuerza a descartar lo stale explícitamente. Trade-off: pierdes matiz conversacional a cambio de hechos verificables. [INFERENCIA]
+- **Fork aislado por defecto.** Estado mutable compartido entre ramas produce resultados no reproducibles e imposibles de atribuir. Trade-off: más workspaces que gestionar. [INFERENCIA]
+- **Una stale crítica fuerza `fresh`.** Sesgo conservador: el costo de un `resume` sobre contexto corrupto (decisiones sobre datos falsos) supera el de re-sintetizar. [SUPUESTO]
+
+## Casos borde
+
+- **Staleness parcial no crítica** (un result stale, ninguno crítico): `resume` permitido pero el `TypedSummary` debe dropear ese result, no arrastrarlo. [INFERENCIA]
+- **Fuente no determinística** (red, reloj, RNG): no es cacheable; trátala como `stale` siempre o no la almacenes como `verified_fact`. [SUPUESTO]
+- **Merge-back de un fork:** al reincorporar una rama ganadora, re-corre el detector de staleness sobre su contexto; el fork pudo envejecer mientras corrían las otras ramas. [INFERENCIA]
+- **Lockfile cambió, objetivo continuo:** sigue siendo `fresh` —la criticidad de la dependencia manda sobre la continuidad del objetivo. [CODE]
+
+## Self-correction (revisar la decisión)
+
+- Elegiste `resume` pero un `verified_fact` falla al reusarse en el turno actual → reclasifica a `fresh` y re-sintetiza. [INFERENCIA]
+- Un `fork` empieza a leer/escribir el workspace de otro → el aislamiento se rompió; detén y re-provisiona scratchpads. [INFERENCIA]
+- El `TypedSummary` contiene un hecho sin `source` o cuyo source está en `stale_dropped` → bug de filtrado; corrige antes de emitir. [CODE]
 
 ## Patrón correcto
 
@@ -77,14 +104,26 @@ def next_session(prev_transcript: str, goal: Goal) -> Session:
     return Session(context=prev_transcript, goal=goal)
 ```
 
-## Checklist de validación
+Otros anti-patrones: marcar `stale` solo por `mtime` sin verificar hash; forks que comparten un workspace; emitir un `TypedSummary` que conserva results de fuentes droppeadas. [INFERENCIA]
 
-- [ ] ¿Se detectaron los tool results stale comparando contra la fuente actual (mtime/hash/HEAD)?
+## Checklist de construcción
+
+- [ ] ¿Se detectaron los tool results stale comparando contra la fuente actual (mtime **y** hash/HEAD)?
 - [ ] ¿El summary es tipado (goal, decisions, open_questions, verified_facts, stale_dropped) y no un transcript crudo?
-- [ ] ¿Los forks corren sin interferencia, con scratchpad y workspace aislados?
+- [ ] ¿Los forks corren con scratchpad y workspace aislados, sin estado mutable compartido?
 - [ ] ¿La transición resume/fork/fresh quedó trazada con su razón?
 - [ ] ¿Una dependencia stale crítica fuerza `fresh` en lugar de `resume`?
-- [ ] ¿El reporte JSON pasa `scripts/check.sh` cuando se produce?
+
+## Gate de aceptación (antes de "done")
+
+> Apóyate en `assets/` (rúbrica `assets/quality-rubric.json` y `assets/checklist.md`) para puntuar el reporte antes del done. [CONFIG]
+
+1. El reporte JSON pasa `scripts/check.sh` sin errores. [CONFIG]
+2. La transición es una de `resume | fork | fresh` y su razón referencia evidencia concreta (qué stale, qué invariante cambió). [CODE]
+3. Si es `fresh`: existe `TypedSummary` y `stale_dropped` no está vacío cuando hubo staleness. [CODE]
+4. Si es `fork`: cada rama tiene scratchpad propio declarado. [CODE]
+5. Ningún `verified_fact` proviene de una fuente listada en `stale_dropped`. [CODE]
+6. Casos de no-activación (sin sesión previa, input vacío, dominio ajeno) **no** emiten transición. [INFERENCIA]
 
 ## Katas y skills relacionadas
 

@@ -12,14 +12,14 @@
       "codex": 3820
     },
     "beta": {
-      "claude-code": 2294,
-      "antigravity": 2990,
-      "codex": 2289
+      "claude-code": 2234,
+      "antigravity": 3377,
+      "codex": 2214
     }
   },
   "reduction_vs_alfa": {
     "claude-code": "92%",
-    "antigravity": "92%",
-    "codex": "-39%"
+    "antigravity": "91%",
+    "codex": "-34%"
   }
 }

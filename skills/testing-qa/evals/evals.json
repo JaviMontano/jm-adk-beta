@@ -1,0 +1,59 @@
+{
+  "cases": [
+    {
+      "id": "route-strategy-monorepo",
+      "input": "We have a fintech monorepo with a payments package and a marketing site. Where should we invest testing effort and what coverage floors make sense per package?",
+      "expected_checks": ["correct_topic_test_strategy", "single_playbook_loaded", "risk_weighted_floors", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "route-unit-coverage-gate",
+      "input": "Our useUserDoc hook talks to Firestore. Add Vitest tests with the Firebase emulator mocked and get diff coverage above 80% with a CI gate.",
+      "expected_checks": ["correct_topic_unit_testing", "single_playbook_loaded", "diff_coverage_80", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "route-e2e-checkout",
+      "input": "Write a Playwright test for the login-then-checkout journey using Page Objects against our Firebase auth+firestore emulator, with screenshots at key states.",
+      "expected_checks": ["correct_topic_e2e_testing", "page_object_model", "no_raw_selectors", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "route-bdd-task-feature",
+      "input": "Generate Gherkin scenarios for the task-creation feature covering functional, security (XSS), a11y, and perf angles, each traced to FR and SC ids.",
+      "expected_checks": ["correct_topic_bdd_full_spectrum", "multiple_quality_angles", "traceability_tags", "assets", "quality_criteria"]
+    },
+    {
+      "id": "route-cross-browser-safari-break",
+      "input": "The dashboard renders in Chrome but is blank in Safari on iPhone. Set up Playwright on all three engines and a feature-detection fix.",
+      "expected_checks": ["correct_topic_cross_browser_testing", "test_by_engine_not_brand", "feature_detection_over_ua", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "route-performance-budget",
+      "input": "Stop our landing page from regressing on LCP and CLS. Add a Lighthouse CI budget that blocks merges and wire up RUM for Core Web Vitals.",
+      "expected_checks": ["correct_topic_performance_testing", "cwv_at_p75", "budget_blocks_merge", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "disambiguate-bdd-vs-e2e",
+      "input": "I want spec-first Given/When/Then scenarios that drive the browser for the signup flow before we build it.",
+      "expected_checks": ["routes_bdd_not_e2e", "single_playbook_loaded", "atdd_before_code", "assets", "quality_criteria"]
+    },
+    {
+      "id": "disambiguate-load-framed-as-e2e",
+      "input": "Run an end-to-end test of the search page under 500 concurrent users to see how latency holds up.",
+      "expected_checks": ["routes_performance_not_e2e", "names_server_load_out_of_scope", "single_playbook_loaded", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "reject-green-axe-style",
+      "input": "Our unit suite is green and coverage shows 92 percent. Can we call this module fully tested and ship it?",
+      "expected_checks": ["rejects_green_as_success", "flags_coverage_theater", "suggests_mutation_testing", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "no-target-gap-report",
+      "input": "Make our app have good tests.",
+      "expected_checks": ["requests_target_or_gap_report", "single_playbook_loaded", "no_hypothetical_test_run", "quality_criteria", "assets"]
+    },
+    {
+      "id": "flaky-retried-green",
+      "input": "Our checkout e2e test fails about one run in three, so the team just reruns CI until it passes. Is that acceptable?",
+      "expected_checks": ["rejects_retry_into_green", "quarantine_owner_sla", "correct_topic_e2e_testing", "deterministic_scripts", "quality_criteria"]
+    }
+  ]
+}

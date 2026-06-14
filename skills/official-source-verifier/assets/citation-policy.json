@@ -1,0 +1,15 @@
+{
+  "skill": "official-source-verifier",
+  "every_citation_must_have": ["url", "accessed_date", "extract_or_paraphrase"],
+  "accessed_date_format": "ISO YYYY-MM-DD",
+  "rules": [
+    "accessed_date is stamped at fetch time; a missing or future date blocks the claim from verified",
+    "the cited url must be the doc whose text was actually fetched, not a search-result snippet",
+    "the extract/paraphrase must be short and faithful to the fetched official passage",
+    "a secondary source is cited as role=lead only; never as authority for a verified claim"
+  ],
+  "self_correction": [
+    "verified claim whose url points to blog/forum/issue/gist/AI-summary -> degrade to unverified",
+    "absent or future accessed_date -> demand a real date before continuing"
+  ]
+}

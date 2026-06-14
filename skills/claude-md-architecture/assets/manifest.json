@@ -1,0 +1,17 @@
+{
+  "skill": "claude-md-architecture",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Eight pass/fail quality criteria (scope separation, cacheable prefix, recursive globs, precedence, user-scope isolation, import DAG, upgrade safety, functional gate) applied before a CLAUDE.md split is marked ready.",
+      "used_by": ["SKILL.md", "agents/guardian.md"]
+    },
+    {
+      "path": "assets/README.md",
+      "type": "text/markdown",
+      "purpose": "Explains the asset bundle and how the rubric and declarative inputs are consumed during a hierarchical memory split.",
+      "used_by": ["README.md"]
+    }
+  ]
+}

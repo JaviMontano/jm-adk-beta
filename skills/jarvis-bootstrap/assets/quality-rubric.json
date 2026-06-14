@@ -1,0 +1,43 @@
+{
+  "skill": "jarvis-bootstrap",
+  "version": "1.0",
+  "criteria": [
+    {
+      "id": "root_contract_parseable",
+      "weight": 0.25,
+      "description": "CLAUDE.md and MEMORY.md root exist and parse coherently (single-brand).",
+      "pass_if": "both files present, valid, brand-consistent"
+    },
+    {
+      "id": "skeleton_complete",
+      "weight": 0.2,
+      "description": "Levels N0-N4 present with seeds P00/P01/P02 each having a local CLAUDE.md.",
+      "pass_if": "all five levels and three seeds materialized"
+    },
+    {
+      "id": "no_unauthorized_overwrite",
+      "weight": 0.25,
+      "description": "Zero preexisting files overwritten unless --force was explicit.",
+      "pass_if": "overwrite count == 0 in missing-only; diffs reviewed if --force"
+    },
+    {
+      "id": "report_traceable",
+      "weight": 0.15,
+      "description": "Bootstrap report lists every artifact with state and absolute path.",
+      "pass_if": "each artifact has state in {creado, omitido, sobrescrito} and absolute path"
+    },
+    {
+      "id": "evidence_tagged",
+      "weight": 0.1,
+      "description": "Every non-trivial claim carries a Jarvis OS family tag (not Alfa).",
+      "pass_if": "tags present and from the Jarvis OS family"
+    },
+    {
+      "id": "idempotent",
+      "weight": 0.05,
+      "description": "A second missing-only run yields zero creations.",
+      "pass_if": "second run creado == 0"
+    }
+  ],
+  "gate": "all criteria must pass; green without evidence is not success"
+}

@@ -1,0 +1,34 @@
+{
+  "nodes": [
+    { "id": "routing_contract", "label": "Routing contract", "kind": "concept" },
+    { "id": "decision_inmediata", "label": "Decision inmediata", "kind": "value" },
+    { "id": "overloading", "label": "Overloading", "kind": "problem" },
+    { "id": "rename_split", "label": "Rename + split", "kind": "decision" },
+    { "id": "reciprocal_boundary", "label": "Reciprocal boundary", "kind": "rule" },
+    { "id": "input_format", "label": "Explicit input format", "kind": "rule" },
+    { "id": "examples", "label": "Invocation examples", "kind": "rule" },
+    { "id": "repo_strategy", "label": "Grep then Read then Edit", "kind": "strategy" },
+    { "id": "read_all_upfront", "label": "Read-all upfront", "kind": "antipattern" },
+    { "id": "edit_failure", "label": "Non-unique anchor Edit failure", "kind": "problem" },
+    { "id": "write_fallback", "label": "Read + Write full rewrite", "kind": "fallback" },
+    { "id": "generic_description", "label": "Generic description", "kind": "antipattern" },
+    { "id": "validation_gate", "label": "Acceptance gate", "kind": "gate" },
+    { "id": "evidence_tags", "label": "Alfa-core evidence tags", "kind": "governance" }
+  ],
+  "edges": [
+    { "from": "routing_contract", "to": "decision_inmediata", "rel": "enables" },
+    { "from": "routing_contract", "to": "input_format", "rel": "requires" },
+    { "from": "routing_contract", "to": "examples", "rel": "requires" },
+    { "from": "routing_contract", "to": "reciprocal_boundary", "rel": "requires" },
+    { "from": "overloading", "to": "rename_split", "rel": "resolved_by" },
+    { "from": "rename_split", "to": "reciprocal_boundary", "rel": "produces" },
+    { "from": "generic_description", "to": "routing_contract", "rel": "violates" },
+    { "from": "repo_strategy", "to": "read_all_upfront", "rel": "forbids" },
+    { "from": "edit_failure", "to": "write_fallback", "rel": "mitigated_by" },
+    { "from": "repo_strategy", "to": "edit_failure", "rel": "exposes" },
+    { "from": "validation_gate", "to": "routing_contract", "rel": "checks" },
+    { "from": "validation_gate", "to": "repo_strategy", "rel": "checks" },
+    { "from": "validation_gate", "to": "write_fallback", "rel": "checks" },
+    { "from": "validation_gate", "to": "evidence_tags", "rel": "enforces" }
+  ]
+}

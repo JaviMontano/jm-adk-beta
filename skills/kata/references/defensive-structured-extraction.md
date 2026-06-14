@@ -14,11 +14,19 @@ Pedir "devuélveme JSON" en prosa garantiza alucinación silenciosa. Sin schema 
 
 ## Modelo mental
 
-- `required` = el campo siempre está presente en la fuente. Si puede faltar, no es `required`: modélalo como union nullable.
-- Default `''` es alucinación. Si el modelo no sabe el valor, debe ser `null` o `'unclear'`, nunca cadena vacía.
-- Enums sin escape obligan a mentir cuando el valor real no encaja en ninguna opción. Añade siempre `'other'`/`'unclear'` más un campo `details`.
-- `tool_choice` forzado evita la respuesta "best-effort en prosa": el modelo está obligado a poblar el schema.
-- Fechas y opcionales se modelan como `{"type":["string","null"],"format":"date"}`.
+- `required` = el campo siempre está presente en la fuente. Si puede faltar, no es `required`: modélalo como union nullable. `required` no garantiza que el modelo lo pueble bien, solo que la clave existirá.
+- Default `''` es alucinación. Si el modelo no sabe el valor, debe ser `null` o `'unclear'`, nunca cadena vacía. El `0` numérico y el `false` booleano son la misma trampa: distingue "ausente" de "cero real".
+- Enums sin escape obligan a mentir cuando el valor real no encaja en ninguna opción. Añade siempre `'other'`/`'unclear'` más un campo `details` libre que capture el valor crudo.
+- `tool_choice` forzado evita la respuesta "best-effort en prosa": el modelo está obligado a poblar el schema. El schema es el contrato; el prompt solo aporta contexto, no estructura.
+- Fechas y opcionales se modelan como `{"type":["string","null"],"format":"date"}`. `format` es documental: Anthropic no valida `format`/`pattern` server-side, así que normaliza y revalida en cliente.
+- Confianza por campo es ortogonal: si el pipeline necesita umbral, añade `*_confidence` o un `needs_review` booleano, no lo infieras del texto.
+
+## Supuestos y límites (anti-scope)
+
+- Aplica al tool-use de Anthropic Messages API con `input_schema` (subset de JSON Schema). NO cubre el modo "JSON output" de otros proveedores ni grammars/structured-outputs con validación estricta server-side.
+- El schema restringe la *forma*, no la *veracidad*: el modelo puede poblar un `string` con un dato inventado pero bien tipado. La extracción defensiva ataca el fallo silencioso de forma, no la corrección factual: para eso, citación a la fuente o un paso de verificación aparte.
+- `tool_choice` forzado deshabilita el chain-of-thought previo a la llamada. Si la extracción requiere razonamiento, usa un campo `reasoning` como primera propiedad del schema o un paso previo sin forzar.
+- NO aplica cuando una respuesta híbrida (texto + extracción) es legítima, ni cuando el modelo debe elegir entre varias tools.
 
 ## Patrón correcto
 
@@ -53,11 +61,32 @@ resp = client.messages.create(
 prompt = "Devuelve JSON con invoice_id, currency, status, due_date..."
 resp = client.messages.create(model=MODEL, messages=[{"role": "user", "content": prompt}])
 data = json.loads(resp.text)  # alucina campos, llena vacíos con '', valores fuera de dominio
+# Además: resp.text puede traer markdown fences o prosa antes/después → json.loads lanza o, peor, parsea basura parcial.
 ```
+
+## Cómo leer la salida (correcto)
+
+```python
+# tool_choice forzado garantiza UN bloque tool_use; aún así, valida.
+block = next(b for b in resp.content if b.type == "tool_use")
+data = block.input  # ya es dict tipado, no json.loads(resp.text)
+if data["currency"] == "other" and not data.get("currency_other_details"):
+    raise ValueError("escape 'other' sin details: contrato incompleto")  # ver edge cases
+```
+
+## Edge cases y modos de fallo
+
+- **Escape sin `details`.** El modelo elige `'other'`/`'unclear'` pero deja `details` en `null`. Mitigación: validación condicional en cliente (arriba); el schema no puede expresar "si X entonces Y requerido".
+- **Enum case/locale drift.** El modelo devuelve `"Paid"` o `"USD "` con espacio. Normaliza (`strip().lower()`) y revalida contra el enum antes de persistir; trata el miss como `'unclear'`, no como excepción.
+- **`max_tokens` corta el tool_use** → JSON del `input` truncado e inválido. Detecta `stop_reason == "max_tokens"` y reintenta con presupuesto mayor o menos campos; nunca persistas un `input` de una respuesta truncada.
+- **Múltiples entidades en la fuente.** Schema de objeto único colapsa N facturas en una. Modela `{"items": {"type": "array", ...}}` cuando la cardinalidad es >1.
+- **Campo obligatorio ausente en la fuente real.** Si marcaste `required` algo que el documento a veces no trae, el modelo alucina para cumplir el contrato. Síntoma de un `required` mal calibrado → muévelo a nullable.
 
 ## Argumento de certificación
 
-La extracción usa `tool_choice` forzado + schema con `required` reales + enums con escape + nullable explícito; nunca prosa.
+La extracción usa `tool_choice` forzado + schema con `required` reales + enums con escape + nullable explícito; nunca prosa. Quien certifica debe demostrar, con un caso donde el dato falta o no encaja, que: (1) el campo ausente sale `null` y no `''`; (2) el valor fuera de dominio cae en `'other'`/`'unclear'` con `details` poblado; (3) el consumidor lee `block.input` del `tool_use`, no `json.loads(resp.text)`; (4) existe validación de cliente para el contrato condicional escape→`details`.
+
+Criterios de aceptación: ningún `required` puede faltar en >0% de la fuente real; todo enum cerrado lleva válvula de escape; todo opcional es union nullable; el parseo nunca depende de prosa.
 
 ## Cuándo activar
 

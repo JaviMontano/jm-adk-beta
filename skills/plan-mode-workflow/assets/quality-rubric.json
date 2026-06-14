@@ -1,0 +1,42 @@
+{
+  "skill": "plan-mode-workflow",
+  "criteria": [
+    {
+      "id": "hook_enforcement",
+      "statement": "La escritura en modo plan esta deshabilitada por un hook PreToolUse, no por convencion de prosa.",
+      "fail_if": "El control vive en una frase ('no voy a escribir') sin un hook que deniegue write-tools.",
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "plan_hash_signature",
+      "statement": "La aprobacion es un evento auditable con hash, approved_by y plan_signed_at, sobre el hash exacto del plan.",
+      "fail_if": "La firma es un 'ok' conversacional o aprueba 'el plan' sin hash.",
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "plan_change_resign",
+      "statement": "Un plan.md con hash distinto al firmado revierte el modo a plan y exige nueva firma.",
+      "fail_if": "Un cambio de plan.md se cuela sin re-aprobacion, o un hash viejo habilita execute.",
+      "evidence": "[CODIGO]"
+    },
+    {
+      "id": "write_tool_blocklist",
+      "statement": "El hook enumera explicitamente las write-tools y los patrones de Bash mutante (fail-closed).",
+      "fail_if": "Whitelist de writes (fail-open) o Bash mutante permitido en modo plan.",
+      "evidence": "[CONFIG]"
+    },
+    {
+      "id": "no_bypass_permissions",
+      "statement": "bypassPermissions y la entrada vacia se rechazan; ninguna entrada sin objetivo fabrica un plan.",
+      "fail_if": "El gate se anula con bypassPermissions, o una entrada vacia auto-completa el plan.",
+      "evidence": "[CONFIG]"
+    },
+    {
+      "id": "evidence_trail",
+      "statement": "El plan firmado y el diff final quedan registrados como rastro de lo autorizado vs. lo ejecutado.",
+      "fail_if": "No hay artefacto que distinga que se autorizo de que se ejecuto.",
+      "evidence": "[DOC]"
+    }
+  ],
+  "pass_rule": "PASS solo si los 6 criterios estan en verde-con-evidencia; cualquier fail_if disparado bloquea."
+}

@@ -1,0 +1,17 @@
+{
+  "skill": "integrations",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Weighted scoring rubric across the six integration quality dimensions; the guardian and the Validation gate score against it.",
+      "used_by": ["agents/guardian.md", "templates/output.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "text/markdown",
+      "purpose": "Run-before-done routing and gate checklist mirroring the rubric in actionable form.",
+      "used_by": ["SKILL.md", "README.md"]
+    }
+  ]
+}

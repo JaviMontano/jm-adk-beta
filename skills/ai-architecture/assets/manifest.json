@@ -1,0 +1,17 @@
+{
+  "skill": "ai-architecture",
+  "assets": [
+    {
+      "path": "assets/routing-rubric.json",
+      "type": "application/json",
+      "purpose": "Deterministic intent->topic map, tie-breakers, validation gate, and governance flags for the router.",
+      "used_by": ["SKILL.md", "agents/lead.md", "agents/support.md"]
+    },
+    {
+      "path": "assets/routing-checklist.md",
+      "type": "text/markdown",
+      "purpose": "Pre-handoff gate checklist: resolve, dispatch, validate, govern.",
+      "used_by": ["README.md", "agents/guardian.md"]
+    }
+  ]
+}

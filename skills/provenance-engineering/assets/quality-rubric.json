@@ -1,0 +1,55 @@
+{
+  "skill": "provenance-engineering",
+  "scale": "0-2 por dimension (0=ausente, 1=parcial, 2=pleno); PASS requiere 2 en toda dimension critica",
+  "dimensions": [
+    {
+      "id": "claim_source_invariant",
+      "label": "Invariante claim-source",
+      "critical": true,
+      "pass": "Todo claim lleva source[] no vacio (source_id + locator + as_of); source[] vacio invalido por construccion.",
+      "fail": "Algun claim sin source o con placeholder ('varias fuentes', 'interno')."
+    },
+    {
+      "id": "inventory_integrity",
+      "label": "Integridad de inventario",
+      "critical": true,
+      "pass": "Cada source_id pertenece al inventario declarado; id desconocido falla duro.",
+      "fail": "source_id fuera del inventario aceptado en silencio."
+    },
+    {
+      "id": "conflict_preservation",
+      "label": "Preservacion de conflicto",
+      "critical": true,
+      "pass": "Valores discrepantes -> conflict=true conservando todas las fuentes; sin promedio/mediana/concat que pierda atribucion.",
+      "fail": "Conflicto promediado, elegido en silencio o reducido a un valor que ninguna fuente afirma."
+    },
+    {
+      "id": "escalation_not_resolution",
+      "label": "Escalacion no resolucion",
+      "critical": true,
+      "pass": "Cada conflicto enrutado a cola humana con ambas fuentes y as_of; pipeline no resuelve.",
+      "fail": "Heuristica 'mas reciente/mas confiable gana' o conflicto marcado pero no enrutado."
+    },
+    {
+      "id": "as_of_visibility",
+      "label": "Visibilidad de as_of",
+      "critical": true,
+      "pass": "Render expone as_of y marcador de conflicto junto a cada dato.",
+      "fail": "Fecha oculta o conflicto enterrado en el render."
+    },
+    {
+      "id": "structural_test",
+      "label": "Test estructural en CI",
+      "critical": true,
+      "pass": "Test que falla ante claim sin source, source_id desconocido o conflicto silenciado.",
+      "fail": "Sin test, o test que no cubre el output serializado."
+    },
+    {
+      "id": "evidence_governance",
+      "label": "Gobernanza de evidencia",
+      "critical": false,
+      "pass": "Cada claim no obvio con un tag Alfa-core; [CÓDIGO] solo donde el patron existe; cada [SUPUESTO] con verificacion; sin precios inventados ni PII; brand unico.",
+      "fail": "Tags ausentes/mezclados, [SUPUESTO] sin verificacion, green tratado como prueba."
+    }
+  ]
+}

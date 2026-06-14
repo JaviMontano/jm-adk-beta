@@ -1,0 +1,48 @@
+{
+  "skill": "architecture",
+  "version": "1.0.0",
+  "scale": { "pass": "all gates true", "fail": "any gate false (never green-as-success)" },
+  "gates": [
+    {
+      "id": "single_route",
+      "check": "Exactly one playbook loaded; topic in enum; no cross-playbook bleed.",
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "evidence_tags",
+      "check": "Every non-obvious claim carries one Alfa-core tag; one family, one spelling.",
+      "allowed_tags": ["[DOC]", "[CONFIG]", "[CODE]", "[INFERENCE]", "[ASSUMPTION]"],
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "assumption_pairing",
+      "check": "Each [ASSUMPTION] is paired with a concrete verification step.",
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "tradeoff_honesty",
+      "check": "Every recommended pattern names a rejected alternative and the cost paid.",
+      "evidence": "[INFERENCE]"
+    },
+    {
+      "id": "measurable_scenarios",
+      "check": "Quality-attribute scenarios use a number + unit, not adjectives.",
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "no_invented_prices",
+      "check": "Cost expressed only as FTE-months/disclaimers; no currency figures.",
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "no_placeholder_fields",
+      "check": "Required template fields filled or [ASSUMPTION]+verification; never TBD.",
+      "evidence": "[DOC]"
+    },
+    {
+      "id": "depth_honesty",
+      "check": "If depth=quick, what was skipped is named explicitly.",
+      "evidence": "[DOC]"
+    }
+  ]
+}

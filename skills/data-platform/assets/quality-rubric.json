@@ -1,0 +1,56 @@
+{
+  "skill": "data-platform",
+  "version": "1.0.0",
+  "scale": { "0": "absent", "1": "partial", "2": "complete" },
+  "dimensions": [
+    {
+      "id": "routing",
+      "weight": 0.2,
+      "criterion": "Exactly one playbook loaded; topic in the 8-enum; deferred topic named if two were plausible.",
+      "evidence_tag": "[DOC]"
+    },
+    {
+      "id": "on_task",
+      "weight": 0.15,
+      "criterion": "Output applies the playbook to the user's real collections/fields, not the topic in the abstract.",
+      "evidence_tag": "[INFERENCE]"
+    },
+    {
+      "id": "idempotency",
+      "weight": 0.15,
+      "criterion": "Loads are idempotent (upsert on key or stage-then-swap); re-run is byte-identical.",
+      "evidence_tag": "[EXPLICIT]"
+    },
+    {
+      "id": "watermark_safety",
+      "weight": 0.1,
+      "criterion": "Watermark advanced only post-commit; kill-mid-batch resumes zero-gap, zero-duplication.",
+      "evidence_tag": "[EXPLICIT]"
+    },
+    {
+      "id": "batch_cap",
+      "weight": 0.1,
+      "criterion": "No Firestore write batch exceeds 500 ops; bulk writes chunked with batch_id.",
+      "evidence_tag": "[CONFIG]"
+    },
+    {
+      "id": "rollback",
+      "weight": 0.1,
+      "criterion": "Every destructive op carries a rollback path stated before execution.",
+      "evidence_tag": "[ASSUMPTION]"
+    },
+    {
+      "id": "reconciliation",
+      "weight": 0.1,
+      "criterion": "Source vs target counts + key checksum match within tolerance; no duplicate/NULL keys at grain.",
+      "evidence_tag": "[EXPLICIT]"
+    },
+    {
+      "id": "evidence_tags",
+      "weight": 0.1,
+      "criterion": "Every claim carries one Alfa-core family tag; one family, one spelling.",
+      "evidence_tag": "[DOC]"
+    }
+  ],
+  "pass_threshold": 0.85
+}

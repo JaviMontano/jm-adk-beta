@@ -1,0 +1,17 @@
+{
+  "skill": "station-create",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "rubric",
+      "purpose": "Scoring thresholds for the seven acceptance criteria (placement, type, structure, Rule-9, missing-only, registry, tag discipline); pass requires all criteria met.",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    },
+    {
+      "path": "assets/checklist.md",
+      "type": "checklist",
+      "purpose": "Human-readable acceptance checklist the guardian walks before emitting a pass/fail verdict.",
+      "used_by": ["agents/guardian.md"]
+    }
+  ]
+}

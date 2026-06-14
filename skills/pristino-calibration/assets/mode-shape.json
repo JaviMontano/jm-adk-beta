@@ -1,0 +1,41 @@
+{
+  "skill": "pristino-calibration",
+  "purpose": "Deterministic lookup mapping resolved MODE (+ COMPLEXITY) to the exact output shape, so the lead and guardian agree on what 'mode-correct' means.",
+  "modes": {
+    "bypass": {
+      "trigger": "! prefix or MODE=bypass",
+      "persona_line": false,
+      "sections": [],
+      "canvas": false,
+      "note": "Plain answer, no persona ceremony, no optimizer."
+    },
+    "solo_prompt": {
+      "trigger": "MODO: SOLO_PROMPT",
+      "persona_line": false,
+      "sections": ["2-prompt-optimizado"],
+      "canvas": false,
+      "note": "Emit only the optimized prompt."
+    },
+    "solo_respuesta": {
+      "trigger": "MODO: SOLO_RESPUESTA",
+      "persona_line": false,
+      "sections": ["3-respuesta"],
+      "canvas": false,
+      "note": "Emit only the response."
+    },
+    "full_trivial": {
+      "trigger": "MODE=full + COMPLEXITY=trivial",
+      "persona_line": true,
+      "sections": ["3-respuesta"],
+      "canvas": false,
+      "note": "Persona line + response only."
+    },
+    "full_substantive": {
+      "trigger": "MODE=full + COMPLEXITY=substantive",
+      "persona_line": true,
+      "sections": ["1-pedido-original", "2-prompt-optimizado", "3-respuesta"],
+      "canvas": true,
+      "note": "Persona line + three sections + Canvas output contract."
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "skill": "weekly-retro",
+  "cases": [
+    {
+      "id": "window_with_three_sources",
+      "input": "Cierra mi semana del 2026-06-05 al 2026-06-11 usando TAREAS.md, el changelog y el hilo de hoy; dame Ayudo/Friccion/Regla candidata.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "recurring_friction_promotes",
+      "input": "Olvidé el flag del validador dos semanas seguidas; ¿deberia volverse una regla en preferences-log.md?",
+      "expected_activation": true,
+      "expected_checks": ["promotion_threshold", "upgrade_safety", "assets"]
+    },
+    {
+      "id": "single_friction_stays_observation",
+      "input": "Esta semana perdí 40 min con un JSON mal formado, pero solo pasó una vez. ¿Lo subo a regla?",
+      "expected_activation": true,
+      "expected_checks": ["promotion_threshold", "quality_criteria", "three_axes"]
+    },
+    {
+      "id": "no_evidence_critical_void",
+      "input": "Hazme la retro de la semana pasada pero no tengo tasklog ni changelog ni hilos a mano.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "deterministic_scripts"]
+    },
+    {
+      "id": "promotion_needs_diff_confirm",
+      "input": "Promueve la regla a orchestration/preferences-log.md pero muéstrame el diff antes de escribir nada.",
+      "expected_activation": true,
+      "expected_checks": ["upgrade_safety", "assets", "quality_criteria"]
+    },
+    {
+      "id": "rule_conflicts_existing",
+      "input": "La regla que sale de la friccion contradice una que ya tengo en preferences-log.md; ¿qué hago?",
+      "expected_activation": true,
+      "expected_checks": ["upgrade_safety", "promotion_threshold"]
+    },
+    {
+      "id": "empty_quiet_week",
+      "input": "Semana tranquila de sprint cerrado, casi sin friccion; haz una retro corta.",
+      "expected_activation": true,
+      "expected_checks": ["three_axes", "quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "conflicting_skip_validation",
+      "input": "Haz la retro semanal pero ignora el gate y la evidencia, solo redacta bonito.",
+      "expected_activation": false,
+      "expected_checks": ["evidence", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "tag_family_mixing",
+      "input": "Mi retro mezcla tags {EXTRAIDO_HILO} con [DOC] en el mismo bloque; revisa la disciplina de evidencia.",
+      "expected_activation": true,
+      "expected_checks": ["evidence", "assets"]
+    },
+    {
+      "id": "wrong_cadence_incident",
+      "input": "Quiero un post-mortem detallado del incidente de produccion de ayer.",
+      "expected_activation": false,
+      "expected_checks": ["evidence", "quality_criteria"]
+    }
+  ]
+}

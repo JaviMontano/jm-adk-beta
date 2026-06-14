@@ -13,11 +13,13 @@ Use the deterministic policies in `assets/` for phases, technology decisions, ev
 
 ## Principio Rector
 
-1. **Phased delivery, not big bang.** Implementar en fases con valor entregable por fase. Fase 0 (Foundation) → Fase 1 (Data Pipeline) → Fase 2 (Model Development) → Fase 3 (Serving) → Fase 4 (CI/CD) → Fase 5 (Monitoring). Cada fase produce capacidad usable. [EXPLICIT]
+1. **Phased delivery, not big bang.** Implementar en fases con valor entregable por fase. Fase 0 (Foundation) → Fase 1 (Data Pipeline) → Fase 2 (Model Development) → Fase 3 (Serving) → Fase 4 (CI/CD) → Fase 5 (Monitoring). Cada fase produce capacidad usable. [EXPLICIT] Antifase: no avanzar a la siguiente fase sin la Definition of Done de la actual cumplida con evidencia — fases incompletas acumulan deuda que reaparece en producción. [INFERENCIA]
 
-2. **Start simple, evolve with evidence.** No sobre-ingenierar para escala hipotética. Empezar con la implementación más simple que resuelva el problema actual. Feature Store no es necesario para un modelo; multi-model tiering no es necesario para un tier. [EXPLICIT]
+2. **Start simple, evolve with evidence.** No sobre-ingenierar para escala hipotética. Empezar con la implementación más simple que resuelva el problema actual. Feature Store no es necesario para un modelo; multi-model tiering no es necesario para un tier. [EXPLICIT] Regla de disparo: agregar complejidad (Feature Store, tiering, streaming) solo cuando una métrica observada lo justifique (≥2 modelos comparten features; latencia de cómputo de feature excede SLA; costo de tier único excede presupuesto). [INFERENCIA]
 
-3. **Tests and monitoring from Phase 0, not Phase 5.** La infraestructura de testing y monitoreo se establece en la primera fase, no se agrega después de incidentes. Cada componente implementado incluye sus tests y sus métricas desde el día uno. [EXPLICIT]
+3. **Tests and monitoring from Phase 0, not Phase 5.** La infraestructura de testing y monitoreo se establece en la primera fase, no se agrega después de incidentes. Cada componente implementado incluye sus tests y sus métricas desde el día uno. [EXPLICIT] Anti-patrón observado: posponer observabilidad a la última fase convierte cada incidente en una investigación a ciegas; el costo de retrofitear monitoreo supera el de instrumentarlo desde el inicio. [INFERENCIA]
+
+4. **Training/serving parity is non-negotiable.** La lógica de feature engineering debe compartirse (mismo código o misma definición) entre entrenamiento y serving. Skew entre ambos es la causa raíz más común de degradación silenciosa en producción. [INFERENCIA]
 
 ---
 
@@ -94,6 +96,12 @@ Load references:
 | Monitoring | [selección] | [alternativa] | [por qué] |
 | CI/CD | [selección] | [alternativa] | [por qué] |
 
+**Worked example (RAG genai, equipo pequeño, K8s disponible, presupuesto medio):** LLM Framework → LangChain (madurez de ecosistema) sobre LlamaIndex; Vector DB → Qdrant self-hosted (control + K8s) sobre Pinecone (lock-in); Serving → vLLM (throughput de tokens) sobre TorchServe; Monitoring → Prometheus + Grafana + Evidently (open-source, sin lock-in). Cada elección lleva ADR con la constraint que la decidió. [SUPUESTO]
+
+**Acceptance criteria:** (a) cada componente del matrix tiene tecnología + alternativa + justificación trazable a una constraint o workload type; (b) toda selección no-obvia tiene ADR con contexto, decisión, consecuencias y alternativas descartadas; (c) no hay tecnología elegida por familiaridad sin justificación de constraint. [INFERENCIA]
+
+**Failure modes:** elegir el stack del último proyecto sin re-evaluar constraints; optimizar para escala que el roadmap no demanda (over-engineering); ignorar la curva de aprendizaje del equipo (un stack óptimo que nadie sabe operar es un riesgo, no una ventaja). [INFERENCIA]
+
 **Entregable:** Stack decision document con ADRs por cada selección no-obvia.
 
 ### S2: Data Pipeline Implementation
@@ -120,6 +128,10 @@ Load references:
 - Streaming requirements → Kafka/Kinesis + streaming feature computation
 - Batch only → Airflow/Dagster + batch transformation
 
+**Acceptance criteria:** quality gates rechazan datos malformados antes de que lleguen a entrenamiento; feature engineering compartido entre training y serving (un solo código fuente); datasets de entrenamiento versionados y reproducibles; pipeline con retry idempotente y alertas de freshness. [INFERENCIA]
+
+**Failure modes:** schema validation que solo loguea pero no bloquea (datos malos pasan); feature logic duplicada en training y serving (training/serving skew garantizado); orquestación sin idempotencia (un retry corrompe el estado); pipeline sin monitoreo de freshness (features stale sirviendo predicciones obsoletas sin alerta). [INFERENCIA]
+
 **Entregable:** Implemented pipeline with tests, monitoring, and documentation.
 
 ### S3: Model Development & Registry Setup
@@ -139,6 +151,10 @@ Implementa el ciclo de desarrollo de modelos con tracking, registro, y evaluaci�
 - MVP → MLflow local, manual training, basic evaluation
 - Production → MLflow/W&B + automated training pipeline + full evaluation suite
 - Enterprise → Full MLOps platform + governance workflows + compliance
+
+**Acceptance criteria:** todo modelo en el registry es reproducible (code + data + config versionados juntos); evaluación incluye fairness y robustez, no solo accuracy; staging workflow exige promoción explícita antes de producción; experimentos comparables (mismas métricas, mismo split). [INFERENCIA]
+
+**Failure modes:** modelos en producción sin lineage (no se puede reproducir ni auditar); evaluación solo por accuracy agregado que oculta sesgo en subgrupos; registry usado como dumping ground sin metadata de staging; hyperparameter tuning sin tracking (resultados no reproducibles). [INFERENCIA]
 
 **Entregable:** Training pipeline, experiment tracking, model registry operational.
 
@@ -160,6 +176,10 @@ Implementa model serving, API layer, caching, y fallback mechanisms. [EXPLICIT]
 - RAG pipeline (Blueprint 5: ingestion, chunking, embedding, retrieval, generation)
 - Agent framework (tool definitions, governance, memory, orchestration)
 - Multi-model routing (Blueprint 6: tier assignment, cost tracking)
+
+**Acceptance criteria:** load test ejecutado con P50/P95/P99 y throughput máximo documentados vs. SLA; circuit breaker probado con fallo inyectado (cascade verificado: model → cache → previous → denial); rate limiting activo por cliente y endpoint; en GenAI, guardrails de input y output verificados con casos adversariales (prompt injection, PII en salida). [INFERENCIA]
+
+**Failure modes:** desplegar sin baseline de carga (capacidad real desconocida hasta el primer pico); fallback cascade nunca probado (falla cuando más se necesita); cache sin invalidación tras nuevo modelo (sirve predicciones del modelo viejo); guardrails GenAI solo en input, dejando salidas tóxicas o con PII sin filtrar. [INFERENCIA]
 
 **Entregable:** Serving infrastructure operational, API documented, load tested.
 
@@ -183,6 +203,12 @@ Implementa Blue & Gold deployment con validation gates automatizados. [EXPLICIT]
 - Regression gate: no accuracy drop > X% vs. current production
 - Security gate: vulnerability scan + access control verification
 
+**Blue & Gold semantics:** Blue = entorno sirviendo producción; Gold = entorno candidato que pasa todos los gates antes de recibir tráfico. La promoción Gold→Blue es atómica y reversible. Canary inserta un paso de tráfico gradual con monitoreo de métricas antes de la promoción completa. [INFERENCIA]
+
+**Acceptance criteria:** rollback probado de extremo a extremo (no solo configurado) con tiempo de recuperación medido; regression gate compara contra producción actual, no contra un baseline estático; ningún cambio de modelo o datos llega a Blue sin pasar todos los gates; aprobación manual configurable para cambios de alto riesgo. [INFERENCIA]
+
+**Failure modes:** gates definidos pero no bloqueantes (cosmética de CI); rollback documentado pero nunca ejecutado (falla en el incidente real); canary sin criterio de aborto automático (degradación pasa a 100% del tráfico); promoción que omite el regression gate y degrada accuracy silenciosamente. [INFERENCIA]
+
 **Entregable:** CI/CD pipeline operational, gates configured, rollback tested.
 
 ### S6: Monitoring & Observability Implementation
@@ -205,6 +231,10 @@ Implementa el stack de observabilidad completo para el sistema AI. [EXPLICIT]
 - ML: Model metrics, drift, fairness, prediction quality
 - Data: Pipeline health, quality scores, freshness
 
+**Acceptance criteria:** las cuatro capas (infra, app, model, data) instrumentadas; cada alerta tiene umbral, política de escalamiento y runbook asociado; drift detection con baseline estadístico y alertas activas; al menos un runbook validado mediante un game-day o simulacro de incidente. [INFERENCIA]
+
+**Failure modes:** dashboards sin alertas (nadie mira hasta que el cliente reporta); alertas sin runbook (el on-call recibe el page sin saber qué hacer); drift detection que alerta sin baseline calibrado (ruido que se ignora — alert fatigue); monitorear infra y app pero no model/data (el modelo se degrada sin señal). [INFERENCIA]
+
 **Entregable:** Full observability stack, dashboards, alerts, runbooks.
 
 ---
@@ -219,6 +249,28 @@ Implementa el stack de observabilidad completo para el sistema AI. [EXPLICIT]
 | **Multi-repo** | Team autonomy, independent releases | Integration testing harder, code duplication | Large teams, independent services |
 | **Kubernetes-native** | Scaling, orchestration, ecosystem | Complexity, K8s expertise required | Multi-model, high-scale systems |
 | **Serverless** | Zero-ops, pay-per-use | Cold starts, limited customization | Event-driven, low-to-medium traffic |
+
+**Trade-offs decididos (con justificación):**
+- **Feature Store sí/no** → habilita reuso y parity training/serving; cuesta operación e infraestructura. Justificado solo con ≥2 modelos compartiendo features o skew observado. Para un modelo, pipeline directo. [INFERENCIA]
+- **Managed vs. open-source serving** → managed reduce time-to-prod pero acopla a vendor y limita tuning de throughput; open-source (vLLM/Triton) da control de latencia/costo a cambio de carga operativa. Decidir por madurez del equipo de infra. [INFERENCIA]
+- **Canary vs. promoción directa** → canary reduce blast radius de un mal deploy a costo de complejidad de routing y métricas. Justificado cuando el costo de una regresión en producción supera el costo del setup. [INFERENCIA]
+
+---
+
+## Phase Sequencing & Definition of Done
+
+Las 6 secciones de entrega (S1–S6) se materializan en 6 fases. La Fase 0 (Foundation), referida en el Output Artifact, precede a la implementación de S2–S6 y se cubre en S1 + repository skeleton. [INFERENCIA]
+
+| Fase | Cubre | DoD (evidencia requerida) |
+|------|-------|----------------------------|
+| 0 Foundation | Stack (S1), repo structure, CI skeleton, dev env | Repo con tests + CI corriendo; ADRs publicados; entorno reproducible |
+| 1 Data Pipeline | S2 | Quality gates bloqueantes; features consistentes training=serving; datasets versionados |
+| 2 Model Development | S3 | Modelo reproducible en registry; evaluación con fairness; staging workflow |
+| 3 Serving | S4 | API documentada; load test con P50/P95/P99; circuit breaker probado; guardrails (si GenAI) |
+| 4 CI/CD | S5 | Gates bloqueantes; Blue & Gold con rollback ejecutado; canary con aborto automático |
+| 5 Monitoring | S6 | 4 capas instrumentadas; alertas con runbook; drift detection activo |
+
+**Regla de avance:** no se inicia la fase N+1 sin la DoD de la fase N firmada con evidencia. La excepción es remediación post-auditoría, donde el orden lo dicta el priority score del audit (ver Edge Case 3). [INFERENCIA]
 
 ---
 

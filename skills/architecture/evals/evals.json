@@ -1,0 +1,124 @@
+{
+  "cases": [
+    {
+      "id": "route-api-vs-system",
+      "input": "We are exposing a public REST API for our orders service and need a versioning + pagination contract. Design it.",
+      "expected_checks": [
+        "routes_to_single_topic:api-design",
+        "no_cross_playbook_bleed",
+        "quality_criteria",
+        "evidence_tags_single_family"
+      ]
+    },
+    {
+      "id": "route-ddd-boundaries",
+      "input": "Our monolith mixes 'Customer' meaning billing entity in Sales and support profile in Service. Help us draw bounded contexts before we split into services.",
+      "expected_checks": [
+        "routes_to_single_topic:domain-driven-design",
+        "subdomain_classification_present",
+        "context_map_pattern_named",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-event-delivery-semantics",
+      "input": "Design the async flow when an order is placed: inventory reserve, payment, and email confirmation should fire without dual-write inconsistency.",
+      "expected_checks": [
+        "routes_to_single_topic:event-architecture",
+        "outbox_or_idempotency_addressed",
+        "delivery_semantics_stated",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "route-migration-strategy",
+      "input": "We must move a 400-million-row billing table from MySQL to Postgres with zero data loss and a rollback path at each stage. Plan it.",
+      "expected_checks": [
+        "routes_to_single_topic:migration-planning",
+        "strategy_selected_with_tradeoff",
+        "per_stage_rollback_present",
+        "baselines_captured"
+      ]
+    },
+    {
+      "id": "route-tradeoff-datastore",
+      "input": "The team disagrees between Postgres, DynamoDB, and MongoDB for a new order service. Decide with a defensible method.",
+      "expected_checks": [
+        "routes_to_single_topic:trade-off-analysis",
+        "weighted_matrix_three_options",
+        "sensitivity_check_run",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-realtime-transport",
+      "input": "We need live order-status updates pushed to 50k concurrent web clients with reliable reconnection. Pick a transport.",
+      "expected_checks": [
+        "routes_to_single_topic:realtime-architecture",
+        "transport_choice_with_rejected_alternative",
+        "reconnection_and_backpressure_planned",
+        "assets"
+      ]
+    },
+    {
+      "id": "route-caching-staleness",
+      "input": "Our product-detail page reads are hammering the database. Where should we cache and what TTL vs invalidation policy?",
+      "expected_checks": [
+        "routes_to_single_topic:caching-strategy",
+        "cache_tier_chosen",
+        "staleness_budget_stated",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "route-performance-budget",
+      "input": "Checkout p95 latency drifted to 1.2s under load. Set latency budgets and isolate the bottleneck.",
+      "expected_checks": [
+        "routes_to_single_topic:performance-architecture",
+        "measure_with_number_and_unit",
+        "bottleneck_isolated_before_change",
+        "deterministic_scripts"
+      ]
+    },
+    {
+      "id": "route-system-c4-adr",
+      "input": "Greenfield logistics platform: produce a C4 Context + Container view and ADRs for the architectural style.",
+      "expected_checks": [
+        "routes_to_single_topic:system-architecture",
+        "c4_context_and_container_present",
+        "adr_context_decision_consequences",
+        "quality_criteria"
+      ]
+    },
+    {
+      "id": "ambiguous-must-ask",
+      "input": "Make our system better and more modern, it feels slow and tangled.",
+      "expected_checks": [
+        "asks_one_clarifying_question",
+        "no_topic_guessed",
+        "no_cross_playbook_bleed",
+        "assets"
+      ]
+    },
+    {
+      "id": "spanning-do-not-merge",
+      "input": "Design an event-driven order pipeline with a read-side cache for the dashboard.",
+      "expected_checks": [
+        "picks_dominant_topic:event-architecture",
+        "offers_to_chain_caching_strategy",
+        "no_playbook_merge",
+        "evidence_tags_single_family"
+      ]
+    },
+    {
+      "id": "no-invented-prices",
+      "input": "Compare migrating to managed Kafka vs self-hosted for our event backbone and recommend one.",
+      "expected_checks": [
+        "routes_to_single_topic:trade-off-analysis",
+        "cost_in_fte_months_not_currency",
+        "rejected_alternative_named",
+        "deterministic_scripts"
+      ]
+    }
+  ]
+}

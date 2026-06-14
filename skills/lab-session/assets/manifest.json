@@ -1,0 +1,17 @@
+{
+  "skill": "lab-session",
+  "assets": [
+    {
+      "path": "assets/quality-rubric.json",
+      "type": "application/json",
+      "purpose": "Machine-readable P08 acceptance criteria the guardian applies as the validation gate.",
+      "used_by": ["agents/guardian.md", "SKILL.md"]
+    },
+    {
+      "path": "assets/file-skeletons.json",
+      "type": "application/json",
+      "purpose": "Canonical starting-state skeleton for each of the four P08 files; the specialist specs and support writes these verbatim.",
+      "used_by": ["agents/specialist.md", "agents/support.md"]
+    }
+  ]
+}

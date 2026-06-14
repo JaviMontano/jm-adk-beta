@@ -1,0 +1,59 @@
+{
+  "cases": [
+    {
+      "id": "route-contract-from-msa",
+      "input": "Review the indemnity and termination clauses in this SaaS MSA before we sign.",
+      "expected_checks": ["routes_to_contract_review", "single_playbook_loaded", "quality_criteria"]
+    },
+    {
+      "id": "route-gdpr-posture",
+      "input": "How does our payment-gateway service measure up against GDPR Art. 30 and Art. 32?",
+      "expected_checks": ["routes_to_compliance_assessment", "framework_named", "assets"]
+    },
+    {
+      "id": "route-control-library-design",
+      "input": "We have no control library yet — help us design SOC2 controls with evidence pointers for an audit next quarter.",
+      "expected_checks": ["routes_to_compliance_framework", "control_has_evidence_pointer", "quality_criteria"]
+    },
+    {
+      "id": "ambiguous-two-lanes",
+      "input": "We need help with PCI-DSS — review our merchant agreement and tell us if we're compliant.",
+      "expected_checks": ["asks_one_disambiguating_question", "no_guessed_route", "deterministic_scripts"]
+    },
+    {
+      "id": "multi-framework-overlap",
+      "input": "Assess our checkout system against both PCI-DSS and GDPR; access logging covers parts of both.",
+      "expected_checks": ["shared_control_mapped_once", "single_scoring_method", "quality_criteria"]
+    },
+    {
+      "id": "missing-governing-law",
+      "input": "Flag risks in this vendor contract; the governing-law section is blank.",
+      "expected_checks": ["stops_and_flags_missing_input", "no_assumed_jurisdiction", "quality_criteria"]
+    },
+    {
+      "id": "undocumented-control",
+      "input": "Our access controls work but nothing is written down — score us for ISO 27001 readiness.",
+      "expected_checks": ["undocumented_scored_partial_not_present", "remediation_owner_assigned", "assets"]
+    },
+    {
+      "id": "conflict-erasure-vs-retention",
+      "input": "GDPR says erase on request but SOX says retain 7 years — resolve this for our records system.",
+      "expected_checks": ["conflict_flagged_not_resolved", "routed_to_legal_dpo", "deterministic_scripts"]
+    },
+    {
+      "id": "out-of-scope-drafting",
+      "input": "Draft a brand-new NDA from scratch for a new supplier.",
+      "expected_checks": ["declined_and_deferred_to_counsel", "no_legal_advice_asserted", "quality_criteria"]
+    },
+    {
+      "id": "lapsed-auto-renewal",
+      "input": "Check this services agreement — I think the auto-renewal opt-out window may have already passed.",
+      "expected_checks": ["escalates_deadline_risk", "fallback_position_provided", "assets"]
+    },
+    {
+      "id": "disclaimer-and-no-pass-as-fact",
+      "input": "Give me a one-page HIPAA posture summary I can hand to the CEO.",
+      "expected_checks": ["verbatim_disclaimer_present", "no_pass_asserted_as_fact", "deterministic_scripts"]
+    }
+  ]
+}

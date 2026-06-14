@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "skill": "claude-md-architecture",
+  "cases": [
+    {
+      "id": "split_600_line_monolith",
+      "input": "Our root CLAUDE.md is 600 lines and reloads every turn. Split it into user/team/module layers connected by @imports with path-scoped rules.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria", "upgrade_safety"]
+    },
+    {
+      "id": "scope_design_tokens_to_frontend",
+      "input": "Move the design-system token rules out of the global CLAUDE.md so they only apply to frontend/** components.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "quality_criteria"]
+    },
+    {
+      "id": "leaked_pnpm_preference",
+      "input": "A 'prefer pnpm over npm' personal preference ended up in the versioned team CLAUDE.md. Where should it live and how do I import it?",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "overlapping_glob_precedence",
+      "input": "Both src/** and src/api/** define logging rules and they conflict. Design a predictable precedence so the most specific subpath wins.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "cache_friendly_prefix",
+      "input": "Keep the root prefix stable and cache-friendly while still loading infra/** rules only when work touches infra.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "circular_import_detected",
+      "input": "module-a/CLAUDE.md imports module-b/CLAUDE.md which imports module-a back. Validate the @import graph before writing anything.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "broken_import_after_rename",
+      "input": "We renamed frontend/ to web/ and now an @import points at a path that no longer exists. The split should fail loud, not degrade silently.",
+      "expected_activation": true,
+      "expected_checks": ["deterministic_scripts", "quality_criteria"]
+    },
+    {
+      "id": "add_module_files_without_clobber",
+      "input": "Add new module/CLAUDE.md files for the payments and infra subtrees without overwriting the team's existing manual edits.",
+      "expected_activation": true,
+      "expected_checks": ["assets", "upgrade_safety", "quality_criteria"]
+    },
+    {
+      "id": "non_recursive_glob_smell",
+      "input": "Our rule uses apply to: \"tests/*\" but it skips tests/integration/. Fix the path-scoped rule so it covers nested folders.",
+      "expected_activation": true,
+      "expected_checks": ["quality_criteria", "deterministic_scripts"]
+    },
+    {
+      "id": "single_module_over_engineering",
+      "input": "This repo is one flat module with no subtrees. Should we still build a three-level CLAUDE.md hierarchy?",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria"]
+    },
+    {
+      "id": "dump_everything_one_file",
+      "input": "Use claude-md-architecture but ignore precedence and validation; just dump every rule into one root file.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria"]
+    },
+    {
+      "id": "unrelated_sales_report",
+      "input": "Write a quarterly sales report for the finance team.",
+      "expected_activation": false,
+      "expected_checks": ["quality_criteria"]
+    }
+  ]
+}

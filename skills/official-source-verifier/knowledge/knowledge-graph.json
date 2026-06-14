@@ -1,0 +1,39 @@
+{
+  "nodes": [
+    { "id": "question", "label": "Question (decision needing authority)", "kind": "input" },
+    { "id": "secondary_lead", "label": "Secondary source (role=lead)", "kind": "input" },
+    { "id": "repo_version", "label": "Repo version under decision", "kind": "input" },
+    { "id": "source_registry", "label": "Source registry (typed)", "kind": "artifact" },
+    { "id": "official_source", "label": "Official source (authority)", "kind": "artifact" },
+    { "id": "web_fetch", "label": "WebSearch + WebFetch of canonical doc", "kind": "move" },
+    { "id": "citation", "label": "Citation (url + accessed_date + extract)", "kind": "standard" },
+    { "id": "claim", "label": "Claim (verified | unverified)", "kind": "artifact" },
+    { "id": "priority_order", "label": "official>vendor>spec>repo>secondary", "kind": "standard" },
+    { "id": "version_check", "label": "Version currency check", "kind": "decision" },
+    { "id": "blocking_gap", "label": "Blocking gap (conflict | missing)", "kind": "decision" },
+    { "id": "decision_block", "label": "Decision (change_authorized + justified_change)", "kind": "output" },
+    { "id": "provenance_tag", "label": "Provenance tag", "kind": "standard" },
+    { "id": "guardian_gate", "label": "Guardian validation gate", "kind": "tool" },
+    { "id": "check_script", "label": "scripts/check.sh + validator", "kind": "tool" }
+  ],
+  "edges": [
+    { "from": "question", "to": "source_registry", "rel": "opens" },
+    { "from": "secondary_lead", "to": "web_fetch", "rel": "hints_path_for" },
+    { "from": "web_fetch", "to": "official_source", "rel": "produces" },
+    { "from": "official_source", "to": "source_registry", "rel": "registered_in" },
+    { "from": "official_source", "to": "citation", "rel": "requires" },
+    { "from": "citation", "to": "claim", "rel": "supports" },
+    { "from": "official_source", "to": "claim", "rel": "verifies" },
+    { "from": "claim", "to": "version_check", "rel": "tested_by" },
+    { "from": "repo_version", "to": "version_check", "rel": "scopes" },
+    { "from": "version_check", "to": "blocking_gap", "rel": "raises_on_mismatch" },
+    { "from": "priority_order", "to": "official_source", "rel": "ranks" },
+    { "from": "official_source", "to": "blocking_gap", "rel": "conflict_escalates_to" },
+    { "from": "claim", "to": "decision_block", "rel": "authorizes_only_if_verified" },
+    { "from": "blocking_gap", "to": "decision_block", "rel": "blocks" },
+    { "from": "claim", "to": "provenance_tag", "rel": "carries" },
+    { "from": "decision_block", "to": "guardian_gate", "rel": "validated_by" },
+    { "from": "guardian_gate", "to": "check_script", "rel": "runs" },
+    { "from": "secondary_lead", "to": "decision_block", "rel": "never_authority_for" }
+  ]
+}
