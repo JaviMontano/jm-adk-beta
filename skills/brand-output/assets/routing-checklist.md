@@ -6,12 +6,12 @@ failure; do not mark green by default. [CONFIG]
 ## Discover
 - [ ] Content/data present? If not → stop `{VACIO_CRITICO}`, ask. [EXPLICIT]
 - [ ] Target format identified (HTML / DOCX / XLSX / spec / slides / folio).
-- [ ] Brand identified: Sofka DS v4 · MetodologIA · fallback config.
+- [ ] Brand identified: MetodologIA DS · MetodologIA · fallback config.
 - [ ] `artifact_date` captured from the caller (never inferred). [INFERENCIA]
 
 ## Route (pick exactly one)
 - [ ] HTML general → `brand-html`
-- [ ] HTML Sofka v4 (orange/Clash Grotesk/Inter) → `html-brand`
+- [ ] HTML MetodologIA DS (orange/Poppins/Inter) → `html-brand`
 - [ ] HTML MetodologIA (navy/gold/glassmorphism) → `branded-html-output`
 - [ ] Numbered/paginated document → `folio-generator`
 - [ ] Word `.docx` → `brand-docx`

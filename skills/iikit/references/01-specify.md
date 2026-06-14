@@ -18,7 +18,7 @@ You **MUST** consider the user input before proceeding (if not empty). [EXPLICIT
 
 ## Constitution Loading
 
-Load constitution per [constitution-loading.md](../iikit-core/references/constitution-loading.md) (soft mode — warn if missing, proceed without). [EXPLICIT]
+Load constitution per `constitution-loading.md` (soft mode — warn if missing, proceed without). [EXPLICIT]
 
 ## Execution Flow
 
@@ -80,11 +80,11 @@ Parse JSON for `BRANCH_NAME`, `SPEC_FILE`, `FEATURE_NUM`. Only run ONCE per feat
 6. Define Success Criteria (measurable, technology-agnostic)
 7. Identify Key Entities (if data involved)
 
-Write to `SPEC_FILE` using [spec-template.md](../iikit-core/templates/spec-template.md) structure. [EXPLICIT]
+Write to `SPEC_FILE` using `spec-template.md` structure. [EXPLICIT]
 
 ### 4. Phase Separation Validation
 
-Scan for implementation details per [phase-separation-rules.md](../iikit-core/references/phase-separation-rules.md) (Specification section). Auto-fix violations, re-validate until clean. [EXPLICIT]
+Scan for implementation details per `phase-separation-rules.md` (Specification section). Auto-fix violations, re-validate until clean. [EXPLICIT]
 
 ### 5. Create Spec Quality Checklist
 
@@ -127,7 +127,7 @@ Output: branch name, spec file path, checklist results, readiness for next phase
 
 ## Semantic Diff on Re-run
 
-If spec.md already exists: extract semantic elements (stories, requirements, criteria), compare with new content per [formatting-guide.md](../iikit-core/references/formatting-guide.md) (Semantic Diff section), show downstream impact warnings, ask confirmation before overwriting. [EXPLICIT]
+If spec.md already exists: extract semantic elements (stories, requirements, criteria), compare with new content per `formatting-guide.md` (Semantic Diff section), show downstream impact warnings, ask confirmation before overwriting. [EXPLICIT]
 
 ## Commit
 
@@ -154,7 +154,7 @@ Parse the JSON and present: [EXPLICIT]
 1. If `clear_after` is true: suggest `/clear` before proceeding
 2. Present `next_step` as the primary recommendation
 3. If `alt_steps` non-empty: list as alternatives
-4. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in [model-recommendations.md](../iikit-core/references/model-recommendations.md) for agent-specific switch commands.
+4. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in `model-recommendations.md` for agent-specific switch commands.
 5. Append dashboard link
 
 Format:

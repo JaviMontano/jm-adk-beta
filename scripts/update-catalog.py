@@ -53,8 +53,8 @@ def main() -> int:
         desc = re.sub(r"\s*Topics:.*$", "", desc)
         if not desc:
             print(f"WARN {d.name}: empty description", file=sys.stderr)
-        if len(desc) > 60:  # trim at word boundary (compressed register; tier-0 budget)
-            desc = desc[:60].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+        if len(desc) > 54:  # trim at word boundary (compressed register; tier-0 budget — v7 core is larger)
+            desc = desc[:54].rsplit(" ", 1)[0].rstrip(",;:") + "…"
         entry = {
             "id": d.name,
             "desc": desc,

@@ -21,7 +21,7 @@
     },
     {
       "id": "adaptive-investigation-method",
-      "desc": "Investigar dominios desconocidos (repos, datasets, corpus)…",
+      "desc": "Investigar dominios desconocidos (repos, datasets…",
       "tier": "standalone",
       "evals": true
     },
@@ -126,12 +126,14 @@
     },
     {
       "id": "brand-output",
-      "desc": "Branded output generation: HTML, DOCX, XLSX, folios…",
+      "desc": "Branded output generation: HTML/CSS/JS, DOCX, XLSX…",
       "tier": "router",
       "params": {
         "topic": [
+          "brand-art",
           "brand-docx",
           "brand-html",
+          "brand-pdf",
           "brand-xlsx",
           "branded-html-output",
           "folio-generator",
@@ -147,7 +149,7 @@
     },
     {
       "id": "business-analysis",
-      "desc": "Business analysis and change router: process modeling…",
+      "desc": "Business analysis and change router: process…",
       "tier": "router",
       "params": {
         "topic": [
@@ -169,7 +171,7 @@
     },
     {
       "id": "carrera",
-      "desc": "Pack de carrera (es): proceso de seleccion, entrevistas…",
+      "desc": "Pack de carrera (es): proceso de seleccion…",
       "tier": "router",
       "params": {
         "topic": [
@@ -194,19 +196,19 @@
     },
     {
       "id": "claude-md-architecture",
-      "desc": "Estructurar memoria jerarquica CLAUDE.md user/team/module…",
+      "desc": "Estructurar memoria jerarquica CLAUDE.md…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "context-window-engineering",
-      "desc": "Disena el ensamblado de la ventana de contexto de un agente…",
+      "desc": "Disena el ensamblado de la ventana de contexto de un…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "custom-tooling-extension",
-      "desc": "Decidir slash command vs skill y escribir su frontmatter de…",
+      "desc": "Decidir slash command vs skill y escribir su…",
       "tier": "standalone",
       "evals": true
     },
@@ -218,7 +220,7 @@
     },
     {
       "id": "data-governance",
-      "desc": "Router for data governance work: privacy patterns, data…",
+      "desc": "Router for data governance work: privacy patterns…",
       "tier": "router",
       "params": {
         "topic": [
@@ -238,7 +240,7 @@
     },
     {
       "id": "data-platform",
-      "desc": "Data engineering lifecycle: pipelines, quality, validation…",
+      "desc": "Data engineering lifecycle: pipelines, quality…",
       "tier": "router",
       "params": {
         "topic": [
@@ -259,7 +261,7 @@
     },
     {
       "id": "dbr-daily-plan",
-      "desc": "Cadencia DBR: selecciona <=3 prioridades-tambor del dia y…",
+      "desc": "Cadencia DBR: selecciona <=3 prioridades-tambor del…",
       "tier": "standalone",
       "evals": true
     },
@@ -288,7 +290,7 @@
     },
     {
       "id": "docs-writing",
-      "desc": "Documentation and professional writing router: technical…",
+      "desc": "Documentation and professional writing router…",
       "tier": "router",
       "params": {
         "topic": [
@@ -314,7 +316,7 @@
     },
     {
       "id": "email-comms",
-      "desc": "Email systems and communication: transactional sending…",
+      "desc": "Email systems and communication: transactional…",
       "tier": "router",
       "params": {
         "topic": [
@@ -331,7 +333,7 @@
     },
     {
       "id": "evaluation-confidence-design",
-      "desc": "Disenar evaluacion con confidence calibrada contra labeled…",
+      "desc": "Disenar evaluacion con confidence calibrada contra…",
       "tier": "standalone",
       "evals": true
     },
@@ -371,7 +373,7 @@
     },
     {
       "id": "google-workspace",
-      "desc": "Router for Google APIs/Workspace work — pick one topic and…",
+      "desc": "Router for Google APIs/Workspace work — pick one…",
       "tier": "router",
       "params": {
         "topic": [
@@ -394,7 +396,7 @@
     },
     {
       "id": "guardrails",
-      "desc": "Deterministic guard layer: pre/post tool guards, prompt…",
+      "desc": "Deterministic guard layer: pre/post tool guards…",
       "tier": "router",
       "params": {
         "topic": [
@@ -441,7 +443,7 @@
     },
     {
       "id": "iikit",
-      "desc": "Intent Integrity Kit: spec-driven development pipeline…",
+      "desc": "Intent Integrity Kit: spec-driven development…",
       "tier": "router",
       "params": {
         "topic": [
@@ -483,13 +485,13 @@
     },
     {
       "id": "jarvis-bootstrap",
-      "desc": "Bootstrap del Jarvis OS: crea CLAUDE.md y MEMORY.md raiz y…",
+      "desc": "Bootstrap del Jarvis OS: crea CLAUDE.md y MEMORY.md…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "jarvis-os",
-      "desc": "Pack paraguas del Personal Jarvis OS: aplica COOL, detecta…",
+      "desc": "Pack paraguas del Personal Jarvis OS: aplica COOL…",
       "tier": "standalone",
       "evals": true
     },
@@ -560,7 +562,7 @@
     },
     {
       "id": "market-intel",
-      "desc": "Market and competitive intelligence: positioning, pricing…",
+      "desc": "Market and competitive intelligence: positioning…",
       "tier": "router",
       "params": {
         "topic": [
@@ -581,7 +583,7 @@
     },
     {
       "id": "marketing-content",
-      "desc": "Marketing content production: copywriting, calendars, PR…",
+      "desc": "Marketing content production: copywriting, calendars…",
       "tier": "router",
       "params": {
         "topic": [
@@ -602,7 +604,7 @@
     },
     {
       "id": "mcp-engineering",
-      "desc": "Configurar MCP servers (project vs user scope, env-var…",
+      "desc": "Configurar MCP servers (project vs user scope…",
       "tier": "standalone",
       "evals": true
     },
@@ -620,7 +622,7 @@
     },
     {
       "id": "observability",
-      "desc": "Production health: monitoring, logging, alerting, health…",
+      "desc": "Production health: monitoring, logging, alerting…",
       "tier": "router",
       "params": {
         "topic": [
@@ -638,7 +640,7 @@
     },
     {
       "id": "official-source-verifier",
-      "desc": "Verify a decision against official sources (ADK, Agent…",
+      "desc": "Verify a decision against official sources (ADK…",
       "tier": "standalone",
       "evals": true
     },
@@ -650,7 +652,7 @@
     },
     {
       "id": "plan-mode-workflow",
-      "desc": "Disenar un gate de dos modos: explorar un repo desconocido…",
+      "desc": "Disenar un gate de dos modos: explorar un repo…",
       "tier": "standalone",
       "evals": true
     },
@@ -680,7 +682,7 @@
     },
     {
       "id": "pristino-calibration",
-      "desc": "Read deterministic persona/mode/optimizer signals injected…",
+      "desc": "Read deterministic persona/mode/optimizer signals…",
       "tier": "standalone",
       "evals": true
     },
@@ -707,37 +709,37 @@
     },
     {
       "id": "project-create",
-      "desc": "Scaffold a Jarvis OS project P-NNN-slug under 02_Proyectos/…",
+      "desc": "Scaffold a Jarvis OS project P-NNN-slug under…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "prompt-chaining-design",
-      "desc": "Descomponer tareas grandes en pase local tipado y pase de…",
+      "desc": "Descomponer tareas grandes en pase local tipado y…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "prompting-and-meta-prompting",
-      "desc": "Turn vague intentions into durable, eval-ready prompts…",
+      "desc": "Turn vague intentions into durable, eval-ready…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "provenance-engineering",
-      "desc": "Disenar pipelines de extraccion/sintesis con provenance…",
+      "desc": "Disenar pipelines de extraccion/sintesis con…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "qbr-quarterly",
-      "desc": "Cadencia QBR (P13): audita el trimestre cerrado contra OKRs…",
+      "desc": "Cadencia QBR (P13): audita el trimestre cerrado…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "revisor-veracidad",
-      "desc": "Audita un texto, etiqueta cada afirmacion no reproducible…",
+      "desc": "Audita un texto, etiqueta cada afirmacion no…",
       "tier": "standalone",
       "evals": true
     },
@@ -775,7 +777,7 @@
     },
     {
       "id": "security",
-      "desc": "Router for application security playbooks: auth, RBAC…",
+      "desc": "Router for application security playbooks: auth…",
       "tier": "router",
       "params": {
         "topic": [
@@ -798,13 +800,13 @@
     },
     {
       "id": "self-correction-loops",
-      "desc": "Construir verificacion cruzada declarado-vs-calculado con…",
+      "desc": "Construir verificacion cruzada declarado-vs-calculado…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "seo-growth",
-      "desc": "SEO and conversion growth router: technical SEO, content…",
+      "desc": "SEO and conversion growth router: technical SEO…",
       "tier": "router",
       "params": {
         "topic": [
@@ -825,13 +827,13 @@
     },
     {
       "id": "session-lifecycle-management",
-      "desc": "Decidir resume vs fork vs fresh con summary tipado segun…",
+      "desc": "Decidir resume vs fork vs fresh con summary tipado…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "session-workspace",
-      "desc": "Router for agent session lifecycle: bootstrap, protocol…",
+      "desc": "Router for agent session lifecycle: bootstrap…",
       "tier": "router",
       "params": {
         "topic": [
@@ -851,7 +853,7 @@
     },
     {
       "id": "skill-foundry",
-      "desc": "Router for building/certifying agentic assets — skills…",
+      "desc": "Router for building/certifying agentic assets —…",
       "tier": "router",
       "params": {
         "topic": [
@@ -880,29 +882,29 @@
     },
     {
       "id": "station-create",
-      "desc": "Scaffold a Jarvis OS station (universal or dedicated) with…",
+      "desc": "Scaffold a Jarvis OS station (universal or dedicated)…",
       "tier": "standalone"
     },
     {
       "id": "structured-output-design",
-      "desc": "Disenar extraccion estructurada Claude como contrato de…",
+      "desc": "Disenar extraccion estructurada Claude como contrato…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "subagent-orchestration",
-      "desc": "Design deterministic hub-and-spoke subagent orchestration…",
+      "desc": "Design deterministic hub-and-spoke subagent…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "task-subfolder",
-      "desc": "Crea/retoma una sub-tarea T-NNN multi-sesion con CLAUDE.md…",
+      "desc": "Crea/retoma una sub-tarea T-NNN multi-sesion con…",
       "tier": "standalone"
     },
     {
       "id": "testing-qa",
-      "desc": "Router for software testing strategy and execution: pick…",
+      "desc": "Router for software testing strategy and execution…",
       "tier": "router",
       "params": {
         "topic": [
@@ -921,13 +923,13 @@
     },
     {
       "id": "tool-use-design",
-      "desc": "Design deterministic tool-description routing contracts…",
+      "desc": "Design deterministic tool-description routing…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "ux-design",
-      "desc": "UI/UX design patterns: design systems, interaction and…",
+      "desc": "UI/UX design patterns: design systems, interaction…",
       "tier": "router",
       "params": {
         "topic": [
@@ -958,7 +960,7 @@
     },
     {
       "id": "ux-research",
-      "desc": "User research and validation router: route to interviews…",
+      "desc": "User research and validation router: route to…",
       "tier": "router",
       "params": {
         "topic": [
@@ -975,13 +977,13 @@
     },
     {
       "id": "validation-retry-design",
-      "desc": "Design deterministic extract-validate-retry loops with…",
+      "desc": "Design deterministic extract-validate-retry loops…",
       "tier": "standalone",
       "evals": true
     },
     {
       "id": "wbr-weekly-review",
-      "desc": "Cadencia WBR (P11): repaso semanal de avances, estancado y…",
+      "desc": "Cadencia WBR (P11): repaso semanal de avances…",
       "tier": "standalone",
       "evals": true
     },
@@ -1015,7 +1017,7 @@
     },
     {
       "id": "weekly-retro",
-      "desc": "Cadencia de retro semanal (P12): captura que ayudo, que…",
+      "desc": "Cadencia de retro semanal (P12): captura que ayudo…",
       "tier": "standalone",
       "evals": true
     },

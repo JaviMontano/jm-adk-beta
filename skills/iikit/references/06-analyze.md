@@ -22,21 +22,21 @@ You **MUST** consider the user input before proceeding (if not empty). [EXPLICIT
 
 ## Constitution Loading
 
-Load constitution per [constitution-loading.md](../iikit-core/references/constitution-loading.md) (basic mode — ERROR if missing). Extract principle names and normative statements. [EXPLICIT]
+Load constitution per `constitution-loading.md` (basic mode — ERROR if missing). Extract principle names and normative statements. [EXPLICIT]
 
 ## Prerequisites Check
 
 1. Run: `bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/check-prerequisites.sh --phase 06 --json`
    Windows: `pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/check-prerequisites.ps1 -Phase 06 -Json`
 2. Derive paths: SPEC, PLAN, TASKS from FEATURE_DIR. ERROR if any missing.
-3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in [conversation-guide.md](../iikit-core/references/conversation-guide.md). After user selects, run:
+3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in `conversation-guide.md`. After user selects, run:
    ```bash
    bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/set-active-feature.sh --json <selection>
    ```
    Windows: `pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/set-active-feature.ps1 -Json <selection>`
 
    Then re-run the prerequisites check from step 1.
-4. Checklist gate per [checklist-gate.md](../iikit-core/references/checklist-gate.md).
+4. Checklist gate per `checklist-gate.md`.
 
 ## Execution Steps
 
@@ -72,7 +72,7 @@ From qa/test-coverage.md: FR→TS traceability matrix (if exists). [EXPLICIT]
 **D. Constitution Alignment**: conflicts with MUST principles; missing mandated sections. For each principle, report status using these exact values:
 - `ALIGNED` — principle satisfied across all artifacts
 - `VIOLATION` — principle violated (auto-CRITICAL severity)
-**E. Phase Separation Violations**: per [phase-separation-rules.md](../iikit-core/references/phase-separation-rules.md) — tech in constitution, implementation in spec, governance in plan
+**E. Phase Separation Violations**: per `phase-separation-rules.md` — tech in constitution, implementation in spec, governance in plan
 **F. Coverage Gaps**: requirements with zero tasks; tasks with no mapped requirement; non-functional requirements not in tasks; requirements not referenced in plan.md
 
 > **Plan coverage detection**: Scan plan.md for each requirement ID (FR-xxx, SC-xxx). A requirement is "covered by plan" if its ID appears anywhere in plan.md. Collect contextual refs (KDD-x, section headers) where found.
@@ -230,7 +230,7 @@ Parse the JSON and present: [EXPLICIT]
 2. If CRITICAL issues were found: suggest resolving them, then re-run `/iikit-06-analyze`
 3. If no CRITICAL: present `next_step` as the primary recommendation
 4. If `alt_steps` non-empty: list as alternatives
-5. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in [model-recommendations.md](../iikit-core/references/model-recommendations.md) for agent-specific switch commands.
+5. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in `model-recommendations.md` for agent-specific switch commands.
 6. Append dashboard link
 
 Format:

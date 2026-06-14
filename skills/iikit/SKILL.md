@@ -69,3 +69,19 @@ Pipeline (each output feeds the next): 00-constitution → 01-specify → 02-pla
   read the correct one — never stack a second on top. [INFERENCE]
 
 Spine: Discover → Analyze → Execute → Validate. [DOC]
+
+## Provenance — tessl tile dependency [DOC]
+
+`iikit` is a thin overlay over the tessl tile `tessl-labs/intent-integrity-kit`. Its
+deeper assets — **`iikit-core`** (references like constitution-loading, formatting-guide,
+phase-separation-rules, model-recommendations; templates like spec/plan/tasks/checklist)
+and the helper scripts under `.tessl/tiles/.../iikit-core/scripts/` — are **provisioned by
+tessl at install time**, NOT vendored in this repo. [CONFIG]
+
+- When a playbook names one of those assets in backticks (e.g. `formatting-guide`,
+  `spec-template`), read it from the installed tile, not from `skills/iikit/`. [DOC]
+- If tessl is not installed (`.tessl/` absent), those assets are unavailable — run the
+  spine on the in-repo playbooks (`references/00-08`, `bugfix`, `clarify`, `core`) and
+  flag the missing tile. [ASSUMPTION]
+- Do NOT fabricate local copies of `iikit-core` content — it is maintained upstream;
+  duplicating it would drift. [DOC]

@@ -14,7 +14,7 @@ You **MUST** consider the user input before proceeding (if not empty). [EXPLICIT
 
 ## Constitution Loading
 
-Load constitution per [constitution-loading.md](../iikit-core/references/constitution-loading.md) (soft mode — warn if missing, proceed without). [EXPLICIT]
+Load constitution per `constitution-loading.md` (soft mode — warn if missing, proceed without). [EXPLICIT]
 
 ## Execution Flow
 
@@ -112,7 +112,7 @@ The helper derives the next ID by scanning existing `BUG-NNN` markers in `bugs.m
 
 ### 7. Write bugs.md
 
-Create or append to `<feature_dir>/bugs.md` using the template at [bugs-template.md](references/bugs-template.md). [EXPLICIT]
+Create or append to `<feature_dir>/bugs.md` using the template at `bugs-template.md`. [EXPLICIT]
 
 Fill in:
 - **BUG-ID**: from Step 6

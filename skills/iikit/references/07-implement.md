@@ -16,13 +16,13 @@ You **MUST** consider the user input before proceeding (if not empty). [EXPLICIT
 
 ## Constitution Loading
 
-Load constitution per [constitution-loading.md](../iikit-core/references/constitution-loading.md) (enforcement mode — extract rules, declare hard gate, validate before every file write). [EXPLICIT]
+Load constitution per `constitution-loading.md` (enforcement mode — extract rules, declare hard gate, validate before every file write). [EXPLICIT]
 
 ## Prerequisites Check
 
 1. Run: `bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/check-prerequisites.sh --phase 07 --json`
 2. Parse for `FEATURE_DIR` and `AVAILABLE_DOCS`. If missing tasks.md: ERROR.
-3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in [conversation-guide.md](../iikit-core/references/conversation-guide.md). After user selects, run:
+3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in `conversation-guide.md`. After user selects, run:
    ```bash
    bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/set-active-feature.sh --json <selection>
    ```
@@ -112,8 +112,8 @@ Do NOT mark `[x]` in tasks.md until all three gates pass. [EXPLICIT]
 
 Before writing source code: [EXPLICIT]
 1. **Install dependencies** from plan.md Technical Context (detect package manager, add runtime + dev deps, commit manifest + lockfile)
-2. **Install Tessl tiles** for each major dependency: `tessl search <pkg>` then `tessl install <tile>`. Query tile docs before writing library code. See [tessl-integration.md](references/tessl-integration.md). (Tile install + query is referenced elsewhere as "§4" for historical numbering; §3.2 is canonical.) [EXPLICIT]
-3. **Scaffold project** if needed. For existing directories, use force/overwrite flags. See [ignore-patterns.md](references/ignore-patterns.md) for gitignore patterns.
+2. **Install Tessl tiles** for each major dependency: `tessl search <pkg>` then `tessl install <tile>`. Query tile docs before writing library code. See `tessl-integration.md`. (Tile install + query is referenced elsewhere as "§4" for historical numbering; §3.2 is canonical.) [EXPLICIT]
+3. **Scaffold project** if needed. For existing directories, use force/overwrite flags. See `ignore-patterns.md` for gitignore patterns.
 
 > **Section numbering**: §4 and §5 are intentionally folded into §3 (Tessl = §3.2) and §6 respectively; cross-references to "§4 Tessl tiles" resolve to §3.2. Do not renumber — downstream artifacts and `formatting-guide.md` anchor on these labels. [EXPLICIT]
 
@@ -121,8 +121,8 @@ Before writing source code: [EXPLICIT]
 
 **6.1 Task extraction**: parse tasks.md for phase, completion status (`[x]` = skip), dependencies, [P] markers, [USn] labels. Build in-memory task graph.
 
-**6.2 Execution strategy — read [parallel-execution.md](references/parallel-execution.md) BEFORE proceeding**:
-If tasks.md contains `[P]` markers, you **MUST** use the `Task` tool to dispatch parallel batches as concurrent subagents (one worker per task). Only fall back to sequential execution if the runtime has no subagent dispatch mechanism. Report mode per [formatting-guide.md](../iikit-core/references/formatting-guide.md) (Execution Mode Header). [EXPLICIT]
+**6.2 Execution strategy — read `parallel-execution.md` BEFORE proceeding**:
+If tasks.md contains `[P]` markers, you **MUST** use the `Task` tool to dispatch parallel batches as concurrent subagents (one worker per task). Only fall back to sequential execution if the runtime has no subagent dispatch mechanism. Report mode per `formatting-guide.md` (Execution Mode Header). [EXPLICIT]
 
 **6.3 Phase-by-phase**:
 1. Collect eligible tasks (dependencies satisfied)
@@ -212,7 +212,7 @@ Parse the JSON and present: [EXPLICIT]
 2. If `next_step` is `/iikit-07-implement` (feature incomplete): suggest resuming implementation
 3. If `next_step` is null (feature complete): congratulate and list alt_steps
 4. If `alt_steps` non-empty: list as alternatives (e.g., `/iikit-08-taskstoissues`)
-5. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in [model-recommendations.md](../iikit-core/references/model-recommendations.md) for agent-specific switch commands.
+5. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in `model-recommendations.md` for agent-specific switch commands.
 6. Append dashboard link
 
 Push commits to remote if available: `git push`. If on a feature branch, offer to merge. Ask the user which approach they prefer: [EXPLICIT]

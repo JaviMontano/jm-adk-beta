@@ -6,7 +6,7 @@
 - **Raw request:** <what the user asked for>
 - **Content/data source:** <inline | file path | structured JSON>
 - **Target format:** <HTML | DOCX | XLSX | spec | slides | folio>
-- **Brand system:** <Sofka DS v4 | MetodologIA | fallback config>
+- **Brand system:** <MetodologIA DS | MetodologIA | fallback config>
 - **artifact_date (caller-supplied):** <YYYY-MM-DD | omitted>
 - **depth:** <quick | deep>
 

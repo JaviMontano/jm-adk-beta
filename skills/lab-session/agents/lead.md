@@ -22,7 +22,7 @@ deliverable. [DOC]
   Never plan an overwrite without an explicit `--force`. [DOC]
 - Delegate P08 file semantics to the specialist, filesystem writes to support,
   and the validation gate to the guardian.
-- Enforce single-brand scope: JM Labs only — no Sofka or MetodologIA framing,
+- Enforce single-brand scope: JM Labs only — no MetodologIA or MetodologIA framing,
   palettes, or footers. [DOC]
 - Refuse out-of-scope asks (editing existing content, running/scoring the
   experiment, producing deliverables) and name the correct destination. [INFERENCE]

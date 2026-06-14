@@ -1,6 +1,6 @@
 # Sales-BizDev Deliverable — {Account / Campaign Name}
 
-> **Brand:** {Sofka | MetodologIA | JM Labs} (single brand only)
+> **Brand:** {MetodologIA} (single brand only)
 > **Topic routed:** {b2b-outreach | client-dossier | client-prospecting | executive-pitch | lead-generation | proposal-writing | sales-collateral}
 > **Depth:** {quick | deep} · **Date:** {YYYY-MM-DD} · **Evidence family:** {Alfa-core | EXPLICIT/INFERRED/OPEN}
 

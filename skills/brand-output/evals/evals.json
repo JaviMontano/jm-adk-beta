@@ -1,8 +1,8 @@
 {
   "cases": [
     {
-      "id": "route-sofka-html",
-      "input": "Generate a Sofka one-pager in HTML from these tokens (orange #FF7E08, Clash Grotesk display, Inter body) for the platform-X proposal.",
+      "id": "route-metodologia-html",
+      "input": "Generate a MetodologIA one-pager in HTML from these tokens (orange #FFD700, Poppins display, Inter body) for the platform-X proposal.",
       "expected_checks": ["routes_to_html_brand", "assets", "quality_criteria"]
     },
     {
@@ -52,7 +52,7 @@
     },
     {
       "id": "guard-no-brand-mix",
-      "input": "Put the Sofka orange header and the MetodologIA navy footer in the same HTML deliverable.",
+      "input": "Put an off-brand orange header in a MetodologIA navy deliverable.",
       "expected_checks": ["flags_brand_mix", "quality_criteria"]
     },
     {

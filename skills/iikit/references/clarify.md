@@ -18,13 +18,13 @@ If the user provides a target argument (e.g., `plan`, `spec`, `checklist`, `test
 
 ## Constitution Loading
 
-Load constitution per [constitution-loading.md](../iikit-core/references/constitution-loading.md) (soft mode — parse if exists, continue if not). [EXPLICIT] Constitution principles bound the *option space* of questions: never offer an option that violates a stated principle, and prefer questions whose answers enforce a principle currently under-specified in the artifact. [INFERENCIA]
+Load constitution per `constitution-loading.md` (soft mode — parse if exists, continue if not). [EXPLICIT] Constitution principles bound the *option space* of questions: never offer an option that violates a stated principle, and prefer questions whose answers enforce a principle currently under-specified in the artifact. [INFERENCIA]
 
 ## Prerequisites Check
 
 1. Run: `bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/check-prerequisites.sh --phase clarify --json`
    Windows: `pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/check-prerequisites.ps1 -Phase clarify -Json`
-2. Parse JSON. If `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in [conversation-guide.md](../iikit-core/references/conversation-guide.md). After user selects, run:
+2. Parse JSON. If `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in `conversation-guide.md`. After user selects, run:
    ```bash
    bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/set-active-feature.sh --json <selection>
    ```
@@ -70,7 +70,7 @@ If no clarifiable artifact exists: ERROR with `No artifacts to clarify. Run /iik
 
 ### 1. Scan for Ambiguities
 
-Load the target artifact and perform a structured scan using the taxonomy for that artifact type from [ambiguity-taxonomies.md](../iikit-core/references/ambiguity-taxonomies.md). Mark each area: Clear / Partial / Missing. [EXPLICIT]
+Load the target artifact and perform a structured scan using the taxonomy for that artifact type from `ambiguity-taxonomies.md`. Mark each area: Clear / Partial / Missing. [EXPLICIT]
 
 - **Clear** = unambiguous and testable as written.
 - **Partial** = present but admits >1 reasonable interpretation, or lacks a measurable bound.
@@ -100,7 +100,7 @@ Only `Partial` and `Missing` areas generate questions; `Clear` areas are skipped
 
 Present ONE question at a time. [EXPLICIT]
 
-**For multiple-choice**: follow the options presentation pattern in [conversation-guide.md](../iikit-core/references/conversation-guide.md). Analyze options, state recommendation with reasoning, render options table. User can reply with letter, "yes"/"recommended", or custom text.
+**For multiple-choice**: follow the options presentation pattern in `conversation-guide.md`. Analyze options, state recommendation with reasoning, render options table. User can reply with letter, "yes"/"recommended", or custom text.
 
 **After answer**: validate against constraints, record, move to next.
 
@@ -127,7 +127,7 @@ Present ONE question at a time. [EXPLICIT]
 - **Write** Q&A to `{FEATURE_DIR}/tests/clarifications.md` (create if missing)
 - **Apply** changes to the `.feature` files themselves (update scenarios, add/remove steps)
 
-See [clarification-format.md](references/clarification-format.md) for format details. [EXPLICIT]
+See `clarification-format.md` for format details. [EXPLICIT]
 
 ### 5. Validation
 
@@ -199,7 +199,7 @@ Parse the JSON and present: [EXPLICIT]
 1. If `clear_after` is true: suggest `/clear` before proceeding (always true for clarify — Q&A sessions consume significant context)
 2. Present `next_step` as the primary recommendation
 3. If `alt_steps` non-empty: list as alternatives
-4. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in [model-recommendations.md](../iikit-core/references/model-recommendations.md) for agent-specific switch commands.
+4. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in `model-recommendations.md` for agent-specific switch commands.
 5. Append dashboard link
 
 Format:

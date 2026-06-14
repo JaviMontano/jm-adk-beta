@@ -17,7 +17,7 @@ Generates C-level presentations with quantified problem statements, 4-pillar val
 3. **Opciones, no mandatos.** 3 opciones con trade-offs claros. El decisor elige — el consultor recomienda con evidencia, no con presión. [EXPLICIT]
 4. **Una decisión por pitch.** Si el ask contiene >1 decisión irreversible, divídelo: el decisor que duda en cualquier sub-decisión bloquea todo el aprobado. [INFERENCIA]
 
-**Anti-objetivos** (lo que un buen pitch NO hace): no oculta riesgos para forzar el sí; no infla proyecciones para ganar mindshare a costa de credibilidad post-firma; no usa urgencia falsa (deadline inventado); no mezcla marcas Sofka/MetodologIA/JM en el mismo entregable. [DOC]
+**Anti-objetivos** (lo que un buen pitch NO hace): no oculta riesgos para forzar el sí; no infla proyecciones para ganar mindshare a costa de credibilidad post-firma; no usa urgencia falsa (deadline inventado); no mezcla marcas MetodologIA en el mismo entregable. [DOC]
 
 ## Inputs
 

@@ -520,9 +520,9 @@ sla-definition,pending,,3,agents/sla-definition-specialist.md;commands/sla-defin
 social-media-strategy,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
 social-proof,pending,,3,agents/social-proof-specialist.md;commands/social-proof.md;prompts/business/8-social-proof.md,router-fold,seo-growth#social-proof,playbook in skills/seo-growth/references/social-proof.md
 socratic-debate,pending,,2,agents/adk-orchestrator.md;agents/socratic-debater.md,router-fold,agent-orchestration#socratic-debate,playbook in skills/agent-orchestration/references/socratic-debate.md
-sofka-bpmn-process-analysis,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
-sofka-regional-finance,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
-sofka-sap-implementation,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+bpmn-process-analysis,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+regional-finance,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
+sap-implementation,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
 software-architecture,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
 software-viability,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive
 solution-roadmap,pending,,0,,dropped-unreferenced,none,pending+unreferenced; alfa is the archive

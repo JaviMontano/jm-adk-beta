@@ -18,7 +18,7 @@ import subprocess
 from pathlib import Path
 
 GENERATOR = "scripts/generate-mcp-configs.py"
-SERVER = "workspace-mcp"
+SERVER = "google-workspace"
 
 # A literal secret would match these; ${ENV} placeholders never do.
 SECRET_PATTERNS = [

@@ -1,7 +1,7 @@
 # brand-output
 
 Router skill for **branded deliverable generation** with design-system tokens
-(Sofka DS v4 / MetodologIA brand). It does not generate artifacts itself — it
+(MetodologIA DS / MetodologIA brand). It does not generate artifacts itself — it
 resolves a `topic` and Reads **exactly one** downstream playbook from `routes.json`
 that owns the actual generation contract. [EXPLICIT]
 
@@ -23,7 +23,7 @@ or non-DS output — route those elsewhere. [INFERENCE]
 1. Infer `topic` from the request; ask only if ≥2 enums fit equally. [EXPLICIT]
 2. Read that single playbook (`deep` → exhaustive; `quick` → essentials). [EXPLICIT]
 3. Format-vs-topic disambiguation:
-   - HTML → `brand-html` (general) · `html-brand` (Sofka v4, token-heavy) ·
+   - HTML → `brand-html` (general) · `html-brand` (MetodologIA DS, token-heavy) ·
      `branded-html-output` (MetodologIA template, lightweight) ·
      `folio-generator` (numbered paginated folios). [INFERENCE]
    - Slides → `presentation-design`. DOCX → `brand-docx`.
@@ -36,7 +36,7 @@ Spine: **Discover → Analyze → Execute → Validate.**
 | topic | playbook | output |
 |---|---|---|
 | `brand-html` | [references/brand-html.md](references/brand-html.md) | self-contained HTML page |
-| `html-brand` | [references/html-brand.md](references/html-brand.md) | Sofka DS v4 HTML deliverable |
+| `html-brand` | [references/html-brand.md](references/html-brand.md) | MetodologIA DS HTML deliverable |
 | `branded-html-output` | [references/branded-html-output.md](references/branded-html-output.md) | MetodologIA template HTML |
 | `folio-generator` | [references/folio-generator.md](references/folio-generator.md) | numbered folio `PREFIX-YYYY-NNN` |
 | `brand-docx` | [references/brand-docx.md](references/brand-docx.md) | `.docx` Word package |

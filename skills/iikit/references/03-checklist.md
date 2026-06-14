@@ -24,7 +24,7 @@ You **MUST** consider the user input before proceeding (if not empty). [EXPLICIT
 
 ## Constitution Loading
 
-Load constitution per [constitution-loading.md](../iikit-core/references/constitution-loading.md) (basic mode). [EXPLICIT]
+Load constitution per `constitution-loading.md` (basic mode). [EXPLICIT]
 
 ## Prerequisites Check
 
@@ -33,7 +33,7 @@ Load constitution per [constitution-loading.md](../iikit-core/references/constit
 2. Parse JSON for `FEATURE_DIR` and `AVAILABLE_DOCS`.
    - If the script exits non-zero or emits non-JSON (e.g. not in an iikit repo, missing `.specify/`), STOP and report the raw error — do not guess `FEATURE_DIR`. [INFERENCIA]
    - If `AVAILABLE_DOCS` lacks `spec.md`, STOP: step 2 of Execution requires it. [INFERENCIA]
-3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in [conversation-guide.md](../iikit-core/references/conversation-guide.md). After user selects, run:
+3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in `conversation-guide.md`. After user selects, run:
    ```bash
    bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/set-active-feature.sh --json <selection>
    ```
@@ -79,13 +79,13 @@ Wrong: "Verify the button clicks correctly" (this tests implementation) [EXPLICI
 
 **Marker semantics** (one per finding type): `[Gap]` = a required statement is absent; `[Ambiguity]` = present but under-specified/unmeasurable; `[Conflict]` = two requirements contradict; `[Assumption]` = relied-upon condition not stated in spec. [INFERENCIA]
 
-See [checklist-examples.md](references/checklist-examples.md) for correct/wrong examples and required patterns. [EXPLICIT]
+See `checklist-examples.md` for correct/wrong examples and required patterns. [EXPLICIT]
 
-Use [checklist-template.md](../iikit-core/templates/checklist-template.md) for format structure. [EXPLICIT]
+Use `checklist-template.md` for format structure. [EXPLICIT]
 
 ### 4. Gap Resolution (Interactive)
 
-For each `[Gap]` item: follow the gap resolution pattern in [conversation-guide.md](../iikit-core/references/conversation-guide.md). Present missing requirement, explain risk, offer options. On resolution: update spec.md and check item off. Skip if `--no-interactive` or no gaps. [EXPLICIT]
+For each `[Gap]` item: follow the gap resolution pattern in `conversation-guide.md`. Present missing requirement, explain risk, offer options. On resolution: update spec.md and check item off. Skip if `--no-interactive` or no gaps. [EXPLICIT]
 
 ### 5. Remaining Item Validation
 
@@ -143,7 +143,7 @@ Parse the JSON and present: [EXPLICIT]
 1. If `clear_after` is true: suggest `/clear` before proceeding
 2. Present `next_step` as the primary recommendation
 3. If `alt_steps` non-empty: list as alternatives
-4. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in [model-recommendations.md](../iikit-core/references/model-recommendations.md) for agent-specific switch commands.
+4. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in `model-recommendations.md` for agent-specific switch commands.
 5. Append dashboard link
 
 If deferred items remain, warn that downstream skills will flag incomplete checklists. [EXPLICIT]
@@ -186,7 +186,7 @@ Example invocations: [EXPLICIT]
 | Empty or minimal input | Request clarification before proceeding |
 | Conflicting requirements | Flag conflicts explicitly, propose resolution |
 | Out-of-scope request | Redirect to appropriate skill or escalate |
-| `requirements.md` missing (skipped specify) | Create it from [checklist-template.md](../iikit-core/templates/checklist-template.md); do not silently no-op [INFERENCIA] |
+| `requirements.md` missing (skipped specify) | Create it from `checklist-template.md`; do not silently no-op [INFERENCIA] |
 | `spec.md` absent or empty | STOP at Load Feature Context — cannot evaluate requirements quality without a spec [INFERENCIA] |
 | `--no-interactive` with open `[Gap]` items | Skip resolution, leave gaps marked, surface count in Report; never auto-invent requirements [INFERENCIA] |
 | Item phrased as implementation test | Reword to a requirements question or drop it (see Litmus test) [INFERENCIA] |

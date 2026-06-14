@@ -16,7 +16,7 @@ the artifact inline.
    press release and an event follow-up), ask one clarifying question. Do not
    guess — a wrong route wastes the whole run.
 2. **Load one playbook** from `routes.json`. Never load siblings to compare.
-3. **Confirm single brand** (MetodologIA / Sofka / JM Labs) before drafting.
+3. **Confirm single brand** (MetodologIA) before drafting.
 4. **Run the spine** for that playbook: Discover (gather its required inputs) →
    Analyze (pick structure/framework) → Execute (draft to canonical structure,
    tag every claim) → Validate (run the playbook's Quality/Acceptance Criteria).

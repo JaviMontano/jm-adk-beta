@@ -1,9 +1,9 @@
 <!-- distilled from alfa skills/constitution-compliance -->
-<!-- Validates outputs, plans, PRs, reports, or workflows against JM-ADK Constitution v6.0.0 using an 18-principle matrix, G0-G3 gate impact, evidence tags, severity, remediation, and fail-closed missing-evidence handling. Use when the user asks for constitution compliance, constitutional audit, Pristino governance validation, pre-delivery compliance, or whether an artifact violates JM-ADK principles. -->
+<!-- Validates outputs, plans, PRs, reports, or workflows against JM-ADK Constitution v7.0.0 using an 11-principle matrix, G0-G3 gate impact, evidence tags, severity, remediation, and fail-closed missing-evidence handling. Use when the user asks for constitution compliance, constitutional audit, Pristino governance validation, pre-delivery compliance, or whether an artifact violates JM-ADK principles. -->
 # Constitution Compliance
 
-Validate an artifact against JM-ADK Constitution v6.0.0. A valid compliance
-report covers all 18 principles, maps findings to G0-G3 gates, classifies
+Validate an artifact against JM-ADK Constitution v7.0.0. A valid compliance
+report covers all 11 principles, maps findings to G0-G3 gates, classifies
 severity, requires remediation for every failure, and treats missing evidence as
 `not_verified` rather than a pass. [EXPLICIT]
 
@@ -18,11 +18,11 @@ must trace to them, not to model recall. [EXPLICIT]
 
 | Path | Use | Load |
 |---|---|---|
-| `assets/constitution-v6-principles.json` | Canonical 18-principle map + G0-G3 gates, derived from `references/ontology/constitution-v6.0.0.md` | Always |
+| `assets/constitution-v7-principles.json` | Canonical 11-principle map + G0-G3 gates, derived from `references/ontology/constitution-v7.0.0.md` | Always |
 | `assets/compliance-report-contract.json` | Required sections, status enum, evidence tags, blocked phrases | Always |
 | `assets/severity-policy.json` | P0-P3 severity mapping and gate-impact rules | Always |
 | `assets/activation-policy.json` | Activation, false-positive, version-drift, missing-evidence rules | When deciding to activate or to suppress a finding |
-| `references/ontology/constitution-v6.0.0.md` | Canonical v6.0.0 text + v5.2.0 crosswalk | When verifying source text or version drift |
+| `references/ontology/constitution-v7.0.0.md` | Canonical v7.0.0 text + v6.0.0 crosswalk | When verifying source text or version drift |
 | `scripts/validate_constitution_report.py` | Offline JSON report validator | When a JSON report exists |
 | `scripts/check.sh` | Positive + negative fixture check | When local scripts can run |
 
@@ -68,13 +68,13 @@ and name the missing input. Never mark a principle `pass` from silence. [EXPLICI
 
 ## Compliance Process
 
-1. Confirm the target Constitution version is v6.0.0. If the artifact cites
-   v5.2.0, classify as version drift (P1) and audit via the v6 crosswalk. [EXPLICIT]
+1. Confirm the target Constitution version is v7.0.0. If the artifact cites
+   v6.0.0, classify as version drift (P1) and audit via the v6.0.0 crosswalk. [EXPLICIT]
 2. Load the three Always assets plus `activation-policy.json`. [EXPLICIT]
 3. Inspect the artifact and evidence sources. Cite file paths, command output,
    or explicit user statements — every factual matrix claim carries a tag. [EXPLICIT]
 4. Produce one matrix row per principle, status
-   `pass|fail|not_verified|not_applicable`. Exactly 18 rows, each principle once.
+   `pass|fail|not_verified|not_applicable`. Exactly 11 rows, each principle once.
 5. For every `fail`: severity, gate impact, evidence, remediation (all non-empty).
 6. For every `not_verified`: the missing evidence and the next command, file, or
    decision that would resolve it.
@@ -92,10 +92,10 @@ principle that cannot apply is `not_applicable` with a one-line reason — not a
 
 Every report includes, in order: [EXPLICIT]
 
-1. Constitution version `v6.0.0`.
+1. Constitution version `v7.0.0`.
 2. Artifact description and audit gate (mark if inferred).
 3. Overall status: `pass`, `blocked`, or `not_verified`.
-4. Matrix with all 18 principles.
+4. Matrix with all 11 principles.
 5. G0-G3 gate impact.
 6. Violations table.
 7. Missing-evidence table.
@@ -110,7 +110,7 @@ Every report includes, in order: [EXPLICIT]
 | Any P0 or P1 `fail` present | `blocked` |
 | Any required-gate evidence is `not_verified` | `not_verified` |
 | Only P2/P3 gaps, all evidence present | `pass` (with caveats) |
-| All 18 `pass` / `not_applicable`, evidence complete | `pass` |
+| All 11 `pass` / `not_applicable`, evidence complete | `pass` |
 
 ## Severity Policy
 
@@ -130,8 +130,8 @@ blocks even if 17 principles pass. [EXPLICIT]
 Checklist the report must satisfy before delivery (superset of the contract;
 each item is independently checkable): [EXPLICIT]
 
-- [ ] Constitution version is `v6.0.0`; no stale `v5.2.0` target except as a drift finding.
-- [ ] All 18 principles represented exactly once.
+- [ ] Constitution version is `v7.0.0`; no stale `v6.0.0` target except as a drift finding.
+- [ ] All 11 principles represented exactly once.
 - [ ] Every row has status, evidence, severity, remediation, and gate impact.
 - [ ] Every `fail` row has non-empty remediation.
 - [ ] Every `not_verified` row names the missing evidence and the next step.
@@ -156,7 +156,7 @@ attached; `gate` absent. [INFERENCE]
 
 ## Edge & Failure Cases
 
-- **Artifact cites v5.2.0:** audit against v6.0.0, raise a version-drift finding (P1).
+- **Artifact cites v6.0.0:** audit against v7.0.0, raise a version-drift finding (P1).
 - **Missing artifact:** `not_verified`, not `pass`; request the artifact.
 - **Partial evidence:** mark only evidenced principles `pass`; the rest `not_verified`.
 - **Conflicting requirements:** map each conflict to its principles and require an

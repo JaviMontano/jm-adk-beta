@@ -1,10 +1,10 @@
 ---
 name: brand-output
 version: 1.0.0
-description: "Branded output generation: HTML, DOCX, XLSX, folios, templates (Sofka DS tokens in references/brand). Topics: brand-docx, brand-html, brand-xlsx, branded-html-output, folio-generator, html-brand, presentation-design, xlsx-template-creator."
+description: "Branded output generation: HTML/CSS/JS, DOCX, XLSX, PDF, vector art, folios, templates (MetodologIA DS tokens in references/brand). Topics: brand-art, brand-docx, brand-html, brand-pdf, brand-xlsx, branded-html-output, folio-generator, html-brand, presentation-design, xlsx-template-creator."
 params:
   topic:
-    enum: [brand-docx, brand-html, brand-xlsx, branded-html-output, folio-generator, html-brand, presentation-design, xlsx-template-creator]
+    enum: [brand-art, brand-docx, brand-html, brand-pdf, brand-xlsx, branded-html-output, folio-generator, html-brand, presentation-design, xlsx-template-creator]
     required: true
     infer: from user request; ask only if ambiguous
   depth:
@@ -23,12 +23,12 @@ routes:
 
 # brand-output
 
-Router skill for **branded deliverable generation** with Sofka DS tokens. Resolve
+Router skill for **branded deliverable generation** with MetodologIA DS tokens. Resolve
 `topic`, then Read EXACTLY ONE playbook from `routes:` — never load the cluster. [EXPLICIT]
 
 ## When to use
 Any request to produce a branded artifact: HTML pages/folios, DOCX, XLSX, slides,
-or reusable templates. **Not** for raw content authoring (no brand) or non-Sofka
+or reusable templates. **Not** for raw content authoring (no brand) or non-MetodologIA
 output — route those elsewhere. [INFERENCE]
 
 ## Inputs / Outputs
@@ -49,7 +49,7 @@ Router aids in `assets/` — `assets/routing-checklist.md` and `assets/quality-r
 
 ## Validation gate (done = all true)
 - Exactly one playbook loaded; topic matches the artifact actually produced. [EXPLICIT]
-- Sofka DS tokens applied from `references/brand`; no hardcoded brand values. [CONFIG]
+- MetodologIA DS tokens applied from `references/brand`; no hardcoded brand values. [CONFIG]
 - Constitution v6.0.0 enforcement + script-first rule honored (generate via script, not hand-edits). [EXPLICIT]
 - Evidence tags present on non-obvious claims; family not mixed (kit set: `[EXPLICIT]`/`[INFERENCE]`/`[ASSUMPTION]`/`[CONFIG]`/`[DOC]`). [DOC]
 

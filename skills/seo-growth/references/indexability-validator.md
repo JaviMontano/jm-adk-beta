@@ -17,7 +17,7 @@ Enforces Constitution XVIII: every directory MUST have a README.md. Scans the re
 ### Step 1: Discover
 - List all directories, excluding by default: `node_modules`, `.git`, `workspace/`, `dist`, `build`, `.next`, `coverage`, `__pycache__`, `.venv`, any path in `.gitignore`. Exclusion set is configurable; record it in the report header so the score is reproducible. [EXPLICIT]
 - For each directory, check if `README.md` exists (case-sensitive on Linux/CI; treat `readme.md` as a finding, not a pass — case mismatch breaks links on case-sensitive filesystems). [EXPLICIT]
-- Read root README.md and extract top-level directory links (markdown `[text](path/)` and bare `path/` references).
+- Read root README.md and extract top-level directory links (markdown directory links and bare `path/` references).
 - Check .gitignore for comment coverage.
 - **Decision**: walk the tree top-down, not via `git ls-files`. Trade-off — top-down catches empty/untracked dirs that should be documented or removed; `git ls-files` would miss them but is faster. Correctness wins here. [EXPLICIT]
 

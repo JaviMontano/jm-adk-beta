@@ -57,7 +57,7 @@
     },
     {
       "id": "governance-single-brand",
-      "input": "One asset that mixes our MetodologIA, Sofka, and JM Labs branding for the launch.",
+      "input": "One asset that mixes our MetodologIA branding for the launch.",
       "expected_checks": ["enforces_single_brand", "asks_which_brand", "assets"]
     }
   ]

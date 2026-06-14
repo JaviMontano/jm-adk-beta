@@ -12,5 +12,5 @@ Use when: format and brand are explicit and only one enum fits.
 Do NOT use when: two brands or two topics are plausible — escalate to `primary.md`
 and ask one disambiguating question. [EXPLICIT]
 
-Example: "Generate the Sofka HTML one-pager from these tokens" → `html-brand`,
+Example: "Generate the MetodologIA HTML one-pager from these tokens" → `html-brand`,
 quick essentials, gate, deliver.

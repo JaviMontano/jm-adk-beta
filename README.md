@@ -2,6 +2,27 @@
 
 Catalog-driven multi-runtime agent harness. Successor of [jm-adk-alfa](https://github.com/JaviMontano/jm-adk-alfa) (frozen at tag `alfa-final`).
 
+## Private Preview Status
+
+Pristino Beta is a private pre-release harness. [CONFIG] It is not public yet and
+is planned for public release with Ciclo 2 of the 2026 Programa de
+Empoderamiento, after release gates pass. [SUPUESTO] If a user without access
+opens or clones `JaviMontano/jm-adk-beta`, GitHub may return 404; that is the
+expected behavior for a private repository.
+
+Beta is a separate product line from Alfa. [CONFIG] Alfa remains the public,
+operational harness for site/app creation, Hostinger/Firebase workflows, and
+vibe coding today. Beta focuses on a smaller catalog-driven harness for the
+vibe coder and the AI-native knowledge worker.
+
+Start here:
+
+- [Private preview](docs/pristino-beta/private-preview.md)
+- [How to install private Beta](docs/pristino-beta/how-to-install-private-beta.md)
+- [Prompt parametrico para empezar](docs/pristino-beta/prompt-parametrico-empezar.md)
+- [Personas: vibe coder / knowledge worker](docs/pristino-beta/personas-vibe-coder-knowledge-worker.md)
+- [FAQ](docs/pristino-beta/faq.md)
+
 **611 alfa skills → 73 beta skills** (35 routers + 24 competencies + 14 jarvis-os) [CODE: `ls -d skills/*/` = 73], all 611 dispositioned and traced, no load-bearing capability dropped. Runs on **Claude Code, Antigravity, Codex** from one catalog.
 
 ## Principles
@@ -42,11 +63,11 @@ Measured (`evals/token-benchmark.json`, chars/4 applied identically to all arms 
 
 | Runtime | Alfa (measured) | Beta naive | Beta (measured) | vs alfa |
 |---|---|---|---|---|
-| Claude Code | 29,552 | 3,869 | **2,234** | **−92%** |
-| Antigravity | 36,801 | 5,377 | **3,377** | **−91%** |
-| Codex | 1,651 | 3,820 | **2,214** | +34%* |
+| Claude Code | 29,552 | 3,869 | **2,301** | **−92%** |
+| Antigravity | 36,801 | 5,377 | **3,614** | **−90%** |
+| Codex | 1,651 | 3,820 | **2,281** | +38%* |
 
-\* Alfa's AGENTS.md carried no skill index — Codex sessions had no catalog access. Beta inlines the full 73-skill tier-0 index; the +563 tokens buy complete catalog routing. Honest trade-off, recorded as measured, not hidden.
+\* Alfa's AGENTS.md carried no skill index — Codex sessions had no catalog access. Beta inlines the full 73-skill tier-0 index; the +630 tokens buy complete catalog routing. Honest trade-off, recorded as measured, not hidden.
 
 Regenerate with `python3 scripts/token-stats.py`. The table updates **only** from committed benchmark data, never hand-typed (caveman honesty rule) — a number here with no matching commit in `evals/` is a bug.
 
@@ -57,9 +78,14 @@ Regenerate with `python3 scripts/token-stats.py`. The table updates **only** fro
 - 3-runtime smoke: 10 canonical tasks pass on Claude Code, Antigravity, Codex.
 - Generated surfaces match catalog: re-running `build-indexes.py` produces no diff.
 
+Current private-preview note: on the universal branch inspected 2026-06-12,
+`validate-coverage.py` passes and `check-token-budget.py` fails
+(`claude-code 3075/2600`, `antigravity 4514/4000`, `codex 3118/2300`). [CONFIG]
+That failure is a release blocker, not a hidden detail.
+
 ## Anti-scope
 
-- Not a general agent framework — only the JM/Sofka catalog, not arbitrary third-party skills.
+- Not a general agent framework — only the MetodologIA catalog, not arbitrary third-party skills.
 - No per-runtime forks of skill logic; runtime differences live only in `runtime/*-deltas`.
 - `migrate/` is throwaway and **deleted at GA** — do not build on it.
 - No prices in any output; FTE-months + disclaimers only (governance rule).

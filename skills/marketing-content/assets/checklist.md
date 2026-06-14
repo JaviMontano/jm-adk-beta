@@ -7,7 +7,7 @@ A fast pre-return checklist for any marketing-content run. Pair it with
 - [ ] Resolved exactly one `topic` from the 8-value enum.
 - [ ] If two topics fit, asked one clarifying question before routing.
 - [ ] Loaded exactly one playbook from `routes.json`; no siblings loaded.
-- [ ] Confirmed a single brand (MetodologIA / Sofka / JM Labs).
+- [ ] Confirmed a single brand (MetodologIA).
 
 ## Discover
 - [ ] Gathered the resolved playbook's required inputs.

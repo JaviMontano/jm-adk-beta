@@ -19,7 +19,7 @@ QA-PLAN.md is the authoritative quality artifact for this project. It aggregates
 Run /sdd:qa to generate or refresh. Auto-invoked by /sdd:analyze.
 ```
 
-**MUST NOT contain**: technology stack, frameworks, databases, implementation details, specific tools or versions. These belong in `/iikit-02-plan`. See [phase-separation-rules.md](../iikit-core/references/phase-separation-rules.md).
+**MUST NOT contain**: technology stack, frameworks, databases, implementation details, specific tools or versions. These belong in `/iikit-02-plan`. See `phase-separation-rules.md`.
 
 **Anti-scope** (explicitly out of bounds, do not generate): feature requirements (→ `/iikit-01-specify`), task breakdowns (→ `/iikit-05-tasks`), test plans (→ `/iikit-04-testify`), CI/deploy config, license text, code of conduct. A constitution is *principles*, not *plans*. [EXPLICIT]
 
@@ -42,7 +42,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    ```
    If FAIL (missing sections or placeholders): ERROR — show details, suggest re-running init.
 3. Check if constitution exists: `cat CONSTITUTION.md 2>/dev/null || echo "NO_CONSTITUTION"`
-4. If missing, copy from [constitution-template.md](../iikit-core/templates/constitution-template.md)
+4. If missing, copy from `constitution-template.md`
 
 **Gate decision — fail closed**: any prerequisite miss (no PREMISE.md, validation FAIL) STOPS the workflow with a remediation message; never auto-create PREMISE.md or proceed on a partial premise. Rationale: the constitution inherits scope and intent from PREMISE.md — proceeding without it produces a constitution that silently contradicts the project's actual intent, the exact failure this kit exists to prevent. [EXPLICIT]
 
@@ -58,13 +58,13 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 3. **Draft content**: replace all placeholders, preserve heading hierarchy, ensure each principle has name + rules + rationale, governance section covers amendment/versioning/compliance.
 
-4. **Consistency check**: validate against [plan-template.md](../iikit-core/templates/plan-template.md), [spec-template.md](../iikit-core/templates/spec-template.md), [tasks-template.md](../iikit-core/templates/tasks-template.md).
+4. **Consistency check**: validate against `plan-template.md`, `spec-template.md`, `tasks-template.md`.
 
 5. **Sync Impact Report** (HTML comment at top): version change, modified principles, added/removed sections, follow-up TODOs.
 
 6. **Validate**: no remaining bracket tokens, version matches report, dates in ISO format, principles are declarative and testable. Constitution MUST have at least 3 principles — if fewer, add more based on the project context.
 
-7. **Phase separation validation**: scan for technology-specific content per [phase-separation-rules.md](../iikit-core/references/phase-separation-rules.md). Auto-fix violations, re-validate until clean.
+7. **Phase separation validation**: scan for technology-specific content per `phase-separation-rules.md`. Auto-fix violations, re-validate until clean.
 
 8. **Write** to `CONSTITUTION.md`
 
@@ -123,7 +123,7 @@ Parse the JSON and present:
 1. If `clear_after` is true: suggest `/clear` before proceeding
 2. Present `next_step` as the primary recommendation
 3. If `alt_steps` non-empty: list as alternatives
-4. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in [model-recommendations.md](../iikit-core/references/model-recommendations.md) for agent-specific switch commands.
+4. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in `model-recommendations.md` for agent-specific switch commands.
 5. Append dashboard link
 
 Format:

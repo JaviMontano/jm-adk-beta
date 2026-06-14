@@ -1,0 +1,28 @@
+{
+  "constitution_version": "v7.0.0",
+  "prior_version": "v6.0.0",
+  "principle_count": 11,
+  "personas": ["vibe-coder", "ai-native-knowledge-worker"],
+  "gates": {
+    "G0": "Active profile resolved; scope + persona understood before work begins",
+    "G1": "After spec: claims tagged, [ASSUMPTION] <=30%, ambiguities logged, estimates computed (P8)",
+    "G2": "After plan: data model + contracts defined, profile standards referenced, no hardcoded profile assumptions",
+    "G3": "Active-profile acceptance: deliverable meets the profile's declared quality bar"
+  },
+  "principles": [
+    { "n": 1, "name": "Think First, Act Next", "section": "I. Foundation", "gates": ["G0", "G1"], "applies_to": ["plan", "spec", "code", "report"] },
+    { "n": 2, "name": "Simple First, Robust Next", "section": "I. Foundation", "gates": ["G1", "G2"], "applies_to": ["plan", "code"] },
+    { "n": 3, "name": "Test-Driven Development", "section": "II. Engineering Discipline", "gates": ["G1", "G2"], "applies_to": ["code", "pr"] },
+    { "n": 4, "name": "BDD Full-Spectrum Quality", "section": "II. Engineering Discipline", "gates": ["G2"], "applies_to": ["code", "pr", "report"] },
+    { "n": 5, "name": "Sequential-First, Parallel-Ready Workflow", "section": "II. Engineering Discipline", "gates": ["G1", "G2"], "applies_to": ["plan", "workflow"] },
+    { "n": 6, "name": "Code Sustainability", "section": "II. Engineering Discipline", "gates": ["G2", "G3"], "applies_to": ["code", "pr"] },
+    { "n": 7, "name": "Indexable & Self-Organizing Repository", "section": "II. Engineering Discipline", "gates": ["G3"], "applies_to": ["repo", "docs"] },
+    { "n": 8, "name": "Estimation Integrity", "section": "III. Integrity", "gates": ["G1"], "applies_to": ["plan", "estimate", "proposal"], "note": "estimates computed (decomposition + scripts + sources), never token-count/gut; currency is profile-scoped" },
+    { "n": 9, "name": "Deliverable Quality", "section": "IV. Deliverable Quality", "gates": ["G2", "G3"], "applies_to": ["any"], "note": "concrete standards (architecture, accessibility, brand, i18n, content authority) declared by the ACTIVE profile, not core" },
+    { "n": 10, "name": "Secure by Default", "section": "V. Security & Trust", "gates": ["G2", "G3"], "applies_to": ["code", "config", "data"], "floor": true },
+    { "n": 11, "name": "Continuous Learning Loop", "section": "VI. Evolution", "gates": ["G3"], "applies_to": ["retro", "amendment"] }
+  ],
+  "conflict_floor": ["10 (Secure by Default)", "9 (Deliverable Quality of active profile)"],
+  "evidence_tags": ["[CODE]", "[CONFIG]", "[DOC]", "[INFERENCE]", "[ASSUMPTION]"],
+  "source": "references/ontology/constitution-v7.0.0.md"
+}

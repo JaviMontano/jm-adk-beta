@@ -5,14 +5,14 @@ Use this to reason about the routing itself before committing to a topic.
 ## Self-check before routing
 - **Format certainty.** Did the user name a format (HTML/DOCX/XLSX/slides/folio)?
   If implicit, what signal disambiguates it? Record the signal as `[INFERENCIA]`.
-- **Brand certainty.** Sofka DS v4, MetodologIA, or fallback config? If two brands
+- **Brand certainty.** MetodologIA DS, MetodologIA, or fallback config? If two brands
   are plausible, ask — never guess between brands. [EXPLICIT]
 - **Binary vs spec.** XLSX request: does the user want a finished workbook
   (`brand-xlsx`) or a reusable, diffable spec (`xlsx-template-creator`)?
 - **Numbering.** Does the document need a unique correlative? → `folio-generator`.
 
 ## Tie-break heuristics
-- HTML + "Sofka" / orange / Clash Grotesk → `html-brand`.
+- HTML + "MetodologIA" / orange / Poppins → `html-brand`.
 - HTML + navy/gold/glassmorphism/MetodologIA → `branded-html-output`.
 - HTML + generic/external brand config → `brand-html`.
 - "template" + spreadsheet → `xlsx-template-creator`; "report"/"dashboard" + xlsx

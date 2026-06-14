@@ -1,8 +1,8 @@
 <!-- distilled from alfa skills/html-brand -->
 <!-- > -->
-# Sofka HTML Brand — Document Generator
+# MetodologIA HTML Brand — Document Generator
 
-Generate beautiful, accessible, on-brand HTML deliverables following the Sofka Design System v4. Every output is a self-contained single-file HTML document with all CSS inline, no external dependencies, and full WCAG AA accessibility. [EXPLICIT]
+Generate beautiful, accessible, on-brand HTML deliverables following the MetodologIA Design System. Every output is a self-contained single-file HTML document with all CSS inline, no external dependencies, and full WCAG AA accessibility. [EXPLICIT]
 
 ## Principio Rector
 
@@ -19,7 +19,7 @@ Generate beautiful, accessible, on-brand HTML deliverables following the Sofka D
 ## When to Use
 
 - Creating branded HTML deliverables for client presentations
-- Upgrading existing HTML documents to Sofka Design System v4
+- Upgrading existing HTML documents to MetodologIA Design System
 - Batch processing multiple files to brand compliance
 - Generating executive, technical, or transformation documents
 - Building self-contained HTML reports with WCAG AA accessibility
@@ -29,14 +29,14 @@ Generate beautiful, accessible, on-brand HTML deliverables following the Sofka D
 - Multi-page web applications with routing → use a framework (React, Vue)
 - Interactive dashboards with live data → build a dedicated app
 - Print-only documents → use PDF generation tools
-- Content writing → **sofka-ux-writing** for microcopy and readability
+- Content writing → **ux-writing** for microcopy and readability
 
 ---
 
 ## Assumptions & Limits
 
 - Output is single-file HTML with inline CSS; font `<link>` tags are the only external dependency
-- Design System v4: orange #FF7E08 primary, Clash Grotesk display, Inter body
+- Design System v4: orange #FFD700 primary, Poppins display, Inter body
 - Does NOT handle multi-page apps, routing, or state management (use a framework)
 - Does NOT embed base64 images (bloat); use relative paths or CDN URLs
 - Cannot produce interactive dashboards with live data (build a React/Vue app)
@@ -45,9 +45,9 @@ Generate beautiful, accessible, on-brand HTML deliverables following the Sofka D
 ## Usage
 
 ```
-/sofka-html-brand executive ./output/brief.html
-/sofka-html-brand technical                       # outputs to current directory
-/sofka-html-brand --batch ./legacy-docs/          # upgrade 3+ files in parallel
+/html-brand executive ./output/brief.html
+/html-brand technical                       # outputs to current directory
+/html-brand --batch ./legacy-docs/          # upgrade 3+ files in parallel
 ```
 
 Parse `$1` as document type (`executive`, `technical`, `transformation`) or `--batch` flag. Parse `$2` as output path. [EXPLICIT]
@@ -98,7 +98,7 @@ Is the primary audience C-level / board / stakeholders?
 
 ## Document Structure
 
-Every Sofka HTML deliverable follows this skeleton:
+Every MetodologIA HTML deliverable follows this skeleton:
 
 ```html
 <!DOCTYPE html>
@@ -109,7 +109,7 @@ Every Sofka HTML deliverable follows this skeleton:
 <body>
   <a href="#main" class="skip-link">Ir al contenido</a>
   <header class="hero">         <!-- black bg, orange bottom border -->
-    <div class="hero-logo">sofka_</div>
+    <div class="hero-logo">metodologia_</div>
     <div class="hero-meta-badges">...</div>
     <h1>Title <span>Highlight</span></h1>
     <div class="hero-kpis">...</div>  <!-- 3-4 KPIs -->
@@ -137,21 +137,21 @@ A deliverable is DONE only when all of these hold (measurable, not subjective): 
 - `validate_html.sh` exits 0 — zero structural, font, token, or accessibility errors
 - File size ≤ 500 KB measured on disk (not gzipped) [EXPLICIT]
 - Every `<section>` has a unique `id` AND a matching TOC `<a href="#id">` (1:1, no orphans either direction)
-- Zero hardcoded hex outside the token block — grep `style=` for `#` and confirm only `var(--sofka-*)` references remain
+- Zero hardcoded hex outside the token block — grep `style=` for `#` and confirm only `var(--metodologia-*)` references remain
 - Contrast verified: body text ≥ 4.5:1, large text (≥24px or ≥19px bold) ≥ 3:1, against actual rendered backgrounds [EXPLICIT]
 - No literal placeholder strings remain (`{`, `TODO`, `Lorem`, `XXX`, `...` inside content)
 - Opens correctly offline with network disabled — only font `<link>` requests may 404 gracefully
 
 ## Color Rules
 
-Design System v4 uses yellow for success states because it maintains brand coherence with the warm Sofka palette — green introduces a cold tone that clashes. [EXPLICIT]
+Design System v4 uses yellow for success states because it maintains brand coherence with the warm MetodologIA palette — green introduces a cold tone that clashes. [EXPLICIT]
 
 | Semantic State | Color | Variable | Usage |
 |---------------|-------|----------|-------|
-| Positive/Success | Yellow #FFD700 | `--sofka-positive` | Health indicators, wins, checkmarks |
-| Warning | Amber #D97706 | `--sofka-warning` | Caution states, medium severity |
-| Critical/Error | Red #DC2626 | `--sofka-critical` | Failures, blockers, high severity |
-| Info | Blue #2563EB | `--sofka-info` | Neutral informational, recommended |
+| Positive/Success | Yellow #FFD700 | `--metodologia-positive` | Health indicators, wins, checkmarks |
+| Warning | Amber #D97706 | `--metodologia-warning` | Caution states, medium severity |
+| Critical/Error | Red #DC2626 | `--metodologia-critical` | Failures, blockers, high severity |
+| Info | Blue #2563EB | `--metodologia-info` | Neutral informational, recommended |
 
 Green (#42D36F), teal, violet, and pink exist only for charts and data visualization — never for semantic states. [EXPLICIT]
 
@@ -204,13 +204,13 @@ See `references/design-tokens.md` for the complete CSS variable system. [EXPLICI
 
 | Anti-Pattern | Why It Breaks the Brand | Fix |
 |-------------|------------------------|-----|
-| Green for success | Cold tone clashes with warm Sofka palette | Use yellow `--sofka-positive` |
+| Green for success | Cold tone clashes with warm MetodologIA palette | Use yellow `--metodologia-positive` |
 | External stylesheets | Breaks self-contained guarantee | Inline all CSS in `<style>` block |
 | Base64 inline images | Bloats file past 500KB limit | Use relative paths or CDN URLs |
 | >4 hero KPIs | Visual overload, metrics lose impact | Move extras to "Key Metrics" section |
 | Sections without numbers | Breaks core brand identity pattern | Always use 01, 02... numbered headers |
 | Mixed card variants | Semantic confusion on same element | One semantic state per card |
-| Wrong font pairing | Hierarchy collapse | Clash Grotesk 600-700 display, Inter 400-500 body |
+| Wrong font pairing | Hierarchy collapse | Poppins 600-700 display, Inter 400-500 body |
 
 ## Constraints
 
@@ -241,9 +241,9 @@ See `references/design-tokens.md` for the complete CSS variable system. [EXPLICI
 | RTL language (Arabic, Hebrew) | Add `dir="rtl"` to `<html>`, mirror layout, test bidirectional text |
 | Bilingual document | Use `lang` attribute per section, maintain consistent layout across languages |
 | 15+ sections requested | Split into 2 deliverables; link with navigation footer |
-| Missing design-tokens.md | Fall back to hardcoded Sofka DS v4 values; flag as degraded generation |
+| Missing design-tokens.md | Fall back to hardcoded MetodologIA DS values; flag as degraded generation |
 | Corrupted existing HTML | Parse what is salvageable, rebuild from template, preserve content text |
-| Dark mode only output | Use `--sofka-black` as base bg, ensure all text meets contrast on dark |
+| Dark mode only output | Use `--metodologia-black` as base bg, ensure all text meets contrast on dark |
 | Print-optimized version | Add `@media print` rules: hide TOC, linearize grid, force white bg |
 
 ## Failure Modes
@@ -252,20 +252,20 @@ Runtime breakages and how to recover (distinct from input edge cases above): [EX
 
 | Failure | Symptom | Root Cause | Recovery |
 |---------|---------|-----------|----------|
-| Fonts never load | Body renders in serif fallback | Clash Grotesk `<link>` blocked/offline | Ship `font-family` stack with `system-ui` fallback; never block render on web fonts |
+| Fonts never load | Body renders in serif fallback | Poppins `<link>` blocked/offline | Ship `font-family` stack with `system-ui` fallback; never block render on web fonts |
 | File exceeds 500 KB | Slow first paint, validator fails | Base64 images embedded | Strip base64, swap to relative/CDN paths; re-run validator [EXPLICIT] |
 | TOC links dead | Click scrolls nowhere | Section `id` renamed but TOC not updated | Regenerate TOC from section IDs as the single source of truth |
 | Modal opens but won't close | Stuck overlay, page unscrollable | JS not wired or duplicate IDs | Verify one listener per modal; ensure unique IDs; test ESC + backdrop click |
-| Contrast fails on dark sections | Text invisible on `--sofka-black` | Token chosen for light bg reused on dark | Recompute contrast per background; use light token variant on dark |
+| Contrast fails on dark sections | Text invisible on `--metodologia-black` | Token chosen for light bg reused on dark | Recompute contrast per background; use light token variant on dark |
 | Validator passes, looks broken | Visually wrong despite 0 errors | Validator checks structure, not visual layout | Always eyeball-render before delivery; validator is necessary not sufficient [EXPLICIT] |
 
 ## Example: Good vs Bad
 
 **Good hero section:**
 ```html
-<header class="hero" style="background: var(--sofka-black); border-bottom: 4px solid var(--sofka-orange);">
-  <div class="hero-logo" style="font-family: var(--font-display); color: var(--sofka-white);">sofka_</div>
-  <h1 style="color: var(--sofka-white);">Core Banking <span style="color: var(--sofka-orange);">Modernization</span></h1>
+<header class="hero" style="background: var(--metodologia-black); border-bottom: 4px solid var(--metodologia-orange);">
+  <div class="hero-logo" style="font-family: var(--font-display); color: var(--metodologia-white);">metodologia_</div>
+  <h1 style="color: var(--metodologia-white);">Core Banking <span style="color: var(--metodologia-orange);">Modernization</span></h1>
   <div class="hero-kpis"><!-- 3 KPIs with icons --></div>
 </header>
 ```
@@ -274,13 +274,13 @@ Runtime breakages and how to recover (distinct from input edge cases above): [EX
 ```html
 <!-- WRONG: hardcoded colors, green for success, no brand font, 6 KPIs -->
 <header style="background: #333; border: 1px solid gray;">
-  <div style="font-family: Arial; color: white;">Sofka</div>
+  <div style="font-family: Arial; color: white;">MetodologIA</div>
   <h1 style="color: #00ff00;">CORE BANKING MODERNIZATION</h1>
   <div><!-- 6 KPIs crammed together --></div>
 </header>
 ```
 
-Differences: hardcoded hex instead of CSS variables, green instead of orange accent, Arial instead of Clash Grotesk, ALL CAPS title, no underscore in wordmark, 6 KPIs exceeds 4-max limit, gray border instead of orange. [EXPLICIT]
+Differences: hardcoded hex instead of CSS variables, green instead of orange accent, Arial instead of Poppins, ALL CAPS title, no underscore in wordmark, 6 KPIs exceeds 4-max limit, gray border instead of orange. [EXPLICIT]
 
 **Worked example — numbered content section (the brand identity pattern):**
 ```html
@@ -289,12 +289,12 @@ Differences: hardcoded hex instead of CSS variables, green instead of orange acc
     <div class="section-number">02</div>
     <div><h2>Estado Actual</h2></div>
   </div>
-  <div class="callout" style="border-left: 4px solid var(--sofka-positive);">
+  <div class="callout" style="border-left: 4px solid var(--metodologia-positive);">
     <strong>Hallazgo:</strong> 92% de uptime sostenido el último trimestre.
   </div>
 </section>
 ```
-Why it passes: unique `id` matching its TOC link, zero-padded `02` number, yellow (`--sofka-positive`) not green for the success callout, no hardcoded hex. [EXPLICIT]
+Why it passes: unique `id` matching its TOC link, zero-padded `02` number, yellow (`--metodologia-positive`) not green for the success callout, no hardcoded hex. [EXPLICIT]
 
 ## Validation Gate
 
@@ -302,7 +302,7 @@ Before delivering any HTML document, verify:
 
 - [ ] Document type matches audience (executive/technical/transformation)
 - [ ] All colors use CSS variables from Design System v4 (no hardcoded hex outside tokens)
-- [ ] Typography: Clash Grotesk for display, Inter for body (no substitutions)
+- [ ] Typography: Poppins for display, Inter for body (no substitutions)
 - [ ] Hero has 3-4 KPIs maximum with orange highlight span
 - [ ] Every section has numbered header (01, 02...) with unique ID
 - [ ] TOC links match all section IDs
@@ -325,8 +325,8 @@ When upgrading 3+ files at once, use parallel sub-agents. Read `references/opera
 | `references/design-tokens.md` | Before building any document | Complete CSS variable system, component classes, typography, shadows, spacing |
 | `references/operations-guide.md` | For batch processing, edge cases, acceptance criteria | Squad pattern, safe text replacement, RTL/bilingual, full checklist |
 | `assets/base-template.html` | Starting a new document | Boilerplate with all components, fonts, inline CSS, JS |
-| `assets/sofka-design-system.css` | Need standalone CSS file | Complete CSS extracted from DS v4 |
-| `assets/sofka-components.js` | Adding JS interactivity | TOC tracking, modals, score bars — namespaced `window.Sofka` |
+| `assets/metodologia-design-system.css` | Need standalone CSS file | Complete CSS extracted from DS v4 |
+| `assets/metodologia-components.js` | Adding JS interactivity | TOC tracking, modals, score bars — namespaced `window.MetodologIA` |
 | `assets/design-system-showcase.html` | Visual reference | Live HTML style guide with every component rendered |
 | `assets/template-ejecutivo-vacio.html` | Quick-start executive | Empty executive template ready for content |
 | `scripts/validate_html.sh` | After generating any HTML | Validates structure, fonts, tokens, accessibility |
@@ -346,10 +346,10 @@ When upgrading 3+ files at once, use parallel sub-agents. Read `references/opera
 
 ## Cross-References
 
-- **sofka-ux-writing:** UX writing standards that govern microcopy and readability in branded documents
-- **sofka-user-representative:** User representative review ensures deliverables are readable and accessible
-- **sofka-design-system:** Design system component library that HTML Brand implements
-- **sofka-executive-pitch:** Executive-facing deliverables that use HTML Brand for presentation
+- **ux-writing:** UX writing standards that govern microcopy and readability in branded documents
+- **user-representative:** User representative review ensures deliverables are readable and accessible
+- **metodologia-design-system:** Design system component library that HTML Brand implements
+- **executive-pitch:** Executive-facing deliverables that use HTML Brand for presentation
 
 ## Output Format Protocol
 

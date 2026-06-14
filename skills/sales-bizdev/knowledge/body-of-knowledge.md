@@ -79,7 +79,7 @@ One artifact answers exactly one buying question: one-pager ("what is this, why 
 
 - **Evidence taxonomy:** Alfa-core `[CÓDIGO]`/`[CONFIG]`/`[DOC]`/`[INFERENCIA]`/`[SUPUESTO]`; some playbooks use `[EXPLICIT]`/`[INFERRED]`/`[OPEN]`. One family, one spelling per output.
 - **No invented prices:** FTE-months + disclaimer; route price asks to a human.
-- **Single brand:** identify first; never mix Sofka / MetodologIA / JM Labs.
+- **Single brand:** identify first; stay on the MetodologIA brand.
 - **No green-as-success:** state confidence, don't style it.
 - **No client PII:** public professional context only; decline personal-data requests and deliver the rest.
 - **Every `[SUPUESTO]`/`[OPEN]` carries a verification next step.**

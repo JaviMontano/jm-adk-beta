@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pristino Beta — Private Preview</title>
+  <meta name="description" content="Pristino Beta es un harness privado, catalog-driven y profile-driven para vibe coders y AI-native knowledge workers. Public release previsto para Ciclo 2 2026 sujeto a gates.">
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d33;--ink:#f7fbff;--muted:#a9b8ca;--gold:#ffd700;--cyan:#00ffff;--line:rgba(255,255,255,.14)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+    main{max-width:1040px;margin:0 auto;padding:56px 24px}
+    section{padding:44px 0;border-bottom:1px solid var(--line)}
+    .eyebrow{font:700 12px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--cyan);letter-spacing:.12em;text-transform:uppercase}
+    h1{font-size:clamp(38px,6vw,72px);line-height:1.02;margin:18px 0}
+    h2{font-size:28px;margin:0 0 18px;color:var(--gold)}
+    p{max-width:760px;color:var(--muted)}
+    a{color:var(--gold)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+    .card{background:var(--panel);border:1px solid var(--line);padding:20px}
+    .card strong{display:block;color:var(--ink);margin-bottom:8px}
+    .cta{display:inline-block;margin:10px 12px 0 0;padding:10px 16px;border:1px solid var(--gold);text-decoration:none;font-weight:700}
+    .primary{background:var(--gold);color:#06101d}
+    code{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px}
+    table{width:100%;border-collapse:collapse;margin-top:16px}
+    td,th{border-bottom:1px solid var(--line);padding:10px;text-align:left;color:var(--muted)}
+    th{color:var(--ink)}
+  </style>
+</head>
+<body>
+<main>
+  <section>
+    <div class="eyebrow">Private preview · no GA · no public access yet</div>
+    <h1>Pristino Beta</h1>
+    <p>Harness catalog-driven para el vibe coder y el AI-native knowledge worker. Beta es un proyecto privado separado de Alfa y su salida publica esta prevista para el Ciclo 2 del Programa de Empoderamiento 2026, sujeta a gates.</p>
+    <a class="cta primary" href="docs/pristino-beta/private-preview.md">Private preview</a>
+    <a class="cta" href="docs/pristino-beta/how-to-install-private-beta.md">How to install</a>
+  </section>
+
+  <section>
+    <h2>Para quien es</h2>
+    <div class="grid">
+      <div class="card"><strong>Vibe coder</strong><p>Crea mini/super apps en ciclos build-run-observe, con tests, seguridad y evidencia.</p></div>
+      <div class="card"><strong>Knowledge worker</strong><p>Delegates research, synthesis, briefs and decisions with provenance and source discipline.</p></div>
+      <div class="card"><strong>MetodologIA profile</strong><p>Activa reglas de marca, calidad y comercial cuando el entregable pertenece al ecosistema MetodologIA.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Estado de gates</h2>
+    <table>
+      <tr><th>Gate</th><th>Estado private preview</th></tr>
+      <tr><td><code>validate-coverage.py</code></td><td>PASS en rama universal inspeccionada.</td></tr>
+      <tr><td><code>check-token-budget.py</code></td><td>FAIL; blocker pre-release documentado.</td></tr>
+      <tr><td>3-runtime smoke</td><td>Pendiente antes de public release.</td></tr>
+      <tr><td>Visibilidad GitHub</td><td>Privada; 404 esperado sin permiso.</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Empieza con una tarea pequena</h2>
+    <p>Usa el prompt parametrico para confirmar repo, gates, perfil y una primera tarea real sin tocar superficies generadas a mano.</p>
+    <a class="cta primary" href="docs/pristino-beta/prompt-parametrico-empezar.md">Prompt de arranque</a>
+    <a class="cta" href="docs/pristino-beta/personas-vibe-coder-knowledge-worker.md">Ver personas</a>
+  </section>
+</main>
+</body>
+</html>

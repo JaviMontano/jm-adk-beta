@@ -1,42 +1,52 @@
 {
   "brand-html": {
     "playbook": "references/brand-html.md",
-    "desc": ">",
+    "desc": "General branded HTML deliverable on the MetodologIA Design System.",
     "alfa": "brand-html"
   },
   "html-brand": {
     "playbook": "references/html-brand.md",
-    "desc": ">",
+    "desc": "Self-contained single-file HTML deliverable, CSS inline, WCAG AA, MetodologIA DS.",
     "alfa": "html-brand"
   },
   "brand-docx": {
     "playbook": "references/brand-docx.md",
-    "desc": ">",
+    "desc": "Editable Word/DOCX document on brand tokens (python-docx).",
     "alfa": "brand-docx"
   },
   "brand-xlsx": {
     "playbook": "references/brand-xlsx.md",
-    "desc": ">",
+    "desc": "Branded Excel/XLSX workbook with brand styling and tokens.",
     "alfa": "brand-xlsx"
+  },
+  "brand-pdf": {
+    "playbook": "references/brand-pdf.md",
+    "desc": "Print-ready PDF rendered deterministically from brand HTML (Chrome print-to-pdf).",
+    "alfa": null
+  },
+  "brand-art": {
+    "playbook": "references/brand-art.md",
+    "desc": "Brand vector art/SVG: heroes, spot illustration, icons, OG cards (flat, faceless figures).",
+    "alfa": null
   },
   "folio-generator": {
     "playbook": "references/folio-generator.md",
-    "desc": ">",
+    "desc": "Multi-page branded collateral folio.",
     "alfa": "folio-generator"
   },
   "xlsx-template-creator": {
     "playbook": "references/xlsx-template-creator.md",
-    "desc": "[EXPLICIT]",
+    "desc": "Reusable branded XLSX template with named styles. [EXPLICIT]",
     "alfa": "xlsx-template-creator"
   },
   "branded-html-output": {
     "playbook": "references/branded-html-output.md",
-    "desc": ">",
+    "desc": "Apply brand tokens to existing HTML output.",
     "alfa": "branded-html-output"
   },
   "presentation-design": {
     "playbook": "references/presentation-design.md",
-    "desc": ">",
+    "desc": "Branded slide/presentation visual design.",
     "alfa": "presentation-design"
   }
 }

@@ -92,7 +92,7 @@ Do NOT guess from hostname or system username. [EXPLICIT]
 
 #### Step 5 — Create PREMISE.md
 
-If `PREMISE.md` does not exist, create it from the user's input using [premise-template.md](templates/premise-template.md). Extract from the user's init description: [EXPLICIT]
+If `PREMISE.md` does not exist, create it from the user's input using `premise-template.md`. Extract from the user's init description: [EXPLICIT]
 - **What**: project description (from the user's input text)
 - **Who**: target users (infer from context, or ask)
 - **Why**: problem being solved (infer from context, or ask)
@@ -117,7 +117,7 @@ Directories created, hook status, PREMISE.md status. Suggest `/iikit-00-constitu
 
 **Gate**: Requires `is_github_remote` AND user provided a PRD/SDD document. If not met, skip silently.
 
-Follow the detailed procedure in [prd-seeding.md](references/prd-seeding.md): resolve input → read document → extract and order features → present for user confirmation → create GitHub issues. [EXPLICIT]
+Follow the detailed procedure in `prd-seeding.md`: resolve input → read document → extract and order features → present for user confirmation → create GitHub issues. [EXPLICIT]
 
 **Why gated on `is_github_remote`**: seeding writes GitHub issues, which require a GitHub remote; on a non-GitHub or remote-less repo the step has no target and is skipped silently rather than erroring. The `prd_source` from Step 0 is the second half of the gate — both must hold. [INFERENCIA] Never create issues without the explicit user-confirmation step in prd-seeding.md, even when both gate conditions pass. [EXPLICIT]
 
@@ -179,13 +179,13 @@ If no selector, no match, or ambiguous match: show available features with stage
 
 ## Subcommand: help (also default when no subcommand)
 
-Display the workflow reference from [help-reference.md](references/help-reference.md) verbatim. [EXPLICIT]
+Display the workflow reference from `help-reference.md` verbatim. [EXPLICIT]
 
 ## Resources
 
-- [spec-template.md](templates/spec-template.md), [plan-template.md](templates/plan-template.md), [agent-file-template.md](templates/agent-file-template.md) — feature scaffolding
-- [prd-issue-template.md](templates/prd-issue-template.md) — PRD backlog seeding
-- [help-reference.md](references/help-reference.md) — workflow command reference
+- `spec-template.md`, `plan-template.md`, `agent-file-template.md` — feature scaffolding
+- `prd-issue-template.md` — PRD backlog seeding
+- `help-reference.md` — workflow command reference
 
 ## Error Handling
 

@@ -37,7 +37,7 @@ More or fewer than four files means the P08 contract is broken. [DOC]
 - **Determinism:** ISO dates (`YYYY-MM-DD`); offline; identical inputs produce
   identical CREATE bytes. [CONFIG]
 - **Decision vocabulary (closed set):** keep / pivot / kill. [DOC]
-- **Brand:** single-brand JM Labs. No Sofka or MetodologIA framing. [DOC]
+- **Brand:** single-brand JM Labs. No MetodologIA or MetodologIA framing. [DOC]
 - **Signal hygiene:** never use green as a success signal in sample content. [DOC]
 
 ## 4. Decision rules

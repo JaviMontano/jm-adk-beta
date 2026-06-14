@@ -16,7 +16,7 @@ You **MUST** consider the user input before proceeding (if not empty). [EXPLICIT
 
 ## Constitution Loading
 
-Load constitution per [constitution-loading.md](../iikit-core/references/constitution-loading.md) (basic mode — note TDD requirements for task ordering). [EXPLICIT]
+Load constitution per `constitution-loading.md` (basic mode — note TDD requirements for task ordering). [EXPLICIT]
 
 If the constitution mandates TDD, every implementation task for a story MUST be preceded by its test task(s) in ID order; a story whose first task is an implementation task is a constitution violation — reorder before writing. [INFERENCIA]
 
@@ -25,14 +25,14 @@ If the constitution mandates TDD, every implementation task for a story MUST be 
 1. Run: `bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/check-prerequisites.sh --phase 05 --json`
    Windows: `pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/check-prerequisites.ps1 -Phase 05 -Json`
 2. Parse JSON for `FEATURE_DIR` and `AVAILABLE_DOCS`. If missing plan.md: ERROR. If script exits with testify error: STOP and tell the user to run `/iikit-04-testify` first.
-3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in [conversation-guide.md](../iikit-core/references/conversation-guide.md). After user selects, run:
+3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in `conversation-guide.md`. After user selects, run:
    ```bash
    bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/set-active-feature.sh --json <selection>
    ```
    Windows: `pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/set-active-feature.ps1 -Json <selection>`
 
    Then re-run the prerequisites check from step 1.
-4. Checklist gate per [checklist-gate.md](../iikit-core/references/checklist-gate.md).
+4. Checklist gate per `checklist-gate.md`.
 
 **Failure modes** — handle deterministically, do not improvise: [INFERENCIA]
 
@@ -50,7 +50,7 @@ If the constitution mandates TDD, every implementation task for a story MUST be 
 2. **User story mapping**: verify each story in spec.md has acceptance criteria (story with zero criteria → WARNING, cannot generate verifiable tasks for it)
 3. **Dependency pre-analysis**: identify shared entities used by multiple stories -> suggest Foundational phase
 
-Report readiness per [formatting-guide.md](../iikit-core/references/formatting-guide.md) (Plan Readiness section). [EXPLICIT]
+Report readiness per `formatting-guide.md` (Plan Readiness section). [EXPLICIT]
 
 ## Execution Flow
 
@@ -127,7 +127,7 @@ A clean graph is the acceptance bar for this phase: zero cycles, zero phase-boun
 
 ### 8. Write tasks.md
 
-Use [tasks-template.md](../iikit-core/templates/tasks-template.md) with phases, dependencies, parallel examples, and implementation strategy. [EXPLICIT]
+Use `tasks-template.md` with phases, dependencies, parallel examples, and implementation strategy. [EXPLICIT]
 
 ## Report
 
@@ -135,7 +135,7 @@ Output: path to tasks.md, total count, count per story, parallel opportunities, 
 
 ## Semantic Diff on Re-run
 
-If tasks.md exists: preserve `[x]` completion status, map old IDs to new by similarity, warn about changes to completed tasks. Ask confirmation before overwriting. Use format from [formatting-guide.md](../iikit-core/references/formatting-guide.md) (Semantic Diff section). [EXPLICIT]
+If tasks.md exists: preserve `[x]` completion status, map old IDs to new by similarity, warn about changes to completed tasks. Ask confirmation before overwriting. Use format from `formatting-guide.md` (Semantic Diff section). [EXPLICIT]
 
 **Re-run edge cases** — never silently destroy completion state: [INFERENCIA]
 
@@ -172,7 +172,7 @@ Parse the JSON and present: [EXPLICIT]
 1. If `clear_after` is true: suggest `/clear` before proceeding
 2. Present `next_step` as the primary recommendation
 3. If `alt_steps` non-empty: list as alternatives
-4. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in [model-recommendations.md](../iikit-core/references/model-recommendations.md) for agent-specific switch commands.
+4. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in `model-recommendations.md` for agent-specific switch commands.
 5. Append dashboard link
 
 Format:

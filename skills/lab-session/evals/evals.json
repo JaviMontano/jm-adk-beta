@@ -58,7 +58,7 @@
     },
     {
       "id": "wrong_brand_deliverable_refusal",
-      "input": "Use lab-session to produce a Sofka client-facing report with brand footer.",
+      "input": "Use lab-session to produce a MetodologIA client-facing report with brand footer.",
       "expected_activation": false,
       "expected_checks": ["quality_criteria", "evidence"]
     },

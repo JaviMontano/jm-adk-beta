@@ -14,7 +14,7 @@ You **MUST** consider the user input before proceeding (if not empty). [EXPLICIT
 
 ## Constitution Loading
 
-Load constitution per [constitution-loading.md](../iikit-core/references/constitution-loading.md) (enforcement mode — extract rules, declare hard gate, halt on violations). [EXPLICIT]
+Load constitution per `constitution-loading.md` (enforcement mode — extract rules, declare hard gate, halt on violations). [EXPLICIT]
 
 ## Prerequisites Check
 
@@ -25,7 +25,7 @@ Load constitution per [constitution-loading.md](../iikit-core/references/constit
    Windows: `pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/check-prerequisites.ps1 -Phase 02 -Json`
 
 2. Parse JSON for `FEATURE_SPEC`, `IMPL_PLAN`, `FEATURE_DIR`, `BRANCH`. If missing spec.md: ERROR (halt — planning has no source of truth without a spec). [EXPLICIT]
-3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in [conversation-guide.md](../iikit-core/references/conversation-guide.md). After user selects, run:
+3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in `conversation-guide.md`. After user selects, run:
    ```bash
    bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/set-active-feature.sh --json <selection>
    ```
@@ -43,7 +43,7 @@ Before planning, validate spec.md: [EXPLICIT]
 4. **User story coverage**: verify each story has acceptance scenarios
 5. **Cross-references**: check for orphan requirements not linked to stories
 
-Report quality score per [formatting-guide.md](../iikit-core/references/formatting-guide.md) (Spec Quality section). If score < 6: recommend `/iikit-clarify` first. [EXPLICIT]
+Report quality score per `formatting-guide.md` (Spec Quality section). If score < 6: recommend `/iikit-clarify` first. [EXPLICIT]
 
 **Gate semantics** (so downstream callers can rely on a deterministic contract): [EXPLICIT]
 - ERROR halts the workflow; WARNING surfaces but allows continuation after explicit user acknowledgement. [EXPLICIT]
@@ -61,7 +61,7 @@ When Tessl eval results are available for candidate technologies, include eval s
 
 ### 2. Tessl Tile Discovery
 
-If Tessl is installed, discover and install tiles for all technologies. See [tessl-tile-discovery.md](references/tessl-tile-discovery.md) for the full procedure. [EXPLICIT]
+If Tessl is installed, discover and install tiles for all technologies. See `tessl-tile-discovery.md` for the full procedure. [EXPLICIT]
 
 ### 3. Research & Resolve Unknowns
 
@@ -139,7 +139,7 @@ Re-validate all technical decisions against constitutional principles. On violat
 
 ### 7. Phase Separation Validation
 
-Scan plan for governance content per [phase-separation-rules.md](../iikit-core/references/phase-separation-rules.md) (Plan section). Auto-fix by replacing with constitution references, re-validate. [EXPLICIT]
+Scan plan for governance content per `phase-separation-rules.md` (Plan section). Auto-fix by replacing with constitution references, re-validate. [EXPLICIT]
 
 ## Output Validation
 
@@ -151,7 +151,7 @@ Output: branch name, plan path, generated artifacts (research.md, data-model.md,
 
 ## Semantic Diff on Re-run
 
-If plan.md exists: compare tech stack, architecture, dependencies. Show diff per [formatting-guide.md](../iikit-core/references/formatting-guide.md) (Semantic Diff section) with downstream impact. Flag breaking changes. [EXPLICIT]
+If plan.md exists: compare tech stack, architecture, dependencies. Show diff per `formatting-guide.md` (Semantic Diff section) with downstream impact. Flag breaking changes. [EXPLICIT]
 
 ## Commit
 
@@ -178,7 +178,7 @@ Parse the JSON and present: [EXPLICIT]
 1. If `clear_after` is true: suggest `/clear` before proceeding
 2. Present `next_step` as the primary recommendation
 3. If `alt_steps` non-empty: list as alternatives
-4. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in [model-recommendations.md](../iikit-core/references/model-recommendations.md) for agent-specific switch commands.
+4. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in `model-recommendations.md` for agent-specific switch commands.
 5. Append dashboard link
 
 Format:

@@ -18,7 +18,7 @@ This skill accepts **no user input parameters** — it reads artifacts automatic
 
 ## Constitution Loading
 
-Load constitution per [constitution-loading.md](../iikit-core/references/constitution-loading.md) (basic mode), then perform TDD assessment: [EXPLICIT]
+Load constitution per `constitution-loading.md` (basic mode), then perform TDD assessment: [EXPLICIT]
 
 **Scan for TDD indicators**:
 - Strong (MUST/REQUIRED + "TDD", "test-first", "red-green-refactor") -> **mandatory**
@@ -29,21 +29,21 @@ Load constitution per [constitution-loading.md](../iikit-core/references/constit
 
 **Determination affects only the report, never generation**: `mandatory`/`optional` both proceed to generate `.feature` files; the label tells the user whether downstream `05-implement` will hard-block on missing tests. `forbidden` is the only branch that halts before generation. [INFERENCIA] On conflicting signals (e.g. one MUST for TDD and one MUST against), treat as **forbidden** and surface both citations — a constitution that both requires and prohibits test-first is a constitution bug the user must resolve, not one this skill should silently pick a side on. [SUPUESTO]
 
-Report per [formatting-guide.md](../iikit-core/references/formatting-guide.md) (TDD Assessment section). [EXPLICIT]
+Report per `formatting-guide.md` (TDD Assessment section). [EXPLICIT]
 
 ## Prerequisites Check
 
 1. Run: `bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/check-prerequisites.sh --phase 04 --json`
    Windows: `pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/check-prerequisites.ps1 -Phase 04 -Json`
 2. Parse for `FEATURE_DIR` and `AVAILABLE_DOCS`. Require **plan.md** and **spec.md** (ERROR if missing).
-3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in [conversation-guide.md](../iikit-core/references/conversation-guide.md). After user selects, run:
+3. If JSON contains `needs_selection: true`: present the `features` array as a numbered table (name and stage columns). Follow the options presentation pattern in `conversation-guide.md`. After user selects, run:
    ```bash
    bash .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/bash/set-active-feature.sh --json <selection>
    ```
    Windows: `pwsh .tessl/tiles/tessl-labs/intent-integrity-kit/skills/iikit-core/scripts/powershell/set-active-feature.ps1 -Json <selection>`
 
    Then re-run the prerequisites check from step 1.
-4. Checklist gate per [checklist-gate.md](../iikit-core/references/checklist-gate.md).
+4. Checklist gate per `checklist-gate.md`.
 
 ## Acceptance Scenario Validation
 
@@ -89,7 +89,7 @@ Feature-level tags for shared metadata: [EXPLICIT]
 
 **From spec.md — Acceptance Tests**: For each Given/When/Then scenario, generate a Gherkin scenario.
 
-Use [testspec-template.md](../iikit-core/templates/testspec-template.md) as the Gherkin file template. For transformation examples, advanced constructs (Background, Scenario Outline, Rule), and syntax validation rules, see [gherkin-reference.md](references/gherkin-reference.md). [EXPLICIT]
+Use `testspec-template.md` as the Gherkin file template. For transformation examples, advanced constructs (Background, Scenario Outline, Rule), and syntax validation rules, see `gherkin-reference.md`. [EXPLICIT]
 
 **Worked example** — spec.md scenario → tagged Gherkin: [INFERENCIA]
 
@@ -226,7 +226,7 @@ Parse the JSON and present: [EXPLICIT]
 1. If `clear_after` is true: suggest `/clear` before proceeding
 2. Present `next_step` as the primary recommendation
 3. If `alt_steps` non-empty: list as alternatives
-4. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in [model-recommendations.md](../iikit-core/references/model-recommendations.md) for agent-specific switch commands.
+4. For `next_step` and each `alt_step`, include the `model_tier` from the JSON so the user knows which model is best for each option. Look up tiers in `model-recommendations.md` for agent-specific switch commands.
 5. Append dashboard link
 
 Format:

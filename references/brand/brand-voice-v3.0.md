@@ -56,9 +56,14 @@ Si no hay datos, no inventar. Alternativas:
 
 **Regla de afirmación fuerte**: toda cifra, comparación o causalidad necesita uno de los 4 tipos; si ninguno aplica, se reformula como hipótesis o se elimina.
 
-### G3 — Español latino neutro
+### G3 — Trilingüe ES / EN / PT (idioma neutro por lengua)
 
-Sin regionalismos. Trato: «tú» por defecto. Excepción: «usted» solo si el canal formal o la audiencia ejecutiva lo exige explícitamente.
+MetodologIA publica en **tres idiomas**; toda pieza final tiene su variante ES, EN y PT (Constitution P9 / profile content-authority). Registro neutro, sin regionalismos, por lengua: [CONFIG]
+- **ES** — español latino neutro. Trato «tú» por defecto; «usted» solo si el canal formal/ejecutivo lo exige.
+- **EN** — neutral business English. Default second-person "you"; no US/UK slang.
+- **PT** — português neutro (base brasileira). Tratamento «você» por padrão; sem regionalismos.
+
+Voz dual por audiencia (ambas trilingües): **El Sabio Visionario / Mentor Tecnológico** (personas — Amplificación·Soberanía·Evolución·Agente·Estrategia·Futuro) · **El Estratega Corporativo / Arquitecto de Sistemas** (empresas — Eficiencia·Escalar·Automatización·Gobernanza·Rentabilidad·Innovación). Ver `profiles/metodologia.md`. [DOC]
 
 ### G4 — Lista roja / lista verde
 

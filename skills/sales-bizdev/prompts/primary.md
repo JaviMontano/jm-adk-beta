@@ -20,7 +20,7 @@ If two topics fit equally or none does, ask ONE disambiguating question. Then Re
 
 ## Step 2 — Lock context
 
-- Identify the **single brand** before drafting (Sofka / MetodologIA / JM Labs). If two are plausible, stop and ask.
+- Identify the **single brand** before drafting; confirm the piece is MetodologIA-branded.
 - Resolve `depth`: `quick` = essentials; `deep` = exhaustive with per-step verification.
 - Capture the account / ICP / persona / buyer context. Missing a required input (e.g. target account for a dossier, proof point for outreach) → flag and ask; never fabricate.
 

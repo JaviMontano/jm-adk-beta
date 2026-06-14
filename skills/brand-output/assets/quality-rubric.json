@@ -27,7 +27,7 @@
     {
       "id": "single_brand",
       "dimension": "brand",
-      "description": "Exactly one brand in the output; no Sofka+MetodologIA mixing.",
+      "description": "Exactly one brand in the output; no off-brand elements.",
       "pass_when": "brand identified before generation; mix flagged and refused",
       "evidence_tag": "[EXPLICIT]"
     },
