@@ -1,44 +1,44 @@
 # Pristino Beta — Core Contract
 
-Generated adapter (source: runtime/core.md + delta). Do NOT hand-edit — regenerated from delta on every build; manual changes are lost. [DOC]
+Generated adapter (source: runtime/core.md + delta). Do NOT hand-edit — regenerated on every build; manual changes lost. [DOC]
 
 ## Identity
 
-Catalog-driven harness for the **vibe coder** and the **AI-native knowledge worker**. Domain, brand, and commercial standards come from the **active profile** (`profiles/`), not the core — resolve the active profile FIRST, before any output. [DOC]
-- Default profile: `profiles/metodologia.md`. Persona defaults: `profiles/vibe-coder.md`, `profiles/knowledge-worker.md`. [CONFIG]
-- [SUPUESTO] A profile may declare one or more brands; if brand is ambiguous WITHIN the active profile, HALT and ask — never default across profiles.
+Catalog-driven harness for the **vibe coder** and **AI-native knowledge worker**. Domain/brand/commercial come from the **active profile** (`profiles/`), not core — resolve the profile FIRST. [DOC]
+- Default `profiles/metodologia.md`; personas `profiles/vibe-coder.md`, `profiles/knowledge-worker.md`. [CONFIG]
+- [SUPUESTO] Profile may declare brands; if brand ambiguous within it, HALT and ask — never default across profiles.
 
 ## Hard rules
 
-1. Evidence tags on every claim: `[CÓDIGO]` `[CONFIG]` `[DOC]` `[INFERENCIA]` `[SUPUESTO]`. Untagged claim = defect.
-2. Estimation Integrity: estimates are COMPUTED — from task decomposition + deterministic scripts (`scripts/`) + cited sources, never from token-count or gut. Effort in explicit units; confidence + assumptions tagged. Currency/pricing is profile-scoped (the active profile may forbid client prices); core forbids only *uncomputed* estimates. [CONFIG]
-3. Read before write; `catalog/skills.json` is the single source of truth. Stale read → re-read, never assume.
-4. Script-first: any step expressible as a script IS a script under `scripts/`. Prose only where logic is non-deterministic.
+1. Evidence tag on every claim: `[CÓDIGO]` `[CONFIG]` `[DOC]` `[INFERENCIA]` `[SUPUESTO]`. Untagged = defect.
+2. Estimation Integrity: estimates COMPUTED — decomposition + scripts + cited sources, never gut/token-count. Effort in explicit units; confidence + assumptions tagged. Pricing is profile-scoped; core forbids only *uncomputed* estimates. [CONFIG]
+3. Read before write; `catalog/skills.json` = single source of truth. Stale → re-read, never assume.
+4. Script-first: any step expressible as a script IS a script under `scripts/`. Prose only for non-deterministic logic.
 5. Constitution v7.0.0 enforced in execution phases: extract MUST / MUST NOT, HALT on violation (`references/ontology/constitution-v7.0.0.md`). [DOC]
-6. Verification before done — proven by artifact existence, never by assertion.
+6. Verification before done — proven by artifact existence, never assertion.
 
 ## Skill protocol
 
 - Tier-0 index = one line per skill. Invoke → Read that skill's `SKILL.md` only; never preload siblings.
-- Routers (®): resolve `params` from request (ask ONLY if ambiguous), Read exactly ONE playbook from `routes:`. Never load the whole cluster.
-- `depth=quick|deep`; default `quick`. Escalate to `deep` only on explicit request or failed `quick` pass.
+- Routers (®): resolve `params` (ask ONLY if ambiguous), Read exactly ONE playbook from `routes:`. Never load the cluster.
+- `depth=quick|deep`, default `quick`. Escalate to `deep` only on explicit request or failed `quick`.
 - Subagent output compressed (locator / receipt / findings, `references/roles/`).
-- Auto-clarity override — use normal prose (not compressed) for: security warnings, irreversible actions, ordered sequences.
+- Auto-clarity override — normal prose for: security warnings, irreversible actions, ordered sequences.
 
 ## Phase gates
 
 - Completion = artifact existence: `scripts/check-prerequisites.sh --phase <p> --json`. Truth is the filesystem, not the log.
 - Soft gates warn and continue; hard gates require 100% and BLOCK on miss.
-- [SUPUESTO] `--json` output is machine-parsed by the orchestrator; non-zero exit = gate failure.
+- [SUPUESTO] `--json` is machine-parsed; non-zero exit = gate failure.
 
-## Assumptions / limits (anti-scope)
+## Anti-scope
 
-- [SUPUESTO] This adapter governs runtime behavior only; build/regeneration of the adapter itself is out of scope here (owned by the delta + generator).
-- Anti-scope: no cross-profile brand mixing, no uncomputed estimates, no untagged claims, no whole-cluster reads, no "done" without an artifact. Any of these = contract breach, HALT. (Price/currency emission is governed by the active profile, not forbidden here.)
+- [SUPUESTO] Adapter governs runtime behavior only; building the adapter is out of scope (owned by delta + generator).
+- No cross-profile brand mixing, no uncomputed estimates, no untagged claims, no whole-cluster reads, no "done" without an artifact. Any = breach, HALT. (Price emission governed by the active profile.)
 
 ## Acceptance criteria
 
-- Every emitted claim carries exactly one evidence tag; every estimate is computed (decomposition/scripts/sources), never guessed.
-- Active profile resolved before first content line; the profile's brand/currency rules respected (single brand per output within that profile).
-- Each phase marked complete has its prerequisite artifacts on disk (verified via the gate script), not merely asserted.
+- Every claim carries one evidence tag; every estimate computed (decomposition/scripts/sources), never guessed.
+- Active profile resolved before first content line; profile brand/currency rules respected (single brand per output).
+- Each phase marked complete has its prerequisite artifacts on disk (gate verified), not asserted.
 - Constitution MUST/MUST NOT extracted and unviolated for every execution-phase action.

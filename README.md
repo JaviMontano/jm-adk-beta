@@ -63,11 +63,11 @@ Measured (`evals/token-benchmark.json`, chars/4 applied identically to all arms 
 
 | Runtime | Alfa (measured) | Beta naive | Beta (measured) | vs alfa |
 |---|---|---|---|---|
-| Claude Code | 29,552 | 3,869 | **2,294** | **−92%** |
-| Antigravity | 36,801 | 5,377 | **2,990** | **−92%** |
-| Codex | 1,651 | 3,820 | **2,289** | +39%* |
+| Claude Code | 29,552 | 3,869 | **2,301** | **−92%** |
+| Antigravity | 36,801 | 5,377 | **3,614** | **−90%** |
+| Codex | 1,651 | 3,820 | **2,281** | +38%* |
 
-\* Alfa's AGENTS.md carried no skill index — Codex sessions had no catalog access. Beta inlines the full 73-skill tier-0 index; the +638 tokens buy complete catalog routing. Honest trade-off, recorded as measured, not hidden.
+\* Alfa's AGENTS.md carried no skill index — Codex sessions had no catalog access. Beta inlines the full 73-skill tier-0 index; the +630 tokens buy complete catalog routing. Honest trade-off, recorded as measured, not hidden.
 
 Regenerate with `python3 scripts/token-stats.py`. The table updates **only** from committed benchmark data, never hand-typed (caveman honesty rule) — a number here with no matching commit in `evals/` is a bug.
 
