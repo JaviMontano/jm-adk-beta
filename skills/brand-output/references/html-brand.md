@@ -109,7 +109,7 @@ Every MetodologIA HTML deliverable follows this skeleton:
 <body>
   <a href="#main" class="skip-link">Ir al contenido</a>
   <header class="hero">         <!-- black bg, orange bottom border -->
-    <div class="hero-logo">sofka_</div>
+    <div class="hero-logo">metodologia_</div>
     <div class="hero-meta-badges">...</div>
     <h1>Title <span>Highlight</span></h1>
     <div class="hero-kpis">...</div>  <!-- 3-4 KPIs -->
@@ -264,7 +264,7 @@ Runtime breakages and how to recover (distinct from input edge cases above): [EX
 **Good hero section:**
 ```html
 <header class="hero" style="background: var(--metodologia-black); border-bottom: 4px solid var(--metodologia-orange);">
-  <div class="hero-logo" style="font-family: var(--font-display); color: var(--metodologia-white);">sofka_</div>
+  <div class="hero-logo" style="font-family: var(--font-display); color: var(--metodologia-white);">metodologia_</div>
   <h1 style="color: var(--metodologia-white);">Core Banking <span style="color: var(--metodologia-orange);">Modernization</span></h1>
   <div class="hero-kpis"><!-- 3 KPIs with icons --></div>
 </header>
