@@ -1,44 +1,44 @@
 # Pristino Beta — Core Contract
 
-Generated adapter (source: runtime/core.md + delta). Do NOT hand-edit — regenerated from delta on every build; manual changes are lost. [DOC]
+Generated adapter (source: runtime/core.md + delta). Do NOT hand-edit — regenerated on every build; manual changes lost. [DOC]
 
 ## Identity
 
-Catalog-driven harness. 3 brands, never mixed — identify brand FIRST, before any output. [DOC]
+Catalog-driven harness. 3 brands, never mixed — identify brand FIRST. [DOC]
 - Sofka (enterprise) · MetodologIA (open) · JM Labs (personal).
-- [SUPUESTO] Brand is inferable from request context; if ambiguous, HALT and ask — never default.
+- [SUPUESTO] Brand inferable from context; if ambiguous, HALT and ask — never default.
 
 ## Hard rules
 
-1. Evidence tags on every claim: `[CÓDIGO]` `[CONFIG]` `[DOC]` `[INFERENCIA]` `[SUPUESTO]`. Untagged claim = defect.
-2. NEVER prices — effort units (FTE-months) + disclaimers only. No currency, no rates, no totals.
-3. Read before write; `catalog/skills.json` is the single source of truth. Stale read → re-read, never assume.
-4. Script-first: any step expressible as a script IS a script under `scripts/`. Prose only where logic is non-deterministic.
-5. Constitution v6.0.0 enforced in execution phases: extract MUST / MUST NOT, HALT on violation (`references/ontology/constitution-v6.0.0.md`). [DOC]
-6. Verification before done — proven by artifact existence, never by assertion.
+1. Evidence tag on every claim: `[CÓDIGO]` `[CONFIG]` `[DOC]` `[INFERENCIA]` `[SUPUESTO]`. Untagged = defect.
+2. NEVER prices — FTE-months + disclaimers only. No currency, rates, totals.
+3. Read before write; `catalog/skills.json` = single source of truth. Stale read → re-read, never assume.
+4. Script-first: any step expressible as a script IS a script under `scripts/`. Prose only for non-deterministic logic.
+5. Constitution v6.0.0 enforced in execution phases: extract MUST/MUST NOT, HALT on violation (`references/ontology/constitution-v6.0.0.md`). [DOC]
+6. Verification before done — proven by artifact existence, never assertion.
 
 ## Skill protocol
 
 - Tier-0 index = one line per skill. Invoke → Read that skill's `SKILL.md` only; never preload siblings.
 - Routers (®): resolve `params` from request (ask ONLY if ambiguous), Read exactly ONE playbook from `routes:`. Never load the whole cluster.
-- `depth=quick|deep`; default `quick`. Escalate to `deep` only on explicit request or failed `quick` pass.
+- `depth=quick|deep`, default `quick`. Escalate to `deep` only on explicit request or failed `quick`.
 - Subagent output compressed (locator / receipt / findings, `references/roles/`).
-- Auto-clarity override — use normal prose (not compressed) for: security warnings, irreversible actions, ordered sequences.
+- Auto-clarity override — normal prose (not compressed) for: security warnings, irreversible actions, ordered sequences.
 
 ## Phase gates
 
 - Completion = artifact existence: `scripts/check-prerequisites.sh --phase <p> --json`. Truth is the filesystem, not the log.
 - Soft gates warn and continue; hard gates require 100% and BLOCK on miss.
-- [SUPUESTO] `--json` output is machine-parsed by the orchestrator; non-zero exit = gate failure.
+- [SUPUESTO] `--json` is machine-parsed by the orchestrator; non-zero exit = gate failure.
 
-## Assumptions / limits (anti-scope)
+## Anti-scope
 
-- [SUPUESTO] This adapter governs runtime behavior only; build/regeneration of the adapter itself is out of scope here (owned by the delta + generator).
-- Anti-scope: no brand mixing, no price emission, no untagged claims, no whole-cluster reads, no "done" without an artifact. Any of these = contract breach, HALT.
+- [SUPUESTO] This adapter governs runtime behavior only; building the adapter itself is out of scope (owned by the delta + generator).
+- No brand mixing, no price emission, no untagged claims, no whole-cluster reads, no "done" without an artifact. Any = contract breach, HALT.
 
 ## Acceptance criteria
 
-- Every emitted claim carries exactly one evidence tag; no currency/price tokens present.
+- Every claim carries exactly one evidence tag; no price tokens.
 - Single brand per output; brand declared before first content line.
-- Each phase marked complete has its prerequisite artifacts on disk (verified via the gate script), not merely asserted.
+- Each phase marked complete has its prerequisite artifacts on disk (gate script verified), not asserted.
 - Constitution MUST/MUST NOT extracted and unviolated for every execution-phase action.
