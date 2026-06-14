@@ -8,7 +8,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
 VALID_MODEL="haiku sonnet opus inherit"
 VALID_COLOR="blue cyan green yellow magenta red"
-VALID_TIER="officer role-template spoke"
+VALID_TIER="ceo coo officer steward sme role-template spoke"
 VALID_PHASE="Think Plan Build Review Validate Ship"
 
 errors=0; warns=0; checked=0
@@ -39,6 +39,12 @@ validate() {
   [ -z "$color" ] || in_set "$color" "$VALID_COLOR" || { echo "ERROR $rel: color '$color' not in {$VALID_COLOR}"; errors=$((errors+1)); }
   [ -z "$tier" ]  || in_set "$tier"  "$VALID_TIER"  || { echo "ERROR $rel: tier '$tier' not in {$VALID_TIER}"; errors=$((errors+1)); }
   [ -z "$phase" ] || in_set "$phase" "$VALID_PHASE" || { echo "ERROR $rel: phase '$phase' not in {$VALID_PHASE}"; errors=$((errors+1)); }
+  # sub-specialists: ≤5 (parametric focus-modes), officers only
+  local specs; specs=$(fm_get "$f" specialists)
+  if [ -n "$specs" ]; then
+    local n; n=$(printf '%s' "$specs" | tr ',' '\n' | grep -c '[a-zA-Z]')
+    [ "$n" -le 5 ] || { echo "ERROR $rel: specialists=$n (max 5 per officer)"; errors=$((errors+1)); }
+  fi
   # name pattern (allow {{skill}} templating for role-templates/spokes)
   if [ -n "$name" ] && ! printf '%s' "$name" | grep -qE '^(\{\{skill\}\}-)?[a-z0-9][a-z0-9-]*[a-z0-9]$|\{\{skill\}\}'; then
     echo "WARN $rel: name '$name' not kebab-case"; warns=$((warns+1)); fi
@@ -61,8 +67,8 @@ validate() {
 
 files=()
 if [ "${1:-}" = "--all" ]; then
-  for f in "$ROOT"/agents/*.md "$ROOT"/references/roles/*.md; do
-    [ "$(basename "$f")" = "README.md" ] && continue; files+=("$f"); done
+  for f in "$ROOT"/agents/*.md "$ROOT"/agents/sme/*.md "$ROOT"/references/roles/*.md; do
+    [ -f "$f" ] || continue; [ "$(basename "$f")" = "README.md" ] && continue; files+=("$f"); done
 else
   files=("$@")
 fi

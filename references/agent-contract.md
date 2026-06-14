@@ -9,12 +9,28 @@ command-bound roles) — WITHOUT importing their verbose bodies. Beta agents sta
 Validated by `scripts/validate-agent.sh`. Constitution v7 + the active profile govern
 all agents; the active profile (`profiles/`) declares brand/domain. [CONFIG]
 
-## Three tiers
-- **officer** — a transversal committee member (13 total, `agents/*.md`). Thin: routes to
-  skills, never duplicates a skill's body. [DOC]
-- **role-template** — a parametrized spoke (`references/roles/{lead,support,guardian,specialist}.md`),
-  instantiated per skill with `{{skill}}`. [DOC]
-- **spoke** — a per-skill instance (`skills/<id>/agents/*.md`) generated from a role-template. [DOC]
+## The office (tiers)
+A hierarchical office, not a flat list. [DOC]
+- **ceo** — **Pristino** (`agents/pristino-ceo.md`). Intent intake, strategic delegation, final sign-off; reference for the SME layer. One.
+- **coo** — the orchestration lead (`agents/orchestrator.md`). Operational dispatch/sequencing/gates/aggregation; reports to the CEO. One.
+- **officer** — a functional committee member (13, `agents/*.md`), reports to the COO. Thin: routes to skills, never duplicates a skill's body. Each may declare **≤5 parametric sub-specialists** (focus-modes, NOT separate files). [DOC]
+- **steward** — harness Ops/upkeep (`agents/*.md`): repo-steward, harness-maintainer, skill-curator, workspace-steward, context-optimizer. Reports to the COO. Keep the kit, the repo, local skills, workspaces, and the context window healthy. [DOC]
+- **sme** — a domain consulting advisor (13, `agents/sme/*.md`) for the vibe coder + knowledge worker; read-only ADVICE (officers/spokes execute). Pristino is their reference. [DOC]
+- **role-template** — a parametrized spoke (`references/roles/{lead,support,guardian,specialist}.md`), instantiated per skill with `{{skill}}`. [DOC]
+- **spoke** — a per-skill instance (`skills/<id>/agents/*.md`) from a role-template. [DOC]
+
+## Sub-specialists (parametric, ≤5 per officer)
+An officer's specialized focus-modes are **parametric, not separate files** — "always still the
+officer." Declare in frontmatter `specialists: [focus-a, focus-b, …]` (≤5) + a `## Sub-specialists`
+section (one line each: focus + trigger) + a `focus` dispatch param. The officer activates a
+focus-mode; no new agent file is created. [CONFIG]
+
+## CORE vs LOCAL skills (preserve alfa's local-skill capability)
+- **CORE** = `skills/` — the 73 kit skills. Immutable except via **harness-maintainer**. [CONFIG]
+- **LOCAL** = `workspace/<active>/skills/` — project-scoped skills the user creates, owned by
+  **skill-curator**; created/administered/used but NEVER written into `skills/` core, never
+  registered in the core catalog, never allowed to shadow a core id silently. The
+  `artifact-placement-guard` enforces the boundary. [CONFIG]
 
 ## Frontmatter (YAML) — required unless marked optional
 ```yaml
@@ -26,7 +42,8 @@ model: haiku|sonnet|opus|inherit   # tier hint: haiku=narrow extract, sonnet=def
 color: blue|cyan|green|yellow|magenta|red   # blue/cyan=analysis · green=build · yellow=validate · red=security/governance · magenta=creative/brand
 tools: [Read, Grep, ...]    # least-privilege; omit ONLY for the orchestrator (needs Agent+all)
 phase: Think|Plan|Build|Review|Validate|Ship   # gstack sprint position
-tier: officer|role-template|spoke
+tier: ceo|coo|officer|steward|sme|role-template|spoke
+specialists: [focus-a, ...] # optional, officers only; ≤5 parametric focus-modes (NOT separate files)
 routes: [skill-id, ...]     # optional; skills/playbooks this agent may dispatch (officers/dev)
 ---
 ```
