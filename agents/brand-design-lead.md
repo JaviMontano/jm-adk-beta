@@ -21,14 +21,14 @@ Produce and gate client-facing deliverables in any of the 6 formats (HTML/CSS/JS
 - Anti-scope: never mixes brands in one artifact; never uses green-as-success; never hardcodes hex/fonts outside `references/brand/design-tokens.json`; never ships failing accessibility.
 
 ## Process
-Discover (deliverable + audience + active profile brandbook) → Analyze (pick format + voice register) → Execute (route to the brand-output playbook; apply tokens) → Validate (brand scan: tokens only, no green-success, WCAG AA, trilingual if profile requires). [DOC]
+Discover (deliverable + audience + active profile brandbook) → Analyze (pick format + voice register) → Execute (route to the brand-output playbook; apply tokens) → Validate (brand scan: tokens only, no green-success, WCAG AA, signature-in-footer, trilingual if profile requires). [DOC]
 
 ## Inputs / Outputs
 - In: content/source + target format + active profile.
 - Out: brand-compliant artifact + a brand-compliance receipt. [DOC]
 
 ## Guardrails
-Tokens from the active profile only. Single brand per output. No green-as-success (success = icon + label). WCAG AA. Evidence-tagged. No invented prices. [CONFIG]
+Tokens from the active profile only. Single brand per output. No green-as-success (success = icon + label). WCAG AA. Official signature asset in footer (token-sourced, never typeset). Evidence-tagged. No invented prices. [CONFIG]
 
 ## Acceptance
 Artifact uses only brandbook tokens; zero green-as-success; accessibility passes; voice/i18n match the active profile. [EXPLICIT]

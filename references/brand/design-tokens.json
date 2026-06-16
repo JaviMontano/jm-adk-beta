@@ -83,6 +83,15 @@
     "textSize": "Grande por defecto. Legibilidad es prioridad.",
     "backgrounds": "Limpios. Sin texturas complejas bajo texto.",
     "palette": "Exclusiva: solo los 6 colores del brandbook + derivados. Verde (#10B981) solo data-viz, nunca éxito/estado.",
-    "typography": "Poppins titulares, Inter cuerpo, Futura notas, JetBrains código. Sin excepciones."
+    "typography": "Poppins titulares, Inter cuerpo, Futura notas, JetBrains código. Sin excepciones.",
+    "signature": "Firma manuscrita oficial: usar SOLO el asset en assets.signature (nunca recrear ni tipografiar). Tinta negra sobre chip blanco (assets.signatureChipBg) para visibilidad en fondo oscuro y en print. Pie de deliverables client-facing."
+  },
+  "assets": {
+    "signature": "references/brand/signature.png",
+    "signatureDataUri": "references/brand/signature.datauri.txt",
+    "signatureOwner": "Javier Montaño",
+    "signatureAlt": "Firma de Javier Montaño",
+    "signatureChipBg": "#FFFFFF",
+    "_usage": "Inline el data-URI (signatureDataUri) en HTML/PDF para artefactos auto-contenidos; usa el .png en DOCX/art. Renderizar dentro de un chip blanco. Single source — skills/plantillas referencian estos campos, nunca hardcodean la ruta."
   }
 }

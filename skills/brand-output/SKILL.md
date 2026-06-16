@@ -47,9 +47,16 @@ Spine: Discover → Analyze → Execute → Validate.
 
 Router aids in `assets/` — `assets/routing-checklist.md` and `assets/quality-rubric.json` (see `assets/README.md`). [CONFIG]
 
+## Signature (cross-cutting, all formats)
+Every client-facing deliverable carries the official handwritten signature in its footer. Use ONLY the brand asset — never recreate or typeset a name as a signature. [CONFIG]
+- Source: `references/brand/design-tokens.json` → `assets.signature*`. HTML/PDF/folios inline `assets.signatureDataUri` (self-contained); DOCX/art embed `assets.signature` (.png). [CONFIG]
+- Render inside a white chip (`assets.signatureChipBg`) so black ink reads on dark screen and in print. Caption with `assets.signatureOwner`. [INFERENCE]
+- HTML/PDF/folio playbooks built on `references/brand/html-template.html` get it automatically (footer block). For DOCX/XLSX/art, add the signature block explicitly from the token. [DOC]
+
 ## Validation gate (done = all true)
 - Exactly one playbook loaded; topic matches the artifact actually produced. [EXPLICIT]
 - MetodologIA DS tokens applied from `references/brand`; no hardcoded brand values. [CONFIG]
+- Footer carries the official signature asset (token-sourced, white chip, owner caption) — never a typeset name. [CONFIG]
 - Constitution v6.0.0 enforcement + script-first rule honored (generate via script, not hand-edits). [EXPLICIT]
 - Evidence tags present on non-obvious claims; family not mixed (kit set: `[EXPLICIT]`/`[INFERENCE]`/`[ASSUMPTION]`/`[CONFIG]`/`[DOC]`). [DOC]
 
