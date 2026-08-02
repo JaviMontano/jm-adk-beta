@@ -81,5 +81,12 @@ echo "WORKSPACE: $WS"
 [ -n "$WS_ID" ] && echo "WORKSPACE-ID: $WS_ID"
 echo "WORKSPACE-STALE: $WS_STALE"
 echo "WORKSPACE-ACTIVE-COUNT: $WS_COUNT"
+
+# ── First-prompt routing (ICM Layer 1) ──
+# Router is read-only, informational, always exits 0. Emits ROUTE-* lines.
+ROUTER="$PROJECT_ROOT/scripts/first-prompt-router.sh"
+[ -x "$ROUTER" ] && "$ROUTER" || echo "ROUTE-MODE: ambiguous"
+echo "ROUTE-HINT: first turn MUST emit ENTENDIDO/MODO/SUPUESTOS/GAPS/TAREA/GATE (see runtime/delta-claude.md)"
+
 echo "---"
 echo "MetodologIA · JM Labs"
