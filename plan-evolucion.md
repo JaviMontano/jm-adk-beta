@@ -28,7 +28,7 @@
 1. **NUNCA hand-editar generated files.** `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `.agent/rules/GEMINI.md`, `SKILLS.md`, `.agent/skills_index.json`, `.mcp.json` son generados por `scripts/build-indexes.py` desde fuente. Cambios manuales se pierden en regen. Para cambiar conducta: editar fuente canonical (`runtime/core.md`, `runtime/delta-*.md`, `catalog/skills.json`, `harness/manifest.json`) → regenerar.
 2. **Source antes que output.** Editar fuente → regen (`python3 scripts/build-indexes.py`) → verificar budgets → commit. Nunca al revés.
 3. **Budget = blocker pre-release.** Tras cualquier cambio a `core.md`/deltas/`manifest.json`: correr `python3 scripts/check-token-budget.py`. Si falla, la fase NO está DONE. Budgets actuales: claude 2601/3000, antigravity 3812/4000, codex 2386/2600. Headroom: claude 399, antigravity 188, codex 214.
-4. **Una fase = un branch = un commit.** `git checkout -b feat/evolucion-p<N>` desde `main` (o desde la rama de la fase previa si encadenadas). Commit al final. Mensaje termina con `Co-Authored-By: Claude <noreply@anthropic.com>`.
+4. **Una fase = un branch = un commit.** `git checkout -b feat/evolucion-p<N>` desde `main` (o desde la rama de la fase previa si encadenadas). Para fases PARALLEL-OK (§9), usar **worktree** aislado en vez de branch suelto — un working dir por fase/agente. Commit al final. Mensaje termina con `Co-Authored-By: Claude <noreply@anthropic.com>`.
 5. **Edit-source principle (ICM).** Si un output está mal, arreglar el contract/fuente, no el output.
 6. **Verificación antes de DONE.** artifact existence (gates), no aserto. Correr §6 harness completo.
 7. **Anti-scope.** No mezclar brands, no estimaciones sin computar, no claims sin evidence tag, no "done" sin artifact.
@@ -230,23 +230,19 @@ Gaps encontrados (evidence-tagged), a cerrar por fases:
 
 ---
 
-## §5 — Orden de dependencias
+## §5 — Orden de dependencias + grupos paralelos
 
 ```
-P0 (README) ──┐
-              ├─→ P4 (consistency sensor) → P6
-P1 (docs) ────┤
-              │
-P2 (core.md ICM) ─→ P3 (routing opt) ─→ P4 ─→ P6
-              │
-P5 (agents/commands) ──────────────────→ P6
+GRUPO A (paralelo, file-disjoint):  GRUPO B (secuencial, file-overlap):
+  P0 (README)   ─┐                   P2 (core.md+manifest) → P3 (scripts) → P4 (scripts+gate)
+  P1 (docs)     ─┼─→ merge ──────────────────────────────────────────────────→ merge
+  P5 (agents)   ─┘
+                                    P6 (verificación + PR) — tras A+B mergeados
 ```
 
-- P0 y P1 independientes (paralelizables conceptualmente, pero ejecutar secuenciales para commits limpios).
-- P2 antes de P3 (P3 usa manifest que P2 eleva).
-- P4 después de P0+P2 (sensor valida lo que esos arreglaron).
-- P5 independiente (puede ir en cualquier punto post-P2).
-- P6 último.
+- **Grupo A (PARALLEL-OK):** P0, P1, P5 tocan archivos disjuntos (README / docs / agents+commands). Cero estado mutable compartido → 3 worktrees en paralelo, WIP=3 (tope constitution P5).
+- **Grupo B (SECUENCIAL):** P2→P3→P4. P2 toca `runtime/core.md`+`manifest.json` (source generated); P3 toca `scripts/`+`workspace/_template/`; P4 toca `scripts/`+`check-prerequisites.sh`. P3 y P4 solapan `scripts/` → secuenciales o split de archivos. P2 antes de P3 (P3 usa lo que P2 eleva). P4 después de P0+P2 (valida lo que arreglaron).
+- P6 último (tras A+B mergeados).
 
 ---
 
@@ -297,3 +293,156 @@ git diff --name-only CLAUDE.md AGENTS.md GEMINI.md SKILLS.md
 - **Confianza plan:** 0.85 [CONFIANZA]. Gaps auditados con evidence tags; fases atómicas; budget risk P2 identificado con mitigación. <0.5 sería escalar; 0.85 → proceder, flag incertidumbre en P2 (budget compactar vs bump).
 - **Bias scan:** anchoring en estado actual (no buscar gaps fuera de lo leído — mitigado: auditoría cubrió README+core+deltas+docs+agents+commands); confirmation (no asumir que P2 cabe sin medir — mitigado: §2 riesgo 1 exige medir). Availability (sobre-indexar PR #5 — mitigado: fases cubren gobernanza pre-PR#5 también).
 - **Creado:** 2026-08-03. **Fuente plan:** este archivo. **No borrar** — es el tracker durable de la evolución.
+
+---
+
+## §9 — Git, ramas y worktrees para paralelización agentica
+
+> Operacionaliza Constitution v7.0.0 P5 (sequential-first, parallel-ready,
+> WIP ≤3, branch-per-task isolation, contract-first integration, merge in
+> dependency order) sobre las fases de este plan y sobre trabajo agentico general.
+> [DOC] Ref: `references/ontology/constitution-v7.0.0.md` P5 + `constitution-must.md`
+> (slice L3). [DOC] Ref: paper ICM arXiv 2603.16021v2 §4.1 (sub-agent delegation
+> via folder structure = aislamiento de contexto por stage).
+
+### 9.1 — Branch model (una rama por fase)
+
+```
+main (protegido, solo via PR)
+ ├── feat/evolucion-p0-readme-remediation   (Grupo A, parallel)
+ ├── feat/evolucion-p1-docs-governance      (Grupo A, parallel)
+ ├── feat/evolucion-p5-agents-commands     (Grupo A, parallel)
+ ├── feat/evolucion-p2-icm-core-shared      (Grupo B, sequential, HEAD de la cadena)
+ ├── feat/evolucion-p3-routing-opt          (Grupo B, parte de P2)
+ ├── feat/evolucion-p4-consistency-sensor   (Grupo B, parte de P3)
+ └── feat/evolucion-p6-final-verify-pr      (cierre, tras A+B merge)
+```
+
+- **Naming:** `feat/evolucion-p<N>-<slug>`. Slug describe el objetivo, no el autor.
+- **Provenance:** cada rama nace de `main` (Grupo A) o de la rama previa (Grupo B: P2←main, P3←P2, P4←P3) — **encadenamiento por dependencia, no por fecha** (constitution P5: merge in dependency order).
+- **Integración:** un PR por rama → `main`. PR body termina `🤖 Generated with [Claude Code](https://claude.com/claude-code)`. Si Grupo A corre en paralelo, 3 PRs abiertos simultáneos (WIP=3), merge en cualquier orden (file-disjoint → sin conflicto).
+- **Rama de integración (opcional):** si riesgo de interacción entre A y B no despreciable, crear `integration/evolucion` y mergear ahí antes de `main`. Solo si §6 harness full falla tras merge individual.
+
+### 9.2 — Worktrees para aislamiento agentico (cómo correr en paralelo)
+
+Un **worktree** = working directory independiente + index independiente + rama independiente, todo del mismo repo. Permite a N agentes trabajar simultáneamente sin pisarse el `working tree`. Constitution P5 exige "zero shared mutable state" → worktree lo da por construcción.
+
+**Comandos core:**
+```bash
+# Crear un worktree por fase PARALLEL-OK (Grupo A) en dirs hermanos
+cd /Users/deonto/Agentic_Space/jm-adk-beta
+git worktree add ../jm-adk-p0  feat/evolucion-p0-readme-remediation
+git worktree add ../jm-adk-p1  feat/evolucion-p1-docs-governance
+git worktree add ../jm-adk-p5  feat/evolucion-p5-agents-commands
+
+# Listar worktrees activos
+git worktree list
+
+# Trabajar en uno: cd al worktree, editar, commit (la rama vive ahí)
+cd ../jm-adk-p0 && git status   # rama feat/evolucion-p0, working tree aislado
+
+# Al terminar (tras merge del PR): limpiar
+git worktree remove ../jm-adk-p0   # falla si hay cambios sin commit → seguridad
+```
+
+**Claude Code (EnterWorktree tool):** para trabajo agentico nativo, `EnterWorktree` crea un worktree bajo `.claude/worktrees/` y切换 el session cwd al aislado. Útil cuando un sub-agente debe mutar archivos sin riesgo al working tree del orquestador. Ver `claude-native-toolkit:agentic-parallelism-decision` para cuándo worktree vs subagent vs workflow.
+
+**Patrón hub-and-spoke (recomendado para Grupo A):**
+```
+        [orquestador en main worktree]
+         /          |           \
+   worktree-p0   worktree-p1   worktree-p5
+   (agente A)    (agente B)    (agente C)
+```
+Orquestador despacha 3 sub-agentes (Task tool, uno por worktree o `isolation: "worktree"`), cada uno ejecuta su fase en aislamiento, merge back via PR. WIP=3 = tope constitution P5.
+
+### 9.3 — Matriz de paralelización (qué puede correr junto)
+
+| Fase | Archivos que toca | ¿Solapa con…? | PARALLEL-OK | Grupo |
+|------|-------------------|---------------|-------------|-------|
+| P0 | `README.md` | nadie | **SÍ** | A |
+| P1 | `docs/**` (NEW + EDIT) | nadie | **SÍ** | A |
+| P5 | `agents/**`, `commands/**` | nadie | **SÍ** | A |
+| P2 | `runtime/core.md`, `runtime/delta-*.md`, `harness/manifest.json` → regen → `CLAUDE.md/AGENTS.md/GEMINI.md/...` | P3 (usa lo de P2) | NO ( cabeza de Grupo B) | B |
+| P3 | `scripts/*.sh`, `workspace/_template/**` | P4 (ambos `scripts/`) | NO (tras P2) | B |
+| P4 | `scripts/check-governance-consistency.sh` (NEW), `scripts/check-prerequisites.sh` | P3 (`scripts/`) | NO (tras P3) | B |
+| P6 | ninguno (verificación + PR) | todos (valida el conjunto) | NO (último) | cierre |
+
+**Regla de oro:** dos fases son PARALLEL-OK sii su intersección de archivos mutables es vacía. Si dudan, **secuencial** (constitution P5: sequential-first es default; parallel solo con tag explícito y zero shared mutable state).
+
+### 9.4 — Orden de merge (dependency order, constitution P5)
+
+```
+Grupo A (merge en cualquier orden, file-disjoint):
+  PR(P0) → main   PR(P1) → main   PR(P5) → main
+
+Grupo B (merge en cadena):
+  PR(P2) → main   →   rebase P3 sobre main   →   PR(P3) → main
+                 →   rebase P4 sobre main   →   PR(P4) → main
+
+P6: tras A+B mergeados, correr §6 harness full, luego PR de cierre (o squash si prefieres un commit limpio).
+```
+
+- Si P3/P4 se rebasaron sobre `main` post-P2 y hay conflicto en `scripts/`: el contrato de P2 (modelo ICM en core) es fuente — P3/P4 se adaptan, no al revés (edit-source principle).
+- **Nunca** mergear P4 antes que P0+P2: P4 valida lo que esos arreglaron (consistency sensor pasaría rojo sobre el estado stale).
+
+### 9.5 — Contract-first integration (constitution P5)
+
+Antes de disparar Grupo A en paralelo, fijar **contrato de ownership** (qué archivo es de quién):
+
+| Archivo/mutable | Owner (único) | Resto |
+|------------------|----------------|-------|
+| `README.md` | P0 | nadie la toca |
+| `docs/**` | P1 | nadie |
+| `agents/**`, `commands/**` | P5 | nadie |
+| `runtime/**`, `harness/manifest.json` | P2 | nadie |
+| `scripts/**` | P3 (routing) + P4 (sensor+gate) — **split**: P3 edita `first-prompt-router.sh`, `stage-context-manifest.sh`, `session-init.sh`, `workspace/_template/**`; P4 crea `check-governance-consistency.sh` y edita `check-prerequisites.sh` | |
+| Generated (`CLAUDE.md/AGENTS.md/...`) | **solo P2 via regen** | nadie hand-edita |
+| `plan-evolucion.md` §0 | orquestador (serialize writes) | agentes leen, no escriben |
+
+Si un agente descubre mid-flight que necesita un archivo fuera de su ownership: **STOP**, escalar al orquestador. No expandir scope en silencio (anti-scope breach).
+
+### 9.6 — Análisis de superficie de conflicto
+
+| Par | Solapa | Riesgo | Mitigación |
+|-----|--------|--------|------------|
+| P0 ↔ P1 | ninguno | nulo | paralelo libre |
+| P0 ↔ P5 | ninguno | nulo | paralelo libre |
+| P1 ↔ P5 | ninguno | nulo | paralelo libre |
+| P2 ↔ P3 | P3 consume el modelo ICM que P2 eleva | semántico (no de archivos) | P2 antes que P3 |
+| P3 ↔ P4 | ambos `scripts/` | bajo (archivos distintos dentro de scripts/) | split de ownership (§9.5); si inseguro, secuencial |
+| P2 ↔ P4 | P4 valida budgets/refs que P2 mueve | semántico | P4 después de P2 (su sensor pasaría rojo sobre P2 mid-flight) |
+| Cualquiera ↔ `plan-evolucion.md` §0 | tracker compartido | write-write | solo orquestador escribe §0; agentes leen |
+
+**Worktree no salva conflictos semánticos** (P2→P3→P4): aislamiento de archivos sí, pero P3 *depende* del output de P2. Worktree sirve para Grupo A (independientes); Grupo B es secuencial por dependencia, no por conflicto.
+
+### 9.7 — Patrón de paralelización agentica (más allá de este plan)
+
+Para trabajo agentico general en el harness (sub-agentes que mutan archivos):
+
+| Tipo de sub-agente | ¿Worktree? | ¿Rama? | Merge |
+|--------------------|------------|--------|-------|
+| Read-only (búsqueda, análisis) | NO | NO | N/A (no muta) |
+| Write, 1 archivo | NO (commit directo en feature branch) | branch-per-task | commit + PR |
+| Write, multi-archivo, sin solapar con otros agentes | opcional | branch-per-task | PR |
+| N agentes write en paralelo, archivos disjuntos | **SÍ (worktree c/u)** | branch c/u | N PRs, merge en cualquier orden |
+| N agentes write con dependencia | NO paralelo | cadena de ramas | merge en dependency order |
+| Orquestador + spokes | orquestador en main, spokes en worktrees | branch c/u spoke | spokes → PR → orquestador merge |
+
+**Tope WIP=3** (constitution P5): máximo 3 worktrees/agentes write activos simultáneos. Si necesitas más, cola (queue), no más paralelo.
+
+### 9.8 — Reanudación bajo modelo worktree
+
+1. `git worktree list` — ver qué worktrees activos hay (qué fases en progreso).
+2. Cada worktree es su propio cwd + rama: `cd <worktree>` → `git status` muestra solo esa fase.
+3. `plan-evolucion.md` es **compartido** (vive en main worktree o se replica): solo el orquestador actualiza §0. Spokes leen su fase en §4 y reportan completion via PR/mensaje, no editando §0.
+4. Si un worktree quedó abandonado: `git worktree remove <path>` (falla si cambios sin commit → inspeccionar antes de forzar).
+5. Tras merge del PR: `git worktree remove <path>` + `git branch -d <branch>` (limpieza).
+
+### 9.9 — Reglas anti-pérdida (git)
+
+- **Commit por fase, no por día.** La granularidad atómica es la fase (§1 regla 4). Commits intermedios dentro de una fase = WIP; el commit que cuenta es el que pasa §6 harness.
+- **Branch protection mental:** `main` solo recibe via PR. Si estás en `main` y vas a editar: `git checkout -b` primero (hook G0 lo exige).
+- **Push solo cuando usuario pida** (global rule). Si 403 de `JaviMetodologIA`: `gh auth switch --user JaviMontano && gh auth setup-git` antes de push (repo es `JaviMontano/jm-adk-beta`).
+- **Worktree ≠ backup.** Si borras un worktree sin mergear, pierdes el trabajo. Merge (o push) antes de `worktree remove`.
+- **Regeneración generated:** solo UN worktree (P2) corre `build-indexes.py`. Si dos worktrees corrieron regen, el segundo pisa al primero → usar el de P2 como fuente, descartar el otro regen.
