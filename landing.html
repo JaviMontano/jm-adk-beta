@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pristino Beta — Private Preview</title>
-  <meta name="description" content="Pristino Beta es un harness privado, catalog-driven y profile-driven para vibe coders y AI-native knowledge workers. Public release previsto para Ciclo 2 2026 sujeto a gates.">
+  <title>Pristino Beta — Catalog-driven agent harness</title>
+  <meta name="description" content="Pristino Beta es un harness catalog-driven para vibe coders y AI-native knowledge workers. Corre en Claude Code, Antigravity y Codex desde un solo catálogo.">
   <style>
     :root{--bg:#07111f;--panel:#0f1d33;--ink:#f7fbff;--muted:#a9b8ca;--gold:#ffd700;--cyan:#00ffff;--line:rgba(255,255,255,.14)}
     *{box-sizing:border-box}
     body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
-    main{max-width:1040px;margin:0 auto;padding:56px 24px}
+    main{max-width:1040px;margin:0 auto;padding:56px 24px 80px}
     section{padding:44px 0;border-bottom:1px solid var(--line)}
     .eyebrow{font:700 12px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--cyan);letter-spacing:.12em;text-transform:uppercase}
     h1{font-size:clamp(38px,6vw,72px);line-height:1.02;margin:18px 0}
@@ -22,47 +22,77 @@
     .cta{display:inline-block;margin:10px 12px 0 0;padding:10px 16px;border:1px solid var(--gold);text-decoration:none;font-weight:700}
     .primary{background:var(--gold);color:#06101d}
     code{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px}
-    table{width:100%;border-collapse:collapse;margin-top:16px}
-    td,th{border-bottom:1px solid var(--line);padding:10px;text-align:left;color:var(--muted)}
-    th{color:var(--ink)}
+    .lang-switch{position:absolute;top:18px;right:24px;font:700 13px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em}
+    .lang-switch button{background:none;border:1px solid var(--line);color:var(--muted);padding:6px 10px;cursor:pointer;font:inherit}
+    .lang-switch button[aria-pressed="true"]{color:var(--gold);border-color:var(--gold)}
+    [data-lang]{display:none}
+    html[lang="es"] [data-lang="es"]{display:block}
+    html[lang="en"] [data-lang="en"]{display:block}
   </style>
 </head>
 <body>
+<div class="lang-switch">
+  <button type="button" id="lang-es" aria-pressed="true">ES</button>
+  <button type="button" id="lang-en" aria-pressed="false">EN</button>
+</div>
 <main>
+
   <section>
-    <div class="eyebrow">Private preview · no GA · no public access yet</div>
+    <div class="eyebrow" data-lang="es">Catalog-driven agent harness</div>
+    <div class="eyebrow" data-lang="en">Catalog-driven agent harness</div>
     <h1>Pristino Beta</h1>
-    <p>Harness catalog-driven para el vibe coder y el AI-native knowledge worker. Beta es un proyecto privado separado de Alfa y su salida publica esta prevista para el Ciclo 2 del Programa de Empoderamiento 2026, sujeta a gates.</p>
-    <a class="cta primary" href="docs/pristino-beta/private-preview.md">Private preview</a>
-    <a class="cta" href="docs/pristino-beta/how-to-install-private-beta.md">How to install</a>
+    <p data-lang="es">Harness catalog-driven para el <strong>vibe coder</strong> y el <strong>AI-native knowledge worker</strong>. Un solo catálogo de skills corre en Claude Code, Antigravity y Codex; el harness carga contexto por capas (≤8k tokens por etapa) en vez de un prompt monolítico, y verifica cada fase con gates determinísticos antes de declararla lista.</p>
+    <p data-lang="en">A catalog-driven harness for the <strong>vibe coder</strong> and the <strong>AI-native knowledge worker</strong>. One skill catalog runs on Claude Code, Antigravity and Codex; the harness loads context in layers (≤8k tokens per stage) instead of a monolithic prompt, and verifies every phase with deterministic gates before calling it done.</p>
   </section>
 
   <section>
-    <h2>Para quien es</h2>
+    <h2 data-lang="es">Para quién es</h2>
+    <h2 data-lang="en">Who it's for</h2>
     <div class="grid">
-      <div class="card"><strong>Vibe coder</strong><p>Crea mini/super apps en ciclos build-run-observe, con tests, seguridad y evidencia.</p></div>
-      <div class="card"><strong>Knowledge worker</strong><p>Delegates research, synthesis, briefs and decisions with provenance and source discipline.</p></div>
-      <div class="card"><strong>MetodologIA profile</strong><p>Activa reglas de marca, calidad y comercial cuando el entregable pertenece al ecosistema MetodologIA.</p></div>
+      <div class="card"><strong data-lang="es">Vibe coder</strong><strong data-lang="en" style="display:none">Vibe coder</strong><p data-lang="es">Crea mini y super apps en ciclos build-run-observe, con tests, seguridad y evidencia en cada paso.</p><p data-lang="en" style="display:none">Build mini and super apps in build-run-observe loops, with tests, security and evidence at every step.</p></div>
+      <div class="card"><strong data-lang="es">Knowledge worker</strong><strong data-lang="en" style="display:none">Knowledge worker</strong><p data-lang="es">Delega investigación, síntesis, briefs y decisiones con proveniencia y disciplina de fuentes.</p><p data-lang="en" style="display:none">Delegates research, synthesis, briefs and decisions with provenance and source discipline.</p></div>
+      <div class="card"><strong data-lang="es">Perfil MetodologIA</strong><strong data-lang="en" style="display:none">MetodologIA profile</strong><p data-lang="es">Activa reglas de marca, calidad y comercial cuando el entregable pertenece al ecosistema MetodologIA.</p><p data-lang="en" style="display:none">Activates brand, quality and commercial rules when the deliverable belongs to the MetodologIA ecosystem.</p></div>
     </div>
   </section>
 
   <section>
-    <h2>Estado de gates</h2>
-    <table>
-      <tr><th>Gate</th><th>Estado private preview</th></tr>
-      <tr><td><code>validate-coverage.py</code></td><td>PASS en rama universal inspeccionada.</td></tr>
-      <tr><td><code>check-token-budget.py</code></td><td>FAIL; blocker pre-release documentado.</td></tr>
-      <tr><td>3-runtime smoke</td><td>Pendiente antes de public release.</td></tr>
-      <tr><td>Visibilidad GitHub</td><td>Privada; 404 esperado sin permiso.</td></tr>
-    </table>
+    <h2 data-lang="es">Principios</h2>
+    <h2 data-lang="en">Principles</h2>
+    <div class="grid">
+      <div class="card"><strong data-lang="es">Catálogo = fuente única</strong><strong data-lang="en" style="display:none">Catalog = single source</strong><p data-lang="es">Cada superficie (CLAUDE.md, AGENTS.md, GEMINI.md) se genera desde <code>catalog/skills.json</code>. Editar el generado a mano se pierde al regenerar.</p><p data-lang="en" style="display:none">Every surface (CLAUDE.md, AGENTS.md, GEMINI.md) is generated from <code>catalog/skills.json</code>. Hand-editing the generated file is lost on regen.</p></div>
+      <div class="card"><strong data-lang="es">Gates = artefactos</strong><strong data-lang="en" style="display:none">Gates = artifacts</strong><p data-lang="es">Una fase está "lista" solo cuando sus artefactos existen en disco, no cuando un modelo lo afirma.</p><p data-lang="en" style="display:none">A phase is "done" only when its artifacts exist on disk, not when a model asserts it.</p></div>
+      <div class="card"><strong data-lang="es">Contexto por capas (ICM)</strong><strong data-lang="en" style="display:none">Layered context (ICM)</strong><p data-lang="es">5 capas bajo demanda, ≤8k tokens por etapa. Un sensor mide el stack antes de cargar, no lo afirma.</p><p data-lang="en" style="display:none">5 layers on demand, ≤8k tokens per stage. A sensor measures the stack before loading — it doesn't just claim it.</p></div>
+      <div class="card"><strong data-lang="es">Constitution v7 + sensor</strong><strong data-lang="en" style="display:none">Constitution v7 + sensor</strong><p data-lang="es">MUST/MUST NOT extraídos y respetados en cada fase de ejecución; un sensor de consistencia atrapa drift entre docs y fuente.</p><p data-lang="en" style="display:none">MUST/MUST NOT extracted and honored in every execution phase; a consistency sensor catches docs-vs-source drift.</p></div>
+    </div>
   </section>
 
   <section>
-    <h2>Empieza con una tarea pequena</h2>
-    <p>Usa el prompt parametrico para confirmar repo, gates, perfil y una primera tarea real sin tocar superficies generadas a mano.</p>
-    <a class="cta primary" href="docs/pristino-beta/prompt-parametrico-empezar.md">Prompt de arranque</a>
-    <a class="cta" href="docs/pristino-beta/personas-vibe-coder-knowledge-worker.md">Ver personas</a>
+    <h2 data-lang="es">Empieza</h2>
+    <h2 data-lang="en">Get started</h2>
+    <p data-lang="es">Usa el prompt paramétrico para confirmar repo, gates, perfil y una primera tarea real sin tocar superficies generadas a mano.</p>
+    <p data-lang="en">Use the parametric prompt to confirm repo, gates, profile and a first real task without hand-editing generated surfaces.</p>
+    <a class="cta primary" href="docs/pristino-beta/how-to-install-private-beta.md" data-lang="es">Cómo instalar</a>
+    <a class="cta primary" href="docs/pristino-beta/how-to-install-private-beta.md" data-lang="en" style="display:none">How to install</a>
+    <a class="cta" href="docs/pristino-beta/prompt-parametrico-empezar.md" data-lang="es">Prompt de arranque</a>
+    <a class="cta" href="docs/pristino-beta/prompt-parametrico-empezar.md" data-lang="en" style="display:none">Startup prompt</a>
+    <a class="cta" href="docs/pristino-beta/personas-vibe-coder-knowledge-worker.md" data-lang="es">Ver personas</a>
+    <a class="cta" href="docs/pristino-beta/personas-vibe-coder-knowledge-worker.md" data-lang="en" style="display:none">See personas</a>
   </section>
+
 </main>
+<script>
+  function setLang(l){
+    document.documentElement.lang=l;
+    document.getElementById('lang-es').setAttribute('aria-pressed', l==='es');
+    document.getElementById('lang-en').setAttribute('aria-pressed', l==='en');
+    document.querySelectorAll('[data-lang]').forEach(function(el){
+      var show = el.getAttribute('data-lang')===l;
+      if(el.tagName==='STRONG' || el.tagName==='A'){ el.style.display = show ? '' : 'none'; }
+    });
+  }
+  document.getElementById('lang-es').addEventListener('click', function(){ setLang('es'); });
+  document.getElementById('lang-en').addEventListener('click', function(){ setLang('en'); });
+  setLang('es');
+</script>
 </body>
 </html>
