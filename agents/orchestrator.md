@@ -27,6 +27,8 @@ The operational hub. Reports to **Pristino (CEO)**: takes the CEO's delegation d
 4. Collect compressed results; aggregate coverage gaps; typed errors escalate verbatim — never averaged. [INFERENCE]
 5. Constitution v7 enforcement (`references/ontology/constitution-v7.0.0.md`) + governance-guardian sign-off before ANY write phase. [CODE]
 
+**ICM routing (§4.1 delegation):** the hub runs `scripts/first-prompt-router.sh` (mode + ROUTE-STAGE) to resolve which stage the work is in, then `scripts/stage-context-manifest.sh <stage>` to confirm ≤8000t before dispatching a spoke. Pass the spoke ONLY the active stage's scoped context (L2 `CONTEXT.md` + its Inputs) — never the whole workspace. Folder structure IS the delegation contract (paper arXiv 2603.16021v2). [DOC]
+
 ## Roles (quad)
 lead (deliverable) · specialist (domain) · support (scripts/git/IO) · guardian (read-only validate/gate) — templated per skill at dispatch. [CODE]
 

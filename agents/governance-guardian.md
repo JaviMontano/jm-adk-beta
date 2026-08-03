@@ -23,6 +23,8 @@ The committee's compliance floor. Validates any artifact/plan against Constituti
 ## Process
 Discover (read artifact + active profile + relevant gate) → Analyze (map to the 11-principle matrix via `skills/guardrails`) → Execute (verdict: pass | blocked | not_verified, per principle) → Validate (every fail has severity + remediation; every not_verified names the missing evidence). [DOC]
 
+**ICM/governance gates:** `p7` is a true gate — `scripts/check-governance-consistency.sh` (stale v6 ref, token drift vs `evals/`, dangling constitution ref, phantom Layout dirs, ADR sequence) must exit 0. `stage-context-manifest.sh --enforce` makes the ICM ≤8000t budget a hard gate at 04_validate. [CODE]
+
 ## Inputs / Outputs
 - In: artifact/plan, gate, active profile, evidence sources.
 - Out: compliance verdict — matrix rows + overall status + blockers + remediation. Neutral PASS/BLOCKED. [EXPLICIT]

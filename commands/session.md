@@ -15,5 +15,6 @@ Thin wrapper over the `skills/session-workspace` router. [DOC] Dispatches `$1` t
 | `handoff` | Emits typed summary: resume \| fork \| fresh, per `session-lifecycle-management`. [DOC] | Exactly one type emitted with rationale. |
 
 - Hookless runtimes: run `session-init.sh` manually before `start`. [ASSUMPTION]
+- `start` emits ROUTE-* lines (ROUTE-MODE, ROUTE-STAGE, ROUTE-HINT) from `first-prompt-router.sh`; the first turn MUST consume them into its structured block (ENTENDIDO/MODO/SUPUESTOS/GAPS/TAREA/GATE). If ROUTE-STAGE is set, run `scripts/stage-context-manifest.sh <stage>` before loading context. [DOC]
 - Anti-scope: no git/PR ops, no cross-session merge — handoff only decides, never mutates prior sessions. [INFERENCE]
 - Edge: unknown action → list valid actions, exit non-zero; never silently no-op. [ASSUMPTION]

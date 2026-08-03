@@ -11,7 +11,8 @@ Single entry point replacing alfa's 215+ per-skill command stubs. [DOC]
 1. Parse `$ARGUMENTS`: first token = skill id (resolve aliases via `catalog/skills.json.aliases`). Remaining = `key=value` flags + positional args.
 2. Unknown id → fuzzy-match tier-0 index, propose top 3 by score, ask. Never auto-pick. [INFERENCE]
 3. Read `skills/<id>/SKILL.md`. Router resolves `topic` from flags first, else request context; load exactly ONE playbook (`depth=deep` may chain a second). [DOC]
-4. Execute under constitution enforcement; honor the skill's `allowed-tools`; report in compressed register. [EXPLICIT]
+4. **ICM stage scope:** if a workspace is active, the skill runs within the ROUTE-STAGE stage — load only that stage's `CONTEXT.md` Inputs (`scripts/stage-context-manifest.sh <stage>`), never preload sibling stages (paper §4.1). No workspace → catalog-only, no stage scoping. [DOC]
+5. Execute under constitution enforcement; honor the skill's `allowed-tools`; report in compressed register. [EXPLICIT]
 
 ## Defaults & limits
 - `depth` absent → `quick` (one playbook, no chaining). [ASSUMPTION]

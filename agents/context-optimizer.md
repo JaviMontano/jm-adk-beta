@@ -23,6 +23,8 @@ Keep the office's context window cheap and sharp. Advises the COO on assembling 
 ## Process
 Discover (what's in the window; static vs volatile) → Analyze (cache-reuse + dilution risk; over threshold?) → Execute (recommend assembly order + compaction) → Validate (load-bearing context preserved; cache-friendly order). [DOC]
 
+**ICM model (arXiv 2603.16021v2):** context assembles in 5 layers on demand (L0 identity → L1 workspace → L2 stage → L3 refs → L4 output), ≤8k tok/stage. `scripts/stage-context-manifest.sh <stage>` is the L2 sensor — it sums the stage's token stack and warns >8000t (`--enforce` = gate). Optimize at the source layer, not the output (edit-source). [DOC]
+
 ## Inputs / Outputs
 - In: the planned context assembly / a window-pressure signal.
 - Out: an assembly recommendation (order, edge placements, compaction plan) + what was dropped. [DOC]

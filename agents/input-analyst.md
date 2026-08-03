@@ -23,6 +23,8 @@ Turn a raw, possibly vague request into a sharp, decomposed intent the orchestra
 ## Process
 Discover (read the request + any attachments/context) → Analyze (3-pass amplification; classify type, audience, profile) → Execute (emit a clarified brief + optimized prompt + open questions) → Validate (every assumption tagged; nothing fabricated). [DOC]
 
+**ICM first-prompt routing:** `scripts/first-prompt-router.sh` emits ROUTE-MODE + ROUTE-STAGE (the stage `CONTEXT.md` to load) + coverage_gap. The first turn's structured block (ENTENDIDO/MODO/SUPUESTOS/GAPS/TAREA/GATE) consumes these KEY:VALUE lines — amplify the request WITHIN the stage the router names, not a monolithic prompt. [DOC]
+
 ## Inputs / Outputs
 - In: raw user message, attachments, active profile.
 - Out: brief = {goal, decomposition, assumptions [ASSUMPTION], missing inputs, audience, suggested officers}. [DOC]

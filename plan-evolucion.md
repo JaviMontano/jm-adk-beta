@@ -16,7 +16,7 @@
 | P2 | Elevar modelo ICM a core.md (shared) + budget bump | DONE | f558f35 | SOURCE edit + regen + budget verify (crítico) |
 | P3 | Optimizar routing/orquestación (manifest --enforce, router, session-init) | DONE | 4dc4433 | script edits, no regen |
 | P4 | Sensor de consistencia de gobernanza + gate p7 | DONE | 1939292 | nuevo script |
-| P5 | Alinear agents/ + commands/ a ICM | PENDING | — | hand-edit, no regen |
+| P5 | Alinear agents/ + commands/ a ICM | DONE | 23b9c57 | hand-edit, no regen |
 | P6 | Verificación final + commit + PR | PENDING | — | cierre |
 
 **Convención de status:** `PENDING` → `IN_PROGRESS` (asignar + `git checkout -b`) → `DONE` (commit hash aquí). Una fase `DONE` tiene su commit en la columna Commit.
