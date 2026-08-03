@@ -3,28 +3,275 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pristino Beta — Catalog-driven agent harness</title>
-  <meta name="description" content="Pristino Beta es un harness catalog-driven para vibe coders y AI-native knowledge workers. Corre en Claude Code, Antigravity y Codex desde un solo catálogo.">
+  <title>Pristino Beta — Onboarding</title>
+  <meta name="description" content="Pristino Beta: harness catalog-driven para vibe coders y AI-native knowledge workers. Corre en Claude Code, Antigravity y Codex desde un solo catálogo. Onboarding en 4 pasos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#07111f;--panel:#0f1d33;--ink:#f7fbff;--muted:#a9b8ca;--gold:#ffd700;--cyan:#00ffff;--line:rgba(255,255,255,.14)}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
-    main{max-width:1040px;margin:0 auto;padding:56px 24px 80px}
-    section{padding:44px 0;border-bottom:1px solid var(--line)}
-    .eyebrow{font:700 12px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--cyan);letter-spacing:.12em;text-transform:uppercase}
-    h1{font-size:clamp(38px,6vw,72px);line-height:1.02;margin:18px 0}
-    h2{font-size:28px;margin:0 0 18px;color:var(--gold)}
-    p{max-width:760px;color:var(--muted)}
-    a{color:var(--gold)}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-    .card{background:var(--panel);border:1px solid var(--line);padding:20px}
-    .card strong{display:block;color:var(--ink);margin-bottom:8px}
-    .cta{display:inline-block;margin:10px 12px 0 0;padding:10px 16px;border:1px solid var(--gold);text-decoration:none;font-weight:700}
-    .primary{background:var(--gold);color:#06101d}
-    code{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px}
-    .lang-switch{position:absolute;top:18px;right:24px;font:700 13px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em}
-    .lang-switch button{background:none;border:1px solid var(--line);color:var(--muted);padding:6px 10px;cursor:pointer;font:inherit}
-    .lang-switch button[aria-pressed="true"]{color:var(--gold);border-color:var(--gold)}
+    /* MetodologIA Design Tokens (canonical brandbook) */
+    :root{
+      --navy:#0A122A;
+      --surface:#1E293B;
+      --surface-alt:#0F172A;
+      --gold:#FFD700;
+      --gold-dark:#E5A100;
+      --gold-light:#FFF176;
+      --cyan:#00FFFF;
+      --text:#FFFFFF;
+      --text-muted:#94A3B8;
+      --border:rgba(255,255,255,0.05);
+      --border-hover:rgba(255,215,0,0.3);
+      --glass-bg:rgba(30,41,59,0.4);
+      --glass-blur:blur(24px);
+      --glass-border:1px solid rgba(255,255,255,0.05);
+      --glass-shadow:0 4px 30px rgba(0,0,0,0.5);
+      --soft-shadow:0 2px 8px rgba(0,0,0,0.15);
+      --gold-glow:0 0 20px rgba(255,215,0,0.2);
+      --gold-hover-shadow:0 8px 32px rgba(255,215,0,0.1);
+      --micro-gradient:linear-gradient(135deg,rgba(255,215,0,0.05),transparent);
+      --transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+      --max-width:1200px;
+      --radius:12px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'Inter',system-ui,sans-serif;
+      background:var(--navy);
+      color:var(--text);
+      line-height:1.65;
+      min-height:100vh;
+    }
+    /* Swiss Grid Overlay — signature aesthetic */
+    body::before{
+      content:'';
+      position:fixed;
+      top:0;left:0;right:0;bottom:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
+      background-size:32px 32px;
+      pointer-events:none;
+      z-index:0;
+    }
+    main{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:56px 32px 104px;
+      position:relative;
+      z-index:1;
+    }
+    header{position:relative;padding:8px 0 0;margin-bottom:8px}
+    .brand{
+      font-family:'JetBrains Mono',monospace;
+      font-weight:500;
+      font-size:14px;
+      color:var(--cyan);
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
+    .lang-switch{
+      position:absolute;
+      top:0;right:0;
+      font-family:'JetBrains Mono',monospace;
+      font-weight:500;
+      font-size:13px;
+      letter-spacing:.08em;
+    }
+    .lang-switch button{
+      background:var(--glass-bg);
+      backdrop-filter:var(--glass-blur);
+      border:var(--glass-border);
+      color:var(--text-muted);
+      padding:8px 14px;
+      cursor:pointer;
+      font:inherit;
+      border-radius:6px;
+      transition:var(--transition);
+    }
+    .lang-switch button[aria-pressed="true"]{
+      color:var(--gold);
+      border-color:var(--gold);
+      box-shadow:var(--gold-glow);
+    }
+    section{padding:48px 0;border-bottom:1px solid var(--border)}
+    section:last-child{border-bottom:none}
+    .eyebrow{
+      font-family:'JetBrains Mono',monospace;
+      font-weight:500;
+      font-size:12px;
+      color:var(--cyan);
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+    h1{
+      font-family:'Poppins',sans-serif;
+      font-weight:800;
+      font-size:clamp(36px,5.5vw,62px);
+      line-height:1.06;
+      margin:16px 0 14px;
+      background:linear-gradient(135deg,var(--text) 0%,var(--gold) 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    h2{
+      font-family:'Poppins',sans-serif;
+      font-weight:700;
+      font-size:28px;
+      margin:0 0 22px;
+      color:var(--gold);
+      letter-spacing:-0.01em;
+    }
+    h3{
+      font-family:'Poppins',sans-serif;
+      font-weight:600;
+      font-size:18px;
+      margin:0 0 8px;
+      color:var(--text);
+    }
+    p{max-width:800px;color:var(--text-muted)}
+    .lead{font-size:20px;color:var(--text);max-width:840px;font-weight:400}
+    a{color:var(--gold);transition:var(--transition)}
+    a:hover{color:var(--gold-light)}
+    code{
+      font-family:'JetBrains Mono',monospace;
+      font-weight:500;
+      font-size:.9em;
+      background:rgba(255,215,0,0.08);
+      color:var(--gold-light);
+      padding:2px 7px;
+      border-radius:5px;
+    }
+    pre{
+      background:var(--surface-alt);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:20px 22px;
+      overflow-x:auto;
+      margin:16px 0;
+      box-shadow:var(--soft-shadow);
+    }
+    pre code{
+      background:none;
+      color:var(--text);
+      padding:0;
+      font-size:.86em;
+      line-height:1.7;
+    }
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+    .card{
+      background:var(--glass-bg);
+      backdrop-filter:var(--glass-blur);
+      border:var(--glass-border);
+      border-radius:var(--radius);
+      padding:24px;
+      box-shadow:var(--soft-shadow);
+      transition:var(--transition);
+      position:relative;
+      overflow:hidden;
+    }
+    .card::before{
+      content:'';
+      position:absolute;
+      top:0;left:0;right:0;bottom:0;
+      background:var(--micro-gradient);
+      pointer-events:none;
+    }
+    .card:hover{
+      border-color:var(--border-hover);
+      box-shadow:var(--gold-hover-shadow);
+      transform:translateY(-2px);
+    }
+    .card h3{margin-bottom:8px;position:relative}
+    .card p{font-size:14.5px;margin:10px 0 0;position:relative}
+    .num{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:34px;height:34px;
+      border:1.5px solid var(--gold);
+      color:var(--gold);
+      border-radius:50%;
+      font-family:'JetBrains Mono',monospace;
+      font-weight:500;
+      font-size:14px;
+      margin-right:14px;
+      flex-shrink:0;
+      box-shadow:var(--gold-glow);
+    }
+    .step{display:flex;align-items:flex-start;margin-bottom:22px}
+    .step-body{padding-top:4px}
+    .step-body h3{margin:0 0 6px}
+    .step-body p{margin:8px 0 0;font-size:15px}
+    .cta{
+      display:inline-block;
+      margin:10px 14px 0 0;
+      padding:12px 20px;
+      border:1.5px solid var(--gold);
+      text-decoration:none;
+      font-weight:700;
+      font-size:15px;
+      border-radius:8px;
+      transition:var(--transition);
+      color:var(--gold);
+    }
+    .cta:hover{
+      background:rgba(255,215,0,0.08);
+      box-shadow:var(--gold-glow);
+      transform:translateY(-1px);
+    }
+    .cta.primary{
+      background:var(--gold);
+      color:var(--navy);
+    }
+    .cta.primary:hover{
+      background:var(--gold-light);
+      box-shadow:var(--gold-hover-shadow);
+    }
+    .runtime-pill{
+      display:inline-block;
+      font-family:'JetBrains Mono',monospace;
+      font-weight:500;
+      font-size:13px;
+      color:var(--cyan);
+      border:1px solid rgba(0,255,255,0.25);
+      background:rgba(0,255,255,0.05);
+      padding:6px 12px;
+      border-radius:20px;
+      margin:0 8px 8px 0;
+    }
+    details{
+      background:var(--glass-bg);
+      backdrop-filter:var(--glass-blur);
+      border:var(--glass-border);
+      border-radius:var(--radius);
+      padding:16px 20px;
+      margin-bottom:12px;
+      transition:var(--transition);
+    }
+    details[open]{border-color:var(--border-hover);box-shadow:var(--soft-shadow)}
+    summary{
+      cursor:pointer;
+      font-family:'Poppins',sans-serif;
+      font-weight:600;
+      color:var(--text);
+      font-size:16px;
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    summary::before{content:'▸ ';color:var(--gold);font-weight:700}
+    details[open] summary::before{content:'▾ '}
+    details p{margin:12px 0 0;font-size:14.5px}
+    .footer-note{
+      font-family:'JetBrains Mono',monospace;
+      font-size:13px;
+      color:var(--text-muted);
+      margin-top:40px;
+      opacity:.6;
+      letter-spacing:.02em;
+    }
     [data-lang]{display:none}
     html[lang="es"] [data-lang="es"]{display:block}
     html[lang="en"] [data-lang="en"]{display:block}
@@ -37,47 +284,253 @@
 </div>
 <main>
 
+<header>
+  <div class="brand">Pristino Beta</div>
+</header>
+
+<!-- ============ ES ============ -->
+<div data-lang="es">
+
   <section>
-    <div class="eyebrow" data-lang="es">Catalog-driven agent harness</div>
-    <div class="eyebrow" data-lang="en">Catalog-driven agent harness</div>
-    <h1>Pristino Beta</h1>
-    <p data-lang="es">Harness catalog-driven para el <strong>vibe coder</strong> y el <strong>AI-native knowledge worker</strong>. Un solo catálogo de skills corre en Claude Code, Antigravity y Codex; el harness carga contexto por capas (≤8k tokens por etapa) en vez de un prompt monolítico, y verifica cada fase con gates determinísticos antes de declararla lista.</p>
-    <p data-lang="en">A catalog-driven harness for the <strong>vibe coder</strong> and the <strong>AI-native knowledge worker</strong>. One skill catalog runs on Claude Code, Antigravity and Codex; the harness loads context in layers (≤8k tokens per stage) instead of a monolithic prompt, and verifies every phase with deterministic gates before calling it done.</p>
+    <div class="eyebrow">Catalog-driven agent harness</div>
+    <h1>Un catálogo. Tres runtimes. Contexto por capas.</h1>
+    <p class="lead">Harness para el <strong>vibe coder</strong> y el <strong>AI-native knowledge worker</strong>. Carga contexto en capas (≤8k tokens por etapa) en vez de un prompt monolítico, y verifica cada fase con gates determinísticos antes de declararla lista.</p>
+    <p style="margin-top:18px">
+      <span class="runtime-pill">Claude Code</span>
+      <span class="runtime-pill">Antigravity</span>
+      <span class="runtime-pill">Codex</span>
+    </p>
   </section>
 
   <section>
-    <h2 data-lang="es">Para quién es</h2>
-    <h2 data-lang="en">Who it's for</h2>
-    <div class="grid">
-      <div class="card"><strong data-lang="es">Vibe coder</strong><strong data-lang="en" style="display:none">Vibe coder</strong><p data-lang="es">Crea mini y super apps en ciclos build-run-observe, con tests, seguridad y evidencia en cada paso.</p><p data-lang="en" style="display:none">Build mini and super apps in build-run-observe loops, with tests, security and evidence at every step.</p></div>
-      <div class="card"><strong data-lang="es">Knowledge worker</strong><strong data-lang="en" style="display:none">Knowledge worker</strong><p data-lang="es">Delega investigación, síntesis, briefs y decisiones con proveniencia y disciplina de fuentes.</p><p data-lang="en" style="display:none">Delegates research, synthesis, briefs and decisions with provenance and source discipline.</p></div>
-      <div class="card"><strong data-lang="es">Perfil MetodologIA</strong><strong data-lang="en" style="display:none">MetodologIA profile</strong><p data-lang="es">Activa reglas de marca, calidad y comercial cuando el entregable pertenece al ecosistema MetodologIA.</p><p data-lang="en" style="display:none">Activates brand, quality and commercial rules when the deliverable belongs to the MetodologIA ecosystem.</p></div>
+    <h2>Qué es</h2>
+    <p>Pristino Beta es un harness agentico. El catálogo <code>catalog/skills.json</code> es la <strong>fuente única de verdad</strong>: cada superficie de runtime (CLAUDE.md, AGENTS.md, GEMINI.md) se <strong>genera</strong> desde el catálogo, nunca se edita a mano. Implementa la <a href="https://arxiv.org/abs/2603.16021">Interpretable Context Methodology (ICM)</a> — estructura-de-carpetas-como-arquitectura — para mantener el contexto por etapa en 2-8k tokens en lugar de un prompt monolítico de 30-50k.</p>
+    <div class="grid" style="margin-top:24px">
+      <div class="card"><h3>73 skills</h3><p>35 routers + 24 competencias + 14 jarvis-os. 611 capacidades trazadas y dispositioned, sin perder capacidad load-bearing.</p></div>
+      <div class="card"><h3>3 runtimes</h3><p>Un solo catálogo corre en Claude Code, Antigravity y Codex. Sin forks de lógica por runtime.</p></div>
+      <div class="card"><h3>Gates determinísticos</h3><p>Una fase está "lista" solo cuando sus artefactos existen en disco, no cuando un modelo lo afirma.</p></div>
     </div>
   </section>
 
   <section>
-    <h2 data-lang="es">Principios</h2>
-    <h2 data-lang="en">Principles</h2>
+    <h2>Para quién es</h2>
     <div class="grid">
-      <div class="card"><strong data-lang="es">Catálogo = fuente única</strong><strong data-lang="en" style="display:none">Catalog = single source</strong><p data-lang="es">Cada superficie (CLAUDE.md, AGENTS.md, GEMINI.md) se genera desde <code>catalog/skills.json</code>. Editar el generado a mano se pierde al regenerar.</p><p data-lang="en" style="display:none">Every surface (CLAUDE.md, AGENTS.md, GEMINI.md) is generated from <code>catalog/skills.json</code>. Hand-editing the generated file is lost on regen.</p></div>
-      <div class="card"><strong data-lang="es">Gates = artefactos</strong><strong data-lang="en" style="display:none">Gates = artifacts</strong><p data-lang="es">Una fase está "lista" solo cuando sus artefactos existen en disco, no cuando un modelo lo afirma.</p><p data-lang="en" style="display:none">A phase is "done" only when its artifacts exist on disk, not when a model asserts it.</p></div>
-      <div class="card"><strong data-lang="es">Contexto por capas (ICM)</strong><strong data-lang="en" style="display:none">Layered context (ICM)</strong><p data-lang="es">5 capas bajo demanda, ≤8k tokens por etapa. Un sensor mide el stack antes de cargar, no lo afirma.</p><p data-lang="en" style="display:none">5 layers on demand, ≤8k tokens per stage. A sensor measures the stack before loading — it doesn't just claim it.</p></div>
-      <div class="card"><strong data-lang="es">Constitution v7 + sensor</strong><strong data-lang="en" style="display:none">Constitution v7 + sensor</strong><p data-lang="es">MUST/MUST NOT extraídos y respetados en cada fase de ejecución; un sensor de consistencia atrapa drift entre docs y fuente.</p><p data-lang="en" style="display:none">MUST/MUST NOT extracted and honored in every execution phase; a consistency sensor catches docs-vs-source drift.</p></div>
+      <div class="card">
+        <h3>Vibe coder</h3>
+        <p>Crea mini y super apps en ciclos build-run-observe. Working code antes que prosa larga. Tests, seguridad y evidencia nunca se doblan por velocidad.</p>
+        <p style="margin-top:12px"><strong>Buenas tareas:</strong> mini app, prototipo, reparar feature chica, tool interno, volver una necesidad app runnable.</p>
+      </div>
+      <div class="card">
+        <h3>Knowledge worker</h3>
+        <p>Delega investigación, síntesis, briefs y decisiones. Cada claim no trivial tagueado y citado. Proveniencia preservada. Supuestos aflorados, no lavados como hechos.</p>
+        <p style="margin-top:12px"><strong>Buenas tareas:</strong> investigar dominio, brief operativo, comparar tools, memo de decisión con fuentes, playbook o FAQ.</p>
+      </div>
+    </div>
+    <p style="margin-top:20px"><strong>Regla de selección:</strong> si la tarea pide código runnable → <code>vibe-coder</code>. Si pide investigación o documentos con fuentes → <code>knowledge-worker</code>.</p>
+  </section>
+
+  <section>
+    <h2>Cómo funciona</h2>
+    <div class="step">
+      <span class="num">1</span>
+      <div class="step-body"><h3>Catálogo = fuente única</h3><p>Editas <code>catalog/skills.json</code> + <code>runtime/core.md</code> + <code>profiles/</code>. <code>scripts/build-indexes.py</code> genera las superficies de cada runtime. Editar el generado a mano se pierde al regenerar.</p></div>
+    </div>
+    <div class="step">
+      <span class="num">2</span>
+      <div class="step-body"><h3>Contexto por capas (ICM)</h3><p>5 capas bajo demanda (L0 identidad → L1 workspace → L2 stage → L3 refs → L4 output). Un sensor mide el stack de tokens antes de cargar — ≤8k por etapa, no 30-50k de golpe.</p></div>
+    </div>
+    <div class="step">
+      <span class="num">3</span>
+      <div class="step-body"><h3>Gates = artefactos</h3><p><code>scripts/check-prerequisites.sh --phase pN --json</code> verifica que los artefactos existan. Constitution v7 MUST/MUST NOT extraídos y respetados en cada fase de ejecución. Un sensor de consistencia atrapa drift entre docs y fuente.</p></div>
     </div>
   </section>
 
   <section>
-    <h2 data-lang="es">Empieza</h2>
-    <h2 data-lang="en">Get started</h2>
-    <p data-lang="es">Usa el prompt paramétrico para confirmar repo, gates, perfil y una primera tarea real sin tocar superficies generadas a mano.</p>
-    <p data-lang="en">Use the parametric prompt to confirm repo, gates, profile and a first real task without hand-editing generated surfaces.</p>
-    <a class="cta primary" href="docs/pristino-beta/how-to-install-private-beta.md" data-lang="es">Cómo instalar</a>
-    <a class="cta primary" href="docs/pristino-beta/how-to-install-private-beta.md" data-lang="en" style="display:none">How to install</a>
-    <a class="cta" href="docs/pristino-beta/prompt-parametrico-empezar.md" data-lang="es">Prompt de arranque</a>
-    <a class="cta" href="docs/pristino-beta/prompt-parametrico-empezar.md" data-lang="en" style="display:none">Startup prompt</a>
-    <a class="cta" href="docs/pristino-beta/personas-vibe-coder-knowledge-worker.md" data-lang="es">Ver personas</a>
-    <a class="cta" href="docs/pristino-beta/personas-vibe-coder-knowledge-worker.md" data-lang="en" style="display:none">See personas</a>
+    <h2>Empieza en 4 pasos</h2>
+    <div class="step">
+      <span class="num">1</span>
+      <div class="step-body"><h3>Clona</h3><pre><code>git clone https://github.com/JaviMontano/jm-adk-beta.git
+cd jm-adk-beta</code></pre></div>
+    </div>
+    <div class="step">
+      <span class="num">2</span>
+      <div class="step-body"><h3>Regenera superficies + valida</h3><pre><code>python3 scripts/build-indexes.py     # genera CLAUDE.md / AGENTS.md / GEMINI.md
+python3 scripts/validate-coverage.py  # 611 capabilities dispositioned
+python3 scripts/check-token-budget.py # budgets CI-gated
+python3 scripts/validate-evals.py</code></pre></div>
+    </div>
+    <div class="step">
+      <span class="num">3</span>
+      <div class="step-body"><h3>Abre en tu runtime</h3><p>El adaptador que tu runtime lee: <code>CLAUDE.md</code> (Claude Code) · <code>AGENTS.md</code> (Codex) · <code>GEMINI.md</code> + <code>.agent/rules/GEMINI.md</code> (Antigravity). No los edites a mano — cambia fuente y regenera.</p></div>
+    </div>
+    <div class="step">
+      <span class="num">4</span>
+      <div class="step-body"><h3>Primer prompt</h3><p>El harness emite automáticamente la decisión de routing (<code>ROUTE-*</code>) en el primer turno: modo, supuestos, gaps, perfil, skill candidato, tarea propuesta, gate. Tú propones una tarea pequeña y verificable; el harness la convierte en plan de 3 pasos con criterio de done.</p></div>
+    </div>
   </section>
+
+  <section>
+    <h2>Tu primera tarea</h2>
+    <p>Pequeña, real y verificable. Ejemplos:</p>
+    <div class="grid" style="margin-top:20px">
+      <div class="card"><h3>Vibe coder</h3><p>"Construye un slice de app que resuelva una fricción real de mi trabajo esta semana."</p></div>
+      <div class="card"><h3>Knowledge worker</h3><p>"Crea un brief operativo de una página a partir de estas notas."</p></div>
+    </div>
+    <p style="margin-top:18px">El harness responde: perfil recomendado, skill/router candidato, inputs que faltan, plan de 3 pasos, gate de validación. Si hay <code>coverage_gap</code>, pregunta antes de editar.</p>
+  </section>
+
+  <section>
+    <h2>Principios</h2>
+    <div class="grid">
+      <div class="card"><h3>Catálogo = fuente única</h3><p>Cada superficie se genera desde <code>catalog/skills.json</code>. Hand-editar el generado es anti-patrón.</p></div>
+      <div class="card"><h3>Gates = artefactos</h3><p>"Listo" = artefactos en disco, no aserción del modelo.</p></div>
+      <div class="card"><h3>ICM ≤8k tok</h3><p>5 capas bajo demanda. Sensor mide el stack, no lo afirma.</p></div>
+      <div class="card"><h3>Constitution v7</h3><p>MUST/MUST NOT extraídos y respetados en cada fase de ejecución.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Preguntas frecuentes</h2>
+    <details><summary>¿Puedo editar CLAUDE.md / AGENTS.md / GEMINI.md a mano?</summary><p>No. Son superficies generadas. Edita la fuente canónica (catálogo, runtime core, delta o profiles) y regenera con <code>build-indexes.py</code>. Los cambios a mano se pierden al regenerar.</p></details>
+    <details><summary>¿Qué runtime uso primero?</summary><p>El que ya tengas. Claude Code lee <code>CLAUDE.md</code>, Codex lee <code>AGENTS.md</code>, Antigravity lee <code>GEMINI.md</code>. Los tres salen del mismo catálogo.</p></details>
+    <details><summary>¿Cómo elijo perfil?</summary><p><code>vibe-coder</code> para software runnable. <code>knowledge-worker</code> para investigación o documentos con fuentes. El perfil activa reglas de marca, calidad y comercial cuando el entregable pertenece al ecosistema MetodologIA.</p></details>
+    <details><summary>¿Qué hace si le pido algo ambiguo?</summary><p>Emite <code>coverage_gap</code> y pregunta antes de editar. No adivina. No edita sobre supuesto.</p></details>
+    <details><summary>¿Puede mostrar precios?</summary><p>No en output. Esfuerzo en FTE-months + disclaimers (regla governance). El pricing es profile-scoped.</p></details>
+  </section>
+
+  <section>
+    <h2>Recursos</h2>
+    <a class="cta primary" href="docs/pristino-beta/how-to-install-private-beta.md">Cómo instalar</a>
+    <a class="cta" href="docs/pristino-beta/prompt-parametrico-empezar.md">Prompt de arranque</a>
+    <a class="cta" href="docs/pristino-beta/personas-vibe-coder-knowledge-worker.md">Ver personas</a>
+    <a class="cta" href="docs/pristino-beta/faq.md">FAQ completo</a>
+  </section>
+
+  <p class="footer-note">Pristino Beta · harness catalog-driven · ICM (arXiv 2603.16021) · Constitution v7</p>
+
+</div>
+
+<!-- ============ EN ============ -->
+<div data-lang="en">
+
+  <section>
+    <div class="eyebrow">Catalog-driven agent harness</div>
+    <h1>One catalog. Three runtimes. Layered context.</h1>
+    <p class="lead">A harness for the <strong>vibe coder</strong> and the <strong>AI-native knowledge worker</strong>. It loads context in layers (≤8k tokens per stage) instead of a monolithic prompt, and verifies every phase with deterministic gates before calling it done.</p>
+    <p style="margin-top:18px">
+      <span class="runtime-pill">Claude Code</span>
+      <span class="runtime-pill">Antigravity</span>
+      <span class="runtime-pill">Codex</span>
+    </p>
+  </section>
+
+  <section>
+    <h2>What it is</h2>
+    <p>Pristino Beta is an agentic harness. The catalog <code>catalog/skills.json</code> is the <strong>single source of truth</strong>: every runtime surface (CLAUDE.md, AGENTS.md, GEMINI.md) is <strong>generated</strong> from the catalog, never hand-edited. It implements the <a href="https://arxiv.org/abs/2603.16021">Interpretable Context Methodology (ICM)</a> — folder-structure-as-architecture — to keep per-stage context at 2-8k tokens instead of a 30-50k monolithic prompt.</p>
+    <div class="grid" style="margin-top:24px">
+      <div class="card"><h3>73 skills</h3><p>35 routers + 24 competencies + 14 jarvis-os. 611 capabilities traced and dispositioned — no load-bearing capability dropped.</p></div>
+      <div class="card"><h3>3 runtimes</h3><p>One catalog runs on Claude Code, Antigravity and Codex. No per-runtime forks of logic.</p></div>
+      <div class="card"><h3>Deterministic gates</h3><p>A phase is "done" only when its artifacts exist on disk, not when a model asserts it.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Who it's for</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Vibe coder</h3>
+        <p>Builds mini and super apps in build-run-observe loops. Working code before long prose. Tests, security and evidence never bend for speed.</p>
+        <p style="margin-top:12px"><strong>Good tasks:</strong> mini app, prototype, repair a small feature, internal tool, turn a rough need into a runnable app slice.</p>
+      </div>
+      <div class="card">
+        <h3>Knowledge worker</h3>
+        <p>Delegates research, synthesis, briefs and decisions. Every non-trivial claim tagged and cited. Provenance preserved. Assumptions surfaced, not laundered into facts.</p>
+        <p style="margin-top:12px"><strong>Good tasks:</strong> research a domain, operating brief, compare tools, sourced decision memo, playbook or FAQ.</p>
+      </div>
+    </div>
+    <p style="margin-top:20px"><strong>Selection rule:</strong> if the task asks for runnable code → <code>vibe-coder</code>. If it asks for research or sourced documents → <code>knowledge-worker</code>.</p>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <div class="step">
+      <span class="num">1</span>
+      <div class="step-body"><h3>Catalog = single source</h3><p>You edit <code>catalog/skills.json</code> + <code>runtime/core.md</code> + <code>profiles/</code>. <code>scripts/build-indexes.py</code> generates each runtime's surfaces. Hand-editing the generated file is lost on regen.</p></div>
+    </div>
+    <div class="step">
+      <span class="num">2</span>
+      <div class="step-body"><h3>Layered context (ICM)</h3><p>5 layers on demand (L0 identity → L1 workspace → L2 stage → L3 refs → L4 output). A sensor measures the token stack before loading — ≤8k per stage, not 30-50k at once.</p></div>
+    </div>
+    <div class="step">
+      <span class="num">3</span>
+      <div class="step-body"><h3>Gates = artifacts</h3><p><code>scripts/check-prerequisites.sh --phase pN --json</code> verifies artifacts exist. Constitution v7 MUST/MUST NOT extracted and honored in every execution phase. A consistency sensor catches docs-vs-source drift.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Get started in 4 steps</h2>
+    <div class="step">
+      <span class="num">1</span>
+      <div class="step-body"><h3>Clone</h3><pre><code>git clone https://github.com/JaviMontano/jm-adk-beta.git
+cd jm-adk-beta</code></pre></div>
+    </div>
+    <div class="step">
+      <span class="num">2</span>
+      <div class="step-body"><h3>Regenerate surfaces + validate</h3><pre><code>python3 scripts/build-indexes.py     # generates CLAUDE.md / AGENTS.md / GEMINI.md
+python3 scripts/validate-coverage.py  # 611 capabilities dispositioned
+python3 scripts/check-token-budget.py # budgets CI-gated
+python3 scripts/validate-evals.py</code></pre></div>
+    </div>
+    <div class="step">
+      <span class="num">3</span>
+      <div class="step-body"><h3>Open in your runtime</h3><p>The adapter your runtime reads: <code>CLAUDE.md</code> (Claude Code) · <code>AGENTS.md</code> (Codex) · <code>GEMINI.md</code> + <code>.agent/rules/GEMINI.md</code> (Antigravity). Don't hand-edit them — change source and regenerate.</p></div>
+    </div>
+    <div class="step">
+      <span class="num">4</span>
+      <div class="step-body"><h3>First prompt</h3><p>The harness auto-emits the routing decision (<code>ROUTE-*</code>) on the first turn: mode, assumptions, gaps, profile, candidate skill, proposed task, gate. You propose a small, verifiable task; the harness turns it into a 3-step plan with a done criterion.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Your first task</h2>
+    <p>Small, real and verifiable. Examples:</p>
+    <div class="grid" style="margin-top:20px">
+      <div class="card"><h3>Vibe coder</h3><p>"Build a tiny app slice that solves a real friction from my work this week."</p></div>
+      <div class="card"><h3>Knowledge worker</h3><p>"Create a one-page operating brief from these notes."</p></div>
+    </div>
+    <p style="margin-top:18px">The harness responds: recommended profile, candidate skill/router, missing inputs, 3-step plan, validation gate. If there's a <code>coverage_gap</code>, it asks before editing.</p>
+  </section>
+
+  <section>
+    <h2>Principles</h2>
+    <div class="grid">
+      <div class="card"><h3>Catalog = single source</h3><p>Every surface is generated from <code>catalog/skills.json</code>. Hand-editing the generated file is an anti-pattern.</p></div>
+      <div class="card"><h3>Gates = artifacts</h3><p>"Done" = artifacts on disk, not model assertion.</p></div>
+      <div class="card"><h3>ICM ≤8k tok</h3><p>5 layers on demand. A sensor measures the stack — it doesn't just claim it.</p></div>
+      <div class="card"><h3>Constitution v7</h3><p>MUST/MUST NOT extracted and honored in every execution phase.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>FAQ</h2>
+    <details><summary>Can I hand-edit CLAUDE.md / AGENTS.md / GEMINI.md?</summary><p>No. They are generated surfaces. Edit the canonical source (catalog, runtime core, delta or profiles) and regenerate with <code>build-indexes.py</code>. Hand changes are lost on regen.</p></details>
+    <details><summary>Which runtime should I use first?</summary><p>Whichever you already have. Claude Code reads <code>CLAUDE.md</code>, Codex reads <code>AGENTS.md</code>, Antigravity reads <code>GEMINI.md</code>. All three come from the same catalog.</p></details>
+    <details><summary>How do I pick a profile?</summary><p><code>vibe-coder</code> for runnable software. <code>knowledge-worker</code> for research or sourced documents. The profile activates brand, quality and commercial rules when the deliverable belongs to the MetodologIA ecosystem.</p></details>
+    <details><summary>What happens if I ask something ambiguous?</summary><p>It emits a <code>coverage_gap</code> and asks before editing. It does not guess. It does not edit on assumption.</p></details>
+    <details><summary>Can it show prices?</summary><p>No, never in output. Effort in FTE-months + disclaimers (governance rule). Pricing is profile-scoped.</p></details>
+  </section>
+
+  <section>
+    <h2>Resources</h2>
+    <a class="cta primary" href="docs/pristino-beta/how-to-install-private-beta.md">How to install</a>
+    <a class="cta" href="docs/pristino-beta/prompt-parametrico-empezar.md">Startup prompt</a>
+    <a class="cta" href="docs/pristino-beta/personas-vibe-coder-knowledge-worker.md">See personas</a>
+    <a class="cta" href="docs/pristino-beta/faq.md">Full FAQ</a>
+  </section>
+
+  <p class="footer-note">Pristino Beta · catalog-driven harness · ICM (arXiv 2603.16021) · Constitution v7</p>
+
+</div>
 
 </main>
 <script>
@@ -85,10 +538,6 @@
     document.documentElement.lang=l;
     document.getElementById('lang-es').setAttribute('aria-pressed', l==='es');
     document.getElementById('lang-en').setAttribute('aria-pressed', l==='en');
-    document.querySelectorAll('[data-lang]').forEach(function(el){
-      var show = el.getAttribute('data-lang')===l;
-      if(el.tagName==='STRONG' || el.tagName==='A'){ el.style.display = show ? '' : 'none'; }
-    });
   }
   document.getElementById('lang-es').addEventListener('click', function(){ setLang('es'); });
   document.getElementById('lang-en').addEventListener('click', function(){ setLang('en'); });
