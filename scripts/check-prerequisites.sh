@@ -20,7 +20,8 @@ case "$PHASE" in
   p3) REQUIRED=(catalog/consolidation-map.yaml skills/iikit/SKILL.md skills/firebase/SKILL.md skills/google-workspace/SKILL.md) ;;
   p4) REQUIRED=(CLAUDE.md AGENTS.md GEMINI.md SKILLS.md .agent/skills_index.json scripts/gen_mcp.py) ;;
   p5) REQUIRED=(scripts/validate-coverage.py harness/.manifest.json) ;;
-  *) echo "usage: $0 --phase p0..p5 [--json]" >&2; exit 2 ;;
+  p6) REQUIRED=(scripts/first-prompt-router.sh scripts/workspace-bootstrap.sh scripts/stage-context-manifest.sh workspace/_template/CONTEXT.md workspace/_template/01_discovery/CONTEXT.md workspace/_template/02_spec/CONTEXT.md workspace/_template/03_build/CONTEXT.md workspace/_template/04_validate/CONTEXT.md workspace/_template/01_discovery/output/.gitkeep workspace/_template/02_spec/output/.gitkeep workspace/_template/03_build/output/.gitkeep workspace/_template/04_validate/output/.gitkeep workspace/_template/_config/.gitkeep references/ontology/constitution-must.md runtime/delta-claude.md) ;;
+  *) echo "usage: $0 --phase p0..p6 [--json]" >&2; exit 2 ;;
 esac
 
 MISSING=()

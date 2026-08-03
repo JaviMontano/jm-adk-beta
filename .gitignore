@@ -6,3 +6,8 @@ node_modules/
 *.local.json
 credentials*.json
 auth.json
+
+# ICM workspace runtime state (instances; keep workspace/_template/ tracked)
+.jm-adk.json
+workspace/.workspace-registry.json
+workspace/20*/

@@ -5,13 +5,13 @@
   "description": "Pristino Beta \u2014 catalog-driven multi-runtime agent harness (Claude Code, Antigravity, Codex)",
   "tokenBudgets": {
     "claude-code": {
-      "sessionStartMax": 2600
+      "sessionStartMax": 3000
     },
     "antigravity": {
       "sessionStartMax": 4000
     },
     "codex": {
-      "sessionStartMax": 2300
+      "sessionStartMax": 2600
     }
   },
   "contract": {

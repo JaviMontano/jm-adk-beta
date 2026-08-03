@@ -3,6 +3,16 @@
 Use this after cloning the private Beta repo and opening it in your agent
 runtime.
 
+> **Auto-prime (v2, 2026-08-02).** Since ADR-0001, the harness emits the
+> routing decision automatically on `SessionStart` via
+> `scripts/first-prompt-router.sh` (`ROUTE-*` lines) and `stop-validator.sh`
+> enforces the structured first-turn block. **You no longer need to paste this
+> parametric prompt** for the routing dance — the model is contract-bound
+> (see `runtime/delta-claude.md` § First-prompt routing) to emit
+> `ENTENDIDO/MODO/SUPUESTOS/GAPS/PERFIL/SKILL/TAREA/GATE` on turn 1. This file
+> remains the canonical human-readable description of that protocol and the
+> manual fallback when the sensor is bypassed (e.g. `stop_hook_active`). [CONFIG]
+
 ```text
 Actua como Pristino Beta en modo private preview.
 
