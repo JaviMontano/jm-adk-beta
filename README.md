@@ -117,5 +117,5 @@ landed (PR #5, merged 2026-08-03); ICM workspace model elevated to `core.md`
 
 - 611/611 alfa skills dispositioned (`scripts/validate-coverage.py` PASS).
 - 73 beta skills (35 routers + 24 competencies + 14 jarvis-os), 351 aliases.
-- ICM first-prompt routing live across all 3 runtimes; compliance audit + `plan-evolucion.md` landed (PR #5, merged 2026-08-03). Phase gates p0-p6 READY; token budgets PASS (claude 2601/3000, antigravity 3812/4000, codex 2386/2600); coverage 611; evals 36/36. [CONFIG]
+- ICM first-prompt routing live across all 3 runtimes; compliance audit + `plan-evolucion.md` landed (PR #5, merged 2026-08-03). Evolution P0-P6 landed (PRs #8-#11): ICM workspace model elevated to `core.md` (shared, 3 runtimes), `--enforce` gate on `stage-context-manifest`, `ROUTE-STAGE` + task-md-missing detection, governance consistency sensor (`p7` true gate), orchestrator agents + flow commands aligned to ICM. Phase gates p0-p7 READY; token budgets PASS (claude 2720/3000, antigravity 4052/4200, codex 2505/2600); coverage 611; evals 36/36. [CONFIG]
 - Pending field validation: 3-runtime smoke (10 canonical tasks), Stitch-on-Codex proxy, Antigravity end-to-end MCP — run `scripts/auth-doctor.sh` first to rule out auth before debugging routing.
