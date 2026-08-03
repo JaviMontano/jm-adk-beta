@@ -12,7 +12,7 @@
 | Fase | Título | Status | Commit | Notas |
 |------|--------|--------|--------|-------|
 | P0 | README remediation | DONE | 396b773 | v7, live budgets, layout, ICM section |
-| P1 | docs governance (index + ADR-0002 + debt update) | PENDING | — | hand-edit docs/, no regen |
+| P1 | docs governance (index + ADR-0002 + debt update) | DONE | 29c90e9 | hand-edit docs/, no regen |
 | P2 | Elevar modelo ICM a core.md (shared) + budget bump | PENDING | — | SOURCE edit + regen + budget verify (crítico) |
 | P3 | Optimizar routing/orquestación (manifest --enforce, router, session-init) | PENDING | — | script edits, no regen |
 | P4 | Sensor de consistencia de gobernanza + gate p7 | PENDING | — | nuevo script |
