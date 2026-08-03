@@ -31,6 +31,10 @@ Catalog-driven harness for the **vibe coder** and **AI-native knowledge worker**
 - Soft gates warn and continue; hard gates require 100% and BLOCK on miss.
 - [SUPUESTO] `--json` is machine-parsed; non-zero exit = gate failure.
 
+## Workspace model (ICM)
+
+Folder-structure-as-architecture (paper arXiv 2603.16021v2). 5 layers on demand (≤8k tok/stage): L0 `CLAUDE.md` · L1 workspace `CONTEXT.md` · L2 stage `CONTEXT.md` (`## Inputs`) · L3 refs+config · L4 output. One stage=one job; edit-source (fix source, not output). `stage-context-manifest.sh <stage>` makes L2 Inputs executable (sums token stack, warns >8000t; paper claims 2-8k, harness enforces). Sub-agents (§4.1): scoped stage context only. [DOC]
+
 ## Anti-scope
 
 - [SUPUESTO] Adapter governs runtime behavior only; building the adapter is out of scope (owned by delta + generator).

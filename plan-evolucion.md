@@ -13,7 +13,7 @@
 |------|--------|--------|--------|-------|
 | P0 | README remediation | DONE | 396b773 | v7, live budgets, layout, ICM section |
 | P1 | docs governance (index + ADR-0002 + debt update) | DONE | 29c90e9 | hand-edit docs/, no regen |
-| P2 | Elevar modelo ICM a core.md (shared) + budget bump | PENDING | — | SOURCE edit + regen + budget verify (crítico) |
+| P2 | Elevar modelo ICM a core.md (shared) + budget bump | DONE | f558f35 | SOURCE edit + regen + budget verify (crítico) |
 | P3 | Optimizar routing/orquestación (manifest --enforce, router, session-init) | PENDING | — | script edits, no regen |
 | P4 | Sensor de consistencia de gobernanza + gate p7 | PENDING | — | nuevo script |
 | P5 | Alinear agents/ + commands/ a ICM | PENDING | — | hand-edit, no regen |
@@ -27,7 +27,7 @@
 
 1. **NUNCA hand-editar generated files.** `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `.agent/rules/GEMINI.md`, `SKILLS.md`, `.agent/skills_index.json`, `.mcp.json` son generados por `scripts/build-indexes.py` desde fuente. Cambios manuales se pierden en regen. Para cambiar conducta: editar fuente canonical (`runtime/core.md`, `runtime/delta-*.md`, `catalog/skills.json`, `harness/manifest.json`) → regenerar.
 2. **Source antes que output.** Editar fuente → regen (`python3 scripts/build-indexes.py`) → verificar budgets → commit. Nunca al revés.
-3. **Budget = blocker pre-release.** Tras cualquier cambio a `core.md`/deltas/`manifest.json`: correr `python3 scripts/check-token-budget.py`. Si falla, la fase NO está DONE. Budgets actuales: claude 2601/3000, antigravity 3812/4000, codex 2386/2600. Headroom: claude 399, antigravity 188, codex 214.
+3. **Budget = blocker pre-release.** Tras cualquier cambio a `core.md`/deltas/`manifest.json`: correr `python3 scripts/check-token-budget.py`. Si falla, la fase NO está DONE. Budgets actuales (post-P2): claude 2720/3000, antigravity 4052/4200, codex 2505/2600. Headroom: claude 280, antigravity 148, codex 95.
 4. **Una fase = un branch = un commit.** `git checkout -b feat/evolucion-p<N>` desde `main` (o desde la rama de la fase previa si encadenadas). Para fases PARALLEL-OK (§9), usar **worktree** aislado en vez de branch suelto — un working dir por fase/agente. Commit al final. Mensaje termina con `Co-Authored-By: Claude <noreply@anthropic.com>`.
 5. **Edit-source principle (ICM).** Si un output está mal, arreglar el contract/fuente, no el output.
 6. **Verificación antes de DONE.** artifact existence (gates), no aserto. Correr §6 harness completo.
