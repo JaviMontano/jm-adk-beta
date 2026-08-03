@@ -77,6 +77,7 @@ fi
 TASK_ONGOING=""
 TASK_LATEST=""
 TASK_CHECKBOXES_OPEN=0
+TASK_MD_MISSING=""
 if [[ -n "$WS_DIR" && -d "$WS_DIR/tasks" ]]; then
   TASK_LATEST=$(ls -1d "$WS_DIR"/tasks/T-[0-9][0-9][0-9]* 2>/dev/null | tail -1 || true)
   if [[ -n "$TASK_LATEST" ]]; then
@@ -85,6 +86,9 @@ if [[ -n "$WS_DIR" && -d "$WS_DIR/tasks" ]]; then
       # status heuristic: presence of unchecked acceptance checkboxes = ongoing
       TASK_CHECKBOXES_OPEN=$(grep -c '^- \[ \]' "$TM" 2>/dev/null || echo "0")
       [[ "$TASK_CHECKBOXES_OPEN" -gt 0 ]] && TASK_ONGOING="$(basename "$TASK_LATEST")"
+    else
+      # T-NNN dir exists but task.md missing — contract breach, not just no-checkboxes
+      TASK_MD_MISSING="$(basename "$TASK_LATEST")"
     fi
   fi
 fi
@@ -110,15 +114,31 @@ elif [[ -n "$TASK_ONGOING" ]]; then
   MODE="resume_task"
 elif [[ -n "$TASK_LATEST" ]]; then
   MODE="new_task"
+  if [[ -n "$TASK_MD_MISSING" ]]; then
+    GAPS="task-md-missing"; GAP_REASON="T-NNN dir $TASK_MD_MISSING exists but task.md absent — rebuild contract before editing"
+  fi
 else
   MODE="resume_project"
   [[ "$WS_STALE" = "true" ]] && { GAPS="stale-workspace"; GAP_REASON="last workspace activity not today"; }
 fi
 
+# ── Suggested stage path (ROUTE-STAGE) from intent ──
+# The ICM model loads ONE stage's CONTEXT.md. Suggest which one:
+#   resume  → last stage with output (where work left off)
+#   new     → 01_discovery (entry stage of a fresh workspace)
+ROUTE_STAGE=""
+if [[ -n "$WS_DIR" ]]; then
+  if [[ -n "$LAST_STAGE" ]]; then
+    ROUTE_STAGE="$WS_DIR/$LAST_STAGE"
+  elif [[ "$MODE" != "ambiguous" ]]; then
+    ROUTE_STAGE="$WS_DIR/01_discovery"
+  fi
+fi
+
 # ── Output ──
 if [[ "$JSON" = "1" ]]; then
   cat <<EOF
-{"mode":"$MODE","workspace_enabled":$WS_ENABLED,"workspace_id":"$WS_ID","workspace_stale":$WS_STALE,"last_stage":"$LAST_STAGE","task_ongoing":"$TASK_ONGOING","task_latest":"$(basename "$TASK_LATEST" 2>/dev/null)","task_open_checkboxes":$TASK_CHECKBOXES_OPEN,"coverage_gap":"$GAPS","gap_reason":"$GAP_REASON"}
+{"mode":"$MODE","workspace_enabled":$WS_ENABLED,"workspace_id":"$WS_ID","workspace_stale":$WS_STALE,"last_stage":"$LAST_STAGE","route_stage":"$ROUTE_STAGE","task_ongoing":"$TASK_ONGOING","task_latest":"$(basename "$TASK_LATEST" 2>/dev/null)","task_open_checkboxes":$TASK_CHECKBOXES_OPEN,"task_md_missing":"$TASK_MD_MISSING","coverage_gap":"$GAPS","gap_reason":"$GAP_REASON"}
 EOF
 else
   echo "ROUTE-MODE: $MODE"
@@ -126,9 +146,11 @@ else
   [[ -n "$WS_ID" ]]        && echo "ROUTE-WS-ID: $WS_ID"
   [[ "$WS_STALE" = "true" ]] && echo "ROUTE-WS-STALE: true"
   [[ -n "$LAST_STAGE" ]]   && echo "ROUTE-LAST-STAGE: $LAST_STAGE"
+  [[ -n "$ROUTE_STAGE" ]]   && echo "ROUTE-STAGE: $ROUTE_STAGE"
   [[ -n "$TASK_ONGOING" ]]  && echo "ROUTE-TASK-ONGOING: $TASK_ONGOING"
   [[ -n "$TASK_LATEST" ]]   && echo "ROUTE-TASK-LATEST: $(basename "$TASK_LATEST")"
   [[ "$TASK_CHECKBOXES_OPEN" -gt 0 ]] && echo "ROUTE-TASK-OPEN-CHECKBOXES: $TASK_CHECKBOXES_OPEN"
+  [[ -n "$TASK_MD_MISSING" ]] && echo "ROUTE-TASK-MD-MISSING: $TASK_MD_MISSING"
   [[ -n "$GAPS" ]]          && echo "ROUTE-COVERAGE-GAP: $GAPS"
   [[ -n "$GAP_REASON" ]]    && echo "ROUTE-GAP-REASON: $GAP_REASON"
 fi

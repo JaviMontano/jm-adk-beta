@@ -15,43 +15,58 @@
 # That is "igual o mejor" than the paper.
 #
 # Usage:
-#   stage-context-manifest.sh <stage_dir>            # human-readable
-#   stage-context-manifest.sh <stage_dir> --json      # machine
-#   stage-context-manifest.sh --selftest              # dry-run sanity
+#   stage-context-manifest.sh <stage_dir>                  # human-readable
+#   stage-context-manifest.sh <stage_dir> --json            # machine
+#   stage-context-manifest.sh <stage_dir> --enforce         # GATE: exit 1 on over-budget/missing
+#   stage-context-manifest.sh <stage_dir> --json --enforce # both
+#   stage-context-manifest.sh --selftest                   # dry-run sanity
 #
-# Sensor, not gate: always exits 0. Warns (stderr) on over-budget (>8000t,
-# paper per-stage ceiling) or missing referenced files.
-# Edit-source: fix the stage CONTEXT.md Inputs table, not this script.
+# Default = SENSOR (always exits 0, warns on stderr). --enforce = GATE
+# (exit 1 if over-budget >8000t OR a referenced Inputs file is missing).
+# 04_validate runs --enforce so the budget the paper only CLAIMS becomes a
+# hard pre-release gate. Edit-source: fix the stage CONTEXT.md Inputs table,
+# not this script.
 
 set -uo pipefail
 
-MODE="${1:-}"
-if [[ "$MODE" == "--selftest" ]]; then
-  for s in 01_discovery 02_spec 03_build 04_validate; do
-    echo "SELFTEST stage=$s"
-    "$0" "workspace/_template/$s"
-    echo
-  done
-  exit 0
-fi
+# --- arg parse (flags in any order; first positional = stage) ---
+STAGE=""
+JSON_FLAG=""
+ENFORCE_FLAG=""
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --selftest)
+      for s in 01_discovery 02_spec 03_build 04_validate; do
+        echo "SELFTEST stage=$s"
+        "$0" "workspace/_template/$s"
+        echo
+      done
+      exit 0
+      ;;
+    --json)    JSON_FLAG="--json"; shift ;;
+    --enforce) ENFORCE_FLAG="--enforce"; shift ;;
+    -*) echo "stage-context-manifest: unknown flag: $1 (ignoring)" >&2; shift ;;
+    *)  STAGE="$1"; shift ;;
+  esac
+done
 
-STAGE="${1:-}"
-JSON="${2:-}"
 if [[ -z "$STAGE" ]]; then
-  echo "usage: $0 <stage_dir> [--json]   |   $0 --selftest" >&2
+  echo "usage: $0 <stage_dir> [--json] [--enforce]   |   $0 --selftest" >&2
   exit 0
 fi
 STAGE="${STAGE%/}"
 CTX="$STAGE/CONTEXT.md"
 if [[ ! -f "$CTX" ]]; then
   echo "STAGE-MANIFEST-ERROR: no CONTEXT.md in $STAGE" >&2
-  exit 0
+  # missing stage contract is a structural failure — gate even in sensor mode
+  [[ -n "$ENFORCE_FLAG" ]] && exit 1 || exit 0
 fi
 
-python3 - "$CTX" "$STAGE" "$JSON" <<'PY'
+python3 - "$CTX" "$STAGE" "$JSON_FLAG" "$ENFORCE_FLAG" <<'PY'
 import sys, json, re
 from pathlib import Path
-ctx_path, stage, json_flag = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3]
+ctx_path, stage, json_flag, enforce_flag = \
+    Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3], sys.argv[4]
 
 def toks(p: Path) -> int:
     return len(p.read_text()) // 4 if p.exists() and p.is_file() else 0
@@ -106,14 +121,24 @@ if json_flag == "--json":
          "tokens": toks(b[2])} for b in base],
         "inputs": items, "base_tokens": base_toks, "inputs_tokens": in_toks,
         "total_tokens": total, "budget": 8000, "over_budget": over,
-        "missing": missing}))
+        "missing": missing, "enforce": enforce_flag == "--enforce"}))
 else:
     print(f"STAGE: {stage}")
     for b in base:
         print(f"  {b[0]} {b[1]:9s} {'OK ' if b[2].exists() else 'MISS'} {toks(b[2]):5d}t  {b[2]}")
     for i in items:
         print(f"  L{i['layer']} {i['kind']:9s} {'OK ' if i['exists'] else 'MISS'} {i['tokens']:5d}t  {i['path']}")
-    print(f"TOTAL: {total}t / 8000  {'OVER-BUDGET' if over else 'ok'}  (base {base_toks} + inputs {in_toks})")
+    gate = "GATE" if enforce_flag == "--enforce" else "sensor"
+    print(f"TOTAL: {total}t / 8000  {'OVER-BUDGET' if over else 'ok'}  ({gate}; base {base_toks} + inputs {in_toks})")
     if missing:
         print(f"MISSING ({len(missing)}): " + "; ".join(missing), file=sys.stderr)
+# Gate signal: exit 1 if over-budget OR missing referenced file. Sensor mode
+# (no --enforce) is caught by the bash wrapper, which forces exit 0 below.
+sys.exit(1 if (over or missing) else 0)
 PY
+rc=$?
+if [[ "$ENFORCE_FLAG" == "--enforce" ]]; then
+  exit "$rc"          # GATE: propagate 1 on over-budget/missing
+else
+  exit 0              # SENSOR: always 0
+fi
