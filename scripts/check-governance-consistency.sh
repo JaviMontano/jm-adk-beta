@@ -48,10 +48,10 @@ if readme.exists() and evals.exists():
     rtext = readme.read_text()
     bench = json.loads(evals.read_text())
     beta = bench.get("arms", {}).get("beta", {})
-    # README row: | <Runtime> | <alfa> | <naive> | **<beta>** | <vs> |
+    # README row: | <Runtime> | **<measured>** | <cap> |
     readme_vals = {}
     for runtime in ("Claude Code", "Antigravity", "Codex"):
-        m = re.search(rf'\| {re.escape(runtime)}\s*\|[^|]*\|[^|]*\|\s*\**([\d,]+)\*', rtext)
+        m = re.search(rf'\| {re.escape(runtime)}\s*\|\s*\**([\d,]+)\*', rtext)
         if m:
             readme_vals[runtime] = int(m.group(1).replace(",", ""))
     mapping = {"Claude Code": "claude-code", "Antigravity": "antigravity", "Codex": "codex"}
