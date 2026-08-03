@@ -85,8 +85,25 @@ echo "WORKSPACE-ACTIVE-COUNT: $WS_COUNT"
 # ── First-prompt routing (ICM Layer 1) ──
 # Router is read-only, informational, always exits 0. Emits ROUTE-* lines.
 ROUTER="$PROJECT_ROOT/scripts/first-prompt-router.sh"
-[ -x "$ROUTER" ] && "$ROUTER" || echo "ROUTE-MODE: ambiguous"
+ROUTE_OUT=""
+if [ -x "$ROUTER" ]; then
+  ROUTE_OUT="$("$ROUTER" 2>/dev/null)"
+  printf '%s\n' "$ROUTE_OUT"
+else
+  echo "ROUTE-MODE: ambiguous"
+fi
 echo "ROUTE-HINT: first turn MUST emit ENTENDIDO/MODO/SUPUESTOS/GAPS/TAREA/GATE (see runtime/delta-claude.md)"
+# ICM budget sensor hint: if a stage was detected, suggest running the
+# executable Inputs-table manifest BEFORE loading that stage's context
+# (paper §3.2: prevention rather than compression — verify ≤8000t first).
+ROUTE_LAST_STAGE=""
+ROUTE_LAST_STAGE="$(printf '%s\n' "$ROUTE_OUT" | sed -n 's/^ROUTE-LAST-STAGE: //p' 2>/dev/null)"
+if [ -n "$ROUTE_LAST_STAGE" ]; then
+  WS_HINT=""
+  WS_HINT="$(printf '%s\n' "$ROUTE_OUT" | sed -n 's/^ROUTE-WS-ID: //p' 2>/dev/null)"
+  [ -n "$WS_HINT" ] && \
+    echo "ROUTE-HINT: run scripts/stage-context-manifest.sh workspace/$WS_HINT/$ROUTE_LAST_STAGE before loading context (ICM ≤8000t gate)"
+fi
 
 echo "---"
 echo "MetodologIA · JM Labs"

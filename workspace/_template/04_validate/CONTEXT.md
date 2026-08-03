@@ -8,7 +8,7 @@ One stage, one job: gates + verification antes de "done". Truth = filesystem.
 - Layer 3 (reference): `../../../scripts/check-prerequisites.sh` (gates).
 
 ## Process
-0. `scripts/stage-context-manifest.sh .` — confirmar contexto scoped ≤8000t (sensor ICM).
+0. `scripts/stage-context-manifest.sh . --enforce` — GATE: confirmar contexto scoped ≤8000t + Inputs resueltos (exit 1 bloquea release; ICM hard gate).
 1. `git status --short` — confirmar cambios.
 2. `python3 scripts/validate-coverage.py`.
 3. `python3 scripts/check-token-budget.py` (blocker pre-release si falla).
