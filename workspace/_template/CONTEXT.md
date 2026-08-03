@@ -21,6 +21,20 @@ No leas todo el workspace si una ruta basta. Carga solo Layers 0-2 + la stage ac
 (2-8k tok, anti lost-in-the-middle, notebook 13845882 §3.2). Si falta dato,
 marca `coverage_gap` y pide bloqueante antes de editar. [DOC]
 
+Antes de cargar contexto de una stage, ejecuta
+`scripts/stage-context-manifest.sh <stage>` — resuelve la Inputs table (L3+L4)
+y suma el stack completo (L0+L1+L2+L3+4); advierte si >8000t. Paper §3.2 deja
+la Inputs table como markdown estático; el harness la hace **ejecutable** (igual o mejor).
+
+## Sub-agent delegation (paper §4.1)
+
+Si delegas a sub-agentes (Task tool), pásales **solo el contexto de la stage
+activa** (L2 contract + L3 + L4 scoped vía `stage-context-manifest.sh`), no el
+workspace entero. La folder structure dicta qué contexto recibe cada sub-agent
+(paper: "the model reads the folder structure to determine what context each
+sub-agent should receive"). Un sub-agent que recibe el workspace entero
+viola layered context loading — degradation garantizada (Liu et al.).
+
 ## Capas ICM en este workspace
 
 - Layer 0: `CLAUDE.md` (raíz repo) — identidad harness.

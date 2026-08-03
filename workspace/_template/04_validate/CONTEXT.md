@@ -4,9 +4,11 @@ One stage, one job: gates + verification antes de "done". Truth = filesystem.
 
 ## Inputs
 - Layer 4 (working): `../03_build/output/build.md`.
+- Layer 3 (reference): `../../../references/ontology/constitution-must.md` (MUST/MUST NOT slice — verificar respetados; full constitution para auditoría humana).
 - Layer 3 (reference): `../../../scripts/check-prerequisites.sh` (gates).
 
 ## Process
+0. `scripts/stage-context-manifest.sh .` — confirmar contexto scoped ≤8000t (sensor ICM).
 1. `git status --short` — confirmar cambios.
 2. `python3 scripts/validate-coverage.py`.
 3. `python3 scripts/check-token-budget.py` (blocker pre-release si falla).
@@ -17,3 +19,4 @@ One stage, one job: gates + verification antes de "done". Truth = filesystem.
 ## Outputs
 - `output/validate.md` — gate results (pass/fail), coverage_gap residual.
 - Block release si cualquier gate falla.
+- **Review gate final**: humano valida gates verdes + deliverable antes de cerrar.
