@@ -15,7 +15,7 @@
 | P1 | docs governance (index + ADR-0002 + debt update) | DONE | 29c90e9 | hand-edit docs/, no regen |
 | P2 | Elevar modelo ICM a core.md (shared) + budget bump | DONE | f558f35 | SOURCE edit + regen + budget verify (crítico) |
 | P3 | Optimizar routing/orquestación (manifest --enforce, router, session-init) | DONE | 4dc4433 | script edits, no regen |
-| P4 | Sensor de consistencia de gobernanza + gate p7 | PENDING | — | nuevo script |
+| P4 | Sensor de consistencia de gobernanza + gate p7 | DONE | 1939292 | nuevo script |
 | P5 | Alinear agents/ + commands/ a ICM | PENDING | — | hand-edit, no regen |
 | P6 | Verificación final + commit + PR | PENDING | — | cierre |
 
