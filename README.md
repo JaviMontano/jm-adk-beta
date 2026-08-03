@@ -84,26 +84,27 @@ Measured (`evals/token-benchmark.json`, chars/4 applied identically to all arms 
 
 | Runtime | Alfa (measured) | Beta naive | Beta (measured) | vs alfa |
 |---|---|---|---|---|
-| Claude Code | 29,552 | 3,869 | **2,601** | **−91%** |
-| Antigravity | 36,801 | 5,377 | **3,812** | **−90%** |
-| Codex | 1,651 | 3,820 | **2,386** | +45%* |
+| Claude Code | 29,552 | 3,869 | **2,720** | **−91%** |
+| Antigravity | 36,801 | 5,377 | **4,052** | **−89%** |
+| Codex | 1,651 | 3,820 | **2,505** | +52%* |
 
-\* Alfa's AGENTS.md carried no skill index — Codex sessions had no catalog access. Beta inlines the full 73-skill tier-0 index; the +735 tokens buy complete catalog routing. Honest trade-off, recorded as measured, not hidden.
+\* Alfa's AGENTS.md carried no skill index — Codex sessions had no catalog access. Beta inlines the full 73-skill tier-0 index; the +854 tokens buy complete catalog routing. Honest trade-off, recorded as measured, not hidden.
 
 Regenerate with `python3 scripts/token-stats.py`. The table updates **only** from committed benchmark data, never hand-typed (caveman honesty rule) — a number here with no matching commit in `evals/` is a bug.
 
 ## Acceptance criteria (GA gate)
 
 - `scripts/validate-coverage.py` PASS — 611/611 dispositioned.
-- `scripts/check-token-budget.py` green for all 3 runtimes (Codex +39% is an accepted, documented regression, not a failure).
+- `scripts/check-token-budget.py` green for all 3 runtimes (Codex +52% is an accepted, documented regression, not a failure).
 - 3-runtime smoke: 10 canonical tasks pass on Claude Code, Antigravity, Codex.
 - Generated surfaces match catalog: re-running `build-indexes.py` produces no diff.
 
 Current private-preview status: `validate-coverage.py` PASS (611/611) and
 `check-token-budget.py` PASS for all 3 runtimes
-(`claude-code 2601/3000`, `antigravity 3812/4000`, `codex 2386/2600`). [CONFIG]
-Headroom: claude 399, antigravity 188, codex 214. ICM routing + compliance audit
-landed (PR #5, merged 2026-08-03); all session-start gates green.
+(`claude-code 2720/3000`, `antigravity 4052/4200`, `codex 2505/2600`). [CONFIG]
+Headroom: claude 280, antigravity 148, codex 95. ICM routing + compliance audit
+landed (PR #5, merged 2026-08-03); ICM workspace model elevated to `core.md`
+(shared, all 3 runtimes, P2); all session-start gates green.
 
 ## Anti-scope
 

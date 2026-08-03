@@ -52,11 +52,14 @@ behavior only; building the adapter is out of scope"):
    scoped context, never the whole workspace — paper §4.1), review gates at
    each stage handoff. [CONFIG]
 
-4. **ICM model elevation to `core.md` (P2, deferred).** The 5-layer model,
+4. **ICM model elevation to `core.md` (P2, resolved).** The 5-layer model,
    one-stage-one-job, edit-source principle, and `stage-context-manifest` move
    to `runtime/core.md` so all three runtimes inherit it first-class — not via a
-   fragile cross-delta reference. P2 carries the budget risk (headroom:
-   antigravity 188t, codex 214t) and is tracked in `plan-evolucion.md` §4 P2. [DOC]
+   fragile cross-delta reference. P2 carried the budget risk (antigravity injects
+   the adapter twice — `GEMINI.md` + `.agent/rules/GEMINI.md` — so core additions
+   cost 2x) and bumped `antigravity.sessionStartMax` 4000→4200 with documented
+   rationale (shared ICM model is permanent; +200 headroom justified). Post-P2
+   budgets: claude 2720/3000, antigravity 4052/4200, codex 2505/2600. [CONFIG]
 
 ## Consequences
 
