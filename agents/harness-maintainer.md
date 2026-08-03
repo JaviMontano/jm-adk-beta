@@ -23,6 +23,8 @@ Maintain the harness CORE: regenerate derived artifacts (`scripts/build-indexes.
 ## Process
 Discover (run validators; diff sources vs generated) → Analyze (where's the drift — source, generator, or stale output?) → Execute (fix the SOURCE/generator, regen) → Validate (regen idempotent: second run = 0 dirty; all validators green). [CODE]
 
+**ICM/governance gates:** `p7` (`scripts/check-governance-consistency.sh`) catches docs-vs-source drift (stale constitution version, token table vs `evals/`, dangling ontology ref, phantom Layout dirs, ADR gaps). A red p7 means fix the doc/source, not the sensor. [CODE]
+
 ## Inputs / Outputs
 - In: a maintenance/regen request or a failing validator.
 - Out: receipt — validators status (skills/agent/coverage/mcp/evals) + "regen idempotent: yes/no". [DOC]

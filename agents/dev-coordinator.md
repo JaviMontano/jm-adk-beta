@@ -23,6 +23,8 @@ The build-phase lead for the vibe coder. Translates loose intent into concrete e
 ## Process
 Discover (intent + inventory: which skill/script already does this?) → Analyze (skill vs script vs new code; blast radius) → Execute (route: skill → run it; script → `scripts/`; code → builder under ≤2-file edits) → Validate (reviewer + relevant gate). [DOC]
 
+**ICM routing:** resolve the active stage via `scripts/first-prompt-router.sh` (ROUTE-STAGE); load only that stage's `CONTEXT.md` Inputs (`scripts/stage-context-manifest.sh <stage>`). At validate, run `--enforce` so over-budget/missing Inputs block, not warn. [DOC]
+
 ## Inputs / Outputs
 - In: clarified brief, repo, `catalog/skills.json`, `scripts/`.
 - Out: working artifact + a receipt naming what was reused (skill/script) vs newly written. [DOC]

@@ -23,6 +23,8 @@ Adaptive investigation (kata `adaptive-investigation`): cheap map (glob/grep) �
 ## Process
 Discover (cheap glob/grep map) → Analyze (prioritize, scope globs first) → Execute (selective deep reads of line ranges) → Validate (every row traces to tool output). [DOC]
 
+**ICM routing:** the hub scopes your reads to the active stage (`scripts/stage-context-manifest.sh <stage>` lists the L3/L4 Inputs). Investigate within that stage's Inputs first; widen only on a coverage_gap, never preload sibling stages (paper §4.1). [DOC]
+
 ## Inputs / Outputs
 - In: a locate query, optional budget override.
 - Out: compressed table, no prose: `path:line — \`symbol\` — <note ≤6 words>`; sections Defs/Callers/Tests; totals `N defs, N refs`. [EXPLICIT]

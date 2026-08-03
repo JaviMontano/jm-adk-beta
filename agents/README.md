@@ -34,6 +34,14 @@ The orchestrator (Pristino) conducts all phases. [DOC]
 An officer routes to skills (`routes:`) and orchestrates; it never re-implements a skill's
 playbook. If a body grows past ~80 lines, the logic belongs in a skill (validator warns). [CONFIG]
 
+## ICM routing (orchestrators)
+The orchestrating officers (orchestrator, dev-coordinator, governance-guardian,
+context-optimizer, input-analyst, investigator, harness-maintainer) follow ICM routing
+(paper arXiv 2603.16021v2): `scripts/first-prompt-router.sh` resolves ROUTE-MODE + ROUTE-STAGE,
+`scripts/stage-context-manifest.sh <stage>` measures the stage's ≤8000t token stack, and
+spokes receive only the active stage's scoped context (§4.1 delegation). Specialist officers
+(brand, estimation) need no routing note — they are dispatched into a stage, not stage-agnostic. [DOC]
+
 ## Per-skill dispatch (role-templates → spokes)
 For single-skill work the orchestrator instantiates the 4 role-templates with `{{skill}}`:
 **lead** (deliverable) · **specialist** (domain) · **support** (scripts/git/IO) · **guardian**
